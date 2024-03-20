@@ -13,6 +13,7 @@ import { usePathname } from "next/navigation";
 import HeroSearchFormSmall from "../(HeroSearchFormSmall)/HeroSearchFormSmall";
 import { StaySearchFormFields } from "../type";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import LangDropdown from "./LangDropdown";
 
 interface Header3Props {
   className?: string;
@@ -79,8 +80,8 @@ const Header3: FC<Header3Props> = ({ className = "" }) => {
     return (
       <div
         className={`absolute inset-x-0 top-0 transition-all will-change-[transform,opacity] ${showHeroSearch
-            ? "visible"
-            : "-translate-x-0 -translate-y-[90px] scale-x-[0.395] scale-y-[0.6] opacity-0 invisible pointer-events-none"
+          ? "visible"
+          : "-translate-x-0 -translate-y-[90px] scale-x-[0.395] scale-y-[0.6] opacity-0 invisible pointer-events-none"
           }`}
       >
         <div className={`w-full max-w-4xl mx-auto pb-6`}>
@@ -98,8 +99,8 @@ const Header3: FC<Header3Props> = ({ className = "" }) => {
     return (
       <div
         className={`w-full relative flex items-center justify-between border border-neutral-200 dark:border-neutral-6000 rounded-full shadow hover:shadow-md transition-all ${showHeroSearch
-            ? "-translate-x-0 translate-y-20 scale-x-[2.55] scale-y-[1.8] opacity-0 pointer-events-none invisible"
-            : "visible"
+          ? "-translate-x-0 translate-y-20 scale-x-[2.55] scale-y-[1.8] opacity-0 pointer-events-none invisible"
+          : "visible"
           }`}
       >
         <div className="flex items-center font-medium text-sm">
@@ -176,17 +177,20 @@ const Header3: FC<Header3Props> = ({ className = "" }) => {
 
             {/* NAV */}
             <div className="hidden md:flex relative z-10 flex-1 justify-end text-neutral-700 dark:text-neutral-100">
-              <div className=" flex space-x-1">
-                <Link
-                  href={"/add-listing/1"}
-                  className="self-center hidden xl:inline-flex px-4 py-2 border border-neutral-300 hover:border-neutral-400 dark:border-neutral-700 rounded-full items-center text-sm text-gray-700 dark:text-neutral-300 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                >
-                  List your property
-                </Link>
+              <div className="hidden lg:flex space-x-1">
+                <LangDropdown />
+                <div className=" flex space-x-1">
+                  <Link
+                    href={"/add-listing/1"}
+                    className="self-center hidden xl:inline-flex px-4 py-2 border border-neutral-300 hover:border-neutral-400 dark:border-neutral-700 rounded-full items-center text-sm text-gray-700 dark:text-neutral-300 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                  >
+                    List your property
+                  </Link>
 
-                <NotifyDropdown />
-                <AvatarDropdown />
-                <MenuBar />
+                  <NotifyDropdown />
+                  <AvatarDropdown />
+                  <MenuBar />
+                </div>
               </div>
             </div>
           </div>
