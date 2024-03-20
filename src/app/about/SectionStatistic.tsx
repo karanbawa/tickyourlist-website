@@ -10,20 +10,20 @@ export interface Statistic {
 const FOUNDER_DEMO: Statistic[] = [
   {
     id: "1",
-    heading: "10 million",
+    heading: "Explore Experiences",
     subHeading:
-      "Articles have been public around the world (as of Sept. 30, 2021)",
+      "Browse A Variety Of Unique Travel Experiences, Tailored For Every Preference.",
   },
   {
     id: "2",
-    heading: "100,000",
-    subHeading: "Registered users account (as of Sept. 30, 2021)",
+    heading: "Secure & Reliable Booking",
+    subHeading: "Experience Hassle-Free Booking With Our Trusted And Secured Platform.",
   },
   {
     id: "3",
-    heading: "220+",
+    heading: "Instant Confirmation",
     subHeading:
-      "Countries and regions have our presence (as of Sept. 30, 2021)",
+      "Get Immediate Booking Confirmations For Swift And Efficient Travel Planning.",
   },
 ];
 
@@ -35,8 +35,7 @@ const SectionStatistic: FC<SectionStatisticProps> = ({ className = "" }) => {
   return (
     <div className={`nc-SectionStatistic relative ${className}`}>
       <Heading
-        desc=" We’re impartial and independent, and every day we create distinctive,
-          world-class programmes and content"
+        desc="Discover the world with TickYourList, your ultimate gateway to unforgettable adventures and experiences. Let us turn your travel dreams into reality, one tick at a time."
       >
         🚀 Fast Facts
       </Heading>

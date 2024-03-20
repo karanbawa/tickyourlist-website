@@ -21,14 +21,14 @@ const PageAbout: FC<PageAboutProps> = ({}) => {
           rightImg={rightImg}
           heading="👋 About Us."
           btnText=""
-          subHeading="We’re impartial and independent, and every day we create distinctive, world-class programmes and content which inform, educate and entertain millions of people in the around the world."
+          subHeading="TickYourList is your passport to unforgettable adventures and epic experiences. We're here to make discovering the world's hidden gems effortless and exhilarating. From thrilling escapades in your own backyard to epic journeys across the globe, we've got you covered. With TickYourList, the world is your playground, and the possibilities are endless. Join us as we redefine adventure and create memories that will last a lifetime."
         />
 
-        <SectionFounder />
-        <div className="relative py-16">
+        {/* <SectionFounder /> */}
+        {/* <div className="relative py-16">
           <BackgroundSection />
           <SectionClientSay />
-        </div>
+        </div> */}
 
         <SectionStatistic />
 
