@@ -5,6 +5,8 @@ import SocialsList1 from "@/shared/SocialsList1";
 import { CustomLink } from "@/data/types";
 import React from "react";
 import FooterNav from "./FooterNav";
+import Link from "next/link";
+import { Route } from "next";
 
 export interface WidgetFooterMenu {
   id: string;
@@ -42,7 +44,7 @@ const widgetMenus: WidgetFooterMenu[] = [
     id: "2",
     title: "Tickyoulist",
     menus: [
-      { href: "#", label: "Our Story" },
+      { href: "/about", label: "Our Story" },
       { href: "#", label: "Careers" },
       { href: "#", label: "Newsroom" },
       { href: "#", label: "Company blog" },
@@ -105,11 +107,27 @@ const Footer: React.FC = () => {
       </div>
       <footer className="container d-flex flex-row justify-between mb-4">
         <div className="flex flex-row space-x-2 text-xs">
-          <div>© Tickyourlist Inc, 203-68, Bena Complex C, Oud Metha, Dubai-UAE</div>
+          <div><span className="font-bold">
+          <Link
+              href={"" as Route<string>}
+              >© Tickyourlist Inc</Link></span>, 203-68, Bena Complex C, Oud Metha, Dubai-UAE</div>
           <div className="font-bold">.</div>
-          <div>Privacy Policy</div>
-          <div className="font-bold">.</div>
-          <div>Terms of usage</div>
+          <div>
+          <Link
+              href={"/privacy-policy" as Route<string>}
+              >
+             Privacy Policy
+            </Link>
+            </div>
+            <div className="font-bold">.</div>
+            <div>
+          <Link
+              href={"/terms-of-usage" as Route<string>}
+              >
+             Terms of usage
+            </Link>
+            </div>
+          
         </div>
         <div></div>
       </footer>
