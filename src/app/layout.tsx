@@ -8,6 +8,7 @@ import "rc-slider/assets/index.css";
 import Footer from "@/components/Footer";
 import FooterNav from "@/components/FooterNav";
 import { Metadata } from "next";
+import Head from "next/head";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -32,6 +33,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={poppins.className}>
+      <Head>
+        <link rel="icon" href="/images/logo/tyllogo.png" /> {/* Add this line */}
+      </Head>
       <body className="bg-white text-base dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
         <ClientCommons />
         <SiteHeader />

@@ -15,46 +15,49 @@ export interface WidgetFooterMenu {
 const widgetMenus: WidgetFooterMenu[] = [
   {
     id: "5",
-    title: "Getting started",
+    title: "Get Help 24/7",
     menus: [
-      { href: "#", label: "Installation" },
-      { href: "#", label: "Release Notes" },
-      { href: "#", label: "Upgrade Guide" },
-      { href: "#", label: "Browser Support" },
-      { href: "#", label: "Editor Support" },
+      { href: "#", label: "Help Center" },
+      { href: "#", label: "Chat with Us" },
+      { href: "#", label: "Call +91 ..." },
+      { href: "#", label: "support@tickyourlist.com" },
     ],
   },
   {
     id: "1",
-    title: "Explore",
+    title: "Top Places",
     menus: [
-      { href: "#", label: "Design features" },
-      { href: "#", label: "Prototyping" },
-      { href: "#", label: "Design systems" },
-      { href: "#", label: "Pricing" },
-      { href: "#", label: "Security" },
+      { href: "#", label: "Dubai" },
+      { href: "#", label: "Abu Dhabi" },
+      { href: "#", label: "Singapore" },
+      { href: "#", label: "Thailand" },
+      { href: "#", label: "Riyad" },
+      { href: "#", label: "Maldives" },
+      { href: "#", label: "Bali" },
+      { href: "#", label: "India" },
+      { href: "#", label: "+ 148 more" },
     ],
   },
   {
     id: "2",
-    title: "Resources",
+    title: "Tickyoulist",
     menus: [
-      { href: "#", label: "Best practices" },
-      { href: "#", label: "Support" },
-      { href: "#", label: "Developers" },
-      { href: "#", label: "Learn design" },
-      { href: "#", label: "Releases" },
+      { href: "#", label: "Our Story" },
+      { href: "#", label: "Careers" },
+      { href: "#", label: "Newsroom" },
+      { href: "#", label: "Company blog" },
+      { href: "#", label: "Travel Blog" },
     ],
   },
   {
     id: "4",
-    title: "Community",
+    title: "We Accept",
     menus: [
-      { href: "#", label: "Discussion Forums" },
-      { href: "#", label: "Code of Conduct" },
-      { href: "#", label: "Community Resources" },
-      { href: "#", label: "Contributing" },
-      { href: "#", label: "Concurrent Mode" },
+      { href: "#", label: "Visa" },
+      { href: "#", label: "Master Card" },
+      { href: "#", label: "Amex" },
+      { href: "#", label: "Google Pay" },
+      { href: "#", label: "Apply Pay" },
     ],
   },
 ];
@@ -100,6 +103,16 @@ const Footer: React.FC = () => {
           {widgetMenus.map(renderWidgetMenuItem)}
         </div>
       </div>
+      <footer className="container d-flex flex-row justify-between mb-4">
+        <div className="flex flex-row space-x-2 text-xs">
+          <div>© Tickyourlist Inc, 203-68, Bena Complex C, Oud Metha, Dubai-UAE</div>
+          <div className="font-bold">.</div>
+          <div>Privacy Policy</div>
+          <div className="font-bold">.</div>
+          <div>Terms of usage</div>
+        </div>
+        <div></div>
+      </footer>
     </>
   );
 };

@@ -8,7 +8,7 @@ export interface SocialsListProps {
 }
 
 const socialsDemo: SocialType[] = [
-  { name: "Facebook", icon: "lab la-facebook-square", href: "#" },
+  // { name: "Facebook", icon: "lab la-facebook-square", href: "#" },
   { name: "Twitter", icon: "lab la-twitter", href: "https://x.com/tick_your_list?s=11" },
   { name: "Youtube", icon: "lab la-youtube", href: "https://www.youtube.com/@TickYourList" },
   { name: "Instagram", icon: "lab la-instagram", href: "https://www.instagram.com/tyl.tickyourlist?igsh=cnN6M2g3NjczMnVo&utm_source=qr" },
