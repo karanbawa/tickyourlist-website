@@ -19,10 +19,10 @@ const widgetMenus: WidgetFooterMenu[] = [
     id: "5",
     title: "Get Help 24/7",
     menus: [
-      { href: "#", label: "Help Center" },
-      { href: "#", label: "Chat with Us" },
+      { href: "/contact", label: "Help Center" },
+      { href: "/contact", label: "Chat with Us" },
       { href: "#", label: "Call +91 ..." },
-      { href: "#", label: "support@tickyourlist.com" },
+      { href: "#", label: "help@tickyourlist.com" },
     ],
   },
   {
@@ -45,10 +45,10 @@ const widgetMenus: WidgetFooterMenu[] = [
     title: "Tickyoulist",
     menus: [
       { href: "/about", label: "Our Story" },
-      { href: "#", label: "Careers" },
-      { href: "#", label: "Newsroom" },
-      { href: "#", label: "Company blog" },
-      { href: "#", label: "Travel Blog" },
+      { href: "/careers", label: "Careers" },
+      { href: "/newsroom", label: "Newsroom" },
+      // { href: "#", label: "Company blog" },
+      { href: "/blog", label: "Travel Blog" },
     ],
   },
   {
