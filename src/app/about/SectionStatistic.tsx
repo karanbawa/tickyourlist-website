@@ -37,7 +37,7 @@ const SectionStatistic: FC<SectionStatisticProps> = ({ className = "" }) => {
       <Heading
         desc="Discover the world with TickYourList, your ultimate gateway to unforgettable adventures and experiences. Let us turn your travel dreams into reality, one tick at a time."
       >
-        🚀 Fast Facts
+        🚀 Book your Experience
       </Heading>
       <div className="grid md:grid-cols-2 gap-6 lg:grid-cols-3 xl:gap-8">
         {FOUNDER_DEMO.map((item) => (

@@ -114,7 +114,7 @@ const Footer: React.FC = () => {
           <div className="font-bold">.</div>
           <div>
           <Link
-              href={"/privacy-policy" as Route<string>}
+              href={"/privacypolicy" as Route<string>}
               >
              Privacy Policy
             </Link>
@@ -122,9 +122,9 @@ const Footer: React.FC = () => {
             <div className="font-bold">.</div>
             <div>
           <Link
-              href={"/terms-of-usage" as Route<string>}
+              href={"/cancellationpolicy" as Route<string>}
               >
-             Terms of usage
+             Cancellation & Refund Policy
             </Link>
             </div>
           
