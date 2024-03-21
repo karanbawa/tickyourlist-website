@@ -1,15 +1,9 @@
 import React from "react";
 import { DEMO_POSTS } from "@/data/posts";
 import { PostDataType } from "@/data/types";
-import Avatar from "@/shared/Avatar";
 import Badge from "@/shared/Badge";
-import ButtonPrimary from "@/shared/ButtonPrimary";
-import ButtonSecondary from "@/shared/ButtonSecondary";
-import Comment from "@/shared/Comment";
-import SocialsList from "@/shared/SocialsList";
-import Textarea from "@/shared/Textarea";
 import Image from "next/image";
-import travelhero2Image from "@/images/travelhero2.png";
+import travelhero2Image from "@/images/company/cancellationpolicy.png";
 import Link from "next/link";
 import { Route } from "@/routers/types";
 
@@ -63,8 +57,8 @@ const Page = ({
                                 Refund eligibility and processing times may vary depending on the activity and provider. Please refer to your booking confirmation for specific refund policies.
                             </li>
                             <li>Refunds will be issued to the original payment method used for booking.</li>
-                            <li>Processing fees or non-refundable portions may apply as per the activity provider's terms and conditions.</li>
-                            <li>For any questions or assistance regarding refunds, feel free to reach out to our customer support team.</li>
+                            <li>{`Processing fees or non-refundable portions may apply as per the activity provider's terms and conditions.`}</li>
+                            <li>{`For any questions or assistance regarding refunds, feel free to reach out to our customer support team.`}</li>
                         </ul>
                     </li>
                     <li>

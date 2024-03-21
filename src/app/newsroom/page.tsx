@@ -7,11 +7,11 @@ import SectionSubscribe2 from "@/components/SectionSubscribe2";
 import SectionHero from "../about/SectionHero";
 import SectionStatistic from "../about/SectionStatistic";
 
-export interface PageAboutProps {}
+export interface PageNewsRoomProps {}
 
-const PageAbout: FC<PageAboutProps> = ({}) => {
+const PageNewsRoom: FC<PageNewsRoomProps> = ({}) => {
   return (
-    <div className={`nc-PageAbout overflow-hidden relative`}>
+    <div className={`nc-PageNewsRoom overflow-hidden relative`}>
       {/* ======== BG GLASS ======== */}
       <BgGlassmorphism />
 
@@ -37,4 +37,4 @@ const PageAbout: FC<PageAboutProps> = ({}) => {
   );
 };
 
-export default PageAbout;
+export default PageNewsRoom;

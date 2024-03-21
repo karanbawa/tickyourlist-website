@@ -9,7 +9,7 @@ import Comment from "@/shared/Comment";
 import SocialsList from "@/shared/SocialsList";
 import Textarea from "@/shared/Textarea";
 import Image from "next/image";
-import travelhero2Image from "@/images/travelhero2.png";
+import travelhero2Image from "@/images/company/privacypolicy.png";
 import Link from "next/link";
 import { Route } from "@/routers/types";
 
@@ -43,10 +43,10 @@ const Page = ({
                 className="prose dark:prose-invert prose-sm !max-w-screen-md sm:prose lg:prose-lg mx-auto dark:prose-dark"
             >
                 <p>
-                    This page outlines TickYourList's (registered under Scrollit) privacy policy, elucidating the collection, usage, and/or disclosure of personal information by TickYourList. Please review it thoroughly.
+                    {`This page outlines TickYourList's (registered under Scrollit) privacy policy, elucidating the collection, usage, and/or disclosure of personal information by TickYourList. Please review it thoroughly.`}
                 </p>
                 <p>
-                    This <strong>Privacy Policy</strong> is applicable to our website, and its related subdomains (collectively referred to as our "Service"), along with our application, TickYourList. By accessing or utilizing our Service, or by directly contacting or engaging with us, you indicate that you have read, comprehended, and consent to our collection, storage, usage, and disclosure of your personal information as delineated in this Privacy Policy and our Terms of Service.
+                    This <strong>Privacy Policy</strong> {`is applicable to our website, and its related subdomains (collectively referred to as our "Service"), along with our application, TickYourList. By accessing or utilizing our Service, or by directly contacting or engaging with us, you indicate that you have read, comprehended, and consent to our collection, storage, usage, and disclosure of your personal information as delineated in this Privacy Policy and our Terms of Service.`}
                 </p>
                 <ol>
                     <li>Definitions and Key Terms</li>
@@ -100,7 +100,7 @@ const Page = ({
                         <p>This Privacy Policy solely applies to the Services as defined. The Services and/or the Service Providers may contain links to other external websites not operated or controlled by TickYourList.</p>
                     </li>
                     <li>
-                        Children's Data
+                        {`Children's Data`}
                         <p>Our Services are not intended for nor directed towards children. We will only knowingly collect or process information pertaining to children if it is provided by and with the consent of a parent or guardian.</p>
                     </li>
                     <li>
