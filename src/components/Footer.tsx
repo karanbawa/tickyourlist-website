@@ -110,7 +110,7 @@ const Footer: React.FC = () => {
           <div><span className="font-bold">
           <Link
               href={"" as Route<string>}
-              >© Tickyourlist Inc</Link></span>, 203-68, Bena Complex C, Oud Metha, Dubai-UAE</div>
+              >© Tickyourlist Inc (Managed by Scrollit)</Link></span>, 203-68, Bena Complex C, Oud Metha, Dubai-UAE</div>
           <div className="font-bold">.</div>
           <div>
           <Link
