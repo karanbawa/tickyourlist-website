@@ -127,7 +127,14 @@ const Footer: React.FC = () => {
              Cancellation & Refund Policy
             </Link>
             </div>
-          
+            <div className="font-bold">.</div>
+          <div>
+          <Link
+              href={"/termsandconditions" as Route<string>}
+              >
+             Terms & Conditions
+            </Link>
+          </div>
         </div>
         <div></div>
       </footer>
