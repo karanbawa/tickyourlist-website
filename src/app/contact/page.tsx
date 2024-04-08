@@ -11,15 +11,15 @@ export interface PageContactProps {}
 const info = [
   {
     title: "🗺 ADDRESS",
-    desc: "Photo booth tattooed prism, portland taiyaki hoodie neutra typewriter",
+    desc: "203-68, Bena Complex C, Oud Metha, Dubai-UAE", 
   },
   {
     title: "💌 EMAIL",
-    desc: "nc.example@example.com",
+    desc: "help@tickyourlist.com",
   },
   {
     title: "☎ PHONE",
-    desc: "000-123-456-7890",
+    desc: "+1 (251) 309-0653",
   },
 ];
 

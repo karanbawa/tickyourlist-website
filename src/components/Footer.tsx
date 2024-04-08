@@ -21,8 +21,8 @@ const widgetMenus: WidgetFooterMenu[] = [
     menus: [
       { href: "/contact", label: "Help Center" },
       { href: "/contact", label: "Chat with Us" },
-      { href: "#", label: "Call +91 ..." },
-      { href: "#", label: "help@tickyourlist.com" },
+      { href: "tel:+12513090653", label: "Call +1 (251) 309-0653" },
+      { href: "mailto:help@tickyourlist.com", label: "help@tickyourlist.com" },
     ],
   },
   {
