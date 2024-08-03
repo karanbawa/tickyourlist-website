@@ -130,7 +130,7 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({}) => {
       <div>
         <h2 className="text-2xl font-semibold">Amenities</h2>
         <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
-          About the property's amenities and services
+          {`About the property's amenities and services`}
         </span>
       </div>
       <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
