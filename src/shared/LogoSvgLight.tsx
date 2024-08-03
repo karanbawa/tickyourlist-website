@@ -7,7 +7,11 @@ const LogoSvgLight = () => {
       viewBox="0 0 65 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-labelledby="logoTitle logoDesc"
     >
+      <title id="logoTitle">TickYourList Logo</title>
+      <desc id="logoDesc">A logo representing TickYourList with a heart shape and text</desc>
       <path
         d="M24.4444 14.0325C24.4444 21.4807 12.9444 29.3945 12.9444 29.3945C12.9444 29.3945 1.44444 21.4807 1.44444 14.0325C1.44444 7.51522 6.84722 2.39453 12.9444 2.39453C19.0417 2.39453 24.4444 7.51522 24.4444 14.0325Z"
         fill="currentColor"

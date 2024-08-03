@@ -42,12 +42,11 @@ const widgetMenus: WidgetFooterMenu[] = [
   },
   {
     id: "2",
-    title: "Tickyoulist",
+    title: "TickYourList",
     menus: [
       { href: "/about", label: "Our Story" },
       { href: "/careers", label: "Careers" },
       { href: "/newsroom", label: "Newsroom" },
-      // { href: "#", label: "Company blog" },
       { href: "/blog", label: "Travel Blog" },
     ],
   },
@@ -59,41 +58,37 @@ const widgetMenus: WidgetFooterMenu[] = [
       { href: "#", label: "Master Card" },
       { href: "#", label: "Amex" },
       { href: "#", label: "Google Pay" },
-      { href: "#", label: "Apply Pay" },
+      { href: "#", label: "Apple Pay" },
     ],
   },
 ];
 
 const Footer: React.FC = () => {
-  const renderWidgetMenuItem = (menu: WidgetFooterMenu, index: number) => {
-    return (
-      <div key={index} className="text-sm">
-        <h2 className="font-semibold text-neutral-700 dark:text-neutral-200">
-          {menu.title}
-        </h2>
-        <ul className="mt-5 space-y-4">
-          {menu.menus.map((item, index) => (
-            <li key={index}>
-              <a
-                key={index}
-                className="text-neutral-6000 dark:text-neutral-300 hover:text-black dark:hover:text-white"
-                href={item.href}
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
-  };
+  const renderWidgetMenuItem = (menu: WidgetFooterMenu) => (
+    <div key={menu.id} className="text-sm">
+      <h2 className="font-semibold text-neutral-700 dark:text-neutral-200">
+        {menu.title}
+      </h2>
+      <ul className="mt-5 space-y-4">
+        {menu.menus.map((item, index) => (
+          <li key={index}>
+            <Link
+              href={item.href as Route}
+              className="text-neutral-600 dark:text-neutral-300 hover:text-black dark:hover:text-white"
+            >
+              {item.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 
   return (
     <>
       <FooterNav />
-
       <div className="nc-Footer relative py-24 lg:py-28 border-t border-neutral-200 dark:border-neutral-700">
-        <div className="container grid grid-cols-2 gap-y-10 gap-x-5 sm:gap-x-8 md:grid-cols-4 lg:grid-cols-5 lg:gap-x-10 ">
+        <div className="container grid grid-cols-2 gap-y-10 gap-x-5 sm:gap-x-8 md:grid-cols-4 lg:grid-cols-5 lg:gap-x-10">
           <div className="grid grid-cols-4 gap-5 col-span-2 md:col-span-4 lg:md:col-span-1 lg:flex lg:flex-col">
             <div className="col-span-2 md:col-span-1">
               <Logo />
@@ -105,35 +100,24 @@ const Footer: React.FC = () => {
           {widgetMenus.map(renderWidgetMenuItem)}
         </div>
       </div>
-      <footer className="container d-flex flex-row justify-between mb-4">
+      <footer className="container flex flex-row justify-between mb-4">
         <div className="flex flex-row space-x-2 text-xs">
-          <div><span className="font-bold">
-          <Link
-              href={"" as Route<string>}
-              >© Tickyourlist Inc (Managed by Scrollit)</Link></span>, 203-68, Bena Complex C, Oud Metha, Dubai-UAE</div>
+          <div>
+            <span className="font-bold">
+              <Link href={"" as Route}>© TickYourList Inc (Managed by Scrollit)</Link>
+            </span>, 203-68, Bena Complex C, Oud Metha, Dubai-UAE
+          </div>
           <div className="font-bold">.</div>
           <div>
-          <Link
-              href={"/privacypolicy" as Route<string>}
-              >
-             Privacy Policy
-            </Link>
-            </div>
-            <div className="font-bold">.</div>
-            <div>
-          <Link
-              href={"/cancellationpolicy" as Route<string>}
-              >
-             Cancellation & Refund Policy
-            </Link>
-            </div>
-            <div className="font-bold">.</div>
+            <Link href={"/privacypolicy" as Route}>Privacy Policy</Link>
+          </div>
+          <div className="font-bold">.</div>
           <div>
-          <Link
-              href={"/termsandconditions" as Route<string>}
-              >
-             Terms & Conditions
-            </Link>
+            <Link href={"/cancellationpolicy" as Route}>Cancellation & Refund Policy</Link>
+          </div>
+          <div className="font-bold">.</div>
+          <div>
+            <Link href={"/termsandconditions" as Route}>Terms & Conditions</Link>
           </div>
         </div>
         <div></div>

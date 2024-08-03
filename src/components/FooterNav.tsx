@@ -13,9 +13,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 let WIN_PREV_POSITION = 0;
-if (typeof window !== "undefined") {
-  WIN_PREV_POSITION = window.pageYOffset;
-}
 
 interface NavItem {
   name: string;
@@ -45,33 +42,27 @@ const NAV: NavItem[] = [
   },
 ];
 
-const FooterNav = () => {
+const FooterNav: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-
   const pathname = usePathname();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      window.addEventListener("scroll", handleEvent);
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleEvent = () => {
-    if (typeof window !== "undefined") {
-      window.requestAnimationFrame(showHideHeaderMenu);
-    }
+  const handleScroll = () => {
+    window.requestAnimationFrame(showHideHeaderMenu);
   };
 
   const showHideHeaderMenu = () => {
-    // if (typeof window === "undefined" || window?.innerWidth >= 768) {
-    //   return null;
-    // }
-
     let currentScrollPos = window.pageYOffset;
     if (!containerRef.current) return;
 
-    // SHOW _ HIDE MAIN MENU
     if (currentScrollPos > WIN_PREV_POSITION) {
       if (
         isInViewport(containerRef.current) &&
@@ -79,7 +70,6 @@ const FooterNav = () => {
       ) {
         return;
       }
-
       containerRef.current.classList.add("FooterNav--hide");
     } else {
       if (
@@ -101,43 +91,42 @@ const FooterNav = () => {
       <Link
         key={index}
         href={item.link}
-        className={`flex flex-col items-center justify-between text-neutral-500 dark:text-neutral-300/90 ${
+        className={`flex flex-col items-center justify-between text-neutral-500 dark:text-neutral-300 ${
           isActive ? "text-neutral-900 dark:text-neutral-100" : ""
         }`}
+        aria-label={item.name}
       >
         <item.icon className={`w-6 h-6 ${isActive ? "text-red-600" : ""}`} />
-        <span
-          className={`text-[11px] leading-none mt-1 ${
-            isActive ? "text-red-600" : ""
-          }`}
-        >
+        <span className={`text-[11px] leading-none mt-1 ${isActive ? "text-red-600" : ""}`}>
           {item.name}
         </span>
       </Link>
     ) : (
       <div
         key={index}
-        className={`flex flex-col items-center justify-between text-neutral-500 dark:text-neutral-300/90 ${
+        className={`flex flex-col items-center justify-between text-neutral-500 dark:text-neutral-300 ${
           isActive ? "text-neutral-900 dark:text-neutral-100" : ""
         }`}
+        aria-label={item.name}
       >
-        <item.icon iconClassName="w-6 h-6" className={``} />
+        <item.icon className="w-6 h-6" />
         <span className="text-[11px] leading-none mt-1">{item.name}</span>
       </div>
     );
   };
 
   return (
-    <div
+    <nav
       ref={containerRef}
-      className="FooterNav block md:!hidden p-2 bg-white dark:bg-neutral-800 fixed top-auto bottom-0 inset-x-0 z-30 border-t border-neutral-300 dark:border-neutral-700 
+      className="FooterNav block md:hidden p-2 bg-white dark:bg-neutral-800 fixed bottom-0 inset-x-0 z-30 border-t border-neutral-300 dark:border-neutral-700 
       transition-transform duration-300 ease-in-out"
+      role="navigation"
+      aria-label="Footer navigation"
     >
-      <div className="w-full max-w-lg flex justify-around mx-auto text-sm text-center ">
-        {/* MENU */}
+      <div className="w-full max-w-lg flex justify-around mx-auto text-sm text-center">
         {NAV.map(renderItem)}
       </div>
-    </div>
+    </nav>
   );
 };
 
