@@ -3,7 +3,7 @@
 import { Dialog } from "@headlessui/react";
 import { motion } from "framer-motion";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useRef, useState } from "react";
+import { useRef, useState, Suspense } from "react";
 import useKeypress from "react-use-keypress";
 import { getNewParam } from "../ListingImageGallery";
 import type { ListingGalleryImage } from "../utils/types";
@@ -55,6 +55,7 @@ export default function Modal({
 
   return (
     <>
+    <Suspense fallback={<div>Loading...</div>}>
       <Dialog
         static
         open={true}
@@ -79,6 +80,7 @@ export default function Modal({
           navigation={true}
         />
       </Dialog>
+      </Suspense>
     </>
   );
 }
