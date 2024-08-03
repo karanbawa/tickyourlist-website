@@ -125,7 +125,7 @@ const Page = () => {
               content or whose products or services we think may interest you.
             </li>
             <li>
-              Website: TickYourList's site, which can be accessed via this
+             {`Website: TickYourList's site, which can be accessed via this `}
               URL:{" "}
               <Link href="https://www.tickyourlist.com/" target="_blank" rel="noopener noreferrer">
                 www.tickyourlist.com
@@ -157,23 +157,23 @@ const Page = () => {
           <li>Return and Refund Policy:</li>
           <ul>
             <li>
-              Thanks for shopping at TickYourList. We appreciate the fact that
+              {`Thanks for shopping at TickYourList. We appreciate the fact that
               you like to buy the stuff we build. We also want to make sure
               you have a rewarding experience while you're exploring,
-              evaluating, and purchasing our products.
+              evaluating, and purchasing our products.`}
             </li>
             <li>
-              As with any shopping experience, there are terms and conditions
+              {`As with any shopping experience, there are terms and conditions
               that apply to transactions at TickYourList. We'll be as brief as
               our attorneys will allow. The main thing to remember is that by
               placing an order or making a purchase at TickYourList, you agree
-              to the terms along with TickYourList's Privacy Policy.
+              to the terms along with TickYourList's Privacy Policy.`}
             </li>
             <li>
-              If, for any reason, you are not completely satisfied with any
+              {`If, for any reason, you are not completely satisfied with any
               good or service that we provide, don't hesitate to contact us
               and we will discuss any of the issues you are going through with
-              our product.
+              our product.`}
             </li>
           </ul>
           <li>Cancellation Policy:</li>
@@ -186,10 +186,10 @@ const Page = () => {
           <li>Your Suggestions:</li>
           <ul>
             <li>
-              Any feedback, comments, ideas, improvements or suggestions
+              {`Any feedback, comments, ideas, improvements or suggestions
               (collectively, "Suggestions") provided by you to TickYourList
               with respect to the website remain the sole and exclusive
-              property of TickYourList.
+              property of TickYourList.`}
             </li>
             <li>
               TickYourList shall be free to use, copy, modify, publish, or
@@ -200,17 +200,17 @@ const Page = () => {
           <li>Your Consent:</li>
           <ul>
             <li>
-              We've updated our Terms & Conditions to provide you with
+              {`We've updated our Terms & Conditions to provide you with
               complete transparency into what is being set when you visit our
               site and how it's being used. By using our website, registering
               an account, or making a purchase, you hereby consent to our
-              Terms & Conditions.
+              Terms & Conditions.`}
             </li>
           </ul>
           <li>Links to Other Websites:</li>
           <ul>
             <li>
-              These Terms & Conditions apply only to the Services. The
+              {`These Terms & Conditions apply only to the Services. The
               Services may contain links to other websites not operated or
               controlled by TickYourList. We are not responsible for the
               content, accuracy or opinions expressed in such websites, and
@@ -221,13 +221,13 @@ const Page = () => {
               interaction on any other website, including those that have a
               link on our platform, is subject to that website’s own rules and
               policies. Such third parties may use their own cookies or other
-              methods to collect information about you.
+              methods to collect information about you.`}
             </li>
           </ul>
           <li>Cookies:</li>
           <ul>
             <li>
-              TickYourList uses "Cookies" to identify the areas of our website
+              {`TickYourList uses "Cookies" to identify the areas of our website
               that you have visited. A cookie is a small piece of data stored
               on your computer or mobile device by your web browser. We use
               cookies to enhance the performance and functionality of our
@@ -239,7 +239,7 @@ const Page = () => {
               can be set to disable the use of cookies. However, if you
               disable cookies, you may not be able to access functionality on
               our website correctly or at all. We never place Personally
-              Identifiable Information in Cookies.
+              Identifiable Information in Cookies.`}
             </li>
           </ul>
           <li>Changes To Our Terms & Conditions:</li>

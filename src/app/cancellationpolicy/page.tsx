@@ -52,7 +52,7 @@ const Page = () => {
                 Refund eligibility and processing times may vary depending on the activity and provider. Please refer to your booking confirmation for specific refund policies.
               </li>
               <li>Refunds will be issued to the original payment method used for booking.</li>
-              <li>Processing fees or non-refundable portions may apply as per the activity provider's terms and conditions.</li>
+              <li>{`Processing fees or non-refundable portions may apply as per the activity provider's terms and conditions.`}</li>
               <li>For any questions or assistance regarding refunds, feel free to reach out to our customer support team.</li>
             </ul>
           </li>
