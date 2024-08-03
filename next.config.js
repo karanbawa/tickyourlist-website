@@ -5,7 +5,6 @@
 const nextConfig = {
   reactStrictMode: false,
   experimental: {
-    appDir: true,
     typedRoutes: true,
   },
   images: {
