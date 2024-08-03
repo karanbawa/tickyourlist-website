@@ -46,7 +46,7 @@ export const headerCurrency = [
   },
 ];
 
-export default function CurrencyDropdown() {
+const CurrencyDropdown: React.FC = () => {
   return (
     <div className="CurrencyDropdown">
       <Popover className="relative">
@@ -56,6 +56,7 @@ export default function CurrencyDropdown() {
               className={`
                 ${open ? "" : "text-opacity-80"}
                 group px-3 py-1.5 border-neutral-300 hover:border-neutral-400 dark:border-neutral-700 rounded-full inline-flex items-center text-sm text-gray-700 dark:text-neutral-300 font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75`}
+              aria-label="Select currency"
             >
               <BanknotesIcon className="w-5 h-5 opacity-80" />
               <span className="ml-2 select-none">Currency</span>
@@ -77,9 +78,9 @@ export default function CurrencyDropdown() {
               <Popover.Panel className="absolute z-10 w-screen max-w-[140px] px-4 mt-4 right-0 sm:px-0">
                 <div className="overflow-hidden rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5">
                   <div className="relative grid gap-7 bg-white dark:bg-neutral-800 p-7">
-                    {headerCurrency.map((item, index) => (
+                    {headerCurrency.map((item) => (
                       <a
-                        key={index}
+                        key={item.id}
                         href={item.href}
                         onClick={() => close()}
                         className={`flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-100 dark:hover:bg-neutral-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50 ${
@@ -87,9 +88,10 @@ export default function CurrencyDropdown() {
                             ? "bg-gray-100 dark:bg-neutral-700"
                             : "opacity-80"
                         }`}
+                        aria-current={item.active ? "page" : undefined}
                       >
-                        <item.icon className="w-[18px] h-[18px] " />
-                        <p className="ml-2 text-sm font-medium ">{item.name}</p>
+                        <item.icon className="w-[18px] h-[18px]" />
+                        <p className="ml-2 text-sm font-medium">{item.name}</p>
                       </a>
                     ))}
                   </div>
@@ -101,4 +103,6 @@ export default function CurrencyDropdown() {
       </Popover>
     </div>
   );
-}
+};
+
+export default CurrencyDropdown;
