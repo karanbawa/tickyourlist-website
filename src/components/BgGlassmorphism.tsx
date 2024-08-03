@@ -11,6 +11,7 @@ const BgGlassmorphism: FC<BgGlassmorphismProps> = ({
     <div
       className={`nc-BgGlassmorphism ${className}`}
       data-nc-id="BgGlassmorphism"
+      aria-hidden="true"
     >
       <span className="block bg-[#ef233c] w-72 h-72 rounded-full mix-blend-multiply filter blur-3xl opacity-10 lg:w-96 lg:h-96"></span>
       <span className="block bg-[#04868b] w-72 h-72 -ml-20 mt-40 rounded-full mix-blend-multiply filter blur-3xl opacity-10 lg:w-96 lg:h-96 nc-animation-delay-2000"></span>

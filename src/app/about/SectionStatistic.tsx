@@ -33,7 +33,7 @@ export interface SectionStatisticProps {
 
 const SectionStatistic: FC<SectionStatisticProps> = ({ className = "" }) => {
   return (
-    <div className={`nc-SectionStatistic relative ${className}`}>
+    <section className={`nc-SectionStatistic relative ${className}`}>
       <Heading
         desc="Discover the world with TickYourList, your ultimate gateway to unforgettable adventures and experiences. Let us turn your travel dreams into reality, one tick at a time."
       >
@@ -48,13 +48,13 @@ const SectionStatistic: FC<SectionStatisticProps> = ({ className = "" }) => {
             <h3 className="text-2xl font-semibold leading-none text-neutral-900 md:text-3xl dark:text-neutral-200">
               {item.heading}
             </h3>
-            <span className="block text-sm text-neutral-500 mt-3 sm:text-base dark:text-neutral-400">
+            <p className="block text-sm text-neutral-500 mt-3 sm:text-base dark:text-neutral-400">
               {item.subHeading}
-            </span>
+            </p>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 
