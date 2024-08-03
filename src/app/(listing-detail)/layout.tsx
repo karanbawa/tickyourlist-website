@@ -5,7 +5,7 @@ import ListingImageGallery from "@/components/listing-image-gallery/ListingImage
 import SectionSliderNewCategories from "@/components/SectionSliderNewCategories";
 import SectionSubscribe2 from "@/components/SectionSubscribe2";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { ReactNode } from "react";
+import React, { ReactNode, Suspense } from "react";
 import MobileFooterSticky from "./(components)/MobileFooterSticky";
 import { imageGallery as listingStayImageGallery } from "./listing-stay-detail/constant";
 import { imageGallery as listingCarImageGallery } from "./listing-car-detail/constant";
@@ -34,17 +34,19 @@ const DetailtLayout = ({ children }: { children: ReactNode }) => {
     if (thisPathname?.includes("/listing-experiences-detail")) {
       return listingExperienceImageGallery;
     }
-
     return [];
   };
 
   return (
     <div className="ListingDetailPage">
-      <ListingImageGallery
-        isShowModal={modal === "PHOTO_TOUR_SCROLLABLE"}
-        onClose={handleCloseModalImageGallery}
-        images={getImageGalleryListing()}
-      />
+      {/* Suspense Boundary Added */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <ListingImageGallery
+          isShowModal={modal === "PHOTO_TOUR_SCROLLABLE"}
+          onClose={handleCloseModalImageGallery}
+          images={getImageGalleryListing()}
+        />
+      </Suspense>
 
       <div className="container ListingDetailPage__content">{children}</div>
 
