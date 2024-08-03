@@ -3,7 +3,7 @@
 import "./styles/index.css";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { FC, Fragment, useEffect, useRef } from "react";
+import { FC, Fragment, useEffect, useRef, Suspense } from "react";
 import Modal from "./components/Modal";
 import type { ListingGalleryImage } from "./utils/types";
 import { useLastViewedPhoto } from "./utils/useLastViewedPhoto";
@@ -121,6 +121,7 @@ const ListingImageGallery: FC<Props> = ({
 
   return (
     <>
+    <Suspense fallback={<div>Loading...</div>}>
       <Transition appear show={isShowModal} as={Fragment}>
         <Dialog as="div" className="relative z-40" onClose={handleClose}>
           <Transition.Child
@@ -164,6 +165,7 @@ const ListingImageGallery: FC<Props> = ({
           </div>
         </Dialog>
       </Transition>
+      </Suspense>
     </>
   );
 };
