@@ -308,6 +308,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({}) => {
 
   return (
     <div className="nc-ListingCarDetailPage">
+      <Suspense fallback={<div>Loading...</div>}>
       <header className="rounded-md sm:rounded-xl">
         <div className="relative grid grid-cols-4 gap-1 sm:gap-2">
           <div
@@ -385,6 +386,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({}) => {
           </div>
         </div>
       </main>
+      </Suspense>
     </div>
   );
 };
