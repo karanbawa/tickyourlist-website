@@ -5,11 +5,13 @@ import ButtonPrimary from "@/shared/ButtonPrimary";
 import Input from "@/shared/Input";
 import Select from "@/shared/Select";
 import Textarea from "@/shared/Textarea";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 export interface AccountPageProps {}
 
 const AccountPage = () => {
   return (
+    <ProtectedRoute>
     <div className="space-y-6 sm:space-y-8">
       {/* HEADING */}
       <h2 className="text-3xl font-semibold">Account infomation</h2>
@@ -93,6 +95,7 @@ const AccountPage = () => {
         </div>
       </div>
     </div>
+    </ProtectedRoute>
   );
 };
 

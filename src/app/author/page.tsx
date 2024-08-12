@@ -15,6 +15,7 @@ import React, { FC, Fragment, useState } from "react";
 import Avatar from "@/shared/Avatar";
 import ButtonSecondary from "@/shared/ButtonSecondary";
 import SocialsList from "@/shared/SocialsList";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 export interface AuthorPageProps {}
 
@@ -209,6 +210,7 @@ const AuthorPage: FC<AuthorPageProps> = ({}) => {
   };
 
   return (
+    <ProtectedRoute>
     <div className={`nc-AuthorPage `}>
       <main className="container mt-12 mb-24 lg:mb-32 flex flex-col lg:flex-row">
         <div className="block flex-grow mb-24 lg:mb-0">
@@ -220,6 +222,7 @@ const AuthorPage: FC<AuthorPageProps> = ({}) => {
         </div>
       </main>
     </div>
+    </ProtectedRoute>
   );
 };
 

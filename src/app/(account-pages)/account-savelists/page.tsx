@@ -11,12 +11,14 @@ import {
 } from "@/data/listings";
 import React, { Fragment, useState } from "react";
 import ButtonSecondary from "@/shared/ButtonSecondary";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 const AccountSavelists = () => {
   let [categories] = useState(["Stays", "Experiences", "Cars"]);
 
   const renderSection1 = () => {
     return (
+      <ProtectedRoute>
       <div className="space-y-6 sm:space-y-8">
         <div>
           <h2 className="text-3xl font-semibold">Save lists</h2>
@@ -79,6 +81,7 @@ const AccountSavelists = () => {
           </Tab.Group>
         </div>
       </div>
+      </ProtectedRoute>
     );
   };
 

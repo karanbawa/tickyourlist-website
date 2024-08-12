@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import FooterNav from "@/components/FooterNav";
 import { Metadata } from "next";
 import Head from "next/head";
+import { AuthProvider } from "@/context/AuthContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -37,11 +38,13 @@ export default function RootLayout({
         <link rel="icon" href="/images/logo/tyllogo.png" /> {/* Add this line */}
       </Head>
       <body className="bg-white text-base dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
+        <AuthProvider>
         <ClientCommons />
         <SiteHeader />
         {children}
         <FooterNav />
         <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

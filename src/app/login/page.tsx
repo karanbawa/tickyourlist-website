@@ -1,25 +1,22 @@
 import React, { FC } from "react";
-import facebookSvg from "@/images/Facebook.svg";
-import twitterSvg from "@/images/Twitter.svg";
 import googleSvg from "@/images/Google.svg";
 import Input from "@/shared/Input";
 import ButtonPrimary from "@/shared/ButtonPrimary";
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
+import Login from "@/components/auth/login";
 
 export interface PageLoginProps {}
 
+export const metadata: Metadata = {
+  title: "Tickyourlist: Login to Your Account",
+  description: "Login to your Tickyourlist account to explore things to do, attractions, tours, events, and experiences.",
+  keywords: "Login, Tickyourlist, Things To Do, Attractions, Tours, Events, Experiences, Booking Online",
+  viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+};
+
 const loginSocials = [
-  {
-    name: "Continue with Facebook",
-    href: "#",
-    icon: facebookSvg,
-  },
-  {
-    name: "Continue with Twitter",
-    href: "#",
-    icon: twitterSvg,
-  },
   {
     name: "Continue with Google",
     href: "#",
@@ -61,28 +58,7 @@ const PageLogin: FC<PageLoginProps> = ({}) => {
             <div className="absolute left-0 w-full top-1/2 transform -translate-y-1/2 border border-neutral-100 dark:border-neutral-800"></div>
           </div>
           {/* FORM */}
-          <form className="grid grid-cols-1 gap-6" action="#" method="post">
-            <label className="block">
-              <span className="text-neutral-800 dark:text-neutral-200">
-                Email address
-              </span>
-              <Input
-                type="email"
-                placeholder="example@example.com"
-                className="mt-1"
-              />
-            </label>
-            <label className="block">
-              <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
-                Password
-                <Link href="/login" className="text-sm underline font-medium">
-                  Forgot password?
-                </Link>
-              </span>
-              <Input type="password" className="mt-1" />
-            </label>
-            <ButtonPrimary type="submit">Continue</ButtonPrimary>
-          </form>
+          <Login />
 
           {/* ==== */}
           <span className="block text-center text-neutral-700 dark:text-neutral-300">
