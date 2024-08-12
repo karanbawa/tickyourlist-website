@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/router';
 import ButtonPrimary from '@/shared/ButtonPrimary';
 
-const VerifyPage = () => {
+const VerifyContent = () => {
     const searchParams = useSearchParams();
     const [status, setStatus] = useState('Verifying...');
     const [verificationSuccess, setVerificationSuccess] = useState<boolean | null>(null);
@@ -49,7 +48,7 @@ const VerifyPage = () => {
     return (
         <div className="container mx-auto p-4">
             <div className="flex flex-col items-center min-h-screen mt-10">
-            <h1 className="text-2xl font-bold text-center mb-4">Email Verification</h1>
+                <h1 className="text-2xl font-bold text-center mb-4">Email Verification</h1>
                 <div className="bg-white shadow-md rounded p-6 max-w-md w-full text-center">
                     {verificationSuccess === null ? (
                         <p>{status}</p>
@@ -67,6 +66,14 @@ const VerifyPage = () => {
                 </div>
             </div>
         </div>
+    );
+};
+
+const VerifyPage = () => {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <VerifyContent />
+        </Suspense>
     );
 };
 
