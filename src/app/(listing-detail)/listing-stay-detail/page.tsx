@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, Fragment, useState, Suspense } from "react";
+import React, { FC, Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ArrowRightIcon, Squares2X2Icon } from "@heroicons/react/24/outline";
 import CommentListing from "@/components/CommentListing";

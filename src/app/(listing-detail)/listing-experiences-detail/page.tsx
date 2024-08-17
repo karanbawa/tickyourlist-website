@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FC, useState, Suspense } from "react";
+import React, { FC, useState } from "react";
 import { ArrowRightIcon, Squares2X2Icon } from "@heroicons/react/24/outline";
 import CommentListing from "@/components/CommentListing";
 import FiveStartIconForRate from "@/components/FiveStartIconForRate";
@@ -362,7 +362,6 @@ const ListingExperiencesDetailPage: FC<ListingExperiencesDetailPageProps> = () =
   );
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
     <div className="nc-ListingExperiencesDetailPage">
         <header className="rounded-md sm:rounded-xl">
           <div className="relative grid grid-cols-4 gap-1 sm:gap-2">
@@ -429,7 +428,6 @@ const ListingExperiencesDetailPage: FC<ListingExperiencesDetailPageProps> = () =
           </div>
         </main>
     </div>
-    </Suspense>
   );
 };
 
