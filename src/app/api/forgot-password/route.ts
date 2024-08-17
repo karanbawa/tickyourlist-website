@@ -32,6 +32,6 @@ export async function POST(req: NextRequest) {
     } catch (error) {
         // Handle any errors that occur during the process
         console.error('Error in forgot password API:', error);
-        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+        return NextResponse.json({ message: 'Internal server error', error }, { status: 500 });
     }
 }

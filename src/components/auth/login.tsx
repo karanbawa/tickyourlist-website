@@ -43,6 +43,7 @@ export default function Login() {
       const userData = await response.json();
       login(userData);
       setNotification('Login successful! Redirecting...');
+      console.log("responsedata ", response);
       setTimeout(() => {
         window.location.href = '/'; // Redirect to a dashboard or another page
       }, 500);
