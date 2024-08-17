@@ -1,12 +1,12 @@
 "use client";
 
+import React, { ReactNode, Suspense } from "react";
 import BackgroundSection from "@/components/BackgroundSection";
 import ListingImageGallery from "@/components/listing-image-gallery/ListingImageGallery";
 import SectionSliderNewCategories from "@/components/SectionSliderNewCategories";
 import SectionSubscribe2 from "@/components/SectionSubscribe2";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { ReactNode, Suspense } from "react";
 import MobileFooterSticky from "./(components)/MobileFooterSticky";
+import { usePathname, useRouter } from "next/navigation";
 import { imageGallery as listingStayImageGallery } from "./listing-stay-detail/constant";
 import { imageGallery as listingCarImageGallery } from "./listing-car-detail/constant";
 import { imageGallery as listingExperienceImageGallery } from "./listing-experiences-detail/constant";
@@ -15,11 +15,14 @@ import { Route } from "next";
 const DetailLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const thisPathname = usePathname();
-  const searchParams = useSearchParams(); // Hook must be called unconditionally
-  const modal = searchParams?.get("modal");
+
+  // Manually extract the "modal" parameter from the URL
+  const modal = typeof window !== "undefined"
+    ? new URLSearchParams(window.location.search).get("modal")
+    : null;
 
   const handleCloseModalImageGallery = () => {
-    let params = new URLSearchParams(document.location.search);
+    const params = new URLSearchParams(window.location.search);
     params.delete("modal");
     router.push(`${thisPathname}/?${params.toString()}` as Route);
   };
@@ -37,13 +40,8 @@ const DetailLayout = ({ children }: { children: ReactNode }) => {
     return [];
   };
 
-  // Conditionally rendering the content based on whether we're on the client-side
-  if (typeof window === "undefined") {
-    return null; // Server-side return null
-  }
-
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div>Loading layout...</div>}>
       <div className="ListingDetailPage">
         <Suspense fallback={<div>Loading Image Gallery...</div>}>
           <ListingImageGallery
