@@ -13,9 +13,10 @@ export interface PageSignUpProps { }
 export const metadata: Metadata = {
   title: "Tickyourlist: Signup for an Account",
   description: "Sign up for an account on Tickyourlist to explore things to do, attractions, tours, events, and experiences.",
-  keywords: "Signup, Tickyourlist, Things To Do, Attractions, Tours, Events, Experiences, Booking Online",
-  viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+  keywords: "Signup, Tickyourlist, Things To Do, Attractions, Tours, Events, Experiences, Booking Online"
 };
+
+export const viewport= "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
 
 const loginSocials = [
   {
