@@ -8,9 +8,10 @@ export interface PageResetPasswordProps {}
 export const metadata: Metadata = {
   title: "Tickyourlist: Reset Password",
   description: "Enter your new password to reset your Tickyourlist account password.",
-  keywords: "Reset Password, Tickyourlist, Update Password, Security",
-  viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+  keywords: "Reset Password, Tickyourlist, Update Password, Security"
 };
+
+export const viewport= "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
 
 const PageResetPassword: FC<PageResetPasswordProps> = ({}) => {
   return (

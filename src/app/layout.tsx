@@ -21,10 +21,10 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Tickyourlist: Things To Do, Attractions, Tours, Events & Experiences",
   description: "Things To Do, Attractions, Tours, Events & Experiences, Booking Online",
-  keywords: "Things To Do, Attractions, Tours, Events & Experiences, Booking Online",
-  viewport:
-    "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+  keywords: "Things To Do, Attractions, Tours, Events & Experiences, Booking Online"
 };
+
+export const viewport = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
 
 export default function RootLayout({
   children,

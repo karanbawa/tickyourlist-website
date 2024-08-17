@@ -2,7 +2,7 @@
 
 import "./styles/index.css";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { FC, Fragment, useEffect, useRef, Suspense } from "react";
 import Modal from "./components/Modal";
 import type { ListingGalleryImage } from "./utils/types";
@@ -55,8 +55,8 @@ const ListingImageGallery: FC<Props> = ({
   onClose,
   isShowModal,
 }) => {
-  // const searchParams = useSearchParams();
-  // const photoId = searchParams?.get("photoId");
+  const searchParams = useSearchParams();
+  const photoId = searchParams?.get("photoId");
   const router = useRouter();
   const [lastViewedPhoto, setLastViewedPhoto] = useLastViewedPhoto();
 
@@ -64,11 +64,11 @@ const ListingImageGallery: FC<Props> = ({
   const thisPathname = usePathname();
   useEffect(() => {
     // This effect keeps track of the last viewed photo in the modal to keep the index page in sync when the user navigates back
-    if (lastViewedPhoto && !1) {
+    if (lastViewedPhoto && !photoId) {
       lastViewedPhotoRef.current?.scrollIntoView({ block: "center" });
       setLastViewedPhoto(null);
     }
-  }, [1, lastViewedPhoto, setLastViewedPhoto]);
+  }, [photoId, lastViewedPhoto, setLastViewedPhoto]);
 
   const handleClose = () => {
     onClose && onClose();
@@ -77,7 +77,7 @@ const ListingImageGallery: FC<Props> = ({
   const renderContent = () => {
     return (
       <div className=" ">
-        {1 && (
+        {photoId && (
           <Modal
             images={images}
             onClose={() => {

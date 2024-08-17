@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { DEMO_POSTS } from "@/data/posts";
 import { PostDataType } from "@/data/types";
 import Avatar from "@/shared/Avatar";
@@ -288,6 +288,7 @@ const Page = ({
   };
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <div className="nc-PageSingle pt-8 lg:pt-16 ">
       {renderHeader()}
       <div className="container my-10 sm:my-12 ">
@@ -313,6 +314,7 @@ const Page = ({
         </div>
       </div>
     </div>
+    </Suspense>
   );
 };
 

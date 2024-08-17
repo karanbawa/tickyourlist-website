@@ -13,9 +13,10 @@ export interface PageLoginProps {}
 export const metadata: Metadata = {
   title: "Tickyourlist: Login to Your Account",
   description: "Login to your Tickyourlist account to explore things to do, attractions, tours, events, and experiences.",
-  keywords: "Login, Tickyourlist, Things To Do, Attractions, Tours, Events, Experiences, Booking Online",
-  viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+  keywords: "Login, Tickyourlist, Things To Do, Attractions, Tours, Events, Experiences, Booking Online"
 };
+
+export const viewport = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
 
 const PageLogin: FC<PageLoginProps> = ({}) => {
   const loginSocials = [

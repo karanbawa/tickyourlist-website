@@ -8,9 +8,10 @@ export interface PageForgotPasswordProps {}
 export const metadata: Metadata = {
   title: "Tickyourlist: Forgot Password",
   description: "Enter your email address to receive a verification link for resetting your Tickyourlist account password.",
-  keywords: "Forgot Password, Tickyourlist, Reset Password, Email Verification",
-  viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
+  keywords: "Forgot Password, Tickyourlist, Reset Password, Email Verification"
 };
+
+export const viewport = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
 
 const PageForgotPassword: FC<PageForgotPasswordProps> = ({}) => {
   return (
