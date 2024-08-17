@@ -4,7 +4,7 @@ import BackgroundSection from "@/components/BackgroundSection";
 import ListingImageGallery from "@/components/listing-image-gallery/ListingImageGallery";
 import SectionSliderNewCategories from "@/components/SectionSliderNewCategories";
 import SectionSubscribe2 from "@/components/SectionSubscribe2";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { ReactNode, Suspense } from "react";
 import MobileFooterSticky from "./(components)/MobileFooterSticky";
 // import { imageGallery as listingStayImageGallery } from "./listing-stay-detail/constant";
@@ -15,13 +15,13 @@ import { Route } from "next";
 const DetailLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const thisPathname = usePathname();
-  const searchParams = useSearchParams();
-  const modal = searchParams?.get("modal");
+  // const searchParams = useSearchParams();
+  // const modal = searchParams?.get("modal");
 
   const handleCloseModalImageGallery = () => {
-    let params = new URLSearchParams(document.location.search);
-    params.delete("modal");
-    router.push(`${thisPathname}/?${params.toString()}` as Route);
+    // let params = new URLSearchParams(document.location.search);
+    // params.delete("modal");
+    // router.push(`${thisPathname}/?${params.toString()}` as Route);
   };
 
   const getImageGalleryListing = () => {
@@ -41,7 +41,7 @@ const DetailLayout = ({ children }: { children: ReactNode }) => {
     <Suspense fallback={<div>Loading...</div>}>
       <div className="ListingDetailPage">
         <ListingImageGallery
-          isShowModal={modal === "PHOTO_TOUR_SCROLLABLE"}
+          isShowModal={"PHOTO_TOUR_SCROLLABLE" === "PHOTO_TOUR_SCROLLABLE"}
           onClose={handleCloseModalImageGallery}
           images={getImageGalleryListing()}
         />
