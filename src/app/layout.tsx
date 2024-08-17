@@ -34,7 +34,7 @@ export default function RootLayout({
   params: any;
 }) {
   return (
-    <GoogleOAuthProvider clientId="595014403702-449f962galakbp5vnhlltqiaf0egfh6l.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID || ''}>
     <html lang="en" className={poppins.className}>
       <Head>
         <link rel="icon" href="/images/logo/tyllogo.png" /> {/* Add this line */}
