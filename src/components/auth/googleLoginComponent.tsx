@@ -7,6 +7,7 @@ import { GoogleLogin, googleLogout } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 import { useAuth } from '@/context/AuthContext';
+import Image from 'next/image';
 
 const GoogleLoginComponent: React.FC = () => {
   const [user, setUser] = useState<any>(null);
@@ -61,7 +62,7 @@ const GoogleLoginComponent: React.FC = () => {
         <div>
           <h2>Welcome {user.name}</h2>
           <h2>Email: {user.email}</h2>
-          <img src={user.picture} alt={user.name} />
+          <Image src={user.picture} alt={user.name} fill />
           <br />
           <button onClick={handleLogout}>Logout</button>
         </div>
