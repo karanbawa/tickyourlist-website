@@ -55,8 +55,8 @@ const ListingImageGallery: FC<Props> = ({
   onClose,
   isShowModal,
 }) => {
-  const searchParams = useSearchParams();
-  const photoId = searchParams?.get("photoId");
+  // const searchParams = useSearchParams();
+  // const photoId = searchParams?.get("photoId");
   const router = useRouter();
   const [lastViewedPhoto, setLastViewedPhoto] = useLastViewedPhoto();
 
@@ -64,11 +64,11 @@ const ListingImageGallery: FC<Props> = ({
   const thisPathname = usePathname();
   useEffect(() => {
     // This effect keeps track of the last viewed photo in the modal to keep the index page in sync when the user navigates back
-    if (lastViewedPhoto && !photoId) {
+    if (lastViewedPhoto && !1) {
       lastViewedPhotoRef.current?.scrollIntoView({ block: "center" });
       setLastViewedPhoto(null);
     }
-  }, [photoId, lastViewedPhoto, setLastViewedPhoto]);
+  }, [1, lastViewedPhoto, setLastViewedPhoto]);
 
   const handleClose = () => {
     onClose && onClose();
@@ -77,7 +77,7 @@ const ListingImageGallery: FC<Props> = ({
   const renderContent = () => {
     return (
       <div className=" ">
-        {photoId && (
+        {1 && (
           <Modal
             images={images}
             onClose={() => {
