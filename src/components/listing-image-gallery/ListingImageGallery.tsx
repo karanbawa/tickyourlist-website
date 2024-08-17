@@ -2,7 +2,7 @@
 
 import "./styles/index.css";
 import Image from "next/image";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FC, Fragment, useEffect, useRef, Suspense } from "react";
 import Modal from "./components/Modal";
 import type { ListingGalleryImage } from "./utils/types";
