@@ -474,7 +474,6 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({}) => {
   );
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
     <div className="nc-ListingStayDetailPage">
         <header className="rounded-md sm:rounded-xl">
           <div className="relative grid grid-cols-3 sm:grid-cols-4 gap-1 sm:gap-2">
@@ -541,7 +540,6 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({}) => {
           </div>
         </main>
     </div>
-    </Suspense>
   );
 };
 
