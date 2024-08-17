@@ -10,6 +10,7 @@ import FooterNav from "@/components/FooterNav";
 import { Metadata } from "next";
 import Head from "next/head";
 import { AuthProvider } from "@/context/AuthContext";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default function RootLayout({
   params: any;
 }) {
   return (
+    <GoogleOAuthProvider clientId="595014403702-449f962galakbp5vnhlltqiaf0egfh6l.apps.googleusercontent.com">
     <html lang="en" className={poppins.className}>
       <Head>
         <link rel="icon" href="/images/logo/tyllogo.png" /> {/* Add this line */}
@@ -47,5 +49,6 @@ export default function RootLayout({
         </AuthProvider>
       </body>
     </html>
+    </GoogleOAuthProvider>
   );
 }

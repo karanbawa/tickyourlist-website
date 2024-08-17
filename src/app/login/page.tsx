@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import Login from "@/components/auth/login";
+import GoogleLoginComponent from "@/components/auth/googleLoginComponent";
 
 export interface PageLoginProps {}
 
@@ -16,15 +17,16 @@ export const metadata: Metadata = {
   viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
 };
 
-const loginSocials = [
-  {
-    name: "Continue with Google",
-    href: "#",
-    icon: googleSvg,
-  },
-];
-
 const PageLogin: FC<PageLoginProps> = ({}) => {
+  const loginSocials = [
+    {
+      name: "Continue with Google",
+      href: "#",
+      icon: googleSvg,
+      component: <GoogleLoginComponent />,
+    },
+  ];
+
   return (
     <div className={`nc-PageLogin`}>
       <div className="container mb-24 lg:mb-32">
@@ -34,20 +36,14 @@ const PageLogin: FC<PageLoginProps> = ({}) => {
         <div className="max-w-md mx-auto space-y-6">
           <div className="grid gap-3">
             {loginSocials.map((item, index) => (
-              <a
-                key={index}
-                href={item.href}
-                className="flex w-full rounded-lg bg-primary-50 dark:bg-neutral-800 px-4 py-3 transform transition-transform sm:px-6 hover:translate-y-[-2px]"
-              >
-                <Image
-                  className="flex-shrink-0"
-                  src={item.icon}
-                  alt={item.name}
-                />
+              <div key={index} className="flex w-full justify-center">
+                {/* <div key={index} className="flex w-full rounded-lg bg-primary-50 dark:bg-neutral-800 px-4 py-3 transform transition-transform sm:px-6 hover:translate-y-[-2px]"> */}
+                {/* <Image className="flex-shrink-0" src={item.icon} alt={item.name} />
                 <h3 className="flex-grow text-center text-sm font-medium text-neutral-700 dark:text-neutral-300 sm:text-sm">
                   {item.name}
-                </h3>
-              </a>
+                </h3> */}
+                {item.component}
+              </div>
             ))}
           </div>
           {/* OR */}

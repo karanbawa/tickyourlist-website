@@ -6,7 +6,7 @@ import Input from '@/shared/Input';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 
-export default function Login() {
+export default function Login() { 
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -37,7 +37,7 @@ export default function Login() {
       // Handle error
       const error = await response.json();
       console.error('Login failed:', error);
-      setErrors({ api: error.message || 'Login failed' });
+      setErrors({ api: error.message || 'Email Id or password is incorrect.' });
     } else {
       // Handle success
       const userData = await response.json();
@@ -45,8 +45,8 @@ export default function Login() {
       setNotification('Login successful! Redirecting...');
       setTimeout(() => {
         window.location.href = '/'; // Redirect to a dashboard or another page
-      }, 2000);
-    }
+      }, 500);
+    } 
   };
 
   return (
@@ -67,7 +67,7 @@ export default function Login() {
         <label className="block">
           <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
             Password
-            <Link href="/login" className="text-sm underline font-medium">
+            <Link href="/forgotpassword" className="text-sm underline font-medium">
               Forgot password?
             </Link>
           </span>

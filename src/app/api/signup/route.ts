@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
         phoneNumber: formData.phoneNumber
     };
 
-    const response = await fetch('https://api.univolenitsolutions.com/v1/customerAuthentication/signup', {
+    const response = await fetch(`${process.env.LOCAL_URL}/v1/customerAuthentication/signup`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
