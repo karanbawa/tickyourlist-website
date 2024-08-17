@@ -4,7 +4,7 @@ export async function POST(req: NextRequest) {
   try {
     const { googleId, email, firstName, lastName, picture } = await req.json();
 
-    const response = await fetch(`${process.env.LOCAL_URL}/v1/customerAuthentication/google`, {
+    const response = await fetch(`${process.env.BASE_URL}/v1/customerAuthentication/google`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

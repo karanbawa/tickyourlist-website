@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
         };
 
         // Make a POST request to your backend API with the token in the query string
-        const response = await fetch(`${process.env.LOCAL_URL}/v1/customerAuthentication/reset-password/verify?token=${token}`, {
+        const response = await fetch(`${process.env.BASE_URL}/v1/customerAuthentication/reset-password/verify?token=${token}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

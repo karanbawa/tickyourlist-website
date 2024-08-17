@@ -7,7 +7,7 @@ export async function DELETE(req: NextRequest) {
 
     console.log("tokendata ", token);
 
-    const response = await fetch(`${process.env.LOCAL_URL}/v1/customerlogout/logout`, {
+    const response = await fetch(`${process.env.BASE_URL}/v1/customerlogout/logout`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

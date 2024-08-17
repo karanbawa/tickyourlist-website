@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
         };
 
         // Make a POST request to your backend API
-        const response = await fetch(`${process.env.LOCAL_URL}/v1/customerAuthentication/reset-password`, {
+        const response = await fetch(`${process.env.BASE_URL}/v1/customerAuthentication/reset-password`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

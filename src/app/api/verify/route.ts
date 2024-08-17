@@ -4,7 +4,7 @@ export async function POST(req: NextRequest) {
     try {
         const { token } = await req.json();
 
-        const response = await fetch(`${process.env.LOCAL_URL}/v1/customerAuthentication/verify?token=${token}`, {
+        const response = await fetch(`${process.env.BASE_URL}/v1/customerAuthentication/verify?token=${token}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
