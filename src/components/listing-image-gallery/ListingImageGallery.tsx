@@ -46,19 +46,20 @@ export const getNewParam = ({
 
 interface Props {
   images?: ListingGalleryImage[];
-  onClose?: () => void;
-  isShowModal: boolean;
+  // onClose?: () => void;
+  // isShowModal: boolean;
 }
 
 const ListingImageGallery: FC<Props> = ({
   images = DEMO_IMAGE,
-  onClose,
-  isShowModal,
+  // onClose,
+  // isShowModal,
 }) => {
   const searchParams = useSearchParams();
   const photoId = searchParams?.get("photoId");
   const router = useRouter();
   const [lastViewedPhoto, setLastViewedPhoto] = useLastViewedPhoto();
+  const modal = searchParams?.get("modal");
 
   const lastViewedPhotoRef = useRef<HTMLDivElement>(null);
   const thisPathname = usePathname();
@@ -71,7 +72,10 @@ const ListingImageGallery: FC<Props> = ({
   }, [photoId, lastViewedPhoto, setLastViewedPhoto]);
 
   const handleClose = () => {
-    onClose && onClose();
+      let params = new URLSearchParams(document.location.search);
+    params.delete("modal");
+    router.push(`${thisPathname}/?${params.toString()}` as Route);
+    // onClose && onClose();
   };
 
   const renderContent = () => {
@@ -122,7 +126,7 @@ const ListingImageGallery: FC<Props> = ({
   return (
     <>
     <Suspense fallback={<div>Loading...</div>}>
-      <Transition appear show={isShowModal} as={Fragment}>
+      <Transition appear show={modal === "PHOTO_TOUR_SCROLLABLE"} as={Fragment}>
         <Dialog as="div" className="relative z-40" onClose={handleClose}>
           <Transition.Child
             as={Fragment}

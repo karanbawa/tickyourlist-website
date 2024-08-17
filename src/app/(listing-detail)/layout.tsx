@@ -1,12 +1,12 @@
 "use client";
 
-import React, { ReactNode, Suspense } from "react";
 import BackgroundSection from "@/components/BackgroundSection";
 import ListingImageGallery from "@/components/listing-image-gallery/ListingImageGallery";
 import SectionSliderNewCategories from "@/components/SectionSliderNewCategories";
 import SectionSubscribe2 from "@/components/SectionSubscribe2";
-import MobileFooterSticky from "./(components)/MobileFooterSticky";
 import { usePathname, useRouter } from "next/navigation";
+import React, { ReactNode, Suspense } from "react";
+import MobileFooterSticky from "./(components)/MobileFooterSticky";
 import { imageGallery as listingStayImageGallery } from "./listing-stay-detail/constant";
 import { imageGallery as listingCarImageGallery } from "./listing-car-detail/constant";
 import { imageGallery as listingExperienceImageGallery } from "./listing-experiences-detail/constant";
@@ -15,17 +15,14 @@ import { Route } from "next";
 const DetailLayout = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const thisPathname = usePathname();
+  // const searchParams = useSearchParams();
+  // const modal = searchParams?.get("modal");
 
-  // Manually extract the "modal" parameter from the URL
-  const modal = typeof window !== "undefined"
-    ? new URLSearchParams(window.location.search).get("modal")
-    : null;
-
-  const handleCloseModalImageGallery = () => {
-    const params = new URLSearchParams(window.location.search);
-    params.delete("modal");
-    router.push(`${thisPathname}/?${params.toString()}` as Route);
-  };
+  // const handleCloseModalImageGallery = () => {
+  //   let params = new URLSearchParams(document.location.search);
+  //   params.delete("modal");
+  //   router.push(`${thisPathname}/?${params.toString()}` as Route);
+  // };
 
   const getImageGalleryListing = () => {
     if (thisPathname?.includes("/listing-stay-detail")) {
@@ -41,14 +38,14 @@ const DetailLayout = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <Suspense fallback={<div>Loading layout...</div>}>
+    <Suspense fallback={<div>Loading...</div>}>
       <div className="ListingDetailPage">
-        <Suspense fallback={<div>Loading Image Gallery...</div>}>
-          <ListingImageGallery
-            isShowModal={modal === "PHOTO_TOUR_SCROLLABLE"}
-            onClose={handleCloseModalImageGallery}
-            images={getImageGalleryListing()}
-          />
+      <Suspense fallback={<div>Loading Listing Image Gallery...</div>}>
+        <ListingImageGallery
+          // isShowModal={"PHOTO_TOUR_SCROLLABLE" === "PHOTO_TOUR_SCROLLABLE"}
+          // onClose={handleCloseModalImageGallery}
+          images={getImageGalleryListing()}
+        />
         </Suspense>
         <div className="container ListingDetailPage__content">{children}</div>
 
