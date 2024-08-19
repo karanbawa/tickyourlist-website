@@ -23,6 +23,7 @@ import { Metadata } from 'next';
 import HandleImageClick from "@/components/tourgroupproductpage/HandleImageClick";
 import './Highlights.css';
 import parse, { domToReact } from "html-react-parser";
+import DetailLayout from "../layout";
 
 interface Params {
   slug: string;
@@ -678,6 +679,7 @@ const ListingStayDetailPage: FC<{ params: { slug: string } }> = async ({ params 
   );
 
   return (
+    <DetailLayout data={tourGroup}>
     <div className="nc-ListingStayDetailPage">
       <header className="rounded-md sm:rounded-xl">
         <div className="relative grid grid-cols-3 sm:grid-cols-4 gap-1 sm:gap-2">
@@ -745,10 +747,11 @@ const ListingStayDetailPage: FC<{ params: { slug: string } }> = async ({ params 
             {renderSection8()} */}
           </div>
           <div className="hidden lg:block flex-grow mt-14 lg:mt-0">
-            {/* <div className="sticky top-28">{renderSidebar()}</div> */}
+            <div className="sticky top-28">{renderSidebar()}</div>
           </div>
         </main>
     </div>
+    </DetailLayout>
   );
 };
 

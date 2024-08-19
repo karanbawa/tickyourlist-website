@@ -46,12 +46,14 @@ export const getNewParam = ({
 
 interface Props {
   images?: ListingGalleryImage[];
+  data?: any
   // onClose?: () => void;
   // isShowModal: boolean;
 }
 
 const ListingImageGallery: FC<Props> = ({
-  images = DEMO_IMAGE,
+  images,
+  data
   // onClose,
   // isShowModal,
 }) => {
@@ -83,7 +85,7 @@ const ListingImageGallery: FC<Props> = ({
       <div className=" ">
         {photoId && (
           <Modal
-            images={images}
+            images={images || []}
             onClose={() => {
               // @ts-ignore
               setLastViewedPhoto(photoId);
@@ -95,7 +97,7 @@ const ListingImageGallery: FC<Props> = ({
         )}
 
         <div className="columns-1 gap-4 sm:columns-2 xl:columns-3">
-          {images.map(({ id, url }) => (
+          {images?.map(({ id, url }) => (
             <div
               key={id}
               onClick={() => {
@@ -148,7 +150,7 @@ const ListingImageGallery: FC<Props> = ({
               >
                 <ArrowSmallLeftIcon className="w-6 h-6" />
               </button>
-              <LikeSaveBtns />
+              <LikeSaveBtns data={data} />
             </div>
 
             <div className="flex min-h-full items-center justify-center sm:p-4 pt-0 text-center">

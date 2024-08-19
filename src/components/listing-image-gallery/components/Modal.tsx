@@ -71,7 +71,7 @@ export default function Modal({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         />
-        <SharedModal
+        <SharedModal 
           index={curIndex}
           direction={direction}
           images={images}

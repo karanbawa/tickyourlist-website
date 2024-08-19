@@ -5,34 +5,43 @@ import ListingImageGallery from "@/components/listing-image-gallery/ListingImage
 import SectionSliderNewCategories from "@/components/SectionSliderNewCategories";
 import SectionSubscribe2 from "@/components/SectionSubscribe2";
 import { usePathname } from "next/navigation";
-import React, { ReactNode, Suspense } from "react";
+import React, { ReactNode, Suspense, useEffect } from "react";
 import MobileFooterSticky from "../(listing-detail)/(components)/MobileFooterSticky";
-import { imageGallery as listingStayImageGallery } from "../(listing-detail)/listing-stay-detail/constant";
-import { imageGallery as listingCarImageGallery } from "../(listing-detail)/listing-car-detail/constant";
-import { imageGallery as listingExperienceImageGallery } from "../(listing-detail)/listing-experiences-detail/constant";
+import { ListingGalleryImage } from "@/components/listing-image-gallery/utils/types";
+// import { imageGallery as listingStayImageGallery } from "../(listing-detail)/listing-stay-detail/constant";
+// import { imageGallery as listingCarImageGallery } from "../(listing-detail)/listing-car-detail/constant";
+// import { imageGallery as listingExperienceImageGallery } from "../(listing-detail)/listing-experiences-detail/constant";
 
-const DetailLayout = ({ children }: { children: ReactNode }) => {
+const DetailLayout = ({ children, data }: { children: ReactNode; data: any }) => {
   const thisPathname = usePathname();
 
-  const getImageGalleryListing = () => {
-    if (thisPathname?.includes("/listing-stay-detail")) {
-      return listingStayImageGallery;
-    }
-    if (thisPathname?.includes("/listing-car-detail")) {
-      return listingCarImageGallery;
-    }
-    if (thisPathname?.includes("/listing-experiences-detail")) {
-      return listingExperienceImageGallery;
-    }
-    return listingStayImageGallery;
-  };
+//   const getImageGalleryListing = () => {
+//     if (thisPathname?.includes("/listing-stay-detail")) {
+//       return listingStayImageGallery;
+//     }
+//     if (thisPathname?.includes("/listing-car-detail")) {
+//       return listingCarImageGallery;
+//     }
+//     if (thisPathname?.includes("/listing-experiences-detail")) {
+//       return listingExperienceImageGallery;
+//     }
+//     return listingStayImageGallery;
+//   };
+
+    const transformImageUploads = (imageUploads: any[]): ListingGalleryImage[] => {
+        return imageUploads?.map((image, index) => ({
+        id: index, // Auto-incremented ID starting from 1
+        url: image?.url,
+        }));
+    };
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div className="ListingDetailPage">
       <Suspense fallback={<div>Loading Listing Image Gallery...</div>}>
         <ListingImageGallery
-          images={getImageGalleryListing()}
+          images={transformImageUploads(data?.imageUploads)}
+          data={data}
         />
         </Suspense>
         <div className="container ListingDetailPage__content">{children}</div>
