@@ -531,7 +531,7 @@ const ListingStayDetailPage: FC<{ params: { slug: string } }> = async ({ params 
             />
             <div className="absolute inset-0 bg-neutral-900 bg-opacity-20 opacity-0 hover:opacity-100 transition-opacity"></div>
           </HandleImageClick>
-          {tourGroup?.imageUploads?.filter((_: any, i: number) => i >= 1 && i < 5).map((item: any, index: React.Key | null | undefined) => (
+          {tourGroup?.imageUploads?.filter((_: any, i: number) => i >= 1 && i < 5).map((item: any, index: number) => (
             <HandleImageClick
               key={index}
               tag="div"
