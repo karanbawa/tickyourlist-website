@@ -11,13 +11,13 @@ import Image from 'next/image';
 
 const GoogleLoginComponent: React.FC = () => {
   const [user, setUser] = useState<any>(null);
-  const { login } = useAuth();
+  const { login, setLoginError } = useAuth();
 
   const handleLoginSuccess = async (response: any) => {
     try {
       const decoded: any = jwtDecode(response.credential);
       const { email, given_name: firstName, family_name: lastName, sub: googleId, picture } = decoded;
-
+  
       // Send the user data to your backend for authentication
       const res = await axios.post('/api/google', {
         googleId,
@@ -26,20 +26,22 @@ const GoogleLoginComponent: React.FC = () => {
         lastName,
         picture
       });
-      console.log("rwewewew ", res);
-      if (!res) {
+
+      if (res.status !== 200) {
         // Handle error
-        const error = await response.json();
+        setLoginError('Failed to login, Please try again!');
       } else {
         // Handle success
         login(res);
         setTimeout(() => {
           window.location.href = '/'; // Redirect to a dashboard or another page
         }, 500);
-    } }catch (error) {
-      console.error("Error decoding token: ", error);
+      }
+    } catch (error) {
+      setLoginError('Failed to login: An unexpected error occurred.');
     }
   };
+  
 
   const handleLoginFailure = () => {
     console.error("Login Failed");

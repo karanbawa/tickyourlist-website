@@ -13,14 +13,12 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({ domainId: process.env.WEBSITE_ID, googleId, email, firstName, lastName, picture }),
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.log("errormessage ", errorData);
-      return NextResponse.json({ error: 'Login failed', errorData }, { status: response.status });
+    const data = await response.json();
+
+    if (data?.statusCode !== '10000') {
+      return NextResponse.json({ error: 'Login failed', data }, { status: response.status });
     }
 
-    const data = await response.json();
-    console.log("errorData ", data);
     return NextResponse.json({ message: 'Login successful', data });
   } catch (error) {
     console.error('Error processing login:', error);

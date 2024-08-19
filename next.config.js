@@ -38,7 +38,13 @@ const nextConfig = {
         hostname: 's3.amazonaws.com',
         port: '',
         pathname: '/**',
-      }
+      },
+      {
+        protocol: 'https',
+        hostname: 'tickyourlist-images.s3.ap-south-1.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

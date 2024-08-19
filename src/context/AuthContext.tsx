@@ -1,6 +1,5 @@
 'use client';
 
-import axios from 'axios';
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 
 interface AuthContextType {
@@ -8,6 +7,12 @@ interface AuthContextType {
   login: (userData: any) => void;
   logout: () => void;
   logoutError: string | null;
+  loginError: string | null;
+  logoutSuccess: string | null;
+  loginSuccess: string | null;
+  setLoginError: React.Dispatch<React.SetStateAction<string | null>>;
+  setLoginSuccess: React.Dispatch<React.SetStateAction<string | null>>;
+  setLogoutSuccess: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -23,6 +28,9 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<any>(null);
   const [logoutError, setLogoutError] = useState<string | null>(null);
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const [logoutSuccess, setLogoutSuccess] = useState<string | null>(null);
+  const [loginSuccess, setLoginSuccess] = useState<string | null>(null);
 
   useEffect(() => {
     // Check if user is already logged in (e.g., from cookies or localStorage)
@@ -32,9 +40,23 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (logoutError || loginError || logoutSuccess || loginSuccess) {
+      const timer = setTimeout(() => {
+        setLogoutError(null);
+        setLoginError(null);
+        setLogoutSuccess(null);
+        setLoginSuccess(null);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [logoutError, loginError, logoutSuccess, loginSuccess]);
+
   const login = (userData: any) => {
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
+    setLoginSuccess('Logged in successfully');
   };
 
   const logout = async () => {
@@ -56,6 +78,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         // Clear the user data on the client-side
         setUser(null);
         localStorage.removeItem('user');
+        setLogoutSuccess('Logged out successfully');
       } else {
         // Handle failed logout
         const errorData = await response.json();
@@ -68,11 +91,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, logoutError }}>
+    <AuthContext.Provider value={{ user, login, logout, logoutError, loginError, setLoginError, loginSuccess, logoutSuccess, setLoginSuccess, setLogoutSuccess }}>
       {children}
       {logoutError && (
         <div className="fixed bottom-4 right-4 bg-red-500 text-white p-4 rounded">
           {logoutError}
+        </div>
+      )}
+      {loginError && (
+        <div className="fixed bottom-4 right-4 bg-red-500 text-white p-4 rounded">
+          {loginError}
+        </div>
+      )}
+      {logoutSuccess && (
+        <div className="fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded">
+          {logoutSuccess}
+        </div>
+      )}
+      {loginSuccess && (
+        <div className="fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded">
+          {loginSuccess}
         </div>
       )}
     </AuthContext.Provider>
