@@ -1,10 +1,42 @@
+'use client'
+
 import React from "react";
 
-const LikeSaveBtns = () => {
+// Define the type for the data prop
+interface LikeSaveBtnsProps {
+  data: any;
+}
+
+const LikeSaveBtns: React.FC<LikeSaveBtnsProps> = ({ data }) => {
+  const handleShare = () => {
+    console.log("datashare ", data);
+    if (navigator.share) {
+      navigator
+        .share({
+          title: 'Check this out!',
+          text: 'I found this amazing tour group, take a look!',
+          url: data?.urlSlugs?.EN,
+        })
+        .then(() => {
+          console.log('Successful share');
+        })
+        .catch((error) => {
+          console.log('Error sharing', error);
+        });
+    } else {
+      // Fallback: Copy URL to clipboard
+      navigator.clipboard.writeText(`https://www.tickyourlist.com/${data?.urlSlugs?.EN}`);
+      alert('URL copied to clipboard');
+    }
+  };
+
   return (
     <div className="flow-root">
       <div className="flex text-neutral-700 dark:text-neutral-300 text-sm -mx-3 -my-1.5">
-        <span className="py-1.5 px-3 flex rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer">
+        <span
+          onClick={handleShare}
+          className="py-1.5 px-3 flex rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"

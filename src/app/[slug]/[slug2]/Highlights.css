@@ -1,0 +1,15 @@
+.highlights-section ul {
+    list-style-type: disc !important;
+    padding-left: 20px !important;
+    margin: 0 0 1em 0 !important;
+  }
+  
+  .highlights-section li {
+    margin-bottom: 14px;
+  }
+
+  .anchor-color a {
+    color: #1D4ED8 !important;
+    text-decoration: 'underline' !important
+  }
+  

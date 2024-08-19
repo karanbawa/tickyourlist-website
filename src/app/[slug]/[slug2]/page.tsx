@@ -21,6 +21,8 @@ import SectionDateRange from "@/app/(listing-detail)/SectionDateRange";
 import { Route } from "next";
 import { Metadata } from 'next';
 import HandleImageClick from "@/components/tourgroupproductpage/HandleImageClick";
+import './Highlights.css';
+import parse, { domToReact } from "html-react-parser";
 
 interface Params {
   slug: string;
@@ -83,21 +85,37 @@ const ListingStayDetailPage: FC<{ params: { slug: string } }> = async ({ params 
   //   router.push(`${thisPathname}/?modal=PHOTO_TOUR_SCROLLABLE` as Route);
   // };
 
+  const abbreviateCountryName = (countryName: string) => {
+    // Split the country name into words
+    const words = countryName.split(' ');
+  
+    // Check if the name is long (more than one word) and abbreviate
+    if (words.length > 1) {
+      return words.map(word => word[0].toUpperCase()).join('');
+    }
+  
+    // If the name is short, return it as it is
+    return countryName;
+  };
+
   const renderSection1 = () => (
     <div className="listingSection__wrap !space-y-6">
       <div className="flex justify-between items-center">
-        <Badge name="Wooden house" />
-        <LikeSaveBtns />
+        <div className="flex gap-2 flex-wrap">
+        {tourGroup?.displayTags?.slice(0,2).map((tag: any,index: any) => <Badge name={tag} key={tag} /> )}
+        {/* <Badge name={tourGroup?.displayTags?.[1]} /> */}
+        </div>
+        <LikeSaveBtns data={tourGroup} />
       </div>
       <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold">
-        Beach House in Collingwood
+        {tourGroup?.name}
       </h2>
       <div className="flex items-center space-x-4">
         <StartRating />
         <span>·</span>
         <span>
           <i className="las la-map-marker-alt"></i>
-          <span className="ml-1">Tokyo, Japan</span>
+          <span className="ml-1">{tourGroup?.city?.name}, {tourGroup?.city?.country?.displayName ? abbreviateCountryName(tourGroup?.city?.country?.displayName) : ''}</span>
         </span>
       </div>
       <div className="flex items-center">
@@ -108,6 +126,21 @@ const ListingStayDetailPage: FC<{ params: { slug: string } }> = async ({ params 
             Kevin Francis
           </span>
         </span>
+      </div>
+      <div className="flex items-center gap-2 flex-wrap">
+        {/* <div className="flex gap-2"> */}
+        {tourGroup?.descriptors?.map((tag: any,index: any) => (
+          <div className="flex items-center space-x-3">
+          <i className="las la-user text-2xl"></i>
+          {/* <span> */}
+            <span className="sm:inline-block text-neutral-900 dark:text-neutral-200 font-medium">{tag?.name}</span>
+            {/* <Badge name={tag?.name} key={tag} />  */}
+          {/* </span> */}
+        </div>
+          ))}
+        {/* <Badge name={tourGroup?.descriptors?.[1]} />
+        <Badge name={tourGroup?.displayTags?.[0]} /> */}
+        {/* </div> */}
       </div>
       <div className="w-full border-b border-neutral-100 dark:border-neutral-700" />
       <div className="flex items-center justify-between xl:justify-start space-x-8 xl:space-x-12 text-sm text-neutral-700 dark:text-neutral-300">
@@ -139,32 +172,162 @@ const ListingStayDetailPage: FC<{ params: { slug: string } }> = async ({ params 
     </div>
   );
 
-  // const renderSection2 = () => (
-  //   <div className="listingSection__wrap">
-  //     <h2 className="text-2xl font-semibold">Stay information</h2>
-  //     <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
-  //     <div className="text-neutral-6000 dark:text-neutral-300">
-  //       <span>
-  //         Providing lake views, The Symphony 9 Tam Coc in Ninh Binh provides
-  //         accommodation, an outdoor swimming pool, a bar, a shared lounge, a
-  //         garden and barbecue facilities. Complimentary WiFi is provided.
-  //       </span>
-  //       <br />
-  //       <br />
-  //       <span>
-  //         There is a private bathroom with bidet in all units, along with a
-  //         hairdryer and free toiletries.
-  //       </span>
-  //       <br />
-  //       <br />
-  //       <span>
-  //         The Symphony 9 Tam Coc offers a terrace. Both a bicycle rental service
-  //         and a car rental service are available at the accommodation, while
-  //         cycling can be enjoyed nearby.
-  //       </span>
+  const renderSection2 = () => (
+    <div className="listingSection__wrap">
+      <h2 className="text-2xl font-semibold">Highlights</h2>
+      <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+      <div className="text-neutral-6000 dark:text-neutral-300 highlights-section" dangerouslySetInnerHTML={{ __html: tourGroup?.highlights }} />
+    </div>
+  );
+
+  const renderSectionInclusion = () => (
+    <div className="listingSection__wrap">
+      <h2 className="text-2xl font-semibold">Inclusions</h2>
+      <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+      <div className="text-neutral-6000 dark:text-neutral-300 highlights-section" dangerouslySetInnerHTML={{ __html: tourGroup?.inclusions }} />
+    </div>
+  );
+
+  const renderSectionCancellationPolicy = () => (
+    <div className="listingSection__wrap">
+      <h2 className="text-2xl font-semibold">Cancellation Policy</h2>
+      <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+      <div className="text-neutral-6000 dark:text-neutral-300 highlights-section">
+        {!tourGroup?.cancellationPolicyV2?.cancellable ? `These tickets can't be cancelled ` : `These tickets can be cancelled `} 
+        {!tourGroup?.reschedulePolicy?.reschedulable ? `or rescheduled` : `but can be rescheduled`}
+      </div>
+    </div>
+  );
+
+  // const HighlightsSection = ({ summary }: { summary: string }) => {
+  //   const options = {
+  //     replace: (domNode: any) => {
+  //       if (domNode.name === "h2") {
+  //         return <h2 className="text-2xl font-semibold">{domNode.children[0].data}</h2>;
+  //       }
+  //       if (domNode.name === "h3") {
+  //         return <h3 className="text-xl font-semibold mt-4">{domNode.children[0].data}</h3>;
+  //       }
+  //       if (domNode.name === "p") {
+  //         return <p className="mt-2 text-neutral-6000 dark:text-neutral-300">{domToReact(domNode.children)}</p>;
+  //       }
+  //       if (domNode.name === "img") {
+  //         return (
+  //           <img
+  //             className="my-4 rounded-lg"
+  //             src={domNode.attribs.src}
+  //             alt={domNode.attribs.alt}
+  //           />
+  //         );
+  //       }
+  //       if (domNode.name === "ul") {
+  //         return (
+  //           <ul className="list-disc pl-5 mt-2 text-neutral-6000 dark:text-neutral-300">
+  //             {domToReact(domNode.children)}
+  //           </ul>
+  //         );
+  //       }
+  //       if (domNode.name === "li") {
+  //         return <li className="mt-1">{domToReact(domNode.children)}</li>;
+  //       }
+  //     },
+  //   };
+  
+  //   return (
+  //     <div className="listingSection__wrap">
+  //       {parse(summary, options)}
   //     </div>
-  //   </div>
-  // );
+  //   );
+  // };
+
+  const HighlightsSection = ({ summary }: { summary: string }) => {
+    // Split the summary into sections based on <h2> tags
+    const sections = summary.split(/(?=<h2>)/g);
+  
+    const options = {
+      replace: (domNode: any) => {
+        if (domNode.name === "h2") {
+          return (<><h2 className="text-2xl font-semibold">{domNode.children[0].data}</h2>
+          <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+          </>);
+        }
+        if (domNode.name === "h3") {
+          return <h3 className="text-xl font-semibold mt-4">{domNode.children[0].data}</h3>;
+        }
+        if (domNode.name === "p") {
+          return <p className="mt-2 text-neutral-6000 dark:text-neutral-300 anchor-color">{domToReact(domNode.children)}</p>;
+        }
+        if (domNode.name === "img") {
+          return (
+            <img
+              className="my-4 rounded-lg"
+              src={domNode.attribs.src}
+              alt={domNode.attribs.alt}
+            />
+          );
+        }
+        if (domNode.name === "ul") {
+          return (
+            <ul className="list-disc pl-5 mt-2 text-neutral-6000 dark:text-neutral-300">
+              {domToReact(domNode.children)}
+            </ul>
+          );
+        }
+        if (domNode.name === "li") {
+          return <li className="mt-1">{domToReact(domNode.children)}</li>;
+        }
+        if (domNode.name === "a") {
+          return (
+            <a
+            className="anchor-color"
+            href={domNode.attribs.href}
+            rel="noopener noreferrer"
+          >
+            {domToReact(domNode.children)}
+          </a>
+          );
+        }
+      },
+    };
+  
+    return (
+      <>
+        {sections?.map((section, index) => (
+          <div className="listingSection__wrap" key={index}>
+            {parse(section, options)}
+          </div>
+        ))}
+        </>
+    );
+  };
+
+  const renderSectionYourExperience = () => (
+
+    <HighlightsSection summary={tourGroup.summary} />
+
+    // <div className="listingSection__wrap">
+    //   <h2 className="text-2xl font-semibold">Your Experience</h2>
+    //   <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+    //   <div className="text-neutral-6000 dark:text-neutral-300 highlights-section">
+    //     {!tourGroup?.cancellationPolicyV2?.cancellable ? `These tickets can't be cancelled ` : `These tickets can be cancelled `} 
+    //     {!tourGroup?.reschedulePolicy?.reschedulable ? `or rescheduled` : `but can be rescheduled`}
+    //   </div>
+    // </div>
+  );
+
+  const renderSectionFaq = () => (
+
+    <HighlightsSection summary={tourGroup.faq} />
+  );
+
+  const renderSectionMyTickets = () => (
+    <div className="listingSection__wrap">
+      <h2 className="text-2xl font-semibold">My Tickets</h2>
+      <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+      <HighlightsSection summary={tourGroup.ticketDeliveryInfo} />
+      {/* <div className="text-neutral-6000 dark:text-neutral-300 highlights-section" dangerouslySetInnerHTML={{ __html: tourGroup?.ticketDeliveryInfo }} /> */}
+    </div>
+  );
 
   // const renderSection3 = () => (
   //   <div className="listingSection__wrap">
@@ -253,266 +416,266 @@ const ListingStayDetailPage: FC<{ params: { slug: string } }> = async ({ params 
   //   </Transition>
   // );
 
-  // const renderSection4 = () => (
-  //   <div className="listingSection__wrap">
-  //     <div>
-  //       <h2 className="text-2xl font-semibold">Room Rates</h2>
-  //       <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
-  //         Prices may increase on weekends or holidays
-  //       </span>
-  //     </div>
-  //     <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
-  //     <div className="flow-root">
-  //       <div className="text-sm sm:text-base text-neutral-6000 dark:text-neutral-300 -mb-4">
-  //         <div className="p-4 bg-neutral-100 dark:bg-neutral-800 flex justify-between items-center space-x-4 rounded-lg">
-  //           <span>Monday - Thursday</span>
-  //           <span>$199</span>
-  //         </div>
-  //         <div className="p-4 flex justify-between items-center space-x-4 rounded-lg">
-  //           <span>Monday - Thursday</span>
-  //           <span>$199</span>
-  //         </div>
-  //         <div className="p-4 bg-neutral-100 dark:bg-neutral-800 flex justify-between items-center space-x-4 rounded-lg">
-  //           <span>Friday - Sunday</span>
-  //           <span>$219</span>
-  //         </div>
-  //         <div className="p-4 flex justify-between items-center space-x-4 rounded-lg">
-  //           <span>Rent by month</span>
-  //           <span>-8.34 %</span>
-  //         </div>
-  //         <div className="p-4 bg-neutral-100 dark:bg-neutral-800 flex justify-between items-center space-x-4 rounded-lg">
-  //           <span>Minimum number of nights</span>
-  //           <span>1 night</span>
-  //         </div>
-  //         <div className="p-4 flex justify-between items-center space-x-4 rounded-lg">
-  //           <span>Max number of nights</span>
-  //           <span>90 nights</span>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
+  const renderSection4 = () => (
+    <div className="listingSection__wrap">
+      <div>
+        <h2 className="text-2xl font-semibold">Room Rates</h2>
+        <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
+          Prices may increase on weekends or holidays
+        </span>
+      </div>
+      <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+      <div className="flow-root">
+        <div className="text-sm sm:text-base text-neutral-6000 dark:text-neutral-300 -mb-4">
+          <div className="p-4 bg-neutral-100 dark:bg-neutral-800 flex justify-between items-center space-x-4 rounded-lg">
+            <span>Monday - Thursday</span>
+            <span>$199</span>
+          </div>
+          <div className="p-4 flex justify-between items-center space-x-4 rounded-lg">
+            <span>Monday - Thursday</span>
+            <span>$199</span>
+          </div>
+          <div className="p-4 bg-neutral-100 dark:bg-neutral-800 flex justify-between items-center space-x-4 rounded-lg">
+            <span>Friday - Sunday</span>
+            <span>$219</span>
+          </div>
+          <div className="p-4 flex justify-between items-center space-x-4 rounded-lg">
+            <span>Rent by month</span>
+            <span>-8.34 %</span>
+          </div>
+          <div className="p-4 bg-neutral-100 dark:bg-neutral-800 flex justify-between items-center space-x-4 rounded-lg">
+            <span>Minimum number of nights</span>
+            <span>1 night</span>
+          </div>
+          <div className="p-4 flex justify-between items-center space-x-4 rounded-lg">
+            <span>Max number of nights</span>
+            <span>90 nights</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 
-  // const renderSection5 = () => (
-  //   <div className="listingSection__wrap">
-  //     <h2 className="text-2xl font-semibold">Host Information</h2>
-  //     <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
-  //     <div className="flex items-center space-x-4">
-  //       <Avatar
-  //         hasChecked
-  //         hasCheckedClass="w-4 h-4 -top-0.5 right-0.5"
-  //         sizeClass="h-14 w-14"
-  //         radius="rounded-full"
-  //       />
-  //       <div>
-  //         <a className="block text-xl font-medium" href="##">
-  //           Kevin Francis
-  //         </a>
-  //         <div className="mt-1.5 flex items-center text-sm text-neutral-500 dark:text-neutral-400">
-  //           <StartRating />
-  //           <span className="mx-2">·</span>
-  //           <span>12 places</span>
-  //         </div>
-  //       </div>
-  //     </div>
-  //     <span className="block text-neutral-6000 dark:text-neutral-300">
-  //       Providing lake views, The Symphony 9 Tam Coc in Ninh Binh provides
-  //       accommodation, an outdoor swimming pool, a bar, a shared lounge, a
-  //       garden and barbecue facilities...
-  //     </span>
-  //     <div className="block text-neutral-500 dark:text-neutral-400 space-y-2.5">
-  //       <div className="flex items-center space-x-3">
-  //         <svg
-  //           xmlns="http://www.w3.org/2000/svg"
-  //           className="h-6 w-6"
-  //           fill="none"
-  //           viewBox="0 0 24 24"
-  //           stroke="currentColor"
-  //         >
-  //           <path
-  //             strokeLinecap="round"
-  //             strokeLinejoin="round"
-  //             strokeWidth={1.5}
-  //             d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-  //           />
-  //         </svg>
-  //         <span>Joined in March 2016</span>
-  //       </div>
-  //       <div className="flex items-center space-x-3">
-  //         <svg
-  //           xmlns="http://www.w3.org/2000/svg"
-  //           className="h-6 w-6"
-  //           fill="none"
-  //           viewBox="0 0 24 24"
-  //           stroke="currentColor"
-  //         >
-  //           <path
-  //             strokeLinecap="round"
-  //             strokeLinejoin="round"
-  //             strokeWidth={1.5}
-  //             d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
-  //           />
-  //         </svg>
-  //         <span>Response rate - 100%</span>
-  //       </div>
-  //       <div className="flex items-center space-x-3">
-  //         <svg
-  //           xmlns="http://www.w3.org/2000/svg"
-  //           className="h-6 w-6"
-  //           fill="none"
-  //           viewBox="0 0 24 24"
-  //           stroke="currentColor"
-  //         >
-  //           <path
-  //             strokeLinecap="round"
-  //             strokeLinejoin="round"
-  //             strokeWidth={1.5}
-  //             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-  //           />
-  //         </svg>
-  //         <span>Fast response - within a few hours</span>
-  //       </div>
-  //     </div>
-  //     <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
-  //     <div>
-  //       <ButtonSecondary href="/author">See host profile</ButtonSecondary>
-  //     </div>
-  //   </div>
-  // );
+  const renderSection5 = () => (
+    <div className="listingSection__wrap">
+      <h2 className="text-2xl font-semibold">Host Information</h2>
+      <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+      <div className="flex items-center space-x-4">
+        <Avatar
+          hasChecked
+          hasCheckedClass="w-4 h-4 -top-0.5 right-0.5"
+          sizeClass="h-14 w-14"
+          radius="rounded-full"
+        />
+        <div>
+          <a className="block text-xl font-medium" href="##">
+            Kevin Francis
+          </a>
+          <div className="mt-1.5 flex items-center text-sm text-neutral-500 dark:text-neutral-400">
+            <StartRating />
+            <span className="mx-2">·</span>
+            <span>12 places</span>
+          </div>
+        </div>
+      </div>
+      <span className="block text-neutral-6000 dark:text-neutral-300">
+        Providing lake views, The Symphony 9 Tam Coc in Ninh Binh provides
+        accommodation, an outdoor swimming pool, a bar, a shared lounge, a
+        garden and barbecue facilities...
+      </span>
+      <div className="block text-neutral-500 dark:text-neutral-400 space-y-2.5">
+        <div className="flex items-center space-x-3">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+            />
+          </svg>
+          <span>Joined in March 2016</span>
+        </div>
+        <div className="flex items-center space-x-3">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
+            />
+          </svg>
+          <span>Response rate - 100%</span>
+        </div>
+        <div className="flex items-center space-x-3">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <span>Fast response - within a few hours</span>
+        </div>
+      </div>
+      <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+      <div>
+        <ButtonSecondary href="/author">See host profile</ButtonSecondary>
+      </div>
+    </div>
+  );
 
-  // const renderSection6 = () => (
-  //   <div className="listingSection__wrap">
-  //     <h2 className="text-2xl font-semibold">Reviews (23 reviews)</h2>
-  //     <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
-  //     <div className="space-y-5">
-  //       <FiveStartIconForRate iconClass="w-6 h-6" className="space-x-0.5" />
-  //       <div className="relative">
-  //         <Input
-  //           fontClass=""
-  //           sizeClass="h-16 px-4 py-3"
-  //           rounded="rounded-3xl"
-  //           placeholder="Share your thoughts ..."
-  //         />
-  //         <ButtonCircle className="absolute right-2 top-1/2 transform -translate-y-1/2" size=" w-12 h-12 ">
-  //           <ArrowRightIcon className="w-5 h-5" />
-  //         </ButtonCircle>
-  //       </div>
-  //     </div>
-  //     <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
-  //       <CommentListing className="py-8" />
-  //       <CommentListing className="py-8" />
-  //       <CommentListing className="py-8" />
-  //       <CommentListing className="py-8" />
-  //       <div className="pt-8">
-  //         <ButtonSecondary>View more 20 reviews</ButtonSecondary>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
+  const renderSection6 = () => (
+    <div className="listingSection__wrap">
+      <h2 className="text-2xl font-semibold">Reviews (23 reviews)</h2>
+      <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+      <div className="space-y-5">
+        <FiveStartIconForRate iconClass="w-6 h-6" className="space-x-0.5" />
+        <div className="relative">
+          <Input
+            fontClass=""
+            sizeClass="h-16 px-4 py-3"
+            rounded="rounded-3xl"
+            placeholder="Share your thoughts ..."
+          />
+          <ButtonCircle className="absolute right-2 top-1/2 transform -translate-y-1/2" size=" w-12 h-12 ">
+            <ArrowRightIcon className="w-5 h-5" />
+          </ButtonCircle>
+        </div>
+      </div>
+      <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
+        <CommentListing className="py-8" />
+        <CommentListing className="py-8" />
+        <CommentListing className="py-8" />
+        <CommentListing className="py-8" />
+        <div className="pt-8">
+          <ButtonSecondary>View more 20 reviews</ButtonSecondary>
+        </div>
+      </div>
+    </div>
+  );
 
-  // const renderSection7 = () => (
-  //   <div className="listingSection__wrap">
-  //     <div>
-  //       <h2 className="text-2xl font-semibold">Location</h2>
-  //       <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
-  //         San Diego, CA, United States of America (SAN-San Diego Intl.)
-  //       </span>
-  //     </div>
-  //     <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
-  //     <div className="aspect-w-5 aspect-h-5 sm:aspect-w-6 sm:aspect-h-5 ring-1 ring-black/10 rounded-xl z-0">
-  //       <div className="rounded-xl overflow-hidden z-0">
-  //         <iframe
-  //           width="100%"
-  //           height="100%"
-  //           loading="lazy"
-  //           allowFullScreen
-  //           referrerPolicy="no-referrer-when-downgrade"
-  //           src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAGVJfZMAKYfZ71nzL_v5i3LjTTWnCYwTY&q=Eiffel+Tower,Paris+France"
-  //         ></iframe>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
+  const renderSection7 = () => (
+    <div className="listingSection__wrap">
+      <div>
+        <h2 className="text-2xl font-semibold">Location</h2>
+        <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
+          San Diego, CA, United States of America (SAN-San Diego Intl.)
+        </span>
+      </div>
+      <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+      <div className="aspect-w-5 aspect-h-5 sm:aspect-w-6 sm:aspect-h-5 ring-1 ring-black/10 rounded-xl z-0">
+        <div className="rounded-xl overflow-hidden z-0">
+          <iframe
+            width="100%"
+            height="100%"
+            loading="lazy"
+            allowFullScreen
+            referrerPolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAGVJfZMAKYfZ71nzL_v5i3LjTTWnCYwTY&q=Eiffel+Tower,Paris+France"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  );
 
-  // const renderSection8 = () => (
-  //   <div className="listingSection__wrap">
-  //     <h2 className="text-2xl font-semibold">Things to know</h2>
-  //     <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
-  //     <div>
-  //       <h4 className="text-lg font-semibold">Cancellation policy</h4>
-  //       <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
-  //         Refund 50% of the booking value when customers cancel the room within
-  //         48 hours after successful booking and 14 days before the check-in
-  //         time. <br />
-  //         Then, cancel the room 14 days before the check-in time, get a 50%
-  //         refund of the total amount paid (minus the service fee).
-  //       </span>
-  //     </div>
-  //     <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
-  //     <div>
-  //       <h4 className="text-lg font-semibold">Check-in time</h4>
-  //       <div className="mt-3 text-neutral-500 dark:text-neutral-400 max-w-md text-sm sm:text-base">
-  //         <div className="flex space-x-10 justify-between p-3 bg-neutral-100 dark:bg-neutral-800 rounded-lg">
-  //           <span>Check-in</span>
-  //           <span>08:00 am - 12:00 am</span>
-  //         </div>
-  //         <div className="flex space-x-10 justify-between p-3">
-  //           <span>Check-out</span>
-  //           <span>02:00 pm - 04:00 pm</span>
-  //         </div>
-  //       </div>
-  //     </div>
-  //     <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
-  //     <div>
-  //       <h4 className="text-lg font-semibold">Special Note</h4>
-  //       <div className="prose sm:prose">
-  //         <ul className="mt-3 text-neutral-500 dark:text-neutral-400 space-y-2">
-  //           <li>
-  //             Ban and I will work together to keep the landscape and environment
-  //             green and clean by not littering, not using stimulants and
-  //             respecting people around.
-  //           </li>
-  //           <li>Do not sing karaoke past 11:30</li>
-  //         </ul>
-  //       </div>
-  //     </div>
-  //   </div>
-  // );
+  const renderSection8 = () => (
+    <div className="listingSection__wrap">
+      <h2 className="text-2xl font-semibold">Things to know</h2>
+      <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+      <div>
+        <h4 className="text-lg font-semibold">Cancellation policy</h4>
+        <span className="block mt-3 text-neutral-500 dark:text-neutral-400">
+          Refund 50% of the booking value when customers cancel the room within
+          48 hours after successful booking and 14 days before the check-in
+          time. <br />
+          Then, cancel the room 14 days before the check-in time, get a 50%
+          refund of the total amount paid (minus the service fee).
+        </span>
+      </div>
+      <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+      <div>
+        <h4 className="text-lg font-semibold">Check-in time</h4>
+        <div className="mt-3 text-neutral-500 dark:text-neutral-400 max-w-md text-sm sm:text-base">
+          <div className="flex space-x-10 justify-between p-3 bg-neutral-100 dark:bg-neutral-800 rounded-lg">
+            <span>Check-in</span>
+            <span>08:00 am - 12:00 am</span>
+          </div>
+          <div className="flex space-x-10 justify-between p-3">
+            <span>Check-out</span>
+            <span>02:00 pm - 04:00 pm</span>
+          </div>
+        </div>
+      </div>
+      <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
+      <div>
+        <h4 className="text-lg font-semibold">Special Note</h4>
+        <div className="prose sm:prose">
+          <ul className="mt-3 text-neutral-500 dark:text-neutral-400 space-y-2">
+            <li>
+              Ban and I will work together to keep the landscape and environment
+              green and clean by not littering, not using stimulants and
+              respecting people around.
+            </li>
+            <li>Do not sing karaoke past 11:30</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
 
-  // const renderSidebar = () => (
-  //   <div className="listingSectionSidebar__wrap shadow-xl">
-  //     <div className="flex justify-between">
-  //       <span className="text-3xl font-semibold">
-  //         $119
-  //         <span className="ml-1 text-base font-normal text-neutral-500 dark:text-neutral-400">
-  //           /night
-  //         </span>
-  //       </span>
-  //       <StartRating />
-  //     </div>
-  //     <form className="flex flex-col border border-neutral-200 dark:border-neutral-700 rounded-3xl">
-  //       <StayDatesRangeInput className="flex-1 z-[11]" />
-  //       <div className="w-full border-b border-neutral-200 dark:border-neutral-700"></div>
-  //       <GuestsInput className="flex-1" />
-  //     </form>
-  //     <div className="flex flex-col space-y-4">
-  //       <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-  //         <span>$119 x 3 night</span>
-  //         <span>$357</span>
-  //       </div>
-  //       <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-  //         <span>Service charge</span>
-  //         <span>$0</span>
-  //       </div>
-  //       <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
-  //       <div className="flex justify-between font-semibold">
-  //         <span>Total</span>
-  //         <span>$199</span>
-  //       </div>
-  //     </div>
-  //     <ButtonPrimary href="/checkout">Reserve</ButtonPrimary>
-  //   </div>
-  // );
+  const renderSidebar = () => (
+    <div className="listingSectionSidebar__wrap shadow-xl">
+      <div className="flex justify-between">
+        <span className="text-3xl font-semibold">
+          $119
+          <span className="ml-1 text-base font-normal text-neutral-500 dark:text-neutral-400">
+            /night
+          </span>
+        </span>
+        <StartRating />
+      </div>
+      <form className="flex flex-col border border-neutral-200 dark:border-neutral-700 rounded-3xl">
+        <StayDatesRangeInput className="flex-1 z-[11]" />
+        <div className="w-full border-b border-neutral-200 dark:border-neutral-700"></div>
+        <GuestsInput className="flex-1" />
+      </form>
+      <div className="flex flex-col space-y-4">
+        <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
+          <span>$119 x 3 night</span>
+          <span>$357</span>
+        </div>
+        <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
+          <span>Service charge</span>
+          <span>$0</span>
+        </div>
+        <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
+        <div className="flex justify-between font-semibold">
+          <span>Total</span>
+          <span>$199</span>
+        </div>
+      </div>
+      <ButtonPrimary href="/checkout">Reserve</ButtonPrimary>
+    </div>
+  );
 
   return (
     <div className="nc-ListingStayDetailPage">
@@ -567,8 +730,13 @@ const ListingStayDetailPage: FC<{ params: { slug: string } }> = async ({ params 
       <main className="relative z-10 mt-11 flex flex-col lg:flex-row">
           <div className="w-full lg:w-3/5 xl:w-2/3 space-y-8 lg:space-y-10 lg:pr-10">
             {renderSection1()}
-            {/* {renderSection2()}
-            {renderSection3()}
+             {renderSection2()}
+             {renderSectionInclusion()}
+             {renderSectionCancellationPolicy()}
+             {renderSectionYourExperience()}
+             {renderSectionFaq()}
+             {renderSectionMyTickets()}
+            {/*{renderSection3()}
             {renderSection4()}
             <SectionDateRange />
             {renderSection5()}
