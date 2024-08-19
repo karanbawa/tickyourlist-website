@@ -130,7 +130,7 @@ const ListingStayDetailPage: FC<{ params: { slug: string } }> = async ({ params 
       <div className="flex items-center gap-2 flex-wrap">
         {/* <div className="flex gap-2"> */}
         {tourGroup?.descriptors?.map((tag: any,index: any) => (
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3" key={tag}>
           <i className="las la-user text-2xl"></i>
           {/* <span> */}
             <span className="sm:inline-block text-neutral-900 dark:text-neutral-200 font-medium">{tag?.name}</span>
