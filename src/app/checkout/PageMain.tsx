@@ -242,7 +242,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
               </Tab.Panels>
             </Tab.Group>
             <div className="pt-8">
-              <ButtonPrimary href={"/pay-done"}>Confirm and pay</ButtonPrimary>
+              <ButtonPrimary href={"/pay-done"} style={{ backgroundColor: '#7C25E9' }}>Confirm and pay</ButtonPrimary>
             </div>
           </div>
         </div>
