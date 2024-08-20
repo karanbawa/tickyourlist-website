@@ -45,7 +45,7 @@ const DetailLayout = ({ children }: { children: ReactNode }) => {
         </div>
 
         {/* STICKY FOOTER MOBILE */}
-        <MobileFooterSticky />
+        {/* <MobileFooterSticky /> */}
       </div>
     </Suspense>
   );

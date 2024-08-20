@@ -1,26 +1,44 @@
-import React, { useState } from "react";
+'use client'
+
+import React, { FC, useState } from "react";
 import ModalSelectDate from "@/components/ModalSelectDate";
 import ButtonPrimary from "@/shared/ButtonPrimary";
 import converSelectedDateToString from "@/utils/converSelectedDateToString";
 import ModalReserveMobile from "./ModalReserveMobile";
+import { useData } from "@/context/DataContext";
 
-const MobileFooterSticky = () => {
+interface MobileFooterStickyProps {
+  data: any
+}
+
+const MobileFooterSticky: FC<MobileFooterStickyProps>  = ({ data }) => {
   const [startDate, setStartDate] = useState<Date | null>(
     new Date("2023/02/06")
   );
   const [endDate, setEndDate] = useState<Date | null>(new Date("2023/02/23"));
-
   return (
     <div className="block lg:hidden fixed bottom-0 inset-x-0 py-2 sm:py-3 bg-white dark:bg-neutral-800 border-t border-neutral-200 dark:border-neutral-6000 z-40">
       <div className="container flex items-center justify-between">
         <div className="">
-          <span className="block text-xl font-semibold">
-            $311
-            <span className="ml-1 text-sm font-normal text-neutral-500 dark:text-neutral-400">
-              /night
+            <span className="text-xs line-through text-neutral-500 dark:text-neutral-400">
+              Rs {data?.listingPrice?.originalPrice}
             </span>
-          </span>
-          <ModalSelectDate
+          
+          <div className="flex items-baseline">
+          <span className="text-lg font-semibold ml-2">
+              Rs {data?.listingPrice?.finalPrice}
+            </span>
+            <span className="ml-1 text-sm font-normal text-neutral-500 dark:text-neutral-400">
+              /ticket
+            </span>
+            </div>
+          {/* <span className="block text-xl font-semibold">
+            Rs {data?.listingPrice?.finalPrice}
+            <span className="ml-1 text-sm font-normal text-neutral-500 dark:text-neutral-400">
+              /day
+            </span>
+          </span> */}
+          {/* <ModalSelectDate
             renderChildren={({ openModal }) => (
               <span
                 onClick={openModal}
@@ -29,7 +47,7 @@ const MobileFooterSticky = () => {
                 {converSelectedDateToString([startDate, endDate])}
               </span>
             )}
-          />
+          /> */}
         </div>
         <ModalReserveMobile
           renderChildren={({ openModal }) => (

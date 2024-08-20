@@ -56,7 +56,8 @@ async function fetchTourGroupData(slug: string) {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj'
+      'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj',
+      'cache-control': 'no-store'
     }
   });
   if (!response.ok) {
