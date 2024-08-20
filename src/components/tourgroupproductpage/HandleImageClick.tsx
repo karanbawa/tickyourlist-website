@@ -1,8 +1,7 @@
-// components/HandleImageClick.tsx
 'use client';
 
 import { FC, ReactNode, useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { Route } from 'next';
 import { useData } from '@/context/DataContext';
 
@@ -16,7 +15,7 @@ interface HandleImageClickProps {
 
 const HandleImageClick: FC<HandleImageClickProps> = ({
   children,
-  className,
+  className = '',
   tag: Tag = 'div',
   type = 'button',
   data = {}
@@ -24,15 +23,19 @@ const HandleImageClick: FC<HandleImageClickProps> = ({
   const router = useRouter();
   const thisPathname = usePathname();
   const { saveData } = useData();
+  const searchParams = useSearchParams();
 
   const handleOpenModalImageGallery = () => {
     router.push(`${thisPathname}/?modal=PHOTO_TOUR_SCROLLABLE` as Route);
   };
 
   useEffect(() => {
-    saveData(data);
-  },[data])
-
+    const modalParam = searchParams.get('modal');
+    if (modalParam === 'PHOTO_TOUR_SCROLLABLE') {
+      console.log('savedata ', saveData);
+      saveData(data);
+    }
+  }, [data, saveData]);
 
   return (
     <Tag
