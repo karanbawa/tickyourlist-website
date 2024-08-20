@@ -50,7 +50,6 @@ const GoogleLoginComponent: React.FC = () => {
   const handleLogout = () => {
     googleLogout();
     setUser(null);
-    console.log("Logged out");
   };
 
   return (

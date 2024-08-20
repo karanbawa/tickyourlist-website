@@ -58,7 +58,6 @@ async function fetchTourGroupData(slug: string) {
       'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj'
     }
   });
-  console.log('responsedata ', response);
   if (!response.ok) {
     throw new Error('Failed to fetch data');
   }

@@ -9,7 +9,6 @@ interface LikeSaveBtnsProps {
 
 const LikeSaveBtns: React.FC<LikeSaveBtnsProps> = ({ data }) => {
   const handleShare = () => {
-    console.log("datashare ", data);
     if (navigator.share) {
       navigator
         .share({

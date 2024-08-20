@@ -5,8 +5,6 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function DELETE(req: NextRequest) {
     const token = req.headers.get('authorization');
 
-    console.log("tokendata ", token);
-
     const response = await fetch(`${process.env.BASE_URL}/v1/customerlogout/logout`, {
         method: 'DELETE',
         headers: {
@@ -17,10 +15,8 @@ export async function DELETE(req: NextRequest) {
     });
     if (response.status !== 200) {
         const errorData = response;
-        console.log("errorData ", errorData);
         return NextResponse.json({ error: 'Logout failed', errorData }, { status: 500 });
     } else {
-        console.log("checkdata ", response);
         return NextResponse.json({ message: 'Logout successful' });
     }
 }
