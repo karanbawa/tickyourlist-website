@@ -259,10 +259,11 @@ const ListingStayDetailPage: FC<{ params: { slug: string } }> = async ({ params 
         }
         if (domNode.name === "img") {
           return (
-            <img
+            <Image
               className="my-4 rounded-lg"
               src={domNode.attribs.src}
               alt={domNode.attribs.alt}
+              fill
             />
           );
         }

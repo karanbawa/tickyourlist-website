@@ -4,7 +4,7 @@ import React from "react";
 
 // Define the type for the data prop
 interface LikeSaveBtnsProps {
-  data: any;
+  data?: any;
 }
 
 const LikeSaveBtns: React.FC<LikeSaveBtnsProps> = ({ data }) => {
