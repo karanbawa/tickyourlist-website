@@ -8,7 +8,7 @@ import ModalReserveMobile from "./ModalReserveMobile";
 import { useData } from "@/context/DataContext";
 
 interface MobileFooterStickyProps {
-  data: any
+  data?: any
 }
 
 const MobileFooterSticky: FC<MobileFooterStickyProps>  = ({ data }) => {
