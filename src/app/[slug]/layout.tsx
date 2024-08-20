@@ -8,41 +8,24 @@ import { usePathname } from "next/navigation";
 import React, { ReactNode, Suspense, useEffect } from "react";
 import MobileFooterSticky from "../(listing-detail)/(components)/MobileFooterSticky";
 import { ListingGalleryImage } from "@/components/listing-image-gallery/utils/types";
-// import { imageGallery as listingStayImageGallery } from "../(listing-detail)/listing-stay-detail/constant";
-// import { imageGallery as listingCarImageGallery } from "../(listing-detail)/listing-car-detail/constant";
-// import { imageGallery as listingExperienceImageGallery } from "../(listing-detail)/listing-experiences-detail/constant";
+import { useData } from "@/context/DataContext";
 
-const DetailLayout = ({ children, data }: { children: ReactNode; data: any }) => {
+const DetailLayout = ({ children }: { children: ReactNode }) => {
   const thisPathname = usePathname();
+  const { data } = useData();
 
-//   const getImageGalleryListing = () => {
-//     if (thisPathname?.includes("/listing-stay-detail")) {
-//       return listingStayImageGallery;
-//     }
-//     if (thisPathname?.includes("/listing-car-detail")) {
-//       return listingCarImageGallery;
-//     }
-//     if (thisPathname?.includes("/listing-experiences-detail")) {
-//       return listingExperienceImageGallery;
-//     }
-//     return listingStayImageGallery;
-//   };
-
-    const transformImageUploads = (imageUploads: any[]): ListingGalleryImage[] => {
-        return imageUploads?.map((image, index) => ({
-        id: index, // Auto-incremented ID starting from 1
-        url: image?.url,
-        }));
-    };
+  const transformImageUploads = (imageUploads: any[]): ListingGalleryImage[] => {
+    return imageUploads?.map((image, index) => ({
+      id: index, // Auto-incremented ID starting from 1
+      url: image?.url,
+    }));
+  };
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div className="ListingDetailPage">
-      <Suspense fallback={<div>Loading Listing Image Gallery...</div>}>
-        <ListingImageGallery
-          images={transformImageUploads(data?.imageUploads)}
-          data={data}
-        />
+        <Suspense fallback={<div>Loading Listing Image Gallery...</div>}>
+          <ListingImageGallery images={transformImageUploads(data?.imageUploads)} data={data} />
         </Suspense>
         <div className="container ListingDetailPage__content">{children}</div>
 

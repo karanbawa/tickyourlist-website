@@ -12,6 +12,7 @@ import Head from "next/head";
 import { AuthProvider } from "@/context/AuthContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Script from 'next/script';
+import { DataProvider } from "@/context/DataContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -42,11 +43,13 @@ export default function RootLayout({
         </Head>
         <body className="bg-white text-base dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
           <AuthProvider>
+          <DataProvider>
             <ClientCommons />
             <SiteHeader />
             {children}
             <FooterNav />
             <Footer />
+            </DataProvider>
           </AuthProvider>
           <Script
             id="clarity-script"

@@ -25,7 +25,7 @@ export const useAuth = () => {
   return context;
 };
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => { 
   const [user, setUser] = useState<any>(null);
   const [logoutError, setLogoutError] = useState<string | null>(null);
   const [loginError, setLoginError] = useState<string | null>(null);

@@ -23,7 +23,6 @@ import { Metadata } from 'next';
 import HandleImageClick from "@/components/tourgroupproductpage/HandleImageClick";
 import './Highlights.css';
 import parse, { domToReact } from "html-react-parser";
-import DetailLayout from "../layout";
 
 interface Params {
   slug: string;
@@ -679,13 +678,13 @@ const ListingStayDetailPage: FC<{ params: { slug: string } }> = async ({ params 
   );
 
   return (
-    <DetailLayout data={tourGroup}>
     <div className="nc-ListingStayDetailPage">
       <header className="rounded-md sm:rounded-xl">
         <div className="relative grid grid-cols-3 sm:grid-cols-4 gap-1 sm:gap-2">
           <HandleImageClick
             tag="div"
             className="col-span-2 row-span-3 sm:row-span-2 relative rounded-md sm:rounded-xl overflow-hidden"
+            data={tourGroup}
           >
             <Image
               fill
@@ -701,6 +700,7 @@ const ListingStayDetailPage: FC<{ params: { slug: string } }> = async ({ params 
               key={index}
               tag="div"
               className={`relative rounded-md sm:rounded-xl overflow-hidden ${index >= 3 ? "hidden sm:block" : ""}`}
+              data={tourGroup}
             >
               <div className="aspect-w-4 aspect-h-3 sm:aspect-w-6 sm:aspect-h-5">
                 <Image
@@ -717,6 +717,7 @@ const ListingStayDetailPage: FC<{ params: { slug: string } }> = async ({ params 
           <HandleImageClick
             tag="button"
             className="absolute hidden md:flex md:items-center md:justify-center left-3 bottom-3 px-4 py-2 rounded-xl bg-neutral-100 text-neutral-500 hover:bg-neutral-200 z-10"
+            data={tourGroup}
           >
             <Squares2X2Icon className="w-5 h-5" />
             <span className="ml-2 text-neutral-800 text-sm font-medium">
@@ -751,7 +752,6 @@ const ListingStayDetailPage: FC<{ params: { slug: string } }> = async ({ params 
           </div>
         </main>
     </div>
-    </DetailLayout>
   );
 };
 
