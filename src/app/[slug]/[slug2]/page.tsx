@@ -51,6 +51,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 }
 
 async function fetchTourGroupData(slug: string) {
+  console.log("process.env.base_url ", process.env.BASE_URL);
   const response = await fetch(`${process.env.BASE_URL}/v1/customertravel/tour-groups/3?currency=INR&domainId=66b78e74f11dc6cc7660ef73`, {
     method: 'GET',
     headers: {
@@ -64,7 +65,7 @@ async function fetchTourGroupData(slug: string) {
   return response.json();
 }
 
-const ListingStayDetailPage: FC<{ params: { slug: string } }> = async ({ params }) => {
+const ListingTourGroupDetailPage: FC<{ params: { slug: string } }> = async ({ params }) => {
   // let [isOpenModalAmenities, setIsOpenModalAmenities] = useState(false);
   const data = await fetchTourGroupData(params.slug);
   const tourGroup = data.data.tourgroup;
@@ -645,7 +646,7 @@ const ListingStayDetailPage: FC<{ params: { slug: string } }> = async ({ params 
     <div className="listingSectionSidebar__wrap shadow-xl">
       <div className="flex justify-between">
         <span className="text-3xl font-semibold">
-          $119
+          Rs {tourGroup?.listingPrice?.finalPrice}
           <span className="ml-1 text-base font-normal text-neutral-500 dark:text-neutral-400">
             /night
           </span>
@@ -754,4 +755,4 @@ const ListingStayDetailPage: FC<{ params: { slug: string } }> = async ({ params 
   );
 };
 
-export default ListingStayDetailPage;
+export default ListingTourGroupDetailPage;
