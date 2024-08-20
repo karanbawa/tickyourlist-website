@@ -4,26 +4,23 @@ import { ReactDatePickerCustomHeaderProps } from "react-datepicker";
 
 const DatePickerCustomHeaderTwoMonth = ({
   monthDate,
-  customHeaderCount,
   decreaseMonth,
   increaseMonth,
+  prevMonthButtonDisabled,
+  nextMonthButtonDisabled,
 }: ReactDatePickerCustomHeaderProps) => {
   return (
-    <div>
+    <div className="flex justify-between items-center mb-4">
       <button
         aria-label="Previous Month"
-        className={
-          "react-datepicker__navigation react-datepicker__navigation--previous absolute -top-1 left-0 flex items-center justify-center p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
-        }
-        style={customHeaderCount === 1 ? { visibility: "hidden" } : {}}
+        className="react-datepicker__navigation react-datepicker__navigation--previous flex items-center justify-center p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
         onClick={decreaseMonth}
+        disabled={prevMonthButtonDisabled}
         type="button"
       >
-        <span className="react-datepicker__navigation-icon react-datepicker__navigation-icon--previous">
-          <ChevronLeftIcon className="w-5 h-5" />
-        </span>
+        <ChevronLeftIcon className="w-5 h-5" />
       </button>
-      <span className="react-datepicker__current-month">
+      <span className="react-datepicker__current-month text-lg font-semibold">
         {monthDate.toLocaleString("en-US", {
           month: "long",
           year: "numeric",
@@ -31,14 +28,12 @@ const DatePickerCustomHeaderTwoMonth = ({
       </span>
       <button
         aria-label="Next Month"
-        className="react-datepicker__navigation react-datepicker__navigation--next absolute -top-1 -right-0 flex items-center justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full"
-        style={customHeaderCount === 0 ? { visibility: "hidden" } : {}}
-        type="button"
+        className="react-datepicker__navigation react-datepicker__navigation--next flex items-center justify-center p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
         onClick={increaseMonth}
+        disabled={nextMonthButtonDisabled}
+        type="button"
       >
-        <span className="react-datepicker__navigation-icon react-datepicker__navigation-icon--next">
-          <ChevronRightIcon className="w-5 h-5" />
-        </span>
+        <ChevronRightIcon className="w-5 h-5" />
       </button>
     </div>
   );

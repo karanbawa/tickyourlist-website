@@ -15,6 +15,7 @@ export interface ButtonProps {
   type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
   href?: Route<string>;
   targetBlank?: boolean;
+  style?: React.CSSProperties; // Change style prop to expect an object
   onClick?: () => void;
   children?: React.ReactNode;
 }
@@ -30,9 +31,10 @@ const Button: FC<ButtonProps> = ({
   targetBlank,
   type,
   loading,
+  style = {}, // Initialize style as an empty object
   onClick = () => {},
 }) => {
-  const CLASSES = `nc-Button relative h-auto inline-flex items-center justify-center rounded-full transition-colors ${fontSize} ${sizeClass} ${translate} ${className} `;
+  const CLASSES = `nc-Button relative h-auto inline-flex items-center justify-center rounded-full transition-colors ${fontSize} ${sizeClass} ${translate} ${className}`;
 
   const _renderLoading = () => {
     return (
@@ -64,8 +66,9 @@ const Button: FC<ButtonProps> = ({
       <Link
         href={href}
         target={targetBlank ? "_blank" : undefined}
-        className={`${CLASSES} `}
+        className={`${CLASSES}`}
         onClick={onClick}
+        style={style} // Use the style object
         rel={targetBlank ? "noopener noreferrer" : undefined}
       >
         {children || `This is Link`}
@@ -79,6 +82,7 @@ const Button: FC<ButtonProps> = ({
       className={`${CLASSES}`}
       onClick={onClick}
       type={type}
+      style={style} // Use the style object
     >
       {loading && _renderLoading()}
       {children || `This is Button`}

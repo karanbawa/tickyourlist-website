@@ -23,6 +23,8 @@ import { Metadata } from 'next';
 import HandleImageClick from "@/components/tourgroupproductpage/HandleImageClick";
 import './Highlights.css';
 import parse, { domToReact } from "html-react-parser";
+import SidebarBooking from "@/components/tour-group-booking/SideBarBooking";
+import MobileFooterSticky from "@/app/(listing-detail)/(components)/MobileFooterSticky";
 
 interface Params {
   slug: string;
@@ -654,28 +656,8 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string } }> = async ({ pa
         </span>
         <StartRating />
       </div>
-      <form className="flex flex-col border border-neutral-200 dark:border-neutral-700 rounded-3xl">
-        <StayDatesRangeInput className="flex-1 z-[11]" />
-        <div className="w-full border-b border-neutral-200 dark:border-neutral-700"></div>
-        <GuestsInput className="flex-1" />
-      </form>
-      <div className="flex flex-col space-y-4">
-        <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-          <span>$119 x 3 night</span>
-          <span>$357</span>
-        </div>
-        <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-          <span>Service charge</span>
-          <span>$0</span>
-        </div>
-        <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
-        <div className="flex justify-between font-semibold">
-          <span>Total</span>
-          <span>$199</span>
-        </div>
-      </div>
-      <ButtonPrimary href="/checkout">Reserve</ButtonPrimary>
-    </div>
+   <SidebarBooking tourGroup={tourGroup} />
+   </div>
   );
 
   return (
@@ -752,6 +734,8 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string } }> = async ({ pa
             <div className="sticky top-28">{renderSidebar()}</div>
           </div>
         </main>
+         {/* STICKY FOOTER MOBILE */}
+         <MobileFooterSticky data={tourGroup} />
     </div>
   );
 };

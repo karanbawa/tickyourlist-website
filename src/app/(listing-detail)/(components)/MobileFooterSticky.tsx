@@ -54,8 +54,9 @@ const MobileFooterSticky: FC<MobileFooterStickyProps>  = ({ data }) => {
             <ButtonPrimary
               sizeClass="px-5 sm:px-7 py-3 !rounded-2xl"
               onClick={openModal}
+              style={{ backgroundColor: '#7C25E9' }}
             >
-              Reserve
+              Book Now
             </ButtonPrimary>
           )}
         />
