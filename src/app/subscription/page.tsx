@@ -92,7 +92,7 @@ const PageSubcription: FC<PageSubcriptionProps> = () => {
         </nav>
         <div className="flex flex-col mt-auto">
           {pricing.isPopular ? (
-            <ButtonPrimary>Submit</ButtonPrimary>
+            <ButtonPrimary style={{ backgroundColor: '#7C25E9' }}>Submit</ButtonPrimary>
           ) : (
             <ButtonSecondary>
               <span className="font-medium">Submit</span>

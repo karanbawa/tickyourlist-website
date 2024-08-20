@@ -114,7 +114,7 @@ const PageAddListing5: FC<PageAddListing5Props> = () => {
         </div>
         <div className="flex flex-col sm:flex-row sm:justify-between space-y-3 sm:space-y-0 sm:space-x-5">
           <Input className="!h-full" placeholder="No smoking..." />
-          <ButtonPrimary className="flex-shrink-0">
+          <ButtonPrimary className="flex-shrink-0" style={{ backgroundColor: '#7C25E9' }}>
             <i className="text-xl las la-plus"></i>
             <span className="ml-3">Add tag</span>
           </ButtonPrimary>

@@ -95,7 +95,7 @@ const SectionGridFilterCard: FC<SectionGridFilterCardProps> = ({
         ))}
 
         <div className="flex mt-12 justify-center items-center">
-          <ButtonPrimary loading>Show more</ButtonPrimary>
+          <ButtonPrimary loading style={{ backgroundColor: '#7C25E9' }}>Show more</ButtonPrimary>
         </div>
       </div>
     </div>

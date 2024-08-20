@@ -60,7 +60,7 @@ const SectionGridFeaturePlaces: FC<SectionGridFeaturePlacesProps> = ({
         {stayListings.map((stay) => renderCard(stay))}
       </div>
       <div className="flex mt-16 justify-center items-center">
-        <ButtonPrimary loading>Show me more</ButtonPrimary>
+        <ButtonPrimary loading style={{ backgroundColor: '#7C25E9' }}>Show me more</ButtonPrimary>
       </div>
     </div>
   );

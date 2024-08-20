@@ -76,7 +76,7 @@ const PageContact: FC<PageContactProps> = ({}) => {
                   <Textarea className="mt-1" rows={6} />
                 </label>
                 <div>
-                  <ButtonPrimary type="submit">Send Message</ButtonPrimary>
+                  <ButtonPrimary style={{ backgroundColor: '#7C25E9' }} type="submit">Send Message</ButtonPrimary>
                 </div>
               </form>
             </div>

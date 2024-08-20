@@ -90,7 +90,7 @@ const AccountPage = () => {
             <Textarea className="mt-1.5" defaultValue="..." />
           </div>
           <div className="pt-2">
-            <ButtonPrimary>Update info</ButtonPrimary>
+            <ButtonPrimary style={{ backgroundColor: '#7C25E9' }}>Update info</ButtonPrimary>
           </div>
         </div>
       </div>

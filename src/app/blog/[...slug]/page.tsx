@@ -218,7 +218,7 @@ const Page = ({
         <form className="nc-SingleCommentForm mt-5">
           <Textarea />
           <div className="mt-2 space-x-3">
-            <ButtonPrimary>Submit</ButtonPrimary>
+            <ButtonPrimary style={{ backgroundColor: '#7C25E9' }}>Submit</ButtonPrimary>
             <ButtonSecondary>Cancel</ButtonSecondary>
           </div>
         </form>

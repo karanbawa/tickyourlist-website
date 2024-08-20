@@ -55,12 +55,12 @@ const VerifyContent = () => {
                     ) : verificationSuccess ? (
                         <>
                             <p className="text-green-600">{status}</p>
-                            <ButtonPrimary onClick={() => window.location.href = '/login'} className='mt-8'>Go to Login</ButtonPrimary>
+                            <ButtonPrimary style={{ backgroundColor: '#7C25E9' }} onClick={() => window.location.href = '/login'} className='mt-8'>Go to Login</ButtonPrimary>
                         </>
                     ) : (
                         <>
                             <p className="text-red-600">{status}</p>
-                            <ButtonPrimary onClick={() => window.location.href = '/signup'} className='mt-8'>Try Again</ButtonPrimary>
+                            <ButtonPrimary style={{ backgroundColor: '#7C25E9' }} onClick={() => window.location.href = '/signup'} className='mt-8'>Try Again</ButtonPrimary>
                         </>
                     )}
                 </div>

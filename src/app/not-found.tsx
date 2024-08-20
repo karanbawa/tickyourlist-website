@@ -13,7 +13,7 @@ const Page404 = () => (
           {`THE PAGE YOU WERE LOOKING FOR DOESN'T EXIST.`}{" "}
         </span>
         <div className="pt-8">
-          <ButtonPrimary href="/">Return Home Page</ButtonPrimary>
+          <ButtonPrimary href="/" style={{ backgroundColor: '#7C25E9' }}>Return Home Page</ButtonPrimary>
         </div>
       </header>
     </div>

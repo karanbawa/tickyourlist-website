@@ -450,9 +450,9 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({}) => {
         <StartRating />
       </div>
       <form className="flex flex-col border border-neutral-200 dark:border-neutral-700 rounded-3xl">
-        <StayDatesRangeInput className="flex-1 z-[11]" />
+        <StayDatesRangeInput onChangeDate={(e) => {console.log(e)}} className="flex-1 z-[11]" />
         <div className="w-full border-b border-neutral-200 dark:border-neutral-700"></div>
-        <GuestsInput className="flex-1" />
+        <GuestsInput onChangeGuests={(e) => {console.log(e)}} className="flex-1" />
       </form>
       <div className="flex flex-col space-y-4">
         <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
@@ -469,7 +469,7 @@ const ListingStayDetailPage: FC<ListingStayDetailPageProps> = ({}) => {
           <span>$199</span>
         </div>
       </div>
-      <ButtonPrimary href="/checkout">Reserve</ButtonPrimary>
+      <ButtonPrimary href="/checkout" style={{ backgroundColor: '#7C25E9' }}>Reserve</ButtonPrimary>
     </div>
   );
 

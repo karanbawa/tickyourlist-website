@@ -124,7 +124,7 @@ const PayPage: FC<PayPageProps> = () => {
           </div>
         </div>
         <div>
-          <ButtonPrimary href="/">Explore more stays</ButtonPrimary>
+          <ButtonPrimary style={{ backgroundColor: '#7C25E9' }} href="/">Explore more stays</ButtonPrimary>
         </div>
       </div>
     );

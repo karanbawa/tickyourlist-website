@@ -269,7 +269,7 @@ const ListingCarDetailPage: FC<ListingCarDetailPageProps> = ({}) => {
           <span>$199</span>
         </div>
       </div>
-      <ButtonPrimary href="/checkout">Reserve</ButtonPrimary>
+      <ButtonPrimary href="/checkout" style={{ backgroundColor: '#7C25E9' }}>Reserve</ButtonPrimary>
     </div>
   );
 

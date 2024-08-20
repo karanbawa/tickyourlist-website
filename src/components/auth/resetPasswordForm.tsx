@@ -94,7 +94,7 @@ const ResetPasswordForm: React.FC = () => {
           <span className="text-red-500 text-sm">{errors.confirmPassword}</span>
         )}
         {errors.api && <span className="text-red-500 text-sm">{errors.api}</span>}
-        <ButtonPrimary type="submit">Reset Password</ButtonPrimary>
+        <ButtonPrimary style={{ backgroundColor: '#7C25E9' }} type="submit">Reset Password</ButtonPrimary>
       </form>
       {notification && <div className="mt-4 text-green-600 text-center">{notification}</div>}
     </div>

@@ -115,6 +115,7 @@ const TabFilters = () => {
                     <ButtonPrimary
                       onClick={close}
                       sizeClass="px-4 py-2 sm:px-5"
+                      style={{ backgroundColor: '#7C25E9' }}
                     >
                       Apply
                     </ButtonPrimary>
@@ -224,6 +225,7 @@ const TabFilters = () => {
                     <ButtonPrimary
                       onClick={close}
                       sizeClass="px-4 py-2 sm:px-5"
+                      style={{ backgroundColor: '#7C25E9' }}
                     >
                       Apply
                     </ButtonPrimary>
@@ -288,6 +290,7 @@ const TabFilters = () => {
                     <ButtonPrimary
                       onClick={close}
                       sizeClass="px-4 py-2 sm:px-5"
+                      style={{ backgroundColor: '#7C25E9' }}
                     >
                       Apply
                     </ButtonPrimary>
@@ -537,6 +540,7 @@ const TabFilters = () => {
                     <ButtonPrimary
                       onClick={closeModalMoreFilterMobile}
                       sizeClass="px-4 py-2 sm:px-5"
+                      style={{ backgroundColor: '#7C25E9' }}
                     >
                       Apply
                     </ButtonPrimary>
@@ -651,6 +655,7 @@ const TabFilters = () => {
                     <ButtonPrimary
                       onClick={closeModalMoreFilter}
                       sizeClass="px-4 py-2 sm:px-5"
+                      style={{ backgroundColor: '#7C25E9' }}
                     >
                       Apply
                     </ButtonPrimary>

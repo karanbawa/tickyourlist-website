@@ -357,7 +357,7 @@ const ListingExperiencesDetailPage: FC<ListingExperiencesDetailPageProps> = () =
           <span>$57</span>
         </div>
       </div>
-      <ButtonPrimary href="/checkout">Reserve</ButtonPrimary>
+      <ButtonPrimary href="/checkout" style={{ backgroundColor: '#7C25E9' }}>Reserve</ButtonPrimary>
     </div>
   );
 

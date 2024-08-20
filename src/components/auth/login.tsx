@@ -81,7 +81,7 @@ export default function Login() {
           />
         </label>
         {errors.api && <span className="text-red-500 text-sm">{errors.api}</span>}
-        <ButtonPrimary type="submit">Continue</ButtonPrimary>
+        <ButtonPrimary style={{ backgroundColor: '#7C25E9' }} type="submit">Continue</ButtonPrimary>
       </form>
       {notification && <div className="mt-4 text-green-600 text-center">{notification}</div>}
     </div>

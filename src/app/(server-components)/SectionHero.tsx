@@ -22,7 +22,7 @@ const SectionHero: FC<SectionHeroProps> = ({ className = "" }) => {
             Accompanying us, you have a trip full of experiences. With Chisfis,
             booking accommodation, resort villas, hotels
           </span>
-          <ButtonPrimary href="/listing-stay-map" sizeClass="px-5 py-4 sm:px-7">
+          <ButtonPrimary href="/listing-stay-map" sizeClass="px-5 py-4 sm:px-7" style={{ backgroundColor: '#7C25E9' }}>
             Start your search
           </ButtonPrimary>
         </div>

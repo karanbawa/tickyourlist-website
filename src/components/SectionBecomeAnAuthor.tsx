@@ -28,7 +28,7 @@ const SectionBecomeAnAuthor: FC<SectionBecomeAnAuthorProps> = ({
           booking accommodation, resort villas, hotels, private houses,
           apartments... becomes fast, convenient and easy.
         </span>
-        <ButtonPrimary className="mt-6 sm:mt-11">
+        <ButtonPrimary className="mt-6 sm:mt-11" style={{ backgroundColor: '#7C25E9' }}>
           Become an author
         </ButtonPrimary>
       </div>

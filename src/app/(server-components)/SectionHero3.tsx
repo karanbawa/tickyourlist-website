@@ -23,6 +23,7 @@ const SectionHero3: FC<SectionHero3Props> = ({ className = "" }) => {
         <ButtonPrimary
           sizeClass="px-6 py-3 lg:px-8 lg:py-4 rounded-xl"
           fontSize="text-sm sm:text-base lg:text-lg font-medium"
+          style={{ backgroundColor: '#7C25E9' }}
         >
           Keep calm & travel on
         </ButtonPrimary>

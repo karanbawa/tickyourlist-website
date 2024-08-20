@@ -120,6 +120,7 @@ const ModalSelectDate: FC<ModalSelectDateProps> = ({ renderChildren }) => {
                         Clear dates
                       </button>
                       <ButtonPrimary
+                        style={{ backgroundColor: '#7C25E9' }}
                         sizeClass="px-6 py-3 !rounded-xl"
                         onClick={() => {
                           closeModal();

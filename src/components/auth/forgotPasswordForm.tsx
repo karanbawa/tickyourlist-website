@@ -54,7 +54,7 @@ export default function ForgotPasswordForm() {
           />
         </label>
         {errors.api && <span className="text-red-500 text-sm">{errors.api}</span>}
-        <ButtonPrimary type="submit">Send Verification Email</ButtonPrimary>
+        <ButtonPrimary style={{ backgroundColor: '#7C25E9' }} type="submit">Send Verification Email</ButtonPrimary>
       </form>
       {notification && <div className="mt-4 text-green-600 text-center">{notification}</div>}
     </div>

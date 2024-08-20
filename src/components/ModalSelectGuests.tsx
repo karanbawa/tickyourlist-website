@@ -83,6 +83,7 @@ const ModalSelectGuests: FC<ModalSelectGuestsProps> = ({ renderChildren }) => {
                       </button>
                       <ButtonPrimary
                         sizeClass="px-6 py-3 !rounded-xl"
+                        style={{ backgroundColor: '#7C25E9' }}
                         onClick={() => {
                           closeModal();
                         }}

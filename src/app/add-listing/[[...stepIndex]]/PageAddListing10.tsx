@@ -34,7 +34,7 @@ const PageAddListing10: FC<PageAddListing10Props> = () => {
             <span className="ml-3">Edit</span>
           </ButtonSecondary>
 
-          <ButtonPrimary>
+          <ButtonPrimary style={{ backgroundColor: '#7C25E9' }}>
             <EyeIcon className="h-5 w-5" />
             <span className="ml-3">Preview</span>
           </ButtonPrimary>
