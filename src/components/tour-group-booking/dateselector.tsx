@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 
 const DateSelection = () => {
   const [selectedDate, setSelectedDate] = useState("Sep 11"); // Example of selected date
-  const [displayedDates, setDisplayedDates] = useState([]);
+  const [displayedDates, setDisplayedDates] = useState([] as any);
 
   const dates = [
     { day: "Mon", date: "Sep 9", price: "₹4.9K" },
@@ -14,7 +14,7 @@ const DateSelection = () => {
     { day: "Fri", date: "Sep 13", price: "₹4.9K" },
     { day: "Sat", date: "Sep 14", price: "₹4.9K" },
     { day: "Sun", date: "Sep 15", price: "₹4.9K" },
-  ];
+  ] as any;
 
   // Function to determine how many dates to show based on screen size
   const updateDisplayedDates = () => {
@@ -52,7 +52,7 @@ const DateSelection = () => {
 
       <div className="relative overflow-x-auto no-scrollbar">
         <div className="flex gap-2 items-center justify-start md:justify-between">
-          {displayedDates.map((dateItem) => (
+          {displayedDates.map((dateItem: any) => (
             <button
               key={dateItem.date}
               onClick={() => setSelectedDate(dateItem.date)}

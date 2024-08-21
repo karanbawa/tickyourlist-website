@@ -111,6 +111,13 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         </h2>
         <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
         <div>
+
+        <div>
+            <h3 className="text-2xl font-semibold">Select a preference</h3>
+           
+          </div>
+
+
           <div>
             <h3 className="text-2xl font-semibold">Your ticket</h3>
             <NcModal
@@ -126,31 +133,10 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
               modalTitle="Booking details"
             />
           </div>
-          {/* <div className="mt-6 border border-neutral-200 dark:border-neutral-700 rounded-3xl flex flex-col sm:flex-row divide-y sm:divide-x sm:divide-y-0 divide-neutral-200 dark:divide-neutral-700 overflow-hidden z-10"> */}
-          <form className="mt-6 flex flex-col border border-neutral-200 dark:border-neutral-700 rounded-3xl z-10">
+          <div className="mt-6 border border-neutral-200 dark:border-neutral-700 rounded-3xl flex flex-col sm:flex-row divide-y sm:divide-x sm:divide-y-0 divide-neutral-200 dark:divide-neutral-700 z-10">
+          {/* <form className="mt-6 flex flex-col border border-neutral-200 dark:border-neutral-700 rounded-3xl z-10"> */}
             <StayDatesRangeInput className="flex-1 z-[11]" onChangeDate={setStayDate} />
-            {/* <div className="w-full border-b border-neutral-200 dark:border-neutral-700"></div>
-            <GuestsInput className="flex-1" onChangeGuests={setGuests} /> */}
-          </form>
-            {/* <ModalSelectDate
-              renderChildren={({ openModal }) => (
-                <button
-                  onClick={openModal}
-                  className="text-left flex-1 p-5 flex justify-between space-x-5 hover:bg-neutral-50 dark:hover:bg-neutral-800"
-                  type="button"
-                >
-                  <div className="flex flex-col">
-                    <span className="text-sm text-neutral-400">Date</span>
-                    <span className="mt-1.5 text-lg font-semibold">
-                      {converSelectedDateToString([startDate, endDate])}
-                    </span>
-                  </div>
-                  <PencilSquareIcon className="w-6 h-6 text-neutral-6000 dark:text-neutral-400" />
-                </button>
-              )}
-            /> */}
-
-            {/* <ModalSelectGuests
+            <ModalSelectGuests
               renderChildren={({ openModal }) => (
                 <button
                   type="button"
@@ -171,11 +157,34 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                   <PencilSquareIcon className="w-6 h-6 text-neutral-6000 dark:text-neutral-400" />
                 </button>
               )}
+            />
+            {/* <div className="w-full border-b border-neutral-200 dark:border-neutral-700"></div>
+            <GuestsInput className="flex-1" onChangeGuests={setGuests} /> */}
+          {/* </form> */}
+          </div>
+            {/* <ModalSelectDate
+              renderChildren={({ openModal }) => (
+                <button
+                  onClick={openModal}
+                  className="text-left flex-1 p-5 flex justify-between space-x-5 hover:bg-neutral-50 dark:hover:bg-neutral-800"
+                  type="button"
+                >
+                  <div className="flex flex-col">
+                    <span className="text-sm text-neutral-400">Date</span>
+                    <span className="mt-1.5 text-lg font-semibold">
+                      {converSelectedDateToString([startDate, endDate])}
+                    </span>
+                  </div>
+                  <PencilSquareIcon className="w-6 h-6 text-neutral-6000 dark:text-neutral-400" />
+                </button>
+              )}
             /> */}
+
+        {/* <div className="mt-6 border border-neutral-200 dark:border-neutral-700 rounded-3xl flex flex-col sm:flex-row divide-y sm:divide-x sm:divide-y-0 divide-neutral-200 dark:divide-neutral-700 overflow-hidden z-10"> */}
           {/* </div> */}
         </div>
         
-        <GuestsInput />
+        {/* <GuestsInput /> */}
 
         <div>
           <h3 className="text-2xl font-semibold">Pay with</h3>
