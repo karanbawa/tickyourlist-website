@@ -2,7 +2,7 @@
 
 import { Tab } from "@headlessui/react";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
-import React, { FC, Fragment, useState } from "react";
+import React, { FC, Fragment, useEffect, useState } from "react";
 import visaPng from "@/images/vis.png";
 import mastercardPng from "@/images/mastercard.svg";
 import Input from "@/shared/Input";
@@ -16,6 +16,9 @@ import converSelectedDateToString from "@/utils/converSelectedDateToString";
 import ModalSelectGuests from "@/components/ModalSelectGuests";
 import Image from "next/image";
 import { GuestsObject } from "../(client-components)/type";
+import { useRouter } from "next/navigation";
+import GuestsInput from "../(client-components)/(HeroSearchForm2Mobile)/GuestsInput";
+import StayDatesRangeInput from "../(listing-detail)/listing-stay-detail/StayDatesRangeInput";
 
 export interface CheckOutPagePageMainProps {
   className?: string;
@@ -24,16 +27,30 @@ export interface CheckOutPagePageMainProps {
 const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   className = "",
 }) => {
-  const [startDate, setStartDate] = useState<Date | null>(
-    new Date("2023/02/06")
-  );
-  const [endDate, setEndDate] = useState<Date | null>(new Date("2023/02/23"));
+  // const [startDate, setStartDate] = useState<Date | null>(
+  //   new Date("2023/02/06")
+  // );
+  const [stayDate, setStayDate] = useState<Date | null>(null);
+  // const [endDate, setEndDate] = useState<Date | null>(new Date("2023/02/23"));
+  const router = useRouter();
 
   const [guests, setGuests] = useState<GuestsObject>({
     guestAdults: 2,
     guestChildren: 1,
     guestInfants: 1,
   });
+
+  useEffect(() => {
+    // Access query parameters from URL
+    const searchParams = new URLSearchParams(window.location.search);
+    const tourid = searchParams.get("tourId");
+    const date = searchParams.get("date");
+
+    // Now you can use `tourid` and `date` to fetch or initialize state
+    console.log("Tour ID:", tourid);
+    console.log("Date:", date);
+  }, []);
+
 
   const renderSidebar = () => {
     return (
@@ -95,7 +112,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
         <div>
           <div>
-            <h3 className="text-2xl font-semibold">Your trip</h3>
+            <h3 className="text-2xl font-semibold">Your ticket</h3>
             <NcModal
               renderTrigger={(openModal) => (
                 <span
@@ -109,8 +126,13 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
               modalTitle="Booking details"
             />
           </div>
-          <div className="mt-6 border border-neutral-200 dark:border-neutral-700 rounded-3xl flex flex-col sm:flex-row divide-y sm:divide-x sm:divide-y-0 divide-neutral-200 dark:divide-neutral-700 overflow-hidden z-10">
-            <ModalSelectDate
+          {/* <div className="mt-6 border border-neutral-200 dark:border-neutral-700 rounded-3xl flex flex-col sm:flex-row divide-y sm:divide-x sm:divide-y-0 divide-neutral-200 dark:divide-neutral-700 overflow-hidden z-10"> */}
+          <form className="mt-6 flex flex-col border border-neutral-200 dark:border-neutral-700 rounded-3xl z-10">
+            <StayDatesRangeInput className="flex-1 z-[11]" onChangeDate={setStayDate} />
+            {/* <div className="w-full border-b border-neutral-200 dark:border-neutral-700"></div>
+            <GuestsInput className="flex-1" onChangeGuests={setGuests} /> */}
+          </form>
+            {/* <ModalSelectDate
               renderChildren={({ openModal }) => (
                 <button
                   onClick={openModal}
@@ -126,9 +148,9 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                   <PencilSquareIcon className="w-6 h-6 text-neutral-6000 dark:text-neutral-400" />
                 </button>
               )}
-            />
+            /> */}
 
-            <ModalSelectGuests
+            {/* <ModalSelectGuests
               renderChildren={({ openModal }) => (
                 <button
                   type="button"
@@ -149,9 +171,11 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                   <PencilSquareIcon className="w-6 h-6 text-neutral-6000 dark:text-neutral-400" />
                 </button>
               )}
-            />
-          </div>
+            /> */}
+          {/* </div> */}
         </div>
+        
+        <GuestsInput />
 
         <div>
           <h3 className="text-2xl font-semibold">Pay with</h3>

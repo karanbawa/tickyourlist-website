@@ -2,9 +2,9 @@
 
 import React, { useState, FC } from "react";
 import StayDatesRangeInput from "@/app/(listing-detail)/listing-stay-detail/StayDatesRangeInput";
-import GuestsInput from "@/app/(listing-detail)/listing-stay-detail/GuestsInput";
 import ButtonPrimary from "@/shared/ButtonPrimary";
 import { GuestsObject } from "@/app/(client-components)/type";
+import { useRouter } from "next/navigation";
 
 interface SidebarBookingProps {
   tourGroup: any;
@@ -18,6 +18,8 @@ const SidebarBooking: FC<SidebarBookingProps> = ({ tourGroup }) => {
     guestInfants: 0,
   });
 
+  const router = useRouter();
+
   const totalGuests = () => {
     return (
       (guests?.guestAdults || 0) +
@@ -26,17 +28,23 @@ const SidebarBooking: FC<SidebarBookingProps> = ({ tourGroup }) => {
     );
   };
 
+  const handleBookNow = () => {
+    if (tourGroup?.id && stayDate) {
+      const formattedDate = encodeURIComponent(
+        stayDate?.toLocaleDateString("en-CA")
+      );
+      router.push(`/checkout?tourId=${tourGroup.id}&date=${formattedDate}`);
+    }
+  };
+
   return (
     <>
       <form className="flex flex-col border border-neutral-200 dark:border-neutral-700 rounded-3xl">
-        <StayDatesRangeInput
-          className="flex-1 z-[11]"
-          onChangeDate={setStayDate} // Pass the setStayDate function to update the date
-        />
-        <div className="w-full border-b border-neutral-200 dark:border-neutral-700"></div>
-        <GuestsInput className="flex-1" onChangeGuests={setGuests} />
+        <StayDatesRangeInput className="flex-1 z-[11]" onChangeDate={setStayDate} />
+        {/* <div className="w-full border-b border-neutral-200 dark:border-neutral-700"></div>
+        <GuestsInput className="flex-1" onChangeGuests={setGuests} /> */}
       </form>
-      <div className="flex flex-col space-y-4">
+      {/* <div className="flex flex-col space-y-4">
         <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
           <span>$119 x {totalGuests()} tickets</span>
           <span>${119 * totalGuests()}</span>
@@ -56,14 +64,20 @@ const SidebarBooking: FC<SidebarBookingProps> = ({ tourGroup }) => {
         </div>
         <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
           <span>Children</span>
-          <span>{guests.guestChildren}</span>
+          <span>{guests.guestChildren()}</span>
         </div>
         <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
           <span>Infants</span>
-          <span>{guests.guestInfants}</span>
+          <span>{guests.guestInfants()}</span>
         </div>
-      </div>
-      <ButtonPrimary href="/checkout" style={{ backgroundColor: '#7C25E9' }}>Book Now</ButtonPrimary>
+      </div> */}
+      <ButtonPrimary
+        onClick={handleBookNow}
+        style={{ backgroundColor: stayDate ? "#7C25E9" : 'gray' }}
+        disabled={!stayDate} // Disable the button if stayDate is null
+      >
+        Book Now
+      </ButtonPrimary>
     </>
   );
 };

@@ -651,7 +651,7 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string } }> = async ({ pa
         <span className="text-3xl font-semibold">
           Rs {tourGroup?.listingPrice?.finalPrice}
           <span className="ml-1 text-base font-normal text-neutral-500 dark:text-neutral-400">
-            /night
+            /ticket
           </span>
         </span>
         <StartRating />
