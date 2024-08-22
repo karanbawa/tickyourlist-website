@@ -73,10 +73,11 @@ const SidebarBooking: FC<SidebarBookingProps> = ({ tourGroup }) => {
       </div> */}
       <ButtonPrimary
         onClick={handleBookNow}
-        style={{ backgroundColor: stayDate ? "#7C25E9" : 'gray' }}
+        style={{ backgroundColor: "#7C25E9" }}
+        // style={{ backgroundColor: stayDate ? "#7C25E9" : 'gray' }}
         disabled={!stayDate} // Disable the button if stayDate is null
       >
-        Book Now
+        {stayDate ? `Book Now` : `Select a Date`}
       </ButtonPrimary>
     </>
   );

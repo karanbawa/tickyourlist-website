@@ -645,6 +645,39 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string } }> = async ({ pa
     </div>
   );
 
+  const renderSidebarDetail = () => (
+    <div className="listingSection__wrap lg:shadow-xl">
+      <span className="text-2xl font-semibold block">
+        Pick up and drop off
+      </span>
+      <div className="mt-8 flex">
+        <div className="flex-shrink-0 flex flex-col items-center py-2">
+          <span className="block w-6 h-6 rounded-full border border-neutral-400"></span>
+          <span className="block flex-grow border-l border-neutral-400 border-dashed my-1"></span>
+          <span className="block w-6 h-6 rounded-full border border-neutral-400"></span>
+        </div>
+        <div className="ml-4 space-y-14 text-sm">
+          <div className="flex flex-col space-y-2">
+            <span className="text-neutral-500 dark:text-neutral-400">
+              Monday, August 12 · 10:00
+            </span>
+            <span className="font-semibold">
+              Saint Petersburg City Center
+            </span>
+          </div>
+          <div className="flex flex-col space-y-2">
+            <span className="text-neutral-500 dark:text-neutral-400">
+              Monday, August 16 · 10:00
+            </span>
+            <span className="font-semibold">
+              Saint Petersburg City Center
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   const renderSidebar = () => (
     <div className="listingSectionSidebar__wrap shadow-xl">
       <div className="flex justify-between">
@@ -730,9 +763,16 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string } }> = async ({ pa
             {renderSection7()}
             {renderSection8()} */}
           </div>
-          <div className="hidden lg:block flex-grow mt-14 lg:mt-0">
+          {/* <div className="hidden lg:block flex-grow mt-14 lg:mt-0">
             <div className="sticky top-28">{renderSidebar()}</div>
+          </div> */}
+          <div className="hidden lg:block flex-grow mt-14 lg:mt-0">
+          {renderSidebar()}
+          <div className="hidden lg:block mt-10 sticky top-28">
+          {/* {renderSidebar()} */}
+            {renderSidebarDetail()}
           </div>
+        </div>
         </main>
          {/* STICKY FOOTER MOBILE */}
          <MobileFooterSticky data={tourGroup} />
