@@ -19,10 +19,18 @@ import { GuestsObject } from "../(client-components)/type";
 import { useRouter } from "next/navigation";
 import GuestsInput from "../(client-components)/(HeroSearchForm2Mobile)/GuestsInput";
 import StayDatesRangeInput from "../(listing-detail)/listing-stay-detail/StayDatesRangeInput";
+import { DEMO_AUTHORS } from "@/data/authors";
+import CardAuthorBox2 from "@/components/CardAuthorBox2";
+import CardAuthorBox from "@/components/CardAuthorBox";
+import CardVariant from "@/components/tour-group-booking/CardVariants";
+
+
 
 export interface CheckOutPagePageMainProps {
   className?: string;
 }
+
+const DEMO_DATA = DEMO_AUTHORS.filter((_, i) => i < 4);
 
 const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   className = "",
@@ -103,23 +111,10 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     );
   };
 
-  const renderMain = () => {
+  const renderViewBookings = () => {
     return (
-      <div className="w-full flex flex-col sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-8 px-0 sm:p-6 xl:p-8">
-        <h2 className="text-3xl lg:text-4xl font-semibold">
-          Confirm and payment
-        </h2>
-        <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
-        <div>
-
-        <div>
-            <h3 className="text-2xl font-semibold">Select a preference</h3>
-           
-          </div>
-
-
-          <div>
-            <h3 className="text-2xl font-semibold">Your ticket</h3>
+      <div>
+            <h3 className="text-2xl font-semibold mt-6">Your ticket</h3>
             <NcModal
               renderTrigger={(openModal) => (
                 <span
@@ -133,6 +128,82 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
               modalTitle="Booking details"
             />
           </div>
+    )
+  }
+
+  const renderPreference = () => {
+    const demoVariants = [
+      {
+        title: "IMG Tickets",
+        originalPrice: 8339,
+        discountedPrice: 4912,
+        discount: "Save up to 41%",
+        features: [
+          "Entry into IMG Worlds of Adventure",
+          "Unlimited access to all rides",
+        ],
+      },
+      {
+        title: "IMG Tickets with Combo Meal",
+        originalPrice: 9710,
+        discountedPrice: 6511,
+        discount: "Save up to 33%",
+        features: [
+          "Combo meal voucher",
+          "Entry into IMG Worlds of Adventure",
+          "Unlimited access to all rides",
+        ],
+      },
+      {
+        title: "IMG Fast Track Tickets",
+        originalPrice: 12337,
+        discountedPrice: 10281,
+        discount: "Save up to 17%",
+        features: [
+          "Fast-track entry to all rides and attractions",
+          "Unlimited access to all rides",
+          "Tickets are valid for both UAE residents & tourists",
+        ],
+      },
+    ];
+  
+    return (
+      <div className="flex flex-col">
+        <h3 className="text-2xl font-semibold mb-4">Select a preference</h3>
+        <div className="flex lg:justify-between gap-4 overflow-x-auto xl:overflow-x-visible">
+          <div className="flex flex-grow-1 gap-4">
+            {demoVariants.map((variant, index) => (
+              <CardVariant
+                key={index}
+                title={variant.title}
+                originalPrice={variant.originalPrice}
+                discountedPrice={variant.discountedPrice}
+                discount={variant.discount}
+                features={variant.features}
+                className="flex-shrink-0 xl:flex-grow-1"
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  
+  const renderMain = () => {
+    return (
+      <div className="w-full flex flex-col sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-8 px-0 sm:p-6 xl:p-8">
+        <h2 className="text-3xl lg:text-4xl font-semibold">
+          Confirm and payment
+        </h2>
+        <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
+
+          {renderPreference()}
+
+          {renderViewBookings()}
+
+
+
           <div className="mt-6 border border-neutral-200 dark:border-neutral-700 rounded-3xl flex flex-col sm:flex-row divide-y sm:divide-x sm:divide-y-0 divide-neutral-200 dark:divide-neutral-700 z-10">
           {/* <form className="mt-6 flex flex-col border border-neutral-200 dark:border-neutral-700 rounded-3xl z-10"> */}
             <StayDatesRangeInput className="flex-1 z-[11]" onChangeDate={setStayDate} />
@@ -182,7 +253,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
         {/* <div className="mt-6 border border-neutral-200 dark:border-neutral-700 rounded-3xl flex flex-col sm:flex-row divide-y sm:divide-x sm:divide-y-0 divide-neutral-200 dark:divide-neutral-700 overflow-hidden z-10"> */}
           {/* </div> */}
-        </div>
         
         {/* <GuestsInput /> */}
 
@@ -286,8 +356,8 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   return (
     <div className={`nc-CheckOutPagePageMain ${className}`}>
       <main className="container mt-11 mb-24 lg:mb-32 flex flex-col-reverse lg:flex-row">
-        <div className="w-full lg:w-3/5 xl:w-2/3 lg:pr-10 ">{renderMain()}</div>
-        <div className="hidden lg:block flex-grow">{renderSidebar()}</div>
+        <div className="w-full lg:w-4/5 xl:w-4/5 lg:pr-10 ">{renderMain()}</div>
+        {/* <div className="hidden lg:block flex-grow">{renderSidebar()}</div> */}
       </main>
     </div>
   );

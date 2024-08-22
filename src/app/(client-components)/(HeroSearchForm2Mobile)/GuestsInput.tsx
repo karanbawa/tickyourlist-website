@@ -57,11 +57,11 @@ const GuestsInput: FC<GuestsInputProps> = ({
   };
 
   return (
-    <div className={`flex flex-col relative ${className}`}>
+    <div className={`flex flex-col relative p-5 ${className}`}>
       <span className="text-[#444444] text-base md:text-lg font-medium mb-1.5">
         {`Who's coming?`}
       </span>
-      <NcInputNumber
+      <NcInputNumber 
         className="w-full"
         defaultValue={guestAdultsInputValue}
         onChange={(value) => handleChangeData(value, "guestAdults")}

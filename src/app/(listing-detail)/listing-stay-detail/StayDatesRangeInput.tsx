@@ -47,7 +47,7 @@ const StayDatesRangeInput: FC<StayDatesRangeInputProps> = ({
           month: "short",
           year: "numeric",
         })
-      : "Select a date";
+      : "Add a date";
 
     return (
       <>
