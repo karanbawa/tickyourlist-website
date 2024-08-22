@@ -39,6 +39,13 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   //   new Date("2023/02/06")
   // );
   const [stayDate, setStayDate] = useState<Date | null>(null);
+
+  const [selectedVariantIndex, setSelectedVariantIndex] = useState<number | null>(null);
+
+  const handleVariantSelect = (index: number | undefined) => {
+    setSelectedVariantIndex(index !== undefined ? index : null);
+  };  
+
   // const [endDate, setEndDate] = useState<Date | null>(new Date("2023/02/23"));
   const router = useRouter();
 
@@ -169,23 +176,25 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   
     return (
       <div className="flex flex-col">
-        <h3 className="text-2xl font-semibold mb-4">Select a preference</h3>
-        <div className="flex lg:justify-between gap-4 overflow-x-auto xl:overflow-x-visible">
-          <div className="flex flex-grow-1 gap-4">
-            {demoVariants.map((variant, index) => (
-              <CardVariant
-                key={index}
-                title={variant.title}
-                originalPrice={variant.originalPrice}
-                discountedPrice={variant.discountedPrice}
-                discount={variant.discount}
-                features={variant.features}
-                className="flex-shrink-0 xl:flex-grow-1"
-              />
-            ))}
-          </div>
+      <h3 className="text-2xl font-semibold mb-4">Select a preference</h3>
+      <div className="flex lg:justify-between gap-4 overflow-x-auto xl:overflow-x-visible">
+        <div className="flex flex-grow-1 gap-4">
+          {demoVariants.map((variant, index) => (
+            <CardVariant
+              key={index}
+              title={variant.title}
+              originalPrice={variant.originalPrice}
+              discountedPrice={variant.discountedPrice}
+              discount={variant.discount}
+              features={variant.features}
+              index={index}
+              onVariantSelect={handleVariantSelect}
+              isSelected={selectedVariantIndex === index} // Pass the selected state
+            />
+          ))}
         </div>
       </div>
+    </div>
     );
   }
   
@@ -199,6 +208,12 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
 
           {renderPreference()}
+
+          {selectedVariantIndex && (
+                    <div>
+                      Selected Variant: {selectedVariantIndex} (Index: {selectedVariantIndex})
+                    </div>
+                  )}
 
           {renderViewBookings()}
 
