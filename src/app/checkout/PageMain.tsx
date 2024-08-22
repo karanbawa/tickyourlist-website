@@ -2,7 +2,7 @@
 
 import { Tab } from "@headlessui/react";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
-import React, { FC, Fragment, useEffect, useState } from "react";
+import React, { FC, Fragment, useEffect, useRef, useState } from "react";
 import visaPng from "@/images/vis.png";
 import mastercardPng from "@/images/mastercard.svg";
 import Input from "@/shared/Input";
@@ -41,10 +41,29 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   const [stayDate, setStayDate] = useState<Date | null>(null);
 
   const [selectedVariantIndex, setSelectedVariantIndex] = useState<number | null>(null);
+   // Create a ref for the element to scroll to
+   const scrollToElementRef = useRef<HTMLDivElement>(null);
 
   const handleVariantSelect = (index: number | undefined) => {
     setSelectedVariantIndex(index !== undefined ? index : null);
+        // // Scroll to the target element when a variant is selected
+        // if (scrollToElementRef.current) {
+        //   scrollToElementRef.current.scrollIntoView({ behavior: "smooth" });
+        // }
   };  
+
+  useEffect(() => {
+    if (selectedVariantIndex !== null && scrollToElementRef.current) {
+      const elementTop = scrollToElementRef.current.getBoundingClientRect().top + window.scrollY;
+      const offset = window.innerHeight * 0.5;
+      const targetPosition = elementTop - offset;
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  }, [selectedVariantIndex]);
 
   // const [endDate, setEndDate] = useState<Date | null>(new Date("2023/02/23"));
   const router = useRouter();
@@ -209,8 +228,8 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
           {renderPreference()}
 
-          {selectedVariantIndex && (
-                    <div>
+          {selectedVariantIndex !== null && selectedVariantIndex !== undefined && (
+                    <div ref={scrollToElementRef}>
                       Selected Variant: {selectedVariantIndex} (Index: {selectedVariantIndex})
                     </div>
                   )}
