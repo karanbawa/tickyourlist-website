@@ -27,7 +27,7 @@ const CardVariant: FC<CardVariantProps> = ({
   isSelected,
 }) => {
   const handleSelect = () => {
-    onVariantSelect(index); // Pass the selected variant index to the parent
+    onVariantSelect(index);
   };
 
   return (
@@ -36,7 +36,7 @@ const CardVariant: FC<CardVariantProps> = ({
       className={`nc-CardVariant relative flex flex-col items-center justify-center text-center px-4 py-6 sm:px-8 sm:py-10 border border-neutral-200 dark:border-neutral-700 rounded-2xl ${className}`}
     >
       <div className="text-left w-full h-full">
-        <h2 className="text-lg font-semibold mb-2">{title}</h2>
+        <h2 className="text-lg font-semibold mb-2 h-[3.4rem]">{title}</h2>
         <span className="line-through ml-2 text-neutral-500 dark:text-neutral-400">
           ₹{originalPrice.toLocaleString("en-IN")}
         </span>
