@@ -775,7 +775,7 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string } }> = async ({ pa
         </div>
         </main>
          {/* STICKY FOOTER MOBILE */}
-         <MobileFooterSticky />
+         <MobileFooterSticky tourGroup={tourGroup} />
     </div>
   );
 };

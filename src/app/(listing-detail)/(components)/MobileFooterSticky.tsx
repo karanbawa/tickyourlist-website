@@ -8,10 +8,10 @@ import ModalReserveMobile from "./ModalReserveMobile";
 import { useData } from "@/context/DataContext";
 
 interface MobileFooterStickyProps {
-  data?: any
+  tourGroup?: any
 }
 
-const MobileFooterSticky: FC<MobileFooterStickyProps>  = ({ data }) => {
+const MobileFooterSticky: FC<MobileFooterStickyProps>  = ({ tourGroup }) => {
   const [startDate, setStartDate] = useState<Date | null>(
     new Date("2023/02/06")
   );
@@ -21,12 +21,12 @@ const MobileFooterSticky: FC<MobileFooterStickyProps>  = ({ data }) => {
       <div className="container flex items-center justify-between">
         <div className="">
             <span className="text-xs line-through text-neutral-500 dark:text-neutral-400">
-              Rs {data?.listingPrice?.originalPrice}
+              Rs {tourGroup?.listingPrice?.originalPrice}
             </span>
           
           <div className="flex items-baseline">
           <span className="text-lg font-semibold ml-2">
-              Rs {data?.listingPrice?.finalPrice}
+              Rs {tourGroup?.listingPrice?.finalPrice}
             </span>
             <span className="ml-1 text-sm font-normal text-neutral-500 dark:text-neutral-400">
               /ticket
