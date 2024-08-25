@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 
 async function fetchTourGroupData(slug: string) {
   console.log("process.env.base_url ", process.env.BASE_URL);
-  const response = await fetch(`${process.env.BASE_URL}/v1/customertravel/tour-groups/3?currency=INR&domainId=66b78e74f11dc6cc7660ef73`, {
+  const response = await fetch(`${process.env.BASE_URL}/v1/customertravel/tour-groups/3?currency=INR&domainId=${process.env.WEBSITE_ID}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -775,7 +775,7 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string } }> = async ({ pa
         </div>
         </main>
          {/* STICKY FOOTER MOBILE */}
-         <MobileFooterSticky data={tourGroup} />
+         <MobileFooterSticky tourGroup={tourGroup} />
     </div>
   );
 };
