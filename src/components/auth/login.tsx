@@ -14,6 +14,7 @@ export default function Login() {
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [notification, setNotification] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const { login } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,6 +24,7 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     // Submit form data to the server-side API
     const response = await fetch('/api/login', {
@@ -37,11 +39,13 @@ export default function Login() {
       // Handle error
       const error = await response.json();
       console.error('Login failed:', error);
+      setLoading(false);
       setErrors({ api: error.message || 'Email Id or password is incorrect.' });
     } else {
       // Handle success
       const userData = await response.json();
       login(userData);
+      setLoading(false);
       setNotification('Login successful! Redirecting...');
       setTimeout(() => {
         window.location.href = '/'; // Redirect to a dashboard or another page
@@ -81,7 +85,7 @@ export default function Login() {
           />
         </label>
         {errors.api && <span className="text-red-500 text-sm">{errors.api}</span>}
-        <ButtonPrimary style={{ backgroundColor: '#7C25E9' }} type="submit">Continue</ButtonPrimary>
+        <ButtonPrimary loading={loading} style={{ backgroundColor: '#7C25E9' }} type="submit">Continue</ButtonPrimary>
       </form>
       {notification && <div className="mt-4 text-green-600 text-center">{notification}</div>}
     </div>

@@ -18,6 +18,7 @@ export default function SignUp() {
 
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [notification, setNotification] = useState<string | null>(null);
+    const [loading, setIsLoading] = useState<boolean>(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -34,6 +35,7 @@ export default function SignUp() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsLoading(true);
         const validationErrors = validatePasswords();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
@@ -53,9 +55,11 @@ export default function SignUp() {
             // Handle error
             const error = await response.json();
             console.error('Signup failed:', error);
+            setIsLoading(false);
             setErrors({ api: error.message || 'Signup failed' });
         } else {
             // Handle success
+            setIsLoading(false);
             setNotification('Signup successful! Please verify your email.');
         }
     };
