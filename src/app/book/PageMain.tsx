@@ -122,7 +122,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
           <div className="px-4 py-4 border-t border-gray-200">
             <div className="flex justify-between items-center mb-2">
               <span className="text-gray-700">
-                {(guests.guestAdults ?? 1)} Adult{(guests.guestAdults ?? 1) > 1 ? 's' : ''}
+                {(guests.guestAdults ?? 1)} Guest{(guests.guestAdults ?? 1) > 1 ? 's' : ''}
               </span>
               <span className="text-gray-700 font-medium">
                 ₹{(guests.guestAdults ?? 1) * tourGroup?.variants?.find((variant: any) => variant?._id === variantId)?.listingPrice?.originalPrice}
