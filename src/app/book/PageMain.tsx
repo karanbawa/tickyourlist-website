@@ -1,20 +1,12 @@
 "use client";
 
 import { Tab } from "@headlessui/react";
-import { PencilSquareIcon } from "@heroicons/react/24/outline";
-import React, { FC, Fragment, useState } from "react";
-import visaPng from "@/images/vis.png";
-import mastercardPng from "@/images/mastercard.svg";
+import React, { FC, useState } from "react";
 import Input from "@/shared/Input";
 import Label from "@/components/Label";
 import Textarea from "@/shared/Textarea";
 import ButtonPrimary from "@/shared/ButtonPrimary";
-import StartRating from "@/components/StartRating";
 import NcModal from "@/shared/NcModal";
-import ModalSelectDate from "@/components/ModalSelectDate";
-import converSelectedDateToString from "@/utils/converSelectedDateToString";
-import ModalSelectGuests from "@/components/ModalSelectGuests";
-import Image from "next/image";
 import { GuestsObject } from "../(client-components)/type";
 import { useRouter } from "next/navigation";
 
@@ -29,12 +21,20 @@ export interface CheckOutPagePageMainProps {
 const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   className = "",
   tourGroup,
-  date,
   tour,
+  date,
   variantId
 }) => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date("2023/02/06"));
-  const [endDate, setEndDate] = useState<Date | null>(new Date("2023/02/23"));
+  const [showPromoCode, setShowPromoCode] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [firstNameError, setFirstNameError] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [emailError, setEmailError] = useState("");
+
   const router = useRouter();
 
   const [guests, setGuests] = useState<GuestsObject>({
@@ -53,6 +53,10 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     });
   };
 
+  const handleTogglePromoCode = () => {
+    setShowPromoCode(!showPromoCode);
+  };
+
   const getFormattedDate = () => {
     if (date) {
       const parsedDate = new Date(date);
@@ -65,18 +69,98 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     } else {
       return undefined;
     }
-  }
+  };
 
   const handleEditDetails = () => {
     router.push(
       `/checkout?tourId=${tourGroup.id}&date=${date}`
     );
-  }
+  };
 
   const getDiscountedPrice = () => {
     const variant = tourGroup?.variants?.find((variant: any) => variant?._id === variantId);
     return variant?.listingPrice?.originalPrice - variant?.listingPrice?.finalPrice;
-  }
+  };
+
+  const validateFields = () => {
+    let valid = true;
+    if (!firstName) {
+      setFirstNameError("First Name is required");
+      valid = false;
+    } else {
+      setFirstNameError("");
+    }
+
+    if (!lastName) {
+      setLastNameError("Last Name is required");
+      valid = false;
+    } else {
+      setLastNameError("");
+    }
+
+
+    if (!phoneNumber) {
+      setPhoneError("Phone number is required");
+      valid = false;
+    } else {
+      setPhoneError("");
+    }
+
+    if (!email) {
+      setEmailError("Email address is required");
+      valid = false;
+    } else {
+      setEmailError("");
+    }
+
+    return valid;
+  };
+
+  const handleConfirmAndPay = async () => {
+    if (!validateFields()) {
+      return;
+    }
+
+    const data = {
+      domainId: "66cacba1eeca9633c29172b9",
+      nonCustomerFirstName: firstName,
+      nonCustomerLastName: lastName,
+      email: email,
+      phoneCode: "+91",
+      phoneNumber: phoneNumber,
+      content: "Booking content",
+      tourId: variantId,
+      customerUserId: "66c36e709006a19edd547e22", // Example value, replace with actual if needed
+      adultsCount: guests.guestAdults,
+      childCount: guests.guestChildren,
+      amount: ((guests.guestAdults || 1) * tourGroup?.variants?.find((variant: any) => variant?._id === variantId)?.listingPrice?.finalPrice).toString(),
+      currency: "INR",
+      title: tourGroup?.name,
+      source: "website",
+      active: true,
+    };
+
+    try {
+      const response = await fetch("https://api.univolenitsolutions.com/v1/tyltourcustomerbooking/add/travel-booking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": "GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Booking successful:", result);
+        router.push("/pay-done");
+      } else {
+        console.error("Failed to book:", response.statusText);
+      }
+    } catch (error) {
+      console.error("An error occurred during booking:", error);
+    }
+  };
 
   const renderSidebar = () => {
     return (
@@ -88,9 +172,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
               <h2 className="text-white text-xl font-medium tracking-wide p-5">{tourGroup?.name}</h2>
             </div>
             <div className="absolute bottom-[-12px] right-0 flex items-center bg-green-500 text-white text-sm font-medium px-2 py-1 rounded-md">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" className="mr-1">
-                {/* SVG paths */}
-              </svg>
               ₹{getDiscountedPrice()} Saved
             </div>
           </div>
@@ -145,6 +226,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
             <ButtonPrimary
               className="w-full h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center justify-center gap-2"
               style={{ backgroundColor: "#7C25E9" }}
+              onClick={handleConfirmAndPay}
             >
               Confirm & Pay
             </ButtonPrimary>
@@ -154,7 +236,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
           </div>
         </div>
       </div>
-    )
+    );
   };
 
   const renderMain = () => {
@@ -248,93 +330,77 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         </div>
 
         <div>
-          <h3 className="text-2xl font-semibold">Pay with</h3>
+          <h3 className="text-2xl font-semibold">Lead Guest Details</h3>
           <div className="w-14 border-b border-neutral-200 dark:border-neutral-700 my-5"></div>
 
           <div className="mt-6">
             <Tab.Group>
-              <Tab.List className="flex my-5 gap-1">
-                <Tab as={Fragment}>
-                  {({ selected }) => (
-                    <button
-                      className={`px-4 py-1.5 sm:px-6 sm:py-2.5 rounded-full focus:outline-none ${selected
-                        ? "bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-900"
-                        : "text-neutral-6000 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800"
-                        }`}
-                    >
-                      Paypal
-                    </button>
-                  )}
-                </Tab>
-                <Tab as={Fragment}>
-                  {({ selected }) => (
-                    <button
-                      className={`px-4 py-1.5 sm:px-6 sm:py-2.5  rounded-full flex items-center justify-center focus:outline-none  ${selected
-                        ? "bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-900"
-                        : " text-neutral-6000 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800"
-                        }`}
-                    >
-                      <span className="mr-2.5">Credit card</span>
-                      <Image className="w-8" src={visaPng} alt="visa" />
-                      <Image
-                        className="w-8"
-                        src={mastercardPng}
-                        alt="mastercard"
-                      />
-                    </button>
-                  )}
-                </Tab>
-              </Tab.List>
-
               <Tab.Panels>
                 <Tab.Panel className="space-y-5">
-                  <div className="space-y-1">
-                    <Label>Card number </Label>
-                    <Input defaultValue="111 112 222 999" />
-                  </div>
-                  <div className="space-y-1">
-                    <Label>Card holder </Label>
-                    <Input defaultValue="JOHN DOE" />
-                  </div>
-                  <div className="flex space-x-5  ">
+                  <div className="flex flex-col sm:flex-row sm:space-x-5">
                     <div className="flex-1 space-y-1">
-                      <Label>Expiration date </Label>
-                      <Input type="date" defaultValue="MM/YY" />
+                      <Label>First Name</Label>
+                      <Input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                      {firstNameError && <p className="text-red-500 text-sm">{firstNameError}</p>}
                     </div>
                     <div className="flex-1 space-y-1">
-                      <Label>CVC </Label>
-                      <Input />
+                      <Label>Last Name</Label>
+                      <Input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                      {lastNameError && <p className="text-red-500 text-sm">{lastNameError}</p>}
                     </div>
                   </div>
-                  <div className="space-y-1">
-                    <Label>Messager for author </Label>
-                    <Textarea placeholder="..." />
-                    <span className="text-sm text-neutral-500 block">
-                      Write a few sentences about yourself.
-                    </span>
+
+                  <div className="flex flex-col sm:flex-row sm:space-x-5">
+                  <div className="flex-1 space-y-1">
+                      <Label>Email</Label>
+                      <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                      {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
+                    </div>
+                    <div className="flex-1 space-y-1 mt-4 sm:mt-0">
+                      <Label>Phone Number</Label>
+                      <Input value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+                      {phoneError && <p className="text-red-500 text-sm">{phoneError}</p>}
+                    </div>
                   </div>
-                </Tab.Panel>
-                <Tab.Panel className="space-y-5">
-                  <div className="space-y-1">
-                    <Label>Email </Label>
-                    <Input type="email" defaultValue="example@gmail.com" />
-                  </div>
-                  <div className="space-y-1">
-                    <Label>Password </Label>
-                    <Input type="password" defaultValue="***" />
-                  </div>
-                  <div className="space-y-1">
-                    <Label>Messager for author </Label>
-                    <Textarea placeholder="..." />
-                    <span className="text-sm text-neutral-500 block">
-                      Write a few sentences about yourself.
-                    </span>
+
+                  <div className="space-y-5 mt-5">
+                    {!showPromoCode && (
+                      <span
+                        onClick={handleTogglePromoCode}
+                        className="text-green-800 underline cursor-pointer"
+                      >
+                        Have a Promo Code?
+                      </span>
+                    )}
+
+                    {showPromoCode && (
+                      <div className="space-y-3">
+                        <Label>Enter a Promo Code</Label>
+                        <div className="flex space-x-3">
+                          <input
+                            type="text"
+                            placeholder="Enter promo code"
+                            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg"
+                          />
+                          <ButtonPrimary
+                            className="h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center justify-center gap-2"
+                            style={{ backgroundColor: "#7C25E9" }}
+                            onClick={() => {
+                              /* Handle promo code application logic here */
+                            }}
+                          >
+                            Apply
+                          </ButtonPrimary>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </Tab.Panel>
               </Tab.Panels>
             </Tab.Group>
             <div className="pt-8">
-              <ButtonPrimary style={{ backgroundColor: "#7C25E9" }} href={"/pay-done"}>Confirm and pay</ButtonPrimary>
+              <ButtonPrimary className="w-2/5 h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center justify-center gap-2"
+              style={{ backgroundColor: "#7C25E9" }} onClick={handleConfirmAndPay}>Confirm & pay</ButtonPrimary>
             </div>
           </div>
         </div>
