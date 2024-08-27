@@ -28,10 +28,11 @@ import MobileFooterSticky from "@/app/(listing-detail)/(components)/MobileFooter
 
 interface Params {
   slug: string;
+  slug2: string
 }
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
-  const data = await fetchTourGroupData(params.slug);
+  const data = await fetchTourGroupData(params.slug2);
   const tourGroup = data.data.tourgroup;
 
   return {
@@ -53,8 +54,13 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 }
 
 async function fetchTourGroupData(slug: string) {
-  console.log("process.env.base_url ", process.env.BASE_URL);
-  const response = await fetch(`${process.env.BASE_URL}/v1/customertravel/tour-groups/3?currency=INR&domainId=${process.env.WEBSITE_ID}`, {
+  const id = slug.match(/\d+$/)?.[0]; 
+
+  if (!id) {
+    throw new Error("Invalid slug2 format. Could not extract ID.");
+  }
+
+  const response = await fetch(`${process.env.BASE_URL}/v1/customertravel/tour-groups/${id}?currency=INR&domainId=${process.env.WEBSITE_ID}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -68,9 +74,9 @@ async function fetchTourGroupData(slug: string) {
   return response.json();
 }
 
-const ListingTourGroupDetailPage: FC<{ params: { slug: string } }> = async ({ params }) => {
+const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }> = async ({ params }) => {
   // let [isOpenModalAmenities, setIsOpenModalAmenities] = useState(false);
-  const data = await fetchTourGroupData(params.slug);
+  const data = await fetchTourGroupData(params.slug2);
   const tourGroup = data.data.tourgroup;
 
   // const thisPathname = usePathname();

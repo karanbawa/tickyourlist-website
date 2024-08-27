@@ -2,7 +2,12 @@ import React, { FC } from "react";
 import CheckOutPagePageMain from "./PageMain";
 
 async function fetchTourGroupData(slug: string) {
-  const response = await fetch(`${process.env.BASE_URL}/v1/customertravel/tour-groups/3?currency=INR&domainId=${process.env.WEBSITE_ID}`, {
+  const id = slug.match(/\d+$/)?.[0]; 
+
+  if (!id) {
+    throw new Error("Invalid slug2 format. Could not extract ID.");
+  }
+  const response = await fetch(`${process.env.BASE_URL}/v1/customertravel/tour-groups/${id}?currency=INR&domainId=${process.env.WEBSITE_ID}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
