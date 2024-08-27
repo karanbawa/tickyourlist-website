@@ -24,16 +24,51 @@ import CardAuthorBox2 from "@/components/CardAuthorBox2";
 import CardAuthorBox from "@/components/CardAuthorBox";
 import CardVariant from "@/components/tour-group-booking/CardVariants";
 
-
+const demoVariants = [
+  {
+    title: "IMG Tickets",
+    originalPrice: 8339,
+    discountedPrice: 4912,
+    discount: "Save up to 41%",
+    features: [
+      "Entry into IMG Worlds of Adventure",
+      "Unlimited access to all rides",
+    ],
+  },
+  {
+    title: "IMG Tickets with Combo Meal",
+    originalPrice: 9710,
+    discountedPrice: 6511,
+    discount: "Save up to 33%",
+    features: [
+      "Combo meal voucher",
+      "Entry into IMG Worlds of Adventure",
+      "Unlimited access to all rides",
+    ],
+  },
+  {
+    title: "IMG Fast Track Tickets",
+    originalPrice: 12337,
+    discountedPrice: 10281,
+    discount: "Save up to 17%",
+    features: [
+      "Fast-track entry to all rides and attractions",
+      "Unlimited access to all rides",
+      "Tickets are valid for both UAE residents & tourists",
+    ],
+  },
+];
 
 export interface CheckOutPagePageMainProps {
   className?: string;
+  tourGroup?: any;
 }
 
 const DEMO_DATA = DEMO_AUTHORS.filter((_, i) => i < 4);
 
 const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   className = "",
+  tourGroup
 }) => {
   // const [startDate, setStartDate] = useState<Date | null>(
   //   new Date("2023/02/06")
@@ -44,8 +79,12 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
    // Create a ref for the element to scroll to
    const scrollToElementRef = useRef<HTMLDivElement>(null);
 
+    // const [endDate, setEndDate] = useState<Date | null>(new Date("2023/02/23"));
+  const router = useRouter();
+
   const handleVariantSelect = (index: number | undefined) => {
     setSelectedVariantIndex(index !== undefined ? index : null);
+    
         // // Scroll to the target element when a variant is selected
         // if (scrollToElementRef.current) {
         //   scrollToElementRef.current.scrollIntoView({ behavior: "smooth" });
@@ -65,8 +104,17 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     }
   }, [selectedVariantIndex]);
 
-  // const [endDate, setEndDate] = useState<Date | null>(new Date("2023/02/23"));
-  const router = useRouter();
+
+  useEffect(() => {
+    if (stayDate && tourGroup?.id) {
+      const formattedDate = encodeURIComponent(
+        stayDate?.toLocaleDateString("en-CA")
+      );
+      router.push(
+        `/checkout?tourId=${tourGroup.id}&date=${formattedDate}`
+      );
+    }
+  }, [stayDate, tourGroup?.id, router]);
 
   const [guests, setGuests] = useState<GuestsObject>({
     guestAdults: 2,
@@ -74,16 +122,35 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     guestInfants: 1,
   });
 
-  useEffect(() => {
-    // Access query parameters from URL
-    const searchParams = new URLSearchParams(window.location.search);
-    const tourid = searchParams.get("tourId");
-    const date = searchParams.get("date");
 
-    // Now you can use `tourid` and `date` to fetch or initialize state
-    console.log("Tour ID:", tourid);
-    console.log("Date:", date);
-  }, []);
+  const getFormattedDate = () => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const dateParam = searchParams.get("date");
+    if(dateParam) {
+    const parsedDate = new Date(dateParam);
+    return  parsedDate.toLocaleDateString("en-US", {
+        weekday: "short",
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      });
+    }else {
+      return undefined;
+    }
+  }
+
+  const getFormatedData= () => {
+    if (tourGroup?.id && stayDate) {
+      const formattedDate = encodeURIComponent(
+        stayDate?.toLocaleDateString("en-CA")
+      );
+      console.log("formattedDate ", formattedDate);
+      // router.push(`/checkout?tourId=${tourGroup.id}&date=${formattedDate}`);
+      return formattedDate;
+    }
+
+    return;
+  }
 
 
   const renderSidebar = () => {
@@ -157,55 +224,30 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     )
   }
 
-  const renderPreference = () => {
-    const demoVariants = [
-      {
-        title: "IMG Tickets",
-        originalPrice: 8339,
-        discountedPrice: 4912,
-        discount: "Save up to 41%",
-        features: [
-          "Entry into IMG Worlds of Adventure",
-          "Unlimited access to all rides",
-        ],
-      },
-      {
-        title: "IMG Tickets with Combo Meal",
-        originalPrice: 9710,
-        discountedPrice: 6511,
-        discount: "Save up to 33%",
-        features: [
-          "Combo meal voucher",
-          "Entry into IMG Worlds of Adventure",
-          "Unlimited access to all rides",
-        ],
-      },
-      {
-        title: "IMG Fast Track Tickets",
-        originalPrice: 12337,
-        discountedPrice: 10281,
-        discount: "Save up to 17%",
-        features: [
-          "Fast-track entry to all rides and attractions",
-          "Unlimited access to all rides",
-          "Tickets are valid for both UAE residents & tourists",
-        ],
-      },
-    ];
+  function calculateDiscountPercentage(originalPrice: number, finalPrice: number): string {
+    if (!originalPrice || !finalPrice || originalPrice <= finalPrice) {
+      return "0";
+    }
   
+    const discount = ((originalPrice - finalPrice) / originalPrice) * 100;
+    return Math.round(discount).toString(); // Rounds to the nearest integer
+  }
+
+  const renderPreference = () => {
+
     return (
       <div className="flex flex-col">
       <h3 className="text-2xl font-semibold mb-4">Select a preference</h3>
       <div className="flex lg:justify-between gap-4 overflow-x-auto xl:overflow-x-visible">
         <div className="flex flex-grow-1 gap-4">
-          {demoVariants.map((variant, index) => (
+          {tourGroup?.variants.map((variant: any, index: any) => (
             <CardVariant
               key={index}
-              title={variant.title}
-              originalPrice={variant.originalPrice}
-              discountedPrice={variant.discountedPrice}
-              discount={variant.discount}
-              features={variant.features}
+              title={variant?.name}
+              originalPrice={variant?.listingPrice?.originalPrice}
+              discountedPrice={variant?.listingPrice?.finalPrice}
+              discount={`Save up to ${calculateDiscountPercentage(variant?.listingPrice?.originalPrice, variant?.listingPrice?.finalPrice)}%`}
+              features={variant?.variantInfo?.split('\r\n')?.map((feature: any) => feature?.replace(/^-/, '')?.trim())}
               index={index}
               onVariantSelect={handleVariantSelect}
               isSelected={selectedVariantIndex === index} // Pass the selected state
@@ -216,7 +258,22 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     </div>
     );
   }
-  
+
+  const renderDateSelector = () => {
+    return (<>
+    <div>
+    <h2 className="text-[#444444] text-base md:text-lg font-medium mb-1.5">
+          Select a date
+        </h2>
+        <p className="text-[#444444] text-xs md:text-sm font-light">
+          All prices are in INR (₹)
+        </p>
+        <div className="mt-6 border border-neutral-200 dark:border-neutral-700 rounded-3xl flex flex-col sm:flex-row divide-y sm:divide-x sm:divide-y-0 divide-neutral-200 dark:divide-neutral-700 z-10">
+        <StayDatesRangeInput className="flex-1 z-[11]" onChangeDate={setStayDate} />
+        </div>
+    </div>
+    </>)
+  }
   
   const renderMain = () => {
     return (
@@ -226,163 +283,27 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         </h2>
         <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
 
+         {renderDateSelector()}
+
           {renderPreference()}
 
           {selectedVariantIndex !== null && selectedVariantIndex !== undefined && (
-                    <div ref={scrollToElementRef}>
-                      Selected Variant: {selectedVariantIndex} (Index: {selectedVariantIndex})
-                    </div>
+            <>
+             <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
+                            <div ref={scrollToElementRef} className="flex justify-between items-center">
+                  <div className="flex-1 max-w-[70%]">
+                    <div className="font-semibold truncate">{tourGroup?.variants?.[selectedVariantIndex]?.name}</div>
+                    <div>{getFormattedDate()}</div>
+                  </div>
+                  <div>
+                    <ButtonPrimary href={`/book?tourId=${tourGroup?.id}&date=${getFormatedData()}&tour=${tourGroup?.variants?.[selectedVariantIndex]?.tours?.[0]?._id}&variantId=${tourGroup?.variants?.[selectedVariantIndex]?._id}`} className="w-full h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center justify-center gap-2" style={{ backgroundColor: '#7C25E9' }}>Next</ButtonPrimary>
+                  </div>
+                </div>
+
+                    <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
+                    </>
                   )}
-
-          {renderViewBookings()}
-
-
-
-          <div className="mt-6 border border-neutral-200 dark:border-neutral-700 rounded-3xl flex flex-col sm:flex-row divide-y sm:divide-x sm:divide-y-0 divide-neutral-200 dark:divide-neutral-700 z-10">
-          {/* <form className="mt-6 flex flex-col border border-neutral-200 dark:border-neutral-700 rounded-3xl z-10"> */}
-            <StayDatesRangeInput className="flex-1 z-[11]" onChangeDate={setStayDate} />
-            <ModalSelectGuests
-              renderChildren={({ openModal }) => (
-                <button
-                  type="button"
-                  onClick={openModal}
-                  className="text-left flex-1 p-5 flex justify-between space-x-5 hover:bg-neutral-50 dark:hover:bg-neutral-800"
-                >
-                  <div className="flex flex-col">
-                    <span className="text-sm text-neutral-400">Guests</span>
-                    <span className="mt-1.5 text-lg font-semibold">
-                      <span className="line-clamp-1">
-                        {`${
-                          (guests.guestAdults || 0) +
-                          (guests.guestChildren || 0)
-                        } Guests, ${guests.guestInfants || 0} Infants`}
-                      </span>
-                    </span>
-                  </div>
-                  <PencilSquareIcon className="w-6 h-6 text-neutral-6000 dark:text-neutral-400" />
-                </button>
-              )}
-            />
-            {/* <div className="w-full border-b border-neutral-200 dark:border-neutral-700"></div>
-            <GuestsInput className="flex-1" onChangeGuests={setGuests} /> */}
-          {/* </form> */}
-          </div>
-            {/* <ModalSelectDate
-              renderChildren={({ openModal }) => (
-                <button
-                  onClick={openModal}
-                  className="text-left flex-1 p-5 flex justify-between space-x-5 hover:bg-neutral-50 dark:hover:bg-neutral-800"
-                  type="button"
-                >
-                  <div className="flex flex-col">
-                    <span className="text-sm text-neutral-400">Date</span>
-                    <span className="mt-1.5 text-lg font-semibold">
-                      {converSelectedDateToString([startDate, endDate])}
-                    </span>
-                  </div>
-                  <PencilSquareIcon className="w-6 h-6 text-neutral-6000 dark:text-neutral-400" />
-                </button>
-              )}
-            /> */}
-
-        {/* <div className="mt-6 border border-neutral-200 dark:border-neutral-700 rounded-3xl flex flex-col sm:flex-row divide-y sm:divide-x sm:divide-y-0 divide-neutral-200 dark:divide-neutral-700 overflow-hidden z-10"> */}
-          {/* </div> */}
-        
-        {/* <GuestsInput /> */}
-
-        <div>
-          <h3 className="text-2xl font-semibold">Pay with</h3>
-          <div className="w-14 border-b border-neutral-200 dark:border-neutral-700 my-5"></div>
-
-          <div className="mt-6">
-            <Tab.Group>
-              <Tab.List className="flex my-5 gap-1">
-                <Tab as={Fragment}>
-                  {({ selected }) => (
-                    <button
-                      className={`px-4 py-1.5 sm:px-6 sm:py-2.5 rounded-full focus:outline-none ${
-                        selected
-                          ? "bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-900"
-                          : "text-neutral-6000 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800"
-                      }`}
-                    >
-                      Paypal
-                    </button>
-                  )}
-                </Tab>
-                <Tab as={Fragment}>
-                  {({ selected }) => (
-                    <button
-                      className={`px-4 py-1.5 sm:px-6 sm:py-2.5  rounded-full flex items-center justify-center focus:outline-none  ${
-                        selected
-                          ? "bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-900"
-                          : " text-neutral-6000 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800"
-                      }`}
-                    >
-                      <span className="mr-2.5">Credit card</span>
-                      <Image className="w-8" src={visaPng} alt="visa" />
-                      <Image
-                        className="w-8"
-                        src={mastercardPng}
-                        alt="mastercard"
-                      />
-                    </button>
-                  )}
-                </Tab>
-              </Tab.List>
-
-              <Tab.Panels>
-                <Tab.Panel className="space-y-5">
-                  <div className="space-y-1">
-                    <Label>Card number </Label>
-                    <Input defaultValue="111 112 222 999" />
-                  </div>
-                  <div className="space-y-1">
-                    <Label>Card holder </Label>
-                    <Input defaultValue="JOHN DOE" />
-                  </div>
-                  <div className="flex space-x-5  ">
-                    <div className="flex-1 space-y-1">
-                      <Label>Expiration date </Label>
-                      <Input type="date" defaultValue="MM/YY" />
-                    </div>
-                    <div className="flex-1 space-y-1">
-                      <Label>CVC </Label>
-                      <Input />
-                    </div>
-                  </div>
-                  <div className="space-y-1">
-                    <Label>Messager for author </Label>
-                    <Textarea placeholder="..." />
-                    <span className="text-sm text-neutral-500 block">
-                      Write a few sentences about yourself.
-                    </span>
-                  </div>
-                </Tab.Panel>
-                <Tab.Panel className="space-y-5">
-                  <div className="space-y-1">
-                    <Label>Email </Label>
-                    <Input type="email" defaultValue="example@gmail.com" />
-                  </div>
-                  <div className="space-y-1">
-                    <Label>Password </Label>
-                    <Input type="password" defaultValue="***" />
-                  </div>
-                  <div className="space-y-1">
-                    <Label>Messager for author </Label>
-                    <Textarea placeholder="..." />
-                    <span className="text-sm text-neutral-500 block">
-                      Write a few sentences about yourself.
-                    </span>
-                  </div>
-                </Tab.Panel>
-              </Tab.Panels>
-            </Tab.Group>
-            <div className="pt-8">
-              <ButtonPrimary href={"/pay-done"} style={{ backgroundColor: '#7C25E9' }}>Confirm and pay</ButtonPrimary>
-            </div>
-          </div>
-        </div>
+          {/* {renderViewBookings()} */}
       </div>
     );
   };
@@ -391,7 +312,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     <div className={`nc-CheckOutPagePageMain ${className}`}>
       <main className="container mt-11 mb-24 lg:mb-32 flex flex-col-reverse lg:flex-row">
         <div className="w-full lg:w-4/5 xl:w-4/5 lg:pr-10 ">{renderMain()}</div>
-        {/* <div className="hidden lg:block flex-grow">{renderSidebar()}</div> */}
+        {/* <div className="hidden lg:block flex-grow">{renderSidebar1()}</div> */}
       </main>
     </div>
   );
