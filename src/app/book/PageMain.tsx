@@ -172,7 +172,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
               <h2 className="text-white text-xl font-medium tracking-wide p-5">{tourGroup?.name}</h2>
             </div>
             <div className="absolute bottom-[-12px] right-0 flex items-center bg-green-500 text-white text-sm font-medium px-2 py-1 rounded-md">
-              ₹{getDiscountedPrice()} Saved
+              ₹{(guests.guestAdults ?? 1) * getDiscountedPrice()} Saved
             </div>
           </div>
 
