@@ -34,6 +34,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   const [lastNameError, setLastNameError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [loadingConfirmPay, setLoadingConfirmPay] = useState(false);
 
   const router = useRouter();
 
@@ -239,6 +240,8 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       return;
     }
 
+    setLoadingConfirmPay(true);
+
     const data = {
       domainId: "66cacba1eeca9633c29172b9",
       nonCustomerFirstName: firstName,
@@ -277,7 +280,9 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       } else {
         console.error("Failed to book:", response.statusText);
       }
+      setLoadingConfirmPay(false);
     } catch (error) {
+      setLoadingConfirmPay(false);
       console.error("An error occurred during booking:", error);
     }
   };
@@ -347,6 +352,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
               className="w-full h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center justify-center gap-2"
               style={{ backgroundColor: "#7C25E9" }}
               onClick={handleConfirmAndPay}
+              loading={loadingConfirmPay}
             >
               Confirm & Pay
             </ButtonPrimary>
@@ -520,7 +526,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
             </Tab.Group>
             <div className="pt-8">
               <ButtonPrimary className="w-2/5 h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center justify-center gap-2"
-              style={{ backgroundColor: "#7C25E9" }} onClick={handleConfirmAndPay}>Confirm & pay</ButtonPrimary>
+              style={{ backgroundColor: "#7C25E9" }} onClick={handleConfirmAndPay} loading={loadingConfirmPay}>Confirm & pay</ButtonPrimary>
             </div>
           </div>
         </div>
