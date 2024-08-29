@@ -31,11 +31,6 @@ const page: FC<BookPageProps> = async ({ searchParams }) => {
   const tour = searchParams.tour || "";
   const variantId = searchParams.variantId || "";
 
-  // // Handle missing parameters
-  // if (!tourId || !date || !tour || !variantId) {
-  //   return <div>Invalid or missing data</div>;
-  // }
-
   try {
     // Fetch the data using the tourId
     const data = await fetchTourGroupData(tourId);

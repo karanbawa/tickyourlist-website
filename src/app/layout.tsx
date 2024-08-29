@@ -44,6 +44,7 @@ export default function RootLayout({
     <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID || ''}>
       <html lang="en" className={poppins.className}>
         <Head>
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="beforeInteractive" />
           <link rel="icon" href="/images/logo/tyllogo.png" /> {/* Add this line */}
         </Head>
         <body className="bg-white text-base dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
