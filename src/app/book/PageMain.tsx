@@ -132,9 +132,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     });
   };
   
-
-
-  const handleRazorpayPayment = async (amount: any, orderId: any, booking: any) => {
+  const handleRazorpayPayment = async (amount: any, orderId: any, booking: { nonCustomerFirstName: any; nonCustomerLastName: any; phoneNumber: any; }) => {
     try {
       const scriptLoaded = await loadRazorpayScript();
       if (!scriptLoaded) {
@@ -149,7 +147,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         description: "Test Transaction",
         image: "https://tickyourlist-images.s3.ap-south-1.amazonaws.com/tyllogo.png",
         order_id: orderId,
-        callback_url: `https://www.tickyourlist.com/pay-done/`,
         prefill: {
           name: `${booking?.nonCustomerFirstName} ${booking?.nonCustomerLastName}`,
           email: "karanbawab1@gmail.com",
@@ -160,6 +157,18 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         },
         theme: {
           color: "#3399cc"
+        },
+        handler: function(response: any) {
+          // This function will be called after the payment is successful
+          console.log("Payment successful:", response);
+          // Route to the desired page after successful payment
+          router.push("/pay-done");
+        },
+        modal: {
+          ondismiss: function() {
+            console.log("Payment popup closed");
+            // Optional: You can also route to another page if the user closes the payment popup
+          }
         }
       };
   
@@ -170,6 +179,44 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       alert(error?.message || "Something went wrong during payment initialization.");
     }
   };
+  
+
+  // const handleRazorpayPayment = async (amount: any, orderId: any, booking: any) => {
+  //   try {
+  //     const scriptLoaded = await loadRazorpayScript();
+  //     if (!scriptLoaded) {
+  //       throw new Error("Razorpay SDK failed to load. Are you online?");
+  //     }
+  
+  //     const options = {
+  //       key: process.env.RAZORPAY_KEY_ID,
+  //       amount,
+  //       currency: 'INR',
+  //       name: "TickYourList",
+  //       description: "Test Transaction",
+  //       image: "https://tickyourlist-images.s3.ap-south-1.amazonaws.com/tyllogo.png",
+  //       order_id: orderId,
+  //       callback_url: `https://www.tickyourlist.com/pay-done/`,
+  //       prefill: {
+  //         name: `${booking?.nonCustomerFirstName} ${booking?.nonCustomerLastName}`,
+  //         email: "karanbawab1@gmail.com",
+  //         contact: booking?.phoneNumber
+  //       },
+  //       notes: {
+  //         address: "Razorpay Corporate Office"
+  //       },
+  //       theme: {
+  //         color: "#3399cc"
+  //       }
+  //     };
+  
+  //     const rzp1 = new (window as any).Razorpay(options);
+  //     rzp1.open();
+  //   } catch (error: any) {
+  //     console.error("Payment initialization failed:", error?.message);
+  //     alert(error?.message || "Something went wrong during payment initialization.");
+  //   }
+  // };
   
 
     const handleConfirmAndPay = async () => {
