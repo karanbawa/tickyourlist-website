@@ -10,7 +10,7 @@ async function fetchPaymentConfirmation(razorpayOrderId: string, razorpayPayment
   };
 
   // const response = await fetch(`${process.env.BASE_URL}/v1/tyltourcustomerbooking/razorpay/payment-confirmation`, {
-    const response = await fetch(`${process.env.BASE_URL}v1/tyltourcustomerbooking/razorpay/payment-confirmation`, {
+    const response = await fetch(`${process.env.BASE_URL}/v1/tyltourcustomerbooking/razorpay/payment-confirmation`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
