@@ -1,30 +1,32 @@
+'use client'
+
 import StartRating from "@/components/StartRating";
 import React, { FC } from "react";
 import ButtonPrimary from "@/shared/ButtonPrimary";
 import Image from "next/image";
 import PayPage from "./pay-done";
 
-async function fetchTourGroupData(slug: string) {
-  const id = slug.match(/\d+$/)?.[0]; 
+// async function fetchTourGroupData(slug: string) {
+//   const id = slug.match(/\d+$/)?.[0]; 
 
-  if (!id) {
-    throw new Error("Invalid slug2 format. Could not extract ID.");
-  }
-  const response = await fetch(`${process.env.BASE_URL}/v1/tyltourcustomerbooking/razorpay/payment-confirmation`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj',
-      'cache-control': 'no-store',
-      'domainId': '66cacba1eeca9633c29172b9'
-    },
-    // body: 
-  });
-  if (!response.ok) {
-    throw new Error('Failed to fetch data');
-  }
-  return response.json();
-}
+//   if (!id) {
+//     throw new Error("Invalid slug2 format. Could not extract ID.");
+//   }
+//   const response = await fetch(`${process.env.BASE_URL}/v1/tyltourcustomerbooking/razorpay/payment-confirmation`, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj',
+//       'cache-control': 'no-store',
+//       'domainId': '66cacba1eeca9633c29172b9'
+//     },
+//     // body: 
+//   });
+//   if (!response.ok) {
+//     throw new Error('Failed to fetch data');
+//   }
+//   return response.json();
+// }
 
 export interface Page {}
 

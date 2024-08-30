@@ -119,112 +119,111 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   };
 
   const loadRazorpayScript = () => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const script = document.createElement("script");
       script.src = "https://checkout.razorpay.com/v1/checkout.js";
       script.onload = () => {
         resolve(true);
       };
       script.onerror = () => {
-        resolve(false);
+        reject(new Error("Razorpay SDK failed to load"));
       };
       document.body.appendChild(script);
     });
   };
+  
 
 
-  const handleRazorpayPayment = async (amount: string, orderId: string, booking: any) => {
-    console.log("anount and data ", amount, orderId)
-
-    const scriptLoaded = await loadRazorpayScript();
-
-      if (!scriptLoaded) {
-        alert("Razorpay SDK failed to load. Are you online?");
-        return;
-      }
-
-    const options = {
-      key: process.env.RAZORPAY_KEY_ID,
-      amount: amount, 
-      currency: 'INR',
-      name: "TickYourList",
-      description: "Test Transaction",
-      image: "https://tickyourlist-images.s3.ap-south-1.amazonaws.com/tyllogo.png",
-      order_id: orderId,
-      callback_url: `https://www.tickyourlist.com/pay-done/`,
-      prefill: {
-        name: `${booking?.nonCustomerFirstName} ${booking?.nonCustomerLastName}`,
-        email: "karanbawab1@gmail.com",
-        contact: booking?.phoneNumber
-      },
-      notes: {
-        address: "Razorpay Corporate Office"
-      },
-      theme: {
-        color: "#3399cc"
-      }
-    };
-
-    
-    const rzp1 = new (window as any).Razorpay(options);
-
-    rzp1.open()
-    }
-
-  const handleConfirmAndPay = async () => {
-    if (!validateFields()) {
-      return;
-    }
-
-    setLoadingConfirmPay(true);
-    setConfirmPayError('');
-
-    const data = {
-      domainId: "66cacba1eeca9633c29172b9",
-      nonCustomerFirstName: firstName,
-      nonCustomerLastName: lastName,
-      email: email,
-      phoneCode: "+91",
-      phoneNumber: phoneNumber,
-      content: "Booking content",
-      tourId: variantId,
-      customerUserId: "66c36e709006a19edd547e22",
-      adultsCount: guests.guestAdults,
-      childCount: guests.guestChildren,
-      amount: ((guests.guestAdults || 1) * tourGroup?.variants?.find((variant: any) => variant?._id === variantId)?.listingPrice?.finalPrice).toString(),
-      currency: "INR",
-      title: tourGroup?.name,
-      source: "website",
-      active: true,
-    };
-
+  const handleRazorpayPayment = async (amount: any, orderId: any, booking: any) => {
     try {
-      const response = await fetch("https://api.univolenitsolutions.com/v1/tyltourcustomerbooking/add/travel-booking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": "GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        console.log('result ', result);
-        await handleRazorpayPayment(result?.data?.booking?.amount, result.data.razorpayOrderId, result?.data?.booking);
-        console.log("Booking successful:", result);
-        // router.push("/pay-done");
-      } else {
-        setConfirmPayError('Failed to Save the Record. Please try again!');
-        console.error("Failed to book:", response.statusText);
+      const scriptLoaded = await loadRazorpayScript();
+      if (!scriptLoaded) {
+        throw new Error("Razorpay SDK failed to load. Are you online?");
       }
-      setLoadingConfirmPay(false);
-    } catch (error) {
-      setLoadingConfirmPay(false);
-      setConfirmPayError('Failed to Save the Record. Please try again!');
-      console.error("An error occurred during booking:", error);
+  
+      const options = {
+        key: process.env.RAZORPAY_KEY_ID,
+        amount,
+        currency: 'INR',
+        name: "TickYourList",
+        description: "Test Transaction",
+        image: "https://tickyourlist-images.s3.ap-south-1.amazonaws.com/tyllogo.png",
+        order_id: orderId,
+        callback_url: `https://www.tickyourlist.com/pay-done/`,
+        prefill: {
+          name: `${booking?.nonCustomerFirstName} ${booking?.nonCustomerLastName}`,
+          email: "karanbawab1@gmail.com",
+          contact: booking?.phoneNumber
+        },
+        notes: {
+          address: "Razorpay Corporate Office"
+        },
+        theme: {
+          color: "#3399cc"
+        }
+      };
+  
+      const rzp1 = new (window as any).Razorpay(options);
+      rzp1.open();
+    } catch (error: any) {
+      console.error("Payment initialization failed:", error?.message);
+      alert(error?.message || "Something went wrong during payment initialization.");
     }
   };
+  
+
+    const handleConfirmAndPay = async () => {
+      if (!validateFields()) {
+        return;
+      }
+    
+      setLoadingConfirmPay(true);
+      setConfirmPayError('');
+
+      const data = {
+        domainId: "66cacba1eeca9633c29172b9",
+        nonCustomerFirstName: firstName,
+        nonCustomerLastName: lastName,
+        email: email,
+        phoneCode: "+91",
+        phoneNumber: phoneNumber,
+        content: "Booking content",
+        tourId: variantId,
+        customerUserId: "66c36e709006a19edd547e22",
+        adultsCount: guests.guestAdults,
+        childCount: guests.guestChildren,
+        amount: ((guests.guestAdults || 1) * tourGroup?.variants?.find((variant: any) => variant?._id === variantId)?.listingPrice?.finalPrice).toString(),
+        currency: "INR",
+        title: tourGroup?.name,
+        source: "website",
+        active: true,
+      };
+    
+      try {
+        const response = await fetch("https://api.univolenitsolutions.com/v1/tyltourcustomerbooking/add/travel-booking", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-api-key": "GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj",
+          },
+          body: JSON.stringify(data),
+        });
+    
+        if (!response.ok) {
+          throw new Error('Failed to Save the Record');
+        }
+    
+        const result = await response.json();
+        await handleRazorpayPayment(result?.data?.booking?.amount, result.data.razorpayOrderId, result?.data?.booking);
+        console.log("Booking successful:", result);
+      } catch (error: any) {
+        console.error("An error occurred during booking:", error);
+        setConfirmPayError(error?.message || 'Failed to Save the Record. Please try again!');
+      } finally {
+        setLoadingConfirmPay(false);
+      }
+    };
+    
 
   const renderSidebar = () => {
     return (
