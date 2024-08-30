@@ -84,11 +84,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
   const handleVariantSelect = (index: number | undefined) => {
     setSelectedVariantIndex(index !== undefined ? index : null);
-    
-        // // Scroll to the target element when a variant is selected
-        // if (scrollToElementRef.current) {
-        //   scrollToElementRef.current.scrollIntoView({ behavior: "smooth" });
-        // }
   };  
 
   useEffect(() => {
