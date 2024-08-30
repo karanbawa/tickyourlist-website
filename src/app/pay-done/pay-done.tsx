@@ -5,9 +5,13 @@ import React, { FC } from "react";
 import ButtonPrimary from "@/shared/ButtonPrimary";
 import Image from "next/image";
 
-export interface PayPageProps {}
+export interface PayPageProps {
+  bookingDetails?: any;
+}
 
-const PayPage: FC<PayPageProps> = () => {
+const PayPage: FC<PayPageProps> = ({
+  bookingDetails
+}) => {
   const renderContent = () => {
     return (
       <div className="w-full flex flex-col sm:rounded-2xl space-y-10 px-0 sm:p-6 xl:p-8">
@@ -34,10 +38,10 @@ const PayPage: FC<PayPageProps> = () => {
             <div className="pt-5  sm:pb-5 sm:px-5 space-y-3">
               <div>
                 <span className="text-sm text-neutral-500 dark:text-neutral-400 line-clamp-1">
-                  Hotel room in Tokyo, Jappan
+                  {bookingDetails?.tourId?.name}
                 </span>
                 <span className="text-base sm:text-lg font-medium mt-1 block">
-                  The Lounge & Bar
+                {bookingDetails?.tourId?.name}
                 </span>
               </div>
               <span className="block  text-sm text-neutral-500 dark:text-neutral-400">

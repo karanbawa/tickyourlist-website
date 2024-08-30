@@ -53,7 +53,7 @@ const Page: FC<PageProps> = async ({ searchParams }) => {
       <div className="nc-PayPage">
         <main className="container mt-11 mb-24 lg:mb-32">
           <div className="max-w-4xl mx-auto">
-            <PayPage />
+            <PayPage bookingDetails={data.booking} />
           </div>
         </main>
       </div>

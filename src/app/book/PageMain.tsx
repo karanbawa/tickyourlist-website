@@ -235,7 +235,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         phoneCode: "+91",
         phoneNumber: phoneNumber,
         content: "Booking content",
-        tourId: variantId,
+        tourId: tour,
         customerUserId: "66c36e709006a19edd547e22",
         adultsCount: guests.guestAdults,
         childCount: guests.guestChildren,
@@ -243,6 +243,9 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         currency: "INR",
         title: tourGroup?.name,
         source: "website",
+        bookingDate: date,
+        variantId,
+        tourGroupId: tourGroup?._id,
         active: true,
       };
     
