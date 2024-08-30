@@ -162,7 +162,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
           // This function will be called after the payment is successful
           console.log("Payment successful:", response);
           // Route to the desired page after successful payment
-          router.push("/pay-done");
+          router.push(`/pay-done?razorpayOrderId=${response?.razorpay_order_id}&razorpayPaymentId=${response?.razorpay_payment_id}&razorpaySignature=${response?.razorpay_signature}`);
         },
         modal: {
           ondismiss: function() {
