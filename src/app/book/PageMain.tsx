@@ -149,7 +149,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         description: "Test Transaction",
         image: "https://tickyourlist-images.s3.ap-south-1.amazonaws.com/tyllogo.png",
         order_id: orderId,
-        callback_url: `https://www.tickyourlist.com/pay-done/`,
+        callback_url: `/pay-done/`,
         prefill: {
           name: `${booking?.nonCustomerFirstName} ${booking?.nonCustomerLastName}`,
           email: "karanbawab1@gmail.com",
