@@ -132,7 +132,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     });
   };
   
-  const handleRazorpayPayment = async (amount: any, orderId: any, booking: { nonCustomerFirstName: any; nonCustomerLastName: any; phoneNumber: any; }) => {
+  const handleRazorpayPayment = async (amount: any, orderId: any, booking: { nonCustomerFirstName: any; nonCustomerLastName: any; phoneNumber: any; _id: string }) => {
     try {
       const scriptLoaded = await loadRazorpayScript();
       if (!scriptLoaded) {
@@ -162,7 +162,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
           // This function will be called after the payment is successful
           console.log("Payment successful:", response);
           // Route to the desired page after successful payment
-          router.push(`/pay-done?razorpayOrderId=${response?.razorpay_order_id}&razorpayPaymentId=${response?.razorpay_payment_id}&razorpaySignature=${response?.razorpay_signature}`);
+          router.push(`/pay-done?razorpayOrderId=${response?.razorpay_order_id}&razorpayPaymentId=${response?.razorpay_payment_id}&razorpaySignature=${response?.razorpay_signature}&bookingId=${booking?._id}`);
         },
         modal: {
           ondismiss: function() {

@@ -1,15 +1,16 @@
 import React, { FC } from "react";
 import PayPage from "./pay-done";
 
-async function fetchPaymentConfirmation(razorpayOrderId: string, razorpayPaymentId: string, razorpaySignature: string) {
+async function fetchPaymentConfirmation(razorpayOrderId: string, razorpayPaymentId: string, razorpaySignature: string, bookingId: string) {
   const requestBody = {
     razorpay_payment_id: razorpayPaymentId,
     razorpay_order_id: razorpayOrderId,
-    razorpay_signature: razorpaySignature
+    razorpay_signature: razorpaySignature,
+    bookingId: bookingId
   };
 
   // const response = await fetch(`${process.env.BASE_URL}/v1/tyltourcustomerbooking/razorpay/payment-confirmation`, {
-    const response = await fetch(`${process.env.BASE_URL}/v1/tyltourcustomerbooking/razorpay/payment-confirmation`, {
+    const response = await fetch(`${process.env.BASE_URL}v1/tyltourcustomerbooking/razorpay/payment-confirmation`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -20,6 +21,7 @@ async function fetchPaymentConfirmation(razorpayOrderId: string, razorpayPayment
   });
 
   if (!response.ok) {
+    console.log("response.json()" , response);
     throw new Error('Failed to fetch payment confirmation');
   }
 
@@ -27,13 +29,14 @@ async function fetchPaymentConfirmation(razorpayOrderId: string, razorpayPayment
 }
 
 export interface PageProps {
-  searchParams: { razorpayOrderId?: string; razorpayPaymentId?: string; razorpaySignature?: string };
+  searchParams: { razorpayOrderId?: string; razorpayPaymentId?: string; razorpaySignature?: string; bookingId?: string; };
 }
 
 const Page: FC<PageProps> = async ({ searchParams }) => {
   const razorpayOrderId = searchParams.razorpayOrderId || "";
   const razorpayPaymentId = searchParams.razorpayPaymentId || "";
   const razorpaySignature = searchParams.razorpaySignature || "";
+  const bookingId = searchParams?.bookingId || "";
 
   console.log("ids ", razorpayOrderId, razorpayPaymentId, razorpaySignature);
 
@@ -44,7 +47,7 @@ const Page: FC<PageProps> = async ({ searchParams }) => {
 
   try {
     // Fetch the payment confirmation data
-    const data = await fetchPaymentConfirmation(razorpayOrderId, razorpayPaymentId, razorpaySignature);
+    const data = await fetchPaymentConfirmation(razorpayOrderId, razorpayPaymentId, razorpaySignature, bookingId);
 
     console.log("responsedatatest ", data);
 
