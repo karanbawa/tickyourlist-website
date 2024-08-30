@@ -9,12 +9,11 @@ async function fetchPaymentConfirmation(razorpayOrderId: string, razorpayPayment
     bookingId: bookingId
   };
 
-  // const response = await fetch(`${process.env.BASE_URL}/v1/tyltourcustomerbooking/razorpay/payment-confirmation`, {
     const response = await fetch(`${process.env.BASE_URL}/v1/tyltourcustomerbooking/razorpay/payment-confirmation`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj',
+      'x-api-key': process.env.API_KEY || '',
       'cache-control': 'no-store',
     },
     body: JSON.stringify(requestBody)
@@ -37,8 +36,6 @@ const Page: FC<PageProps> = async ({ searchParams }) => {
   const razorpayPaymentId = searchParams.razorpayPaymentId || "";
   const razorpaySignature = searchParams.razorpaySignature || "";
   const bookingId = searchParams?.bookingId || "";
-
-  console.log("ids ", razorpayOrderId, razorpayPaymentId, razorpaySignature);
 
   // Ensure all required params are present
   if (!razorpayOrderId || !razorpayPaymentId || !razorpaySignature) {
