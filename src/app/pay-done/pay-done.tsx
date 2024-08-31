@@ -45,7 +45,7 @@ const PayPage: FC<PayPageProps> = ({
                 </span>
               </div>
               <span className="block  text-sm text-neutral-500 dark:text-neutral-400">
-                2 beds · 2 baths
+                {bookingDetails?.tourGroupId?.city?.displayName}
               </span>
               <div className="w-10 border-b border-neutral-200  dark:border-neutral-700"></div>
               <StartRating />
@@ -136,7 +136,7 @@ const PayPage: FC<PayPageProps> = ({
           </div>
         </div>
         <div>
-          <ButtonPrimary style={{ backgroundColor: '#7C25E9' }} href="/">Explore more stays</ButtonPrimary>
+          <ButtonPrimary style={{ backgroundColor: '#7C25E9' }} href="/">Explore more destinations</ButtonPrimary>
         </div>
       </div>
     );
