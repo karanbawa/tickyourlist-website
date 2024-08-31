@@ -28,8 +28,10 @@ const CategoryTabs: React.FC = () => {
   const [isSticky, setIsSticky] = useState<boolean>(false);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
   const [tabsOriginalTop, setTabsOriginalTop] = useState<number>(0);
+  const [scrollLeft, setScrollLeft] = useState<number>(0);
   const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const tabsRef = useRef<HTMLDivElement>(null);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -69,6 +71,9 @@ const CategoryTabs: React.FC = () => {
         } else {
           setIsSticky(false);
         }
+      }
+      if (scrollAreaRef.current) {
+        setScrollLeft(scrollAreaRef.current.scrollLeft);
       }
     };
 
@@ -131,27 +136,38 @@ const CategoryTabs: React.FC = () => {
           boxShadow: isSticky ? '0 2px 4px rgba(0,0,0,0.1)' : 'none'
         }}
       >
-        <ScrollArea className="w-full whitespace-nowrap px-4 py-2" orientation="horizontal">
-          <div className="flex space-x-4 px-4 min-w-max">
-            {categories.map((category) => (
-              <button
-                key={category.label}
-                onClick={() => handleTabClick(category.label)}
-                className={`
-                  flex space-x-2 items-center justify-center
-                  p-2 rounded-lg transition-colors duration-200
-                  min-w-[80px] sm:min-w-[100px]
-                  ${activeTab === category.label
-                    ? 'bg-purple-100 text-purple-600'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}
-                `}
-              >
-                <span className="mb-1">{category.icon}</span>
-                <span className="text-xs sm:text-sm text-center whitespace-nowrap">{category.label}</span>
-              </button>
-            ))}
-          </div>
-        </ScrollArea>
+        <div className="max-w-screen-xl mx-auto relative">
+          <ScrollArea 
+            className="w-full whitespace-nowrap px-4 py-2" 
+            orientation="horizontal"
+          >
+            <div 
+              ref={scrollAreaRef}
+              className="flex space-x-4 px-4 min-w-max"
+              style={{
+                transform: isSticky ? `translateX(-${scrollLeft}px)` : 'none'
+              }}
+            >
+              {categories.map((category) => (
+                <button
+                  key={category.label}
+                  onClick={() => handleTabClick(category.label)}
+                  className={`
+                    flex space-x-2 items-center justify-center
+                    p-2 rounded-lg transition-colors duration-200
+                    min-w-[80px] sm:min-w-[100px]
+                    ${activeTab === category.label
+                      ? 'bg-purple-100 text-purple-600'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}
+                  `}
+                >
+                  <span className="mb-1">{category.icon}</span>
+                  <span className="text-xs sm:text-sm text-center whitespace-nowrap">{category.label}</span>
+                </button>
+              ))}
+            </div>
+          </ScrollArea>
+        </div>
       </div>
 
       {/* Experiences */}

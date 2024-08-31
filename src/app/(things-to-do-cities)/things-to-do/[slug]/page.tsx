@@ -17,7 +17,7 @@ function PageHome3() {
       {/* <BgGlassmorphism /> */}
 
       {/* SECTION HERO */}
-      <div className="container px-1 sm:px-4 mb-24 ">
+      <div className="container px-1 sm:px-4 mb-8 ">
         <SectionHero3 className="" />
       </div>
 
