@@ -22,6 +22,13 @@ const categories = [
   { icon: <Compass size={24} />, label: "Desert Safari" },
 ];
 
+const noScrollbarClass = `
+  scrollbar-hide overflow-x-auto
+  [&::-webkit-scrollbar]:hidden
+  [-ms-overflow-style:'none']
+  [scrollbar-width:'none']
+`;
+
 const CategoryTabs: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>(categories[0].label);
   const [isSticky, setIsSticky] = useState<boolean>(false);
@@ -32,6 +39,7 @@ const CategoryTabs: React.FC = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const buttonRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({});
+  const isManualScrollRef = useRef<boolean>(false);
 
   useEffect(() => {
     const calculateHeaderHeight = () => {
@@ -61,45 +69,53 @@ const CategoryTabs: React.FC = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.pageYOffset;
-      if (tabsRef.current) {
-        setIsSticky(scrollPosition > tabsOriginalTop - headerHeight);
-      }
-    };
+  const handleScroll = () => {
+    const scrollPosition = window.pageYOffset;
+    if (tabsRef.current) {
+      setIsSticky(scrollPosition > tabsOriginalTop - headerHeight);
+    }
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [headerHeight, tabsOriginalTop]);
+    if (!isManualScrollRef.current) {
+      const viewportHeight = window.innerHeight;
+      let maxVisibleHeight = 0;
+      let mostVisibleSection = '';
 
-  useEffect(() => {
-    const observerOptions: IntersectionObserverInit = {
-      root: null,
-      rootMargin: `-${headerHeight + 50}px 0px -50% 0px`,
-      threshold: 0,
-    };
-
-    const observerCallback: IntersectionObserverCallback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && entry.target.id) {
-          setActiveTab(entry.target.id);
+      Object.entries(sectionRefs.current).forEach(([label, ref]) => {
+        if (ref) {
+          const rect = ref.getBoundingClientRect();
+          const visibleHeight = Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0);
+          if (visibleHeight > maxVisibleHeight) {
+            maxVisibleHeight = visibleHeight;
+            mostVisibleSection = label;
+          }
         }
       });
-    };
 
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
+      if (mostVisibleSection && mostVisibleSection !== activeTab) {
+        setActiveTab(mostVisibleSection);
+      }
+    }
+  };
 
-    Object.values(sectionRefs.current).forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [headerHeight, tabsOriginalTop, activeTab]);
 
-    return () => {
-      Object.values(sectionRefs.current).forEach((ref) => {
-        if (ref) observer.unobserve(ref);
-      });
-    };
-  }, [headerHeight]);
+  const handleTabClick = (category: string) => {
+    setActiveTab(category);
+    isManualScrollRef.current = true;
+    const element = sectionRefs.current[category];
+    if (element && tabsRef.current) {
+      const tabsHeight = tabsRef.current.offsetHeight;
+      const y = element.getBoundingClientRect().top + window.pageYOffset - headerHeight - tabsHeight;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+      
+      setTimeout(() => {
+        isManualScrollRef.current = false;
+      }, 1000);
+    }
+  };
 
   useEffect(() => {
     if (isSticky && scrollContainerRef.current && buttonRefs.current[activeTab]) {
@@ -121,16 +137,6 @@ const CategoryTabs: React.FC = () => {
     }
   }, [activeTab, isSticky]);
 
-  const handleTabClick = (category: string) => {
-    setActiveTab(category);
-    const element = sectionRefs.current[category];
-    if (element && tabsRef.current) {
-      const tabsHeight = tabsRef.current.offsetHeight;
-      const y = element.getBoundingClientRect().top + window.pageYOffset - headerHeight - tabsHeight;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
-  };
-
   const renderExperienceCard = (stay: StayDataType) => {
     return <StayCard2 key={stay.id} data={stay} className="min-w-[300px] max-w-[300px] flex-shrink-0" />;
   };
@@ -151,7 +157,7 @@ const CategoryTabs: React.FC = () => {
         <div className="max-w-screen-xl mx-auto relative">
           <div 
             ref={scrollContainerRef}
-            className="overflow-x-auto whitespace-nowrap px-4 py-2 scrollbar-hide"
+            className={`whitespace-nowrap px-4 py-2 ${noScrollbarClass}`}
           >
             <div className="inline-flex space-x-4">
               {categories.map((category) => (
@@ -201,8 +207,10 @@ const CategoryTabs: React.FC = () => {
                 </ButtonSecondary>
               </span>
             </div>
-            <div className="flex space-x-4 px-4 overflow-x-auto scrollbar-hide">
-              {DEMO_DATA.map((stay) => renderExperienceCard(stay))}
+            <div className={noScrollbarClass}>
+              <div className="flex space-x-4 px-4 min-w-max">
+                {DEMO_DATA.map((stay) => renderExperienceCard(stay))}
+              </div>
             </div>
           </div>
         ))}
