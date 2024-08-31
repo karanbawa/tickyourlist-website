@@ -31,14 +31,14 @@ const PayPage: FC<PayPageProps> = ({
                   fill
                   alt=""
                   className="object-cover"
-                  src="https://images.pexels.com/photos/6373478/pexels-photo-6373478.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+                  src={bookingDetails?.tourGroupId?.imageUploads?.[0]?.url || bookingDetails?.tourGroupId?.media?.productImages?.[0]?.url}
                 />
               </div>
             </div>
             <div className="pt-5  sm:pb-5 sm:px-5 space-y-3">
               <div>
                 <span className="text-sm text-neutral-500 dark:text-neutral-400 line-clamp-1">
-                  {bookingDetails?.tourId?.name}
+                  {bookingDetails?.tourGroupId?.name}
                 </span>
                 <span className="text-base sm:text-lg font-medium mt-1 block">
                 {bookingDetails?.tourId?.name}
@@ -71,7 +71,7 @@ const PayPage: FC<PayPageProps> = ({
               <div className="flex flex-col">
                 <span className="text-sm text-neutral-400">Date</span>
                 <span className="mt-1.5 text-lg font-semibold">
-                  Aug 12 - 16, 2021
+                  {bookingDetails?.bookingDate}
                 </span>
               </div>
             </div>
@@ -93,7 +93,7 @@ const PayPage: FC<PayPageProps> = ({
 
               <div className="flex flex-col">
                 <span className="text-sm text-neutral-400">Guests</span>
-                <span className="mt-1.5 text-lg font-semibold">3 Guests</span>
+                <span className="mt-1.5 text-lg font-semibold">{(bookingDetails?.childCount + bookingDetails?.adultsCount)} {(bookingDetails?.childCount + bookingDetails?.adultsCount) > 1 ? 'Guests' : 'Guest'}</span>
               </div>
             </div>
           </div>
@@ -103,30 +103,36 @@ const PayPage: FC<PayPageProps> = ({
         <div className="space-y-6">
           <h3 className="text-2xl font-semibold">Booking detail</h3>
           <div className="flex flex-col space-y-4">
-            <div className="flex text-neutral-6000 dark:text-neutral-300">
+          <div className="flex text-neutral-6000 dark:text-neutral-300">
               <span className="flex-1">Booking code</span>
               <span className="flex-1 font-medium text-neutral-900 dark:text-neutral-100">
                 #222-333-111
               </span>
             </div>
+          <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
+              <span className="flex-1">Lead Guest Name</span>
+              <span className="flex-1 font-medium text-neutral-900 dark:text-neutral-100">
+               {bookingDetails?.nonCustomerFirstName} {bookingDetails?.nonCustomerLastName}
+              </span>
+            </div>
             <div className="flex text-neutral-6000 dark:text-neutral-300">
               <span className="flex-1">Date</span>
               <span className="flex-1 font-medium text-neutral-900 dark:text-neutral-100">
-                12 Aug, 2021
+                {bookingDetails?.bookingDate}
               </span>
             </div>
             <div className="flex text-neutral-6000 dark:text-neutral-300">
               <span className="flex-1">Total</span>
               <span className="flex-1 font-medium text-neutral-900 dark:text-neutral-100">
-                $199
+                INR {bookingDetails?.amount}
               </span>
             </div>
-            <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
+            {/* <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
               <span className="flex-1">Payment method</span>
               <span className="flex-1 font-medium text-neutral-900 dark:text-neutral-100">
                 Credit card
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
         <div>
