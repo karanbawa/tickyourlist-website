@@ -2,7 +2,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Home, Landmark, Search, User, Globe, Waves, Compass } from 'lucide-react';
-import { ScrollArea } from './scrollbarAndArea';
 import { StayDataType } from '@/data/types';
 import StayCard2 from '@/components/tourrgroupsectionpage/StayCard2';
 import { DEMO_STAY_LISTINGS } from '@/data/listings';
@@ -28,11 +27,11 @@ const CategoryTabs: React.FC = () => {
   const [isSticky, setIsSticky] = useState<boolean>(false);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
   const [tabsOriginalTop, setTabsOriginalTop] = useState<number>(0);
-  const [scrollLeft, setScrollLeft] = useState<number>(0);
   const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const tabsRef = useRef<HTMLDivElement>(null);
-  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const buttonRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({});
 
   useEffect(() => {
     const calculateHeaderHeight = () => {
@@ -66,14 +65,7 @@ const CategoryTabs: React.FC = () => {
     const handleScroll = () => {
       const scrollPosition = window.pageYOffset;
       if (tabsRef.current) {
-        if (scrollPosition > tabsOriginalTop - headerHeight) {
-          setIsSticky(true);
-        } else {
-          setIsSticky(false);
-        }
-      }
-      if (scrollAreaRef.current) {
-        setScrollLeft(scrollAreaRef.current.scrollLeft);
+        setIsSticky(scrollPosition > tabsOriginalTop - headerHeight);
       }
     };
 
@@ -109,6 +101,26 @@ const CategoryTabs: React.FC = () => {
     };
   }, [headerHeight]);
 
+  useEffect(() => {
+    if (isSticky && scrollContainerRef.current && buttonRefs.current[activeTab]) {
+      const container = scrollContainerRef.current;
+      const button = buttonRefs.current[activeTab];
+      
+      if (button) {
+        const containerWidth = container.offsetWidth;
+        const buttonLeft = button.offsetLeft;
+        const buttonWidth = button.offsetWidth;
+        
+        const scrollLeft = buttonLeft - containerWidth / 2 + buttonWidth / 2;
+        
+        container.scrollTo({
+          left: scrollLeft,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }, [activeTab, isSticky]);
+
   const handleTabClick = (category: string) => {
     setActiveTab(category);
     const element = sectionRefs.current[category];
@@ -137,20 +149,15 @@ const CategoryTabs: React.FC = () => {
         }}
       >
         <div className="max-w-screen-xl mx-auto relative">
-          <ScrollArea 
-            className="w-full whitespace-nowrap px-4 py-2" 
-            orientation="horizontal"
+          <div 
+            ref={scrollContainerRef}
+            className="overflow-x-auto whitespace-nowrap px-4 py-2 scrollbar-hide"
           >
-            <div 
-              ref={scrollAreaRef}
-              className="flex space-x-4 px-4 min-w-max"
-              style={{
-                transform: isSticky ? `translateX(-${scrollLeft}px)` : 'none'
-              }}
-            >
+            <div className="inline-flex space-x-4">
               {categories.map((category) => (
                 <button
                   key={category.label}
+                  ref={el => buttonRefs.current[category.label] = el}
                   onClick={() => handleTabClick(category.label)}
                   className={`
                     flex space-x-2 items-center justify-center
@@ -166,7 +173,7 @@ const CategoryTabs: React.FC = () => {
                 </button>
               ))}
             </div>
-          </ScrollArea>
+          </div>
         </div>
       </div>
 
@@ -194,11 +201,9 @@ const CategoryTabs: React.FC = () => {
                 </ButtonSecondary>
               </span>
             </div>
-            <ScrollArea className="flex space-x-4 px-4 overflow-x-auto" orientation="horizontal">
-              <div className="flex space-x-4">
-                {DEMO_DATA.map((stay) => renderExperienceCard(stay))}
-              </div>
-            </ScrollArea>
+            <div className="flex space-x-4 px-4 overflow-x-auto scrollbar-hide">
+              {DEMO_DATA.map((stay) => renderExperienceCard(stay))}
+            </div>
           </div>
         ))}
       </div>
