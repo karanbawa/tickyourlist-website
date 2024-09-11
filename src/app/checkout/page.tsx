@@ -12,8 +12,9 @@ async function fetchTourGroupData(slug: string) {
     headers: {
       'Content-Type': 'application/json',
       'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj',
-      'cache-control': 'no-store'
-    }
+      'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+    },
+    next: { revalidate: 10 }, // Ensure Vercel does not cache this fetch
   });
   if (!response.ok) {
     throw new Error('Failed to fetch data');
