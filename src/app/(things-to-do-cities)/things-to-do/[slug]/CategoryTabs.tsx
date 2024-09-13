@@ -2,25 +2,10 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Home, Landmark, Search, User, Globe, Waves, Compass } from 'lucide-react';
-import { StayDataType } from '@/data/types';
 import StayCard2 from '@/components/tourrgroupsectionpage/StayCard2';
-import { DEMO_STAY_LISTINGS } from '@/data/listings';
 import Heading from '@/shared/Heading';
 import ButtonSecondary from '@/shared/ButtonSecondary';
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
-
-const DEMO_DATA: StayDataType[] = DEMO_STAY_LISTINGS.filter((_, i) => i < 8);
-
-const categories = [
-  { icon: <Home size={24} />, label: "Theme Parks" },
-  { icon: <Landmark size={24} />, label: "Landmarks" },
-  { icon: <Search size={24} />, label: "Combos" },
-  { icon: <User size={24} />, label: "Zoos" },
-  { icon: <Globe size={24} />, label: "Cruises" },
-  { icon: <Waves size={24} />, label: "Water Parks" },
-  { icon: <Waves size={24} />, label: "Skydiving" },
-  { icon: <Compass size={24} />, label: "Desert Safari" },
-];
 
 const noScrollbarClass = `
   scrollbar-hide overflow-x-auto
@@ -29,8 +14,12 @@ const noScrollbarClass = `
   [scrollbar-width:'none']
 `;
 
-const CategoryTabs: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<string>(categories[0].label);
+interface CategoryTabsProps {
+  travelSections: any;
+}
+
+const CategoryTabs: React.FC<CategoryTabsProps> = ({ travelSections }) => {
+  const [activeTab, setActiveTab] = useState<string>('');
   const [isSticky, setIsSticky] = useState<boolean>(false);
   const [headerHeight, setHeaderHeight] = useState<number>(0);
   const [tabsOriginalTop, setTabsOriginalTop] = useState<number>(0);
@@ -40,6 +29,14 @@ const CategoryTabs: React.FC = () => {
   const contentRef = useRef<HTMLDivElement>(null);
   const buttonRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({});
   const isManualScrollRef = useRef<boolean>(false);
+
+  console.log("travelSections ", travelSections);
+
+  useEffect(() => {
+    if (travelSections && travelSections.data && travelSections.data.length > 0) {
+      setActiveTab(travelSections.data?.[0].category.id.name);
+    }
+  }, [travelSections]);
 
   useEffect(() => {
     const calculateHeaderHeight = () => {
@@ -137,9 +134,23 @@ const CategoryTabs: React.FC = () => {
     }
   }, [activeTab, isSticky]);
 
-  const renderExperienceCard = (stay: StayDataType) => {
-    return <StayCard2 key={stay.id} data={stay} className="min-w-[300px] max-w-[300px] flex-shrink-0" />;
+  const getCategoryIcon = (categoryName: string) => {
+    switch (categoryName.toLowerCase()) {
+      case 'theme parks': return <Home size={24} />;
+      case 'landmarks': return <Landmark size={24} />;
+      case 'combos': return <Search size={24} />;
+      case 'zoos': return <User size={24} />;
+      case 'cruises': return <Globe size={24} />;
+      case 'water parks': return <Waves size={24} />;
+      case 'skydiving': return <Waves size={24} />;
+      case 'desert safari': return <Compass size={24} />;
+      default: return <Home size={24} />;
+    }
   };
+
+  if (!travelSections || !travelSections.data || travelSections.data.length === 0) {
+    return <div>No travel sections available</div>;
+  }
 
   return (
     <div className="w-full bg-white min-h-screen flex flex-col">
@@ -160,22 +171,22 @@ const CategoryTabs: React.FC = () => {
             className={`whitespace-nowrap px-4 py-2 ${noScrollbarClass}`}
           >
             <div className="inline-flex space-x-4">
-              {categories.map((category) => (
+              {travelSections.data.map((section: any) => (
                 <button
-                  key={category.label}
-                  ref={el => buttonRefs.current[category.label] = el}
-                  onClick={() => handleTabClick(category.label)}
+                  key={section.category.id.name}
+                  ref={el => buttonRefs.current[section.category.id.name] = el}
+                  onClick={() => handleTabClick(section.category.id.name)}
                   className={`
                     flex space-x-2 items-center justify-center
                     p-2 rounded-lg transition-colors duration-200
                     min-w-[80px] sm:min-w-[100px]
-                    ${activeTab === category.label
+                    ${activeTab === section.category.id.name
                       ? 'bg-purple-100 text-purple-600'
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}
                   `}
                 >
-                  <span className="mb-1">{category.icon}</span>
-                  <span className="text-xs sm:text-sm text-center whitespace-nowrap">{category.label}</span>
+                  <span className="mb-1">{getCategoryIcon(section.category.id.name)}</span>
+                  <span className="text-xs sm:text-sm text-center whitespace-nowrap">{section.category.id.name}</span>
                 </button>
               ))}
             </div>
@@ -189,15 +200,15 @@ const CategoryTabs: React.FC = () => {
         className="flex-1" 
         style={{ paddingTop: isSticky ? `${tabsRef.current?.offsetHeight || 0}px` : '0' }}
       >
-        {categories.map((category) => (
+        {travelSections.data.map((section: any) => (
           <div
             className="nc-SectionGridFeaturePlaces relative pt-10 pb-10"
-            key={category.label}
-            id={category.label}
-            ref={el => sectionRefs.current[category.label] = el}
+            key={section.category.id.name}
+            id={section.category.id.name}
+            ref={el => sectionRefs.current[section.category.id.name] = el}
           >
             <div className="flex items-center justify-between px-4 mb-4">
-              <Heading desc={'Explore top experiences'}>{'Top Experiences in'} {category.label}</Heading>
+              <Heading desc={'Explore top experiences'}>{`Top Experiences in ${section.category.id.name}`}</Heading>
               <span className="hidden sm:block flex-shrink-0">
                 <ButtonSecondary href="/listing-stay" className="!leading-none">
                   <div className="flex items-center justify-center">
@@ -209,7 +220,9 @@ const CategoryTabs: React.FC = () => {
             </div>
             <div className={noScrollbarClass}>
               <div className="flex space-x-4 px-4 min-w-max">
-                {DEMO_DATA.map((stay) => renderExperienceCard(stay))}
+                {section.tourgroups.map((tourgroup: any) => (
+                  <StayCard2 key={tourgroup.id} data={tourgroup} className="min-w-[300px] max-w-[300px] flex-shrink-0" />
+                ))}
               </div>
             </div>
           </div>

@@ -1,58 +1,29 @@
-import React from "react";
-import SectionSubscribe2 from "@/components/SectionSubscribe2";
-import BackgroundSection from "@/components/BackgroundSection";
-import BgGlassmorphism from "@/components/BgGlassmorphism";
-import { TaxonomyType } from "@/data/types";
-import SectionGridAuthorBox from "@/components/SectionGridAuthorBox";
-import SectionGridCategoryBox from "@/components/SectionGridCategoryBox";
-import SectionHero3 from "@/app/(server-components)/SectionHero3";
-import CardCategory6 from "@/components/CardCategory6";
-import CategoryTabs from "./CategoryTabs";
-// import SectionGridFeaturePlaces from "@/components/tourrgroupsectionpage/SectionGridFeaturePlaces";
+import PageHome3 from './PageHome3';
 
-function PageHome3() {
-  return (
-    <main className="nc-PageHome3 relative overflow-hidden">
-      {/* GLASSMOPHIN */}
-      {/* <BgGlassmorphism /> */}
+async function getTravelSections(cityCode: string) {
+  const res = await fetch(`${process.env.BASE_URL}/v1/tyltravelsection/get/public/travel-sections/?cityCode=${cityCode}&domainId=${process.env.WEBSITE_ID}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj',
+     'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+    },
+    next: { revalidate: 10 }, // Ensure Vercel does not cache this fetch
+  });
 
-      {/* SECTION HERO */}
-      <div className="container px-1 sm:px-4 mb-8 ">
-        <SectionHero3 className="" />
-      </div>
+  if (!res.ok) {
+    // return [];
+    throw new Error('Failed to fetch travel sections');
+  }
 
-      <div className="container relative space-y-24 mb-24 ">
-        {/* SECTION 1 */}
-        <CategoryTabs />
-        {/* <div className="grid grid-cols-12 gap-6">
-          <div className="col-span-12 sm:col-span-6 lg:col-span-4 flex">
-            <CardCategory6 taxonomy={DEMO_CATS_2[0]} />
-          </div>
-          <div className="col-span-12 sm:col-span-6 lg:col-span-4 grid grid-rows-2 gap-6">
-            <CardCategory6 taxonomy={DEMO_CATS_2[3]} />
-            <CardCategory6 taxonomy={DEMO_CATS_2[1]} />
-          </div>
-          <div className="col-span-12 sm:col-span-6 lg:col-span-4 flex">
-            <CardCategory6 taxonomy={DEMO_CATS_2[4]} />
-          </div>
-        </div> */}
-
-        {/* SECTION */}
-        {/* <SectionGridCategoryBox /> */}
-
-        {/* SECTION */}
-        {/* <div className="relative py-16">
-          <BackgroundSection />
-          <SectionGridAuthorBox boxCard="box2" />
-        </div> */}
-
-        {/* <SectionGridFeaturePlaces /> */}
-
-        {/* SECTION */}
-        <SectionSubscribe2 />
-      </div>
-    </main>
-  );
+  const data =  res.json();
+  return data;
 }
 
-export default PageHome3;
+export default async function PageHome3Server({ params }: {
+  params: { slug: string };
+}) {
+  const cityCode = params.slug as string || 'DUBAI';
+  const travelSections = await getTravelSections(cityCode);
+
+  return <PageHome3 travelSections={travelSections} />;
+}

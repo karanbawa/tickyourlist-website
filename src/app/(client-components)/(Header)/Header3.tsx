@@ -14,6 +14,7 @@ import HeroSearchFormSmall from "../(HeroSearchFormSmall)/HeroSearchFormSmall";
 import { StaySearchFormFields } from "../type";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import LangDropdown from "./LangDropdown";
+import AlgoliaLikeSearch from "@/app/(things-to-do-cities)/things-to-do/[slug]/AlgoliaLikeSearch";
 
 interface Header3Props {
   className?: string;
@@ -120,6 +121,7 @@ const Header3: FC<Header3Props> = ({ className = "" }) => {
             <div className="flex flex-[2] lg:flex-none mx-auto">
               <div className="flex-1 hidden lg:flex self-center">
                 {renderButtonOpenHeroSearch()}
+                {/* <AlgoliaLikeSearch /> */}
               </div>
               <div className="self-center flex-1 lg:hidden w-full max-w-lg mx-auto">
                 <HeroSearchForm2MobileFactory />

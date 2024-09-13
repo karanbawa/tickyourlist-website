@@ -1,7 +1,5 @@
 import React, { FC } from "react";
 import GallerySlider from "@/components/GallerySlider";
-import { DEMO_STAY_LISTINGS } from "@/data/listings";
-import { StayDataType } from "@/data/types";
 import StartRating from "@/components/StartRating";
 import BtnLikeIcon from "@/components/BtnLikeIcon";
 import SaleOffBadge from "@/components/SaleOffBadge";
@@ -10,31 +8,27 @@ import Link from "next/link";
 
 export interface StayCard2Props {
   className?: string;
-  data?: StayDataType;
+  data: any; // Tour group data from API
   size?: "default" | "small";
 }
-
-const DEMO_DATA = DEMO_STAY_LISTINGS[0];
 
 const StayCard2: FC<StayCard2Props> = ({
   size = "default",
   className = "",
-  data = DEMO_DATA,
+  data,
 }) => {
   const {
-    galleryImgs,
-    listingCategory,
-    address,
-    title,
-    bedrooms,
-    href,
-    like,
-    saleOff,
-    isAds,
-    price,
-    reviewStart,
-    reviewCount,
     id,
+    name,
+    imageUploads,
+    url,
+    shortSummary,
+    metaTitle,
+    metaDescription,
+    cityCode,
+    tourType,
+    displayTags,
+    urlSlugs
   } = data;
 
   const renderSliderGallery = () => {
@@ -43,12 +37,12 @@ const StayCard2: FC<StayCard2Props> = ({
         <GallerySlider
           uniqueID={`StayCard2_${id}`}
           ratioClass="aspect-w-12 aspect-h-11"
-          galleryImgs={galleryImgs}
+          galleryImgs={imageUploads.map((img: any) => img.url)}
           imageClass="rounded-lg"
-          href={href}
+          href={urlSlugs?.EN}
         />
-        <BtnLikeIcon isLiked={like} className="absolute right-3 top-3 z-[1]" />
-        {saleOff && <SaleOffBadge className="absolute left-3 top-3" />}
+        <BtnLikeIcon isLiked={false} className="absolute right-3 top-3 z-[1]" />
+        {/* Add SaleOffBadge conditionally if there's a promotion */}
       </div>
     );
   };
@@ -58,16 +52,18 @@ const StayCard2: FC<StayCard2Props> = ({
       <div className={size === "default" ? "mt-3 space-y-3" : "mt-2 space-y-2"}>
         <div className="space-y-2">
           <span className="text-sm text-neutral-500 dark:text-neutral-400">
-            {listingCategory.name} · {bedrooms} beds
+            {tourType} · {cityCode}
           </span>
           <div className="flex items-center space-x-2">
-            {isAds && <Badge name="ADS" color="green" />}
+            {/* {displayTags.map((tag: string, index: number) => (
+              <Badge key={index} name={tag} color="green" />
+            ))} */}
             <h2
               className={`font-semibold capitalize text-neutral-900 dark:text-white ${
                 size === "default" ? "text-base" : "text-base"
               }`}
             >
-              <span className="line-clamp-1">{title}</span>
+              <span className="line-clamp-1">{name}</span>
             </h2>
           </div>
           <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-1.5">
@@ -92,32 +88,37 @@ const StayCard2: FC<StayCard2Props> = ({
                 />
               </svg>
             )}
-            <span className="">{address}</span>
+            <span className="">{cityCode}</span>
           </div>
         </div>
         <div className="w-14 border-b border-neutral-100 dark:border-neutral-800"></div>
         <div className="flex justify-between items-center">
           <span className="text-base font-semibold">
-            {price}
+            {/* Add price information if available */}
+            {console.log("ddsadasadsas ", data)}
+            ₹ {data?.listingPrice?.finalPrice}
             {` `}
             {size === "default" && (
               <span className="text-sm text-neutral-500 dark:text-neutral-400 font-normal">
-                /night
+                /ticket
               </span>
             )}
           </span>
-          {!!reviewStart && (
-            <StartRating reviewCount={reviewCount} point={reviewStart} />
-          )}
+          {/* {!!reviewStart && ( */}
+            <StartRating reviewCount={4} point={2} />
+          {/* )} */}
+          {/* Add rating information if available */}
         </div>
       </div>
     );
   };
 
+  {console.log("urlslugs ", urlSlugs)}
+
   return (
     <div className={`nc-StayCard2 group relative ${className}`}>
       {renderSliderGallery()}
-      <Link href={href}>{renderContent()}</Link>
+      <Link href={urlSlugs?.EN}>{renderContent()}</Link>
     </div>
   );
 };

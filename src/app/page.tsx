@@ -1,89 +1,26 @@
-import React from "react";
-import SectionHero from "@/app/(server-components)/SectionHero";
-import BgGlassmorphism from "@/components/BgGlassmorphism";
-import { TaxonomyType } from "@/data/types";
 import SectionSliderNewCategories from "@/components/SectionSliderNewCategories";
-import SectionOurFeatures from "@/components/SectionOurFeatures";
-import BackgroundSection from "@/components/BackgroundSection";
-import SectionGridFeaturePlaces from "@/components/SectionGridFeaturePlaces";
-import SectionHowItWork from "@/components/SectionHowItWork";
+import React from "react";
 import SectionSubscribe2 from "@/components/SectionSubscribe2";
-import SectionGridAuthorBox from "@/components/SectionGridAuthorBox";
-import SectionGridCategoryBox from "@/components/SectionGridCategoryBox";
-import SectionBecomeAnAuthor from "@/components/SectionBecomeAnAuthor";
-import SectionVideos from "@/components/SectionVideos";
-import SectionClientSay from "@/components/SectionClientSay";
+import SectionOurFeatures from "@/components/SectionOurFeatures";
+import SectionHowItWork from "@/components/SectionHowItWork";
+import BackgroundSection from "@/components/BackgroundSection";
+import { TaxonomyType } from "@/data/types";
+//
+import HIW1img from "@/images/HIW2-1.png";
+import HIW2img from "@/images/HIW2-2.png";
+import HIW3img from "@/images/HIW2-3.png";
+import HIW1imgDark from "@/images/HIW2-1-dark.png";
+import HIW2imgDark from "@/images/HIW2-2-dark.png";
+import HIW3imgDark from "@/images/HIW2-3-dark.png";
+import rightImgPng from "@/images/our-features-2.png";
 
-const DEMO_CATS: TaxonomyType[] = [
-  {
-    id: "1",
-    href: "/listing-stay-map",
-    name: "New Yourk",
-    taxonomy: "category",
-    count: 188288,
-    thumbnail:
-      "https://images.pexels.com/photos/64271/queen-of-liberty-statue-of-liberty-new-york-liberty-statue-64271.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
-  },
-  {
-    id: "2",
-    href: "/listing-stay-map",
-    name: "Singapore",
-    taxonomy: "category",
-    count: 188288,
-    thumbnail:
-      "https://images.pexels.com/photos/7740160/pexels-photo-7740160.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-  },
-  {
-    id: "3",
-    href: "/listing-stay-map",
-    name: "Paris",
-    taxonomy: "category",
-    count: 188288,
-    thumbnail:
-      "https://images.pexels.com/photos/739407/pexels-photo-739407.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-  },
-  {
-    id: "4",
-    href: "/listing-stay-map",
-    name: "London",
-    taxonomy: "category",
-    count: 188288,
-    thumbnail:
-      "https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
-  },
-  {
-    id: "5",
-    href: "/listing-stay-map",
-    name: "Tokyo",
-    taxonomy: "category",
-    count: 188288,
-    thumbnail:
-      "https://images.pexels.com/photos/4151484/pexels-photo-4151484.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
-  },
-  {
-    id: "6",
-    href: "/listing-stay-map",
-    name: "Maldives",
-    taxonomy: "category",
-    count: 188288,
-    thumbnail:
-      "https://images.pexels.com/photos/3250613/pexels-photo-3250613.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-  },
-  {
-    id: "7",
-    href: "/listing-stay-map",
-    name: "Italy",
-    taxonomy: "category",
-    count: 188288,
-    thumbnail:
-      "https://images.pexels.com/photos/7740160/pexels-photo-7740160.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-  },
-];
+import SectionGridFeatureProperty from "./(home)/SectionGridFeatureProperty";
+import SectionHero2 from "@/app/(server-components)/SectionHero2";
 
 const DEMO_CATS_2: TaxonomyType[] = [
   {
     id: "1",
-    href: "/listing-stay-map",
+    href: "/listing-real-estate",
     name: "Enjoy the great cold",
     taxonomy: "category",
     count: 188288,
@@ -92,7 +29,7 @@ const DEMO_CATS_2: TaxonomyType[] = [
   },
   {
     id: "2",
-    href: "/listing-stay-map",
+    href: "/listing-real-estate",
     name: "Sleep in a floating way",
     taxonomy: "category",
     count: 188288,
@@ -101,7 +38,7 @@ const DEMO_CATS_2: TaxonomyType[] = [
   },
   {
     id: "3",
-    href: "/listing-stay-map",
+    href: "/listing-real-estate",
     name: "In the billionaire's house",
     taxonomy: "category",
     count: 188288,
@@ -110,7 +47,7 @@ const DEMO_CATS_2: TaxonomyType[] = [
   },
   {
     id: "4",
-    href: "/listing-stay-map",
+    href: "/listing-real-estate",
     name: "Cool in the deep forest",
     taxonomy: "category",
     count: 188288,
@@ -119,7 +56,7 @@ const DEMO_CATS_2: TaxonomyType[] = [
   },
   {
     id: "5",
-    href: "/listing-stay-map",
+    href: "/listing-real-estate",
     name: "In the billionaire's house",
     taxonomy: "category",
     count: 188288,
@@ -128,68 +65,105 @@ const DEMO_CATS_2: TaxonomyType[] = [
   },
   {
     id: "6",
-    href: "/listing-stay-map",
+    href: "/listing-real-estate",
+    name: "Sleep in a floating way",
+    taxonomy: "category",
+    count: 188288,
+    thumbnail:
+      "https://images.pexels.com/photos/2869499/pexels-photo-2869499.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+  },
+  {
+    id: "7",
+    href: "/listing-real-estate",
     name: "In the billionaire's house",
     taxonomy: "category",
     count: 188288,
     thumbnail:
-      "https://images.pexels.com/photos/9828170/pexels-photo-9828170.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load",
-  },
-  {
-    id: "7",
-    href: "/listing-stay-map",
-    name: "Cool in the deep forest",
-    taxonomy: "category",
-    count: 188288,
-    thumbnail:
-      "https://images.pexels.com/photos/247532/pexels-photo-247532.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+      "https://images.pexels.com/photos/7031413/pexels-photo-7031413.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
   },
 ];
 
 function PageHome() {
+
+  
+  
   return (
-    <main className="nc-PageHome relative overflow-hidden">
-      {/* GLASSMOPHIN */}
-      <BgGlassmorphism />
-
+    <main className="nc-PageHome2 relative overflow-hidden">
       <div className="container relative space-y-24 mb-24 lg:space-y-28 lg:mb-28">
-        {/* SECTION HERO */}
-        <SectionHero className="pt-10 lg:pt-16 lg:pb-16" />
+        <SectionHero2 className="" />
+        
+        {/* <div className="ncSectionLogos grid grid-cols-3 lg:grid-cols-5 gap-5 sm:gap-16">
+          <div className="flex items-end justify-center">
+            <Image className="block dark:hidden" src={logo1} alt="logo1" />
+            <Image className="hidden dark:block" src={logo1Dark} alt="logo1" />
+          </div>
+          <div className="flex items-end justify-center">
+            <Image className="block dark:hidden" src={logo4} alt="logo4" />
+            <Image className="hidden dark:block" src={logo4Dark} alt="logo4" />
+          </div>
+          <div className="flex items-end justify-center">
+            <Image className="block dark:hidden" src={logo2} alt="logo2" />
+            <Image className="hidden dark:block" src={logo2Dark} alt="logo2" />
+          </div>
+          <div className="flex items-end justify-center">
+            <Image className="block dark:hidden" src={logo3} alt="logo3" />
+            <Image className="hidden dark:block" src={logo3Dark} alt="logo3" />
+          </div>
 
-        {/* SECTION 1 */}
-        <SectionSliderNewCategories categories={DEMO_CATS} />
+          <div className="flex items-end justify-center">
+            <Image className="block dark:hidden" src={logo5} alt="logo5" />
+            <Image className="hidden dark:block" src={logo5Dark} alt="logo5" />
+          </div>
+        </div> */}
 
-        <SectionOurFeatures />
-
-        <SectionGridFeaturePlaces cardType="card2" />
-
-        <SectionHowItWork />
-
-        <div className="relative py-16">
-          <BackgroundSection className="bg-orange-50 dark:bg-black/20" />
-          <SectionSliderNewCategories
-            categories={DEMO_CATS_2}
-            categoryCardType="card4"
-            itemPerRow={4}
-            heading="Suggestions for discovery"
-            subHeading="Popular places to stay that Chisfis recommends for you"
-            sliderStyle="style2"
-          />
-        </div>
-
-        <SectionSubscribe2 />
-
-        <div className="relative py-16">
-          <BackgroundSection className="bg-orange-50 dark:bg-black dark:bg-opacity-20 " />
-          <SectionGridAuthorBox />
-        </div>
-
-        <SectionGridCategoryBox />
+        <SectionHowItWork
+          data={[
+            {
+              id: 1,
+              img: HIW1img,
+              imgDark: HIW1imgDark,
+              title: "Smart search",
+              desc: "Name the area or type of home you are looking for the search bar. Our app will find you the perfect match.",
+            },
+            {
+              id: 2,
+              img: HIW2img,
+              imgDark: HIW2imgDark,
+              title: "Choose property",
+              desc: "From the number of options our app will provide, you can select any property that you like to explore.",
+            },
+            {
+              id: 3,
+              img: HIW3img,
+              imgDark: HIW3imgDark,
+              title: "Book you property",
+              desc: "Find a home or space from our search bar. Enter your specific location, property type and price range.",
+            },
+          ]}
+        />
 
         <div className="relative py-16">
           <BackgroundSection />
-          <SectionBecomeAnAuthor />
+          <SectionGridFeatureProperty />
+          {/* <Section */}
         </div>
+
+        <SectionOurFeatures type="type2" rightImg={rightImgPng} />
+
+        {/* <SectionDowloadApp /> */}
+
+        <SectionSliderNewCategories
+          categories={DEMO_CATS_2}
+          categoryCardType="card4"
+          itemPerRow={4}
+          heading="Suggestions for discovery"
+          subHeading="Popular places to stay that Chisfis recommends for you"
+        />
+
+        {/* <div className="relative py-16">
+          <BackgroundSection className="bg-neutral-100 dark:bg-black dark:bg-opacity-20 " />
+          <SectionGridAuthorBox boxCard="box2" />
+        </div> */}
 
         <SectionSliderNewCategories
           heading="Explore by types of stays"
@@ -198,12 +172,7 @@ function PageHome() {
           itemPerRow={5}
         />
 
-        <SectionVideos />
-
-        <div className="relative py-16">
-          <BackgroundSection />
-          <SectionClientSay />
-        </div>
+        <SectionSubscribe2 />
       </div>
     </main>
   );
