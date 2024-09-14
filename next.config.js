@@ -58,6 +58,7 @@ const nextConfig = {
         pathname: '/**',
       }
     ],
+    domains: ['tickyourlist-images.s3.ap-south-1.amazonaws.com'],
   },
 };
 

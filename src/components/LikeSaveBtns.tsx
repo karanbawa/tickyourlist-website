@@ -17,7 +17,6 @@ const LikeSaveBtns: React.FC<LikeSaveBtnsProps> = ({ data }) => {
           url: data?.urlSlugs?.EN,
         })
         .then(() => {
-          console.log('Successful share');
         })
         .catch((error) => {
           console.log('Error sharing', error);

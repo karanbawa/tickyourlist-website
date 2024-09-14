@@ -20,7 +20,6 @@ async function fetchPaymentConfirmation(razorpayOrderId: string, razorpayPayment
   });
 
   if (!response.ok) {
-    console.log("response.json()" , response);
     throw new Error('Failed to fetch payment confirmation');
   }
 

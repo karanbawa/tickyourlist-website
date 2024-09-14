@@ -10,7 +10,7 @@ import { PathName } from "@/routers/types";
 import Link from "next/link";
 import Header from "./Header";
 import Header3 from "./Header3";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useThemeMode } from "@/utils/useThemeMode";
 
 export type SiteHeaders = "Header 1" | "Header 2" | "Header 3";
@@ -18,6 +18,11 @@ export type SiteHeaders = "Header 1" | "Header 2" | "Header 3";
 interface HomePageItem {
   name: string;
   slug: PathName;
+}
+
+interface SiteHeaderProps {
+  initialCollectionData: any;
+  initialCityCode: string;
 }
 
 let OPTIONS = {
@@ -33,8 +38,72 @@ const PAGES_HIDE_HEADER_BORDER: PathName[] = [
   "/listing-stay-detail",
 ];
 
-const SiteHeader = () => {
+const CACHE_EXPIRY = 60 * 60 * 1000;
+
+const getCollectionData = async (cityCode: string) => {
+  const timestamp = Date.now();
+  const res = await fetch(`/api/collection-data?cityCode=${cityCode}&_t=${timestamp}`);
+  if (!res.ok) {
+    throw new Error('Failed to fetch collection data');
+  }
+  return res.json();
+};
+
+const getCachedData = (key: string) => {
+  const item = localStorage.getItem(key);
+  if (item) {
+    const { value, expiry } = JSON.parse(item);
+    if (expiry > Date.now()) {
+      return value;
+    }
+    localStorage.removeItem(key);
+  }
+  return null;
+};
+
+const setCachedData = (key: string, value: any) => {
+  const item = {
+    value: value,
+    expiry: Date.now() + CACHE_EXPIRY
+  };
+  localStorage.setItem(key, JSON.stringify(item));
+};
+
+const SiteHeader : React.FC<SiteHeaderProps> = ({ initialCollectionData, initialCityCode }) => {
   const anchorRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const [collectionData, setCollectionData] = useState(initialCollectionData);
+
+  useEffect(() => {
+    const cityMatch = pathname.match(/\/things-to-do\/([^\/\?]+)/);
+    if (cityMatch) {
+      const cityCode = cityMatch[1].toUpperCase();
+      const cacheKey = `collection-data-things-to-do-${cityCode}`;
+
+      if (cityCode !== initialCityCode) {
+        // Check localStorage first
+        const cachedData = getCachedData(cacheKey);
+        if (cachedData) {
+          setCollectionData(cachedData);
+        } else {
+          getCollectionData(cityCode)
+            .then(data => {
+              console.log("data ", data);
+              setCollectionData(data.data);
+              setCachedData(cacheKey, data.data);
+            })
+            .catch(error => {
+              console.error('Error fetching collection data:', error);
+              setCollectionData(null);
+            });
+        }
+      }
+    } else {
+      setCollectionData(null);
+    }
+  }, [pathname, initialCityCode]);
+
+  console.log("initialCollectionData  ", initialCollectionData);
 
   let [headers] = useState<SiteHeaders[]>(["Header 1", "Header 2", "Header 3"]);
 
@@ -52,8 +121,6 @@ const SiteHeader = () => {
   }, []);
   //
   useThemeMode();
-  //
-  const pathname = usePathname();
 
   const intersectionCallback = (entries: IntersectionObserverEntry[]) => {
     entries.forEach((entry) => {
@@ -194,10 +261,10 @@ const SiteHeader = () => {
       case "Header 2":
         return <Header className={headerClassName} navType="MainNav2" />;
       case "Header 3":
-        return <Header3 className={headerClassName} />;
+        return <Header3 className={headerClassName} collectionData={collectionData} initialCityCode={initialCityCode} />;
 
       default:
-        return <Header3 className={headerClassName} />;
+        return <Header3 className={headerClassName} collectionData={collectionData} initialCityCode={initialCityCode} />;
     }
   };
 

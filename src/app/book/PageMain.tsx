@@ -160,13 +160,11 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         },
         handler: function(response: any) {
           // This function will be called after the payment is successful
-          console.log("Payment successful:", response);
           // Route to the desired page after successful payment
           router.push(`/pay-done?razorpayOrderId=${response?.razorpay_order_id}&razorpayPaymentId=${response?.razorpay_payment_id}&razorpaySignature=${response?.razorpay_signature}&bookingId=${booking?._id}`);
         },
         modal: {
           ondismiss: function() {
-            console.log("Payment popup closed");
             // Optional: You can also route to another page if the user closes the payment popup
           }
         }
@@ -265,7 +263,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     
         const result = await response.json();
         await handleRazorpayPayment(result?.data?.booking?.amount, result.data.razorpayOrderId, result?.data?.booking);
-        console.log("Booking successful:", result);
       } catch (error: any) {
         console.error("An error occurred during booking:", error);
         setConfirmPayError(error?.message || 'Failed to Save the Record. Please try again!');

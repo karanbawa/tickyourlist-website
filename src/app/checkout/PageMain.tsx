@@ -139,7 +139,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       const formattedDate = encodeURIComponent(
         stayDate?.toLocaleDateString("en-CA")
       );
-      console.log("formattedDate ", formattedDate);
       // router.push(`/checkout?tourId=${tourGroup.id}&date=${formattedDate}`);
       return formattedDate;
     }

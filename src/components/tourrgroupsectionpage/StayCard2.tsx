@@ -95,7 +95,6 @@ const StayCard2: FC<StayCard2Props> = ({
         <div className="flex justify-between items-center">
           <span className="text-base font-semibold">
             {/* Add price information if available */}
-            {console.log("ddsadasadsas ", data)}
             ₹ {data?.listingPrice?.finalPrice}
             {` `}
             {size === "default" && (
@@ -112,8 +111,6 @@ const StayCard2: FC<StayCard2Props> = ({
       </div>
     );
   };
-
-  {console.log("urlslugs ", urlSlugs)}
 
   return (
     <div className={`nc-StayCard2 group relative ${className}`}>

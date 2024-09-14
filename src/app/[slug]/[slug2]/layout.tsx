@@ -6,7 +6,7 @@ import SectionSliderNewCategories from "@/components/SectionSliderNewCategories"
 import SectionSubscribe2 from "@/components/SectionSubscribe2";
 import { usePathname } from "next/navigation";
 import React, { ReactNode, Suspense, useEffect } from "react";
-import MobileFooterSticky from "../(listing-detail)/(components)/MobileFooterSticky";
+import MobileFooterSticky from "../../(listing-detail)/(components)/MobileFooterSticky";
 import { ListingGalleryImage } from "@/components/listing-image-gallery/utils/types";
 import { useData } from "@/context/DataContext";
 
