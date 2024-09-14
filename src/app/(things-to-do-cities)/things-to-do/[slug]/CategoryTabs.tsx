@@ -30,8 +30,6 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ travelSections }) => {
   const buttonRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({});
   const isManualScrollRef = useRef<boolean>(false);
 
-  console.log("travelSections ", travelSections);
-
   useEffect(() => {
     if (travelSections && travelSections.data && travelSections.data.length > 0) {
       setActiveTab(travelSections.data?.[0].category.id.name);

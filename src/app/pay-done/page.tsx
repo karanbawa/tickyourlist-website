@@ -46,8 +46,6 @@ const Page: FC<PageProps> = async ({ searchParams }) => {
     // Fetch the payment confirmation data
     const data = await fetchPaymentConfirmation(razorpayOrderId, razorpayPaymentId, razorpaySignature, bookingId);
 
-    console.log("responsedatatest ", data);
-
     // Render the content with the fetched data
     return (
       <div className="nc-PayPage">
