@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 }
 
 async function fetchTourGroupData(slug: string) {
-  const id = slug.match(/\d+$/)?.[0]; 
+  const id = slug.match(/\d+$/)?.[0];
 
   if (!id) {
     throw new Error("Invalid slug2 format. Could not extract ID.");

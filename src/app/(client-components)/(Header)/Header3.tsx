@@ -35,7 +35,9 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const isThingsToDoPage = pathname?.startsWith('/things-to-do-city/');
+  // const isThingsToDoPage = pathname?.startsWith('/things-to-do-city/');
+  // const [isSlugPage, setIsSlugPage] = useState(false);
+  const [shouldShowCategoryTab, setShouldShowCategoryTab] = useState(false);
 
   const handleCategoryMouseEnter = () => {
     setShowCategoryDropdown(true);
@@ -120,6 +122,17 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
   );
 
   useEffect(() => {
+    if (pathname) {
+      const isThingsToDoPage = pathname.startsWith('/things-to-do-city/');
+      // const pathParts = pathname.split('/').filter(Boolean);
+      // const isSlugPage = pathParts.length === 1 && pathParts[0] !== 'about' && pathParts[0] !== 'add-listing';
+      
+      // setShouldShowCategoryTab(isThingsToDoPage || isSlugPage);
+      setShouldShowCategoryTab(isThingsToDoPage);
+    }
+  }, [pathname]);
+
+  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(event.target as Node)) {
         setShowCategoryDropdown(false);
@@ -179,7 +192,7 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
           </div>
         </div>
         {/* Add this new section for the category tab */}
-        {!showHeroSearch && isThingsToDoPage && (
+        {!showHeroSearch && shouldShowCategoryTab && (
           <div className="bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-700 hidden sm:block lg:block w-full" ref={categoryDropdownRef}
           onMouseLeave={handleCategoryMouseLeave}>
             <div className="relative px-4 lg:container"> {/* Keep this as it was */}
