@@ -28,8 +28,8 @@ function PageHome3({ collectionData, tourGroups }: PageHome3Props) {
               <ChevronRight className="w-4 h-4 mx-2" />
             </li>
             <li className="flex items-center">
-              <Link href={`/things-to-do-in-${collection.cityCode.toLowerCase()}`} className="hover:text-gray-700 underline">
-                Things to do in {collection.cityCode}
+              <Link href={`/things-to-do-city/${collection.cityCode.toLowerCase()}`} className="hover:text-gray-700 underline">
+                Things to do in {collection.cityCode.charAt(0).toUpperCase() + collection.cityCode.slice(1).toLowerCase()}
               </Link>
               <ChevronRight className="w-4 h-4 mx-2" />
             </li>

@@ -75,10 +75,10 @@ const SiteHeader : React.FC<SiteHeaderProps> = ({ initialCollectionData, initial
   const [collectionData, setCollectionData] = useState(initialCollectionData);
 
   useEffect(() => {
-    const cityMatch = pathname.match(/\/things-to-do\/([^\/\?]+)/);
+    const cityMatch = pathname.match(/\/things-to-do-city\/([^\/\?]+)/);
     if (cityMatch) {
       const cityCode = cityMatch[1].toUpperCase();
-      const cacheKey = `collection-data-things-to-do-${cityCode}`;
+      const cacheKey = `collection-data-things-to-do-city-${cityCode}`;
 
       if (cityCode !== initialCityCode) {
         // Check localStorage first

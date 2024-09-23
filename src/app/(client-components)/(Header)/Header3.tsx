@@ -35,7 +35,7 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const isThingsToDoPage = pathname?.startsWith('/things-to-do/');
+  const isThingsToDoPage = pathname?.startsWith('/things-to-do-city/');
 
   const handleCategoryMouseEnter = () => {
     setShowCategoryDropdown(true);

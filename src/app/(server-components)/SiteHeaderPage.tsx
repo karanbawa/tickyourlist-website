@@ -24,7 +24,7 @@ export default async function SiteHeaderPage() {
   const headersList = headers();
   const path = headersList.get('x-invoke-path') || '/';
   
-  const cityMatch = path.match(/\/things-to-do\/([^\/\?]+)/);
+  const cityMatch = path.match(/\/things-to-do-city\/([^\/\?]+)/);
   let initialCollectionData = null;
   let initialCityCode = null;
 
