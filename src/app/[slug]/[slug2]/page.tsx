@@ -25,6 +25,7 @@ import './Highlights.css';
 import parse, { domToReact } from "html-react-parser";
 import SidebarBooking from "@/components/tour-group-booking/SideBarBooking";
 import MobileFooterSticky from "@/app/(listing-detail)/(components)/MobileFooterSticky";
+import { notFound } from "next/navigation";
 
 interface Params {
   slug: string;
@@ -702,6 +703,11 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
    <SidebarBooking tourGroup={tourGroup} />
    </div>
   );
+
+  if(!tourGroup) {
+      console.log("No Tougroup data found for slug:", tourGroup);
+      return notFound();
+  }
 
   return (
     <div className="nc-ListingStayDetailPage">
