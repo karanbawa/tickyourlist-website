@@ -69,7 +69,7 @@ const CategoryTab: FC<CategoryTabProps> = ({ showDropdown, setShowDropdown, cate
     if (activeItem === `Things to do in ${cityName}`) {
       return (
         <div className="grid grid-cols-3 gap-6 pb-4">
-          {collections.map((collection) => (
+          {collections?.map((collection) => (
             <div 
               key={collection.id}
               className="cursor-pointer group flex items-center space-x-4 p-2 rounded-lg hover:bg-gray-100"
@@ -100,11 +100,11 @@ const CategoryTab: FC<CategoryTabProps> = ({ showDropdown, setShowDropdown, cate
         </div>
       );
     } else {
-      const category = categories.find(cat => cat.displayName === activeItem);
+      const category = categories?.find(cat => cat.displayName === activeItem);
       if (category) {
         return (
           <div className="grid grid-cols-3 gap-6 pb-4">
-            {category.subcategories.map((subcategory) => (
+            {category?.subcategories?.map((subcategory) => (
               <div 
                 key={subcategory.id}
                 className="cursor-pointer group flex items-center space-x-4 p-2 rounded-lg hover:bg-gray-100"
