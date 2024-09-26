@@ -78,7 +78,6 @@ async function fetchTourGroupData(slug: string) {
 const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }> = async ({ params }) => {
   // let [isOpenModalAmenities, setIsOpenModalAmenities] = useState(false);
   const data = await fetchTourGroupData(params.slug2);
-  console.log("ListingTourGroupDetailPage ", data);
   const tourGroup = data.data.tourgroup;
 
   // const thisPathname = usePathname();

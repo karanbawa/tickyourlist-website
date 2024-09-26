@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const token = userValue?.data?.data?.data?.tokens?.accessToken || userValue?.data?.data?.tokens?.accessToken;
 
       // Make an API call to the logout endpoint
-      const response = await fetch('/api/logout', {
+      const response = await fetch('/api/logout', { 
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
