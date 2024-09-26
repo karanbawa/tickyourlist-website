@@ -21,6 +21,7 @@ interface Header3Props {
   className?: string;
   collectionData?: any;
   initialCityCode?: string;
+  categoriesData?: any;
 }
 
 let WIN_PREV_POSITION = 0;
@@ -28,7 +29,7 @@ if (typeof window !== "undefined") {
   WIN_PREV_POSITION = window.pageYOffset;
 }
 
-const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCityCode }) => {
+const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCityCode, categoriesData }) => {
   const headerInnerRef = useRef<HTMLDivElement>(null);
   const [showHeroSearch, setShowHeroSearch] = useState<StaySearchFormFields | null>(null);
   const [currentTab, setCurrentTab] = useState<SearchTab>("Stays");
@@ -226,8 +227,9 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
             <CategoryTab
                     showDropdown={showCategoryDropdown}
                     setShowDropdown={setShowCategoryDropdown}
-                    categories={collectionData}
+                    collections={collectionData}
                     cityName={initialCityCode || "Dubai"}
+                    categories={categoriesData}
                   />
           </div>
         )}

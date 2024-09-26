@@ -23,6 +23,7 @@ interface HomePageItem {
 interface SiteHeaderProps {
   initialCollectionData: any;
   initialCityCode: string;
+  initialCategoriesData: any;
 }
 
 let OPTIONS = {
@@ -49,6 +50,15 @@ const getCollectionData = async (cityCode: string) => {
   return res.json();
 };
 
+const getCategoriesData = async (cityCode: string) => {
+  const timestamp = Date.now();
+  const res = await fetch(`/api/category-data?cityCode=${cityCode}&_t=${timestamp}`);
+  if (!res.ok) {
+    throw new Error('Failed to fetch category data');
+  }
+  return res.json();
+};
+
 const getCachedData = (key: string) => {
   const item = localStorage.getItem(key);
   if (item) {
@@ -69,16 +79,18 @@ const setCachedData = (key: string, value: any) => {
   localStorage.setItem(key, JSON.stringify(item));
 };
 
-const SiteHeader : React.FC<SiteHeaderProps> = ({ initialCollectionData, initialCityCode }) => {
+const SiteHeader : React.FC<SiteHeaderProps> = ({ initialCollectionData, initialCityCode, initialCategoriesData }) => {
   const anchorRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const [collectionData, setCollectionData] = useState(initialCollectionData);
+  const [categoriesData, setCategoriesData] = useState(initialCategoriesData);
 
   useEffect(() => {
     const cityMatch = pathname.match(/\/things-to-do-city\/([^\/\?]+)/);
     if (cityMatch) {
       const cityCode = cityMatch[1].toUpperCase();
       const cacheKey = `collection-data-things-to-do-city-${cityCode}`;
+      const categoriesCacheKey = `categories-data-things-to-do-city-${cityCode}`;
 
       if (cityCode !== initialCityCode) {
         // Check localStorage first
@@ -97,9 +109,27 @@ const SiteHeader : React.FC<SiteHeaderProps> = ({ initialCollectionData, initial
               setCollectionData(null);
             });
         }
+
+        // Fetch categories data
+        const cachedCategoriesData = getCachedData(categoriesCacheKey);
+        if (cachedCategoriesData) {
+          setCategoriesData(cachedCategoriesData);
+        } else {
+          getCategoriesData(cityCode)
+            .then(data => {
+              setCategoriesData(data);
+              setCachedData(categoriesCacheKey, data);
+            })
+            .catch(error => {
+              console.error('Error fetching categories data:', error);
+              setCategoriesData(null);
+            });
+        }
       }
     } else {
       setCollectionData(null);
+      setCategoriesData(null);
+
     }
   }, [pathname, initialCityCode]);
 
@@ -261,10 +291,10 @@ const SiteHeader : React.FC<SiteHeaderProps> = ({ initialCollectionData, initial
       case "Header 2":
         return <Header className={headerClassName} navType="MainNav2" />;
       case "Header 3":
-        return <Header3 className={headerClassName} collectionData={collectionData} initialCityCode={initialCityCode} />;
+        return <Header3 className={headerClassName} collectionData={collectionData} initialCityCode={initialCityCode} categoriesData={categoriesData} />;
 
       default:
-        return <Header3 className={headerClassName} collectionData={collectionData} initialCityCode={initialCityCode} />;
+        return <Header3 className={headerClassName} collectionData={collectionData} initialCityCode={initialCityCode} categoriesData={categoriesData} />;
     }
   };
 
