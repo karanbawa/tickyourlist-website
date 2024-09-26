@@ -32,35 +32,38 @@ interface Params {
 }
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
-  const data = await fetchTourGroupData(params.slug2);
-  const tourGroup = data.data.tourgroup;
+  const data = await fetchTourGroupData(params?.slug, params?.slug2);
+  const tourGroup = data?.data?.tourgroup;
 
   return {
-    title: tourGroup.metaTitle,
-    description: tourGroup.metaDescription,
+    title: tourGroup?.metaTitle,
+    description: tourGroup?.metaDescription,
     alternates: {
-      canonical: `https://tickyourlist.com${tourGroup.url}`,
+      canonical: `https://tickyourlist.com${tourGroup?.url}`,
     },
     openGraph: {
-      title: tourGroup.metaTitle,
-      description: tourGroup.metaDescription,
+      title: tourGroup?.metaTitle,
+      description: tourGroup?.metaDescription,
       images: [
         {
-          url: tourGroup.imageUploads[0]?.url || '',
+          url: tourGroup?.imageUploads[0]?.url || '',
         },
       ],
     },
   };
 }
 
-async function fetchTourGroupData(slug: string) {
-  const id = slug.match(/\d+$/)?.[0]; 
+async function fetchTourGroupData(slug:string, slug2: string) {
+  // console.log("asaadadasdasdadada ", slug);
+  // const id = slug.match(/\d+$/)?.[0]; 
 
-  if (!id) {
-    throw new Error("Invalid slug2 format. Could not extract ID.");
+  // console.log("idtest ", id);
+
+  if (!slug) {
+    throw new Error("Invalid slug format. Could not extract slug.");
   }
 
-  const response = await fetch(`${process.env.BASE_URL}/v1/customertravel/tour-groups/${id}?currency=INR&domainId=${process.env.WEBSITE_ID}`, {
+  const response = await fetch(`${process.env.BASE_URL}/v1/customertravel/tour-groups/EN/${slug}/${slug2}?currency=INR&domainId=${process.env.WEBSITE_ID}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -77,8 +80,8 @@ async function fetchTourGroupData(slug: string) {
 
 const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }> = async ({ params }) => {
   // let [isOpenModalAmenities, setIsOpenModalAmenities] = useState(false);
-  const data = await fetchTourGroupData(params.slug2);
-  const tourGroup = data.data.tourgroup;
+  const data = await fetchTourGroupData(params.slug, params.slug2);
+  const tourGroup = data?.data?.tourgroup;
 
   // const thisPathname = usePathname();
   // const router = useRouter();
@@ -252,7 +255,7 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
 
   const HighlightsSection = ({ summary }: { summary: string }) => {
     // Split the summary into sections based on <h2> tags
-    const sections = summary.split(/(?=<h2>)/g);
+    const sections = summary?.split(/(?=<h2>)/g);
   
     const options = {
       replace: (domNode: any) => {
@@ -313,7 +316,7 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
 
   const renderSectionYourExperience = () => (
 
-    <HighlightsSection summary={tourGroup.summary} />
+    <HighlightsSection summary={tourGroup?.summary} />
 
     // <div className="listingSection__wrap">
     //   <h2 className="text-2xl font-semibold">Your Experience</h2>
@@ -327,14 +330,14 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
 
   const renderSectionFaq = () => (
 
-    <HighlightsSection summary={tourGroup.faq} />
+    <HighlightsSection summary={tourGroup?.faq} />
   );
 
   const renderSectionMyTickets = () => (
     <div className="listingSection__wrap">
       <h2 className="text-2xl font-semibold">My Tickets</h2>
       <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
-      <HighlightsSection summary={tourGroup.ticketDeliveryInfo} />
+      <HighlightsSection summary={tourGroup?.ticketDeliveryInfo} />
       {/* <div className="text-neutral-6000 dark:text-neutral-300 highlights-section" dangerouslySetInnerHTML={{ __html: tourGroup?.ticketDeliveryInfo }} /> */}
     </div>
   );

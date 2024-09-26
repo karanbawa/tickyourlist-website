@@ -14,7 +14,7 @@ interface Subcategory {
   name: string;
   displayName: string;
   medias: any;
-  urlSlug: { EN: string };
+  urlSlugs: { EN: string };
 }
 
 interface Collection {
@@ -108,8 +108,8 @@ const CategoryTab: FC<CategoryTabProps> = ({ showDropdown, setShowDropdown, cate
               <div 
                 key={subcategory.id}
                 className="cursor-pointer group flex items-center space-x-4 p-2 rounded-lg hover:bg-gray-100"
-                onClick={() => handleClick(subcategory.urlSlug.EN)}
-                onKeyDown={(e) => e.key === 'Enter' && handleClick(subcategory.urlSlug.EN)}
+                onClick={() => handleClick(subcategory.urlSlugs.EN)}
+                onKeyDown={(e) => e.key === 'Enter' && handleClick(subcategory.urlSlugs.EN)}
                 role="button"
                 tabIndex={0}
               >
