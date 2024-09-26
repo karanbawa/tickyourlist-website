@@ -24,6 +24,7 @@ interface SiteHeaderProps {
   initialCollectionData: any;
   initialCityCode: string;
   initialCategoriesData: any;
+  currencyCode: string;
 }
 
 let OPTIONS = {
@@ -79,7 +80,7 @@ const setCachedData = (key: string, value: any) => {
   localStorage.setItem(key, JSON.stringify(item));
 };
 
-const SiteHeader : React.FC<SiteHeaderProps> = ({ initialCollectionData, initialCityCode, initialCategoriesData }) => {
+const SiteHeader : React.FC<SiteHeaderProps> = ({ initialCollectionData, initialCityCode, initialCategoriesData, currencyCode }) => {
   const anchorRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const [collectionData, setCollectionData] = useState(initialCollectionData);
@@ -291,10 +292,10 @@ const SiteHeader : React.FC<SiteHeaderProps> = ({ initialCollectionData, initial
       case "Header 2":
         return <Header className={headerClassName} navType="MainNav2" />;
       case "Header 3":
-        return <Header3 className={headerClassName} collectionData={collectionData} initialCityCode={initialCityCode} categoriesData={categoriesData} />;
+        return <Header3 className={headerClassName} collectionData={collectionData} initialCityCode={initialCityCode} categoriesData={categoriesData} currencyCode={currencyCode} />;
 
       default:
-        return <Header3 className={headerClassName} collectionData={collectionData} initialCityCode={initialCityCode} categoriesData={categoriesData} />;
+        return <Header3 className={headerClassName} collectionData={collectionData} initialCityCode={initialCityCode} categoriesData={categoriesData} currencyCode={currencyCode} />;
     }
   };
 

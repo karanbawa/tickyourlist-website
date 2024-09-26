@@ -38,9 +38,44 @@ const getCategoryData = async (cityCode: string) => {
   return res.json();
 };
 
+// Country to currency mapping
+const countryCurrencyMap: { [key: string]: string } = {
+  AE: "AED",
+  US: "USD",
+  GB: "GBP",
+  EU: "EUR",
+  IN: 'INR',
+  // Add more country-currency mappings as needed
+};
+
+// Fetch geolocation based on IP (server-side)
+const getGeolocation = async () => {
+  try {
+    const res = await fetch('https://ipapi.co/json/', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch geolocation');
+    }
+
+    const data = await res.json();
+    return data.country_code;
+  } catch (error) {
+    console.error('Error fetching geolocation:', error);
+    return 'AE'; // Default to AE (United Arab Emirates) if there's an error
+  }
+};
+
+
 export default async function SiteHeaderPage() {
   const headersList = headers();
   const path = headersList.get('x-invoke-path') || '/';
+  const countryCode = await getGeolocation();
+  const currencyCode = countryCurrencyMap[countryCode] || "AED";
   
   const cityMatch = path.match(/\/things-to-do-city\/([^\/\?]+)/);
   let initialCollectionData = null;
@@ -64,6 +99,7 @@ export default async function SiteHeaderPage() {
       initialCollectionData={initialCollectionData?.data} 
       initialCityCode={initialCityCode || ''}
       initialCategoriesData={initialCategoriesData?.data}
+      currencyCode={currencyCode}
     />
   );
 }

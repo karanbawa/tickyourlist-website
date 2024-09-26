@@ -6,7 +6,7 @@ import {
   GlobeAltIcon,
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
-import { FC, Fragment } from "react";
+import { FC, Fragment, useState, useEffect } from "react";
 import { headerCurrency } from "./CurrencyDropdown";
 
 interface LanguageItem {
@@ -48,6 +48,7 @@ export const headerLanguage: LanguageItem[] = [
 interface LangDropdownProps {
   panelClassName?: string;
   className?: string;
+  currencyCode?: string;
 }
 
 function classNames(...classes: any) {
@@ -57,7 +58,31 @@ function classNames(...classes: any) {
 const LangDropdown: FC<LangDropdownProps> = ({
   panelClassName = "top-full right-0 max-w-sm w-96",
   className = "hidden md:flex",
+  currencyCode = 'AED'
 }) => {
+  const [selectedCurrency, setSelectedCurrency] = useState("AED");
+
+  useEffect(() => {
+    const initializeCurrency = async () => {
+      const storedCurrency = localStorage.getItem('selectedCurrency');
+      if (storedCurrency) {
+        setSelectedCurrency(storedCurrency);
+      } else {
+        setSelectedCurrency(currencyCode);
+        localStorage.setItem('selectedCurrency', currencyCode);
+      }
+    };
+
+    initializeCurrency();
+  }, [currencyCode]);
+
+  const handleCurrencyChange = (currencyId: string) => {
+    console.log('currencyId ', currencyId);
+    setSelectedCurrency(currencyId);
+    localStorage.setItem('selectedCurrency', currencyId);
+    console.log('Currency changed:', currencyId);
+  };
+
   const renderLang = (close: () => void) => {
     return (
       <div className="grid gap-8 lg:grid-cols-2">
@@ -86,18 +111,20 @@ const LangDropdown: FC<LangDropdownProps> = ({
     return (
       <div className="grid gap-7 lg:grid-cols-2">
         {headerCurrency.map((item) => (
-          <a
+          <button
             key={item.id}
-            href={item.href}
-            onClick={() => close()}
+            onClick={() => {
+              handleCurrencyChange(item.id);
+              close();
+            }}
             className={`flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50 ${
-              item.active ? "bg-gray-100 dark:bg-gray-700" : "opacity-80"
+              item.id === selectedCurrency ? "bg-gray-100 dark:bg-gray-700" : "opacity-80"
             }`}
-            aria-current={item.active ? "page" : undefined}
+            aria-current={item.id === selectedCurrency ? "page" : undefined}
           >
             <item.icon className="w-[18px] h-[18px]" />
             <p className="ml-2 text-sm font-medium">{item.name}</p>
-          </a>
+          </button>
         ))}
       </div>
     );
@@ -135,7 +162,7 @@ const LangDropdown: FC<LangDropdownProps> = ({
               <div className="p-3 sm:p-6 rounded-2xl bg-white dark:bg-neutral-800 shadow-lg ring-1 ring-black ring-opacity-5">
                 <Tab.Group>
                   <Tab.List className="flex space-x-1 rounded-full bg-gray-100 dark:bg-slate-700 p-1">
-                    {["Language", "Currency"].map((category) => (
+                    {["Currency", "Language"].map((category) => (
                       <Tab
                         key={category}
                         className={({ selected }) =>
@@ -153,13 +180,13 @@ const LangDropdown: FC<LangDropdownProps> = ({
                     ))}
                   </Tab.List>
                   <Tab.Panels className="mt-5">
-                    <Tab.Panel
+                  <Tab.Panel
                       className={classNames(
                         "rounded-xl p-3",
                         "focus:outline-none focus:ring-0"
                       )}
                     >
-                      {renderLang(close)}
+                      {renderCurr(close)}
                     </Tab.Panel>
                     <Tab.Panel
                       className={classNames(
@@ -167,7 +194,7 @@ const LangDropdown: FC<LangDropdownProps> = ({
                         "focus:outline-none focus:ring-0"
                       )}
                     >
-                      {renderCurr(close)}
+                      {renderLang(close)}
                     </Tab.Panel>
                   </Tab.Panels>
                 </Tab.Group>
