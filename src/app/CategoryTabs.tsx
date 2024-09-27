@@ -218,7 +218,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ travelSections }) => {
             </div>
             <div className={noScrollbarClass}>
               <div className="flex space-x-4 px-4 min-w-max">
-                {section.tourgroups.map((tourgroup: any) => (
+                {section?.tourgroups?.map((tourgroup: any) => (
                   <StayCard2 key={tourgroup.id} data={tourgroup} className="min-w-[300px] max-w-[300px] flex-shrink-0" />
                 ))}
               </div>

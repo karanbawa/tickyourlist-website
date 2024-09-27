@@ -37,7 +37,7 @@ const StayCard2: FC<StayCard2Props> = ({
         <GallerySlider
           uniqueID={`StayCard2_${id}`}
           ratioClass="aspect-w-12 aspect-h-11"
-          galleryImgs={imageUploads.map((img: any) => img.url)}
+          galleryImgs={imageUploads?.map((img: any) => img.url)}
           imageClass="rounded-lg"
           href={urlSlugs?.EN}
         />

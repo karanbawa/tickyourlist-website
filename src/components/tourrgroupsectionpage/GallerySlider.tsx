@@ -58,7 +58,7 @@ export default function GallerySlider({
     trackMouse: true,
   });
 
-  let currentImage = images[index];
+  let currentImage = images?.[index];
 
   return (
     <MotionConfig
