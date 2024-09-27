@@ -8,8 +8,10 @@ import { useSwipeable } from "react-swipeable";
 import { variants } from "@/utils/animationVariants";
 import Link from "next/link";
 import { Route } from "@/routers/types";
+import { History } from "lucide-react";
 
 export interface GallerySliderProps {
+  hasFreeCancellationDescriptor?: any;
   className?: string;
   galleryImgs: (StaticImageData | string)[];
   ratioClass?: string;
@@ -29,6 +31,7 @@ export default function GallerySlider({
   galleryClass = "rounded-xl",
   href = "/listing-stay-detail",
   navigation = true,
+  hasFreeCancellationDescriptor
 }: GallerySliderProps) {
   const [loaded, setLoaded] = useState(false);
   const [index, setIndex] = useState(0);
@@ -71,6 +74,12 @@ export default function GallerySlider({
         className={`relative group group/cardGallerySlider ${className}`}
         {...handlers}
       >
+        {hasFreeCancellationDescriptor && (
+          <div className="flex absolute top-3 left-3 z-10 bg-white text-black px-2 py-1 rounded-md text-xs">
+            <span><History size={16} /></span>
+            <span className="ml-1">Free Cancellation</span>
+          </div>
+        )}
         {/* Main image */}
         <div className={`w-full overflow-hidden ${galleryClass}`}>
           <Link

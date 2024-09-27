@@ -5,7 +5,7 @@ import BtnLikeIcon from "@/components/BtnLikeIcon";
 import SaleOffBadge from "@/components/SaleOffBadge";
 import Badge from "@/shared/Badge";
 import Link from "next/link";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, History, Smartphone, X, Zap } from "lucide-react";
 
 export interface StayCard2Props {
   className?: string;
@@ -18,6 +18,7 @@ const StayCard2: FC<StayCard2Props> = ({
   className = "",
   data,
 }) => {
+  console.log("data ", data);
   const {
     id,
     name,
@@ -33,9 +34,11 @@ const StayCard2: FC<StayCard2Props> = ({
   };
 
   const renderSliderGallery = () => {
+    const hasFreeCancellationDescriptor = data?.descriptors?.some((descriptor: any) => descriptor.code === "FREE_CANCELLATION");
     return (
       <div className="relative w-full">
         <GallerySlider
+          hasFreeCancellationDescriptor={hasFreeCancellationDescriptor}
           uniqueID={`StayCard2_${id}`}
           ratioClass="aspect-w-12 aspect-h-11"
           galleryImgs={imageUploads?.map((img: any) => img.url)}
@@ -54,13 +57,35 @@ const StayCard2: FC<StayCard2Props> = ({
     const savedAmount = originalPrice - finalPrice;
     const savedPercentage = Math.round((savedAmount / originalPrice) * 100);
 
+    const hasInstantConfirmation = data?.descriptors?.some((descriptor: any) => descriptor.code === "INSTANT_CONFIRMATION");
+    const hasFreeCancellationDescriptor = data?.descriptors?.some((descriptor: any) => descriptor.code === "FREE_CANCELLATION");
+
+
     return (
       <div className={size === "default" ? "mt-3 space-y-3" : "mt-2 space-y-2"}>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-neutral-500 dark:text-neutral-400">
-              {tourType} · {cityCode}
-            </span>
+            {/* <span className="text-sm text-neutral-500 dark:text-neutral-400">
+              {data?.descriptors?.[0]?.name}
+            </span> */}
+            {hasInstantConfirmation && (
+            <div className="flex text-sm text-neutral-500 dark:text-neutral-400">
+              <Zap size={16} />
+              <span className="text-xs ml-1">Instant Confirmation</span>
+            </div>
+          )}
+          {!hasInstantConfirmation && hasFreeCancellationDescriptor && (
+            <div className="flex text-sm text-neutral-500 dark:text-neutral-400">
+              <History size={16} />
+              <span className="text-xs ml-1">Free Cancellation</span>
+            </div>
+          )}
+          {!hasInstantConfirmation && !hasFreeCancellationDescriptor && data?.descriptors?.[0] && (
+            <div className="flex text-sm text-neutral-500 dark:text-neutral-4000">
+              <Smartphone size={16}/>
+              <span className="text-xs">{data?.descriptors[0].name}</span>
+            </div>
+          )}
             <StartRating reviewCount={data.reviewCount || 0} point={data.rating || 0} />
           </div>
           <div className="flex items-center space-x-2">
