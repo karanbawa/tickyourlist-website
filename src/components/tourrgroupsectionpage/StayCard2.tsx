@@ -5,10 +5,11 @@ import BtnLikeIcon from "@/components/BtnLikeIcon";
 import SaleOffBadge from "@/components/SaleOffBadge";
 import Badge from "@/shared/Badge";
 import Link from "next/link";
+import { ArrowDown } from "lucide-react";
 
 export interface StayCard2Props {
   className?: string;
-  data: any; // Tour group data from API
+  data: any;
   size?: "default" | "small";
 }
 
@@ -21,15 +22,15 @@ const StayCard2: FC<StayCard2Props> = ({
     id,
     name,
     imageUploads,
-    url,
-    shortSummary,
-    metaTitle,
-    metaDescription,
+    urlSlugs,
     cityCode,
     tourType,
-    displayTags,
-    urlSlugs
   } = data;
+
+  // Helper function to format price with commas
+  const formatPrice = (price: number) => {
+    return price?.toLocaleString('en-IN');
+  };
 
   const renderSliderGallery = () => {
     return (
@@ -48,21 +49,24 @@ const StayCard2: FC<StayCard2Props> = ({
   };
 
   const renderContent = () => {
+    const originalPrice = data?.listingPrice?.originalPrice;
+    const finalPrice = data?.listingPrice?.finalPrice;
+    const savedAmount = originalPrice - finalPrice;
+    const savedPercentage = Math.round((savedAmount / originalPrice) * 100);
+
     return (
       <div className={size === "default" ? "mt-3 space-y-3" : "mt-2 space-y-2"}>
         <div className="space-y-2">
-          <span className="text-sm text-neutral-500 dark:text-neutral-400">
-            {tourType} · {cityCode}
-          </span>
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-neutral-500 dark:text-neutral-400">
+              {tourType} · {cityCode}
+            </span>
+            <StartRating reviewCount={data.reviewCount || 0} point={data.rating || 0} />
+          </div>
           <div className="flex items-center space-x-2">
-            {/* {displayTags.map((tag: string, index: number) => (
-              <Badge key={index} name={tag} color="green" />
-            ))} */}
-            <h2
-              className={`font-semibold capitalize text-neutral-900 dark:text-white ${
-                size === "default" ? "text-base" : "text-base"
-              }`}
-            >
+            <h2 className={`font-semibold capitalize text-neutral-900 dark:text-white ${
+              size === "default" ? "text-base" : "text-base"
+            }`}>
               <span className="line-clamp-1">{name}</span>
             </h2>
           </div>
@@ -91,22 +95,30 @@ const StayCard2: FC<StayCard2Props> = ({
             <span className="">{cityCode}</span>
           </div>
         </div>
+        
         <div className="w-14 border-b border-neutral-100 dark:border-neutral-800"></div>
-        <div className="flex justify-between items-center">
-          <span className="text-base font-semibold">
-            {/* Add price information if available */}
-            ₹ {data?.listingPrice?.finalPrice}
-            {` `}
-            {size === "default" && (
-              <span className="text-sm text-neutral-500 dark:text-neutral-400 font-normal">
-                /ticket
+        <div className="flex items-end">
+          <div className="flex flex-col">
+            <div className="flex items-center">
+              <span className="text-sm text-neutral-500 dark:text-neutral-400">
+                from
+              </span> 
+              <span className="text-sm ml-2 line-through text-neutral-500 dark:text-neutral-400">
+                ₹ {formatPrice(originalPrice)}
               </span>
-            )}
+            </div>
+            <span className="text-base font-semibold">
+              ₹ {formatPrice(finalPrice)}
+              {size === "default" && (
+                <span className="text-sm text-neutral-500 dark:text-neutral-400 font-normal">
+                  {` `}/ticket
+                </span>
+              )}
+            </span>
+          </div>
+          <span className="flex items-center bg-green-800 text-white text-xs font-medium px-2 py-1 rounded-md ml-2">
+            Save up to {savedPercentage}%
           </span>
-          {/* {!!reviewStart && ( */}
-            <StartRating reviewCount={4} point={2} />
-          {/* )} */}
-          {/* Add rating information if available */}
         </div>
       </div>
     );
