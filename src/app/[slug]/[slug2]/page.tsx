@@ -84,6 +84,11 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
   const data = await fetchTourGroupData(params.slug, params.slug2);
   const tourGroup = data?.data?.tourgroup;
 
+  const originalPrice = tourGroup?.listingPrice?.originalPrice;
+  const finalPrice = tourGroup?.listingPrice?.finalPrice;
+  const savedAmount = originalPrice - finalPrice;
+  const savedPercentage = Math.round((savedAmount / originalPrice) * 100);
+
   // const thisPathname = usePathname();
   // const router = useRouter();
 
@@ -689,19 +694,36 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
     </div>
   );
 
+  const formatPrice = (price: number) => {
+    return price.toLocaleString('en-IN');
+  };
+
   const renderSidebar = () => (
-    <div className="listingSectionSidebar__wrap shadow-xl">
-      <div className="flex justify-between">
-        <span className="text-3xl font-semibold">
-          Rs {tourGroup?.listingPrice?.finalPrice}
-          <span className="ml-1 text-base font-normal text-neutral-500 dark:text-neutral-400">
-            /ticket
+    <div className="listingSectionSidebar__wrap shadow-xl p-4">
+      <div className="flex flex-col mb-4">
+        <div className="flex justify-between items-center">
+          <span className="flex items-center">
+        <span className="text-sm text-neutral-500 dark:text-neutral-400">from</span>
+          <span className="text-sm line-through text-neutral-500 dark:text-neutral-400 mr-2 ml-2">
+          ₹ {formatPrice(originalPrice)}
           </span>
-        </span>
-        <StartRating />
+          </span>
+          {/* <StartRating reviewCount={tourGroup?.reviewCount || 0} point={tourGroup?.rating || 0} /> */}
+        </div>
+        <div className="flex justify-between items-end">
+          <span className="text-xl font-semibold flex">
+          ₹ {formatPrice(finalPrice)}
+            <span className="ml-1 text-xl font-normal text-neutral-500 dark:text-neutral-400">
+              /ticket
+            </span>
+            <span className="flex items-center bg-green-800 text-white text-xs font-medium px-2 py-1 rounded-md ml-3">
+            Save up to {savedPercentage}%
+          </span>
+          </span>
+        </div>
       </div>
-   <SidebarBooking tourGroup={tourGroup} />
-   </div>
+      <SidebarBooking tourGroup={tourGroup} />
+    </div>
   );
 
   if(!tourGroup) {
