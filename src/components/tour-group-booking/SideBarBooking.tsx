@@ -33,7 +33,7 @@ const SidebarBooking: FC<SidebarBookingProps> = ({ tourGroup }) => {
       const formattedDate = encodeURIComponent(
         stayDate?.toLocaleDateString("en-CA")
       );
-      router.push(`/checkout?tourId=${tourGroup.id}&date=${formattedDate}`);
+      router.push(`/checkout?tourId=${tourGroup._id}&date=${formattedDate}`);
     }
   };
 

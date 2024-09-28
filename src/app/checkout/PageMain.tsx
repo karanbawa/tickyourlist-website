@@ -106,10 +106,10 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         stayDate?.toLocaleDateString("en-CA")
       );
       router.push(
-        `/checkout?tourId=${tourGroup.id}&date=${formattedDate}`
+        `/checkout?tourId=${tourGroup._id}&date=${formattedDate}`
       );
     }
-  }, [stayDate, tourGroup?.id, router]);
+  }, [stayDate, tourGroup?._id, router]);
 
   const [guests, setGuests] = useState<GuestsObject>({
     guestAdults: 2,
@@ -228,30 +228,28 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   }
 
   const renderPreference = () => {
-
-    return (
-      <div className="flex flex-col">
+  return (
+    <div className="flex flex-col">
       <h3 className="text-2xl font-semibold mb-4">Select a preference</h3>
       <div className="flex lg:justify-between gap-4 overflow-x-auto xl:overflow-x-visible">
         <div className="flex flex-grow-1 gap-4">
           {tourGroup?.variants.map((variant: any, index: any) => (
-            <CardVariant
-              key={index}
-              title={variant?.name}
-              originalPrice={variant?.listingPrice?.originalPrice}
-              discountedPrice={variant?.listingPrice?.finalPrice}
-              discount={`Save up to ${calculateDiscountPercentage(variant?.listingPrice?.originalPrice, variant?.listingPrice?.finalPrice)}%`}
-              features={variant?.variantInfo?.split('\r\n')?.map((feature: any) => feature?.replace(/^-/, '')?.trim())}
-              index={index}
-              onVariantSelect={handleVariantSelect}
-              isSelected={selectedVariantIndex === index} // Pass the selected state
-            />
+              <CardVariant
+                title={variant?.name}
+                originalPrice={variant?.listingPrice?.originalPrice}
+                discountedPrice={variant?.listingPrice?.finalPrice}
+                discount={`Save up to ${calculateDiscountPercentage(variant?.listingPrice?.originalPrice, variant?.listingPrice?.finalPrice)}%`}
+                features={variant?.variantInfo?.split('\r\n')?.map((feature: any) => feature?.replace(/^-/, '')?.trim())}
+                index={index}
+                onVariantSelect={handleVariantSelect}
+                isSelected={selectedVariantIndex === index}
+              />
           ))}
         </div>
       </div>
     </div>
-    );
-  }
+  );
+}
 
   const renderDateSelector = () => {
     return (<>
@@ -290,7 +288,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                     <div>{getFormattedDate()}</div>
                   </div>
                   <div>
-                    <ButtonPrimary href={`/book?tourId=${tourGroup?.id}&date=${getFormatedData()}&tour=${tourGroup?.variants?.[selectedVariantIndex]?.tours?.[0]?._id}&variantId=${tourGroup?.variants?.[selectedVariantIndex]?._id}`} className="w-full h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center justify-center gap-2" style={{ backgroundColor: '#7C25E9' }}>Next</ButtonPrimary>
+                    <ButtonPrimary href={`/book?tourId=${tourGroup?._id}&date=${getFormatedData()}&tour=${tourGroup?.variants?.[selectedVariantIndex]?.tours?.[0]?._id}&variantId=${tourGroup?.variants?.[selectedVariantIndex]?._id}`} className="w-full h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center justify-center gap-2" style={{ backgroundColor: '#7C25E9' }}>Next</ButtonPrimary>
                   </div>
                 </div>
 

@@ -11,8 +11,8 @@ export interface CardVariantProps {
   discount: string;
   features: string[];
   index?: number;
-  onVariantSelect: (index: number | undefined) => void; // Callback to pass selected variant to parent
-  isSelected: boolean; // Prop to determine if the card is selected
+  onVariantSelect: (index: number | undefined) => void;
+  isSelected: boolean;
 }
 
 const CardVariant: FC<CardVariantProps> = ({
@@ -32,23 +32,26 @@ const CardVariant: FC<CardVariantProps> = ({
 
   return (
     <div
-      style={{ width: "18rem" }}
-      className={`nc-CardVariant relative flex flex-col items-center justify-center text-center px-4 py-6 sm:px-8 sm:py-10 border border-neutral-200 dark:border-neutral-700 rounded-2xl ${className}`}
+      className={`nc-CardVariant relative flex flex-col w-full max-w-[18rem] px-4 py-6 sm:px-8 sm:py-10 border border-neutral-200 dark:border-neutral-700 rounded-2xl ${className}`}
     >
-      <div className="text-left w-full h-full">
-        <h2 className="text-lg font-semibold mb-2 h-[3.4rem]">{title}</h2>
-        <span className="line-through ml-2 text-neutral-500 dark:text-neutral-400">
-          ₹{originalPrice.toLocaleString("en-IN")}
-        </span>
-        <div className="flex items-baseline">
-          <span className="text-xl font-normal">
-            ₹{discountedPrice.toLocaleString("en-IN")}
-          </span>
-          <Badge className="ml-3" color="green" name={discount} />
+      <div className="flex flex-col h-full">
+        <div className="title-container mb-2">
+          <h2 className="text-lg font-semibold h-[5rem]">{title}</h2>
         </div>
-        <div className="mt-6">
+        <div className="mb-4">
+          <span className="line-through text-sm text-neutral-500 dark:text-neutral-400">
+            ₹{originalPrice?.toLocaleString("en-IN")}
+          </span>
+          <div className="flex items-baseline">
+            <span className="text-xl font-normal">
+              ₹{discountedPrice?.toLocaleString("en-IN")}
+            </span>
+            <Badge className="ml-3" color="green" name={discount} />
+          </div>
+        </div>
+        <div>
           <ButtonPrimary
-            className="w-full"
+            className="w-full mb-6"
             style={{ backgroundColor: "#7C25E9" }}
             onClick={handleSelect}
           >
@@ -62,14 +65,16 @@ const CardVariant: FC<CardVariantProps> = ({
             )}
           </ButtonPrimary>
         </div>
-        <ul className="mt-4 space-y-2 text-sm text-neutral-600 dark:text-neutral-400">
-          {features.map((feature, idx) => (
-            <li key={idx} className="flex items-start">
-              <span className="mr-2">•</span>
-              {feature}
-            </li>
-          ))}
-        </ul>
+        <div className="flex-grow overflow-auto mb-6">
+          <ul className="space-y-2 text-sm text-left text-neutral-600 dark:text-neutral-400">
+            {features.map((feature, idx) => (
+              <li key={idx} className="flex items-start">
+                <span className="mr-2">•</span>
+                {feature}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
