@@ -235,6 +235,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         <div className="flex flex-grow-1 gap-4">
           {tourGroup?.variants.map((variant: any, index: any) => (
               <CardVariant
+                key={variant?._id}
                 title={variant?.name}
                 originalPrice={variant?.listingPrice?.originalPrice}
                 discountedPrice={variant?.listingPrice?.finalPrice}
