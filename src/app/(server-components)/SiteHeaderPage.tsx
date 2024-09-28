@@ -1,10 +1,10 @@
 import { headers } from 'next/headers';
-import nookies from 'nookies';
+// import nookies from 'nookies';
 import SiteHeader from '../(client-components)/(Header)/SiteHeader';
 
 const getCollectionData = async (cityCode: string) => {
   const timestamp = Date.now();
-  const res = await fetch(`http://localhost:3005/v1/customertravel/get/travel-collection/top/list?cityCode=${cityCode}&currency=EUR&domainId=66cacba1eeca9633c29172b9&_t=${timestamp}`, {
+  const res = await fetch(`${process.env.BASE_URL}/v1/customertravel/get/travel-collection/top/list?cityCode=${cityCode}&currency=EUR&domainId=66cacba1eeca9633c29172b9&_t=${timestamp}`, {
     headers: {
       'Content-Type': 'application/json',
       'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj',
@@ -75,25 +75,25 @@ export default async function SiteHeaderPage() {
   const path = headersList.get('x-invoke-path') || '/';
   
   // Use nookies.get to retrieve cookies
-  const cookies = nookies.get(); // Don't need to pass context for server-side
-  let currencyCode = cookies.selectedCurrency || null;
+  // const cookies = nookies.get(); // Don't need to pass context for server-side
+  // let currencyCode = cookies.selectedCurrency || null;
 
-  console.log('currencyCode before geolocation data test: ', currencyCode);
+  // console.log('currencyCode before geolocation data test: ', currencyCode);
 
   // If currency is not in cookies, fetch geolocation and determine default currency
-  if (!currencyCode) {
-    const countryCode = await getGeolocation();
-    currencyCode = countryCurrencyMap[countryCode] || "AED";
+  // if (!currencyCode) {
+  //   const countryCode = await getGeolocation();
+  //   currencyCode = countryCurrencyMap[countryCode] || "AED";
 
-    // Set the currency cookie for future requests
-    nookies.set(null, 'selectedCurrency', currencyCode, {
-      maxAge: 30 * 24 * 60 * 60, // Set for 30 days
-      path: '/', // Make it available for the entire site
-      httpOnly: false, // Allow access from client-side JavaScript
-    });
-  }
+  //   // Set the currency cookie for future requests
+  //   nookies.set(null, 'selectedCurrency', currencyCode, {
+  //     maxAge: 30 * 24 * 60 * 60, // Set for 30 days
+  //     path: '/', // Make it available for the entire site
+  //     httpOnly: false, // Allow access from client-side JavaScript
+  //   });
+  // }
 
-  console.log('currencyCode after geolocation: ', currencyCode);
+  // console.log('currencyCode after geolocation: ', currencyCode);
   
   const cityMatch = path.match(/\/things-to-do-city\/([^\/\?]+)/);
   let initialCollectionData = null;
@@ -115,7 +115,7 @@ export default async function SiteHeaderPage() {
       initialCollectionData={initialCollectionData?.data} 
       initialCityCode={initialCityCode || ''}
       initialCategoriesData={initialCategoriesData?.data}
-      currencyCode={currencyCode}
+      currencyCode={'AED'}
     />
   );
 }
