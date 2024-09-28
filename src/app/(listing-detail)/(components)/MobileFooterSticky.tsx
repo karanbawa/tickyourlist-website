@@ -13,11 +13,11 @@ interface MobileFooterStickyProps {
 
 const MobileFooterSticky: FC<MobileFooterStickyProps> = ({ tourGroup }) => {
   const formatPrice = (price: number) => {
-    return price.toLocaleString('en-IN');
+    return price?.toLocaleString('en-IN');
   };
 
-  const originalPrice = tourGroup?.listingPrice?.originalPrice;
-  const finalPrice = tourGroup?.listingPrice?.finalPrice;
+  const originalPrice = tourGroup?.listingPrice?.prices?.[0]?.originalPrice;
+  const finalPrice = tourGroup?.listingPrice?.prices?.[0]?.finalPrice;
   const savedAmount = originalPrice - finalPrice;
   const savedPercentage = Math.round((savedAmount / originalPrice) * 100);
 

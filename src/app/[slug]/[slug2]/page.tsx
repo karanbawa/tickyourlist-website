@@ -84,8 +84,8 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
   const data = await fetchTourGroupData(params.slug, params.slug2);
   const tourGroup = data?.data?.tourgroup;
 
-  const originalPrice = tourGroup?.listingPrice?.originalPrice;
-  const finalPrice = tourGroup?.listingPrice?.finalPrice;
+  const originalPrice = tourGroup?.listingPrice?.prices?.[0]?.originalPrice;
+  const finalPrice = tourGroup?.listingPrice?.prices?.[0]?.finalPrice;
   const savedAmount = originalPrice - finalPrice;
   const savedPercentage = Math.round((savedAmount / originalPrice) * 100);
 
@@ -695,7 +695,7 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
   );
 
   const formatPrice = (price: number) => {
-    return price.toLocaleString('en-IN');
+    return price?.toLocaleString('en-IN');
   };
 
   const renderSidebar = () => (
