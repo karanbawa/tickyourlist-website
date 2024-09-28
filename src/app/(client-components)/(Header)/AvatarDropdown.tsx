@@ -196,11 +196,11 @@ export default function AvatarDropdown({ className = "" }: Props) {
                               />
                             </svg>
                           </div>
-                          <div className="ml-4">
+                          {/* <div className="ml-4">
                             <p className="text-sm font-medium">Dark theme</p>
-                          </div>
+                          </div> */}
                         </div>
-                        <SwitchDarkMode2 />
+                        {/* <SwitchDarkMode2 /> */}
                       </div>
 
                       <Link
