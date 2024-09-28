@@ -102,8 +102,8 @@ const SiteHeader : React.FC<SiteHeaderProps> = ({ initialCollectionData, initial
           getCollectionData(cityCode)
             .then(data => {
               console.log("data ", data);
-              setCollectionData(data.data);
-              setCachedData(cacheKey, data.data);
+              setCollectionData(data.data?.collections);
+              setCachedData(cacheKey, data.data?.collections);
             })
             .catch(error => {
               console.error('Error fetching collection data:', error);

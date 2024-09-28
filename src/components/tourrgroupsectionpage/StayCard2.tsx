@@ -52,8 +52,8 @@ const StayCard2: FC<StayCard2Props> = ({
   };
 
   const renderContent = () => {
-    const originalPrice = data?.listingPrice?.originalPrice;
-    const finalPrice = data?.listingPrice?.finalPrice;
+    const originalPrice = data?.listingPrice?.prices?.[0]?.originalPrice;
+    const finalPrice = data?.listingPrice?.prices?.[0]?.finalPrice;
     const savedAmount = originalPrice - finalPrice;
     const savedPercentage = Math.round((savedAmount / originalPrice) * 100);
 

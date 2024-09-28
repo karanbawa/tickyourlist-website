@@ -9,7 +9,7 @@ async function fetchTourGroupData(tourId: string) {
   if (!tourId) {
     throw new Error("Invalid slug2 format. Could not extract ID.");
   }
-  const response = await fetch(`http://localhost:3005/v1/customertravel/tour-group/by-tourid/${tourId}?currency=${currency}&domainId=${process.env.WEBSITE_ID}`, {
+  const response = await fetch(`${process.env.BASE_URL}/v1/customertravel/tour-group/by-tourid/${tourId}?currency=${currency}&domainId=${process.env.WEBSITE_ID}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

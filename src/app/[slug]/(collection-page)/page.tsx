@@ -3,11 +3,11 @@ import PageHome3 from './PageHome';
 import { Metadata, ResolvingMetadata } from 'next';
 
 async function getCollectionDetails(slug: string) {
-  const url = `${process.env.BASE_URL}/v1/customertravel/get/travel-collection/by-slug/EN/${slug}?currency=USD&page=1&limit=20&domainId=66cacba1eeca9633c29172b9`;
+  const url = `${process.env.BASE_URL}/v1/customertravel/get/travel-collection/by-slug/EN/${slug}?currencyCode=EUR&page=1&limit=20&domainId=66cacba1eeca9633c29172b9`;
   console.log('Fetching from URL:', url);
 
   try {
-    const res = await fetch(url, {
+    const res = await fetch(url, { 
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

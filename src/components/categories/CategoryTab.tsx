@@ -92,7 +92,7 @@ const CategoryTab: FC<CategoryTabProps> = ({ showDropdown, setShowDropdown, cate
               <div className="flex-grow">
                 <h4 className="font-medium group-hover:text-purple-600 transition-colors">{collection.displayName}</h4>
                 <p className="text-sm text-gray-600">
-                  from {collection.startingPrice.currency}{collection.startingPrice.listingPrice.toLocaleString()}
+                  from {collection.startingPrice?.currency} {collection?.startingPrice?.listingPrice?.toLocaleString()}
                 </p>
               </div>
             </div>
