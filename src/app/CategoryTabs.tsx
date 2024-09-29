@@ -1,11 +1,12 @@
 'use client'
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Home, Landmark, Search, User, Globe, Waves, Compass } from 'lucide-react';
+import { Home, Landmark, Search, User, Globe, Waves, Compass, ChevronLeft, ChevronRight } from 'lucide-react';
 import StayCard2 from '@/components/tourrgroupsectionpage/StayCard2';
 import Heading from '@/shared/Heading';
 import ButtonSecondary from '@/shared/ButtonSecondary';
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
+import Link from 'next/link';
 
 const noScrollbarClass = `
   scrollbar-hide overflow-x-auto
@@ -16,6 +17,11 @@ const noScrollbarClass = `
 
 interface CategoryTabsProps {
   travelSections: any;
+}
+
+interface ScrollState {
+  isAtStart: boolean;
+  isAtEnd: boolean;
 }
 
 const CategoryTabs: React.FC<CategoryTabsProps> = ({ travelSections }) => {
@@ -29,6 +35,38 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ travelSections }) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const buttonRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({});
   const isManualScrollRef = useRef<boolean>(false);
+  const scrollContainerRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const [scrollStates, setScrollStates] = useState<{ [key: string]: ScrollState }>({});
+
+  const updateScrollState = (sectionId: string) => {
+    const container = scrollContainerRefs.current[sectionId];
+    if (container) {
+      const isAtStart = container.scrollLeft === 0;
+      const isAtEnd = container.scrollLeft + container.clientWidth >= container.scrollWidth - 1; // -1 to account for potential rounding errors
+      setScrollStates(prev => ({
+        ...prev,
+        [sectionId]: { isAtStart, isAtEnd }
+      }));
+    }
+  };
+
+  const scrollProducts = (sectionId: string, direction: 'left' | 'right') => {
+    const container = scrollContainerRefs.current[sectionId];
+    if (container) {
+      const scrollAmount = container.clientWidth;
+      container.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  useEffect(() => {
+    // Initialize scroll states
+    travelSections.data.forEach((section: any) => {
+      updateScrollState(section.category.id.name);
+    });
+  }, [travelSections]);
 
   useEffect(() => {
     if (travelSections && travelSections.data && travelSections.data.length > 0) {
@@ -155,7 +193,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ travelSections }) => {
       {/* Category Tabs */}
       <div
         ref={tabsRef}
-        className={`bg-white z-10 transition-all duration-300 ${
+        className={`bg-white z-[11] transition-all duration-300 ${
           isSticky ? 'fixed left-0 right-0' : ''
         }`}
         style={{ 
@@ -198,33 +236,67 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ travelSections }) => {
         className="flex-1" 
         style={{ paddingTop: isSticky ? `${tabsRef.current?.offsetHeight || 0}px` : '0' }}
       >
-        {travelSections.data.map((section: any) => (
-          <div
-            className="nc-SectionGridFeaturePlaces relative pt-10 pb-10"
-            key={section.category.id.name}
-            id={section.category.id.name}
-            ref={el => sectionRefs.current[section.category.id.name] = el}
-          >
-            <div className="flex items-center justify-between px-4 mb-4">
-              <Heading desc={'Explore top experiences'}>{`Top Experiences in ${section.category.id.name}`}</Heading>
-              <span className="hidden sm:block flex-shrink-0">
-                <ButtonSecondary href="/listing-stay" className="!leading-none">
-                  <div className="flex items-center justify-center">
-                    <span>View all</span>
-                    <ArrowRightIcon className="w-5 h-5 ml-3" />
-                  </div>
-                </ButtonSecondary>
-              </span>
-            </div>
-            <div className={noScrollbarClass}>
-              <div className="flex space-x-4 px-4 min-w-max">
-                {section?.tourGroups?.map((tourgroup: any) => (
-                  <StayCard2 key={tourgroup.id} data={tourgroup} className="min-w-[300px] max-w-[300px] flex-shrink-0" />
-                ))}
+        {travelSections.data.map((section: any) => {
+          const sectionId = section.category.id.name;
+          const scrollState = scrollStates[sectionId] || { isAtStart: true, isAtEnd: false };
+          const urlSLug = section.category.id.urlSlugs.EN;
+
+          return (
+            <div
+              className="nc-SectionGridFeaturePlaces relative pt-10 pb-10"
+              key={sectionId}
+              id={sectionId}
+              ref={el => sectionRefs.current[sectionId] = el}
+            >
+              <div className="flex items-center justify-between px-4 mb-4">
+                <Heading desc={'Explore top experiences'}>{`Top Experiences in ${sectionId}`}</Heading>
+                <div className="flex items-center space-x-2">
+                  <span className="block flex-shrink-0 mr-2">
+                    {/* <ButtonSecondary href="/listing-stay" className="!leading-none"> */}
+                      <div className="flex items-center justify-center">
+                        <Link href={urlSLug} className='text-sm underline'>View all</Link>
+                        <ArrowRightIcon className="w-5 h-4 ml-3 sm:block md:hidden" />
+                      </div>
+                    {/* </ButtonSecondary> */}
+                  </span>
+                  <button 
+                    onClick={() => scrollProducts(sectionId, 'left')}
+                    className={`p-2 hidden sm:block rounded-full transition-colors font- ${
+                      scrollState.isAtStart 
+                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                        : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                    }`}
+                    disabled={scrollState.isAtStart}
+                  >
+                    <ChevronLeft size={24} />
+                  </button>
+                  <button 
+                    onClick={() => scrollProducts(sectionId, 'right')}
+                    className={`p-2 hidden sm:block rounded-full transition-colors ${
+                      scrollState.isAtEnd 
+                        ? 'bg-gray-100 text-gray-400 cursor-not-allowed' 
+                        : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                    }`}
+                    disabled={scrollState.isAtEnd}
+                  >
+                    <ChevronRight size={24} />
+                  </button>
+                </div>
+              </div>
+              <div 
+                className={`${noScrollbarClass} relative`}
+                ref={el => scrollContainerRefs.current[sectionId] = el}
+                onScroll={() => updateScrollState(sectionId)}
+              >
+                <div className="flex space-x-4 px-4">
+                  {section.tourGroups?.map((tourgroup: any) => (
+                    <StayCard2 key={tourgroup.id} data={tourgroup} className="min-w-[300px] max-w-[300px] flex-shrink-0" />
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
