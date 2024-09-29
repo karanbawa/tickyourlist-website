@@ -18,7 +18,6 @@ const StayCard2: FC<StayCard2Props> = ({
   className = "",
   data,
 }) => {
-  console.log("data ", data);
   const {
     id,
     name,

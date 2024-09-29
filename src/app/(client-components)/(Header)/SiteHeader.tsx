@@ -101,7 +101,6 @@ const SiteHeader : React.FC<SiteHeaderProps> = ({ initialCollectionData, initial
         } else {
           getCollectionData(cityCode)
             .then(data => {
-              console.log("data ", data);
               setCollectionData(data.data?.collections);
               setCachedData(cacheKey, data.data?.collections);
             })
@@ -133,8 +132,6 @@ const SiteHeader : React.FC<SiteHeaderProps> = ({ initialCollectionData, initial
 
     }
   }, [pathname, initialCityCode]);
-
-  console.log("initialCollectionData  ", initialCollectionData);
 
   let [headers] = useState<SiteHeaders[]>(["Header 1", "Header 2", "Header 3"]);
 

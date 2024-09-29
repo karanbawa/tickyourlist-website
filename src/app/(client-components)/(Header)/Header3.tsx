@@ -210,7 +210,6 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
                       All Categories
                     </span>
                     <ChevronDownIcon className="w-5 h-5 pr-4" />
-                    {console.log("collectionData ", collectionData)}
                     {collectionData && collectionData?.map((item: any, index: number) => (
                     <React.Fragment key={item.id}>
                       <span className="h-5 w-[1px] bg-neutral-300 dark:bg-neutral-700"></span>

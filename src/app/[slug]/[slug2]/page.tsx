@@ -55,10 +55,6 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 }
 
 async function fetchTourGroupData(slug:string, slug2: string) {
-  // console.log("asaadadasdasdadada ", slug);
-  // const id = slug.match(/\d+$/)?.[0]; 
-
-  // console.log("idtest ", id);
 
   if (!slug) {
     throw new Error("Invalid slug format. Could not extract slug.");
@@ -727,7 +723,6 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
   );
 
   if(!tourGroup) {
-      console.log("No Tougroup data found for slug:", tourGroup);
       return notFound();
   }
 

@@ -19,7 +19,6 @@ const LikeSaveBtns: React.FC<LikeSaveBtnsProps> = ({ data }) => {
         .then(() => {
         })
         .catch((error) => {
-          console.log('Error sharing', error);
         });
     } else {
       // Fallback: Copy URL to clipboard

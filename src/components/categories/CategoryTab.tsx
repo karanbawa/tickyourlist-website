@@ -54,7 +54,6 @@ const CategoryTab: FC<CategoryTabProps> = ({ showDropdown, setShowDropdown, cate
   if (!showDropdown) return null;
 
   const handleClick = (urlSlug: string) => {
-    console.log('Navigating to:', urlSlug);
     router.push(urlSlug as any);
   };
 

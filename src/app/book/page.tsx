@@ -37,8 +37,6 @@ const page: FC<BookPageProps> = async ({ searchParams }) => {
     const data = await fetchTourGroupData(tourId, variantId);
     const tourGroup = data.data.tourgroup;
 
-    console.log('tourGrouptourGroup ', tourGroup);
-
     return <CheckOutPagePageMain tourGroup={tourGroup} date={date} tour={tour} variantId={variantId} />;
   } catch (error) {
     console.error("Error fetching tour group data:", error);

@@ -32,7 +32,6 @@ const HandleImageClick: FC<HandleImageClickProps> = ({
   useEffect(() => {
     const modalParam = searchParams.get('modal');
     if (modalParam === 'PHOTO_TOUR_SCROLLABLE') {
-      console.log('savedata ', saveData);
       saveData(data);
     }
   }, [data, saveData]);

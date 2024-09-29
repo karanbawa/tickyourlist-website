@@ -547,9 +547,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
               {pricing?.prices.map((price: any) => {
                 const guestType = price.type.toLowerCase();
                 const guestCount = guests[`guest${guestType.charAt(0).toUpperCase() + guestType.slice(1)}s` as keyof GuestsObject] || 0;
-                console.log('guestCount ', guestCount, guestType);
-                console.log('uests[`guest${price.type.charAt(0).toUpperCase ', guests[`guest${guestType.charAt(0).toUpperCase() + guestType.slice(1)}s` as keyof GuestsObject]);
-                // console.log("opricedetaisl ", price);
                 return (
                   <PriceRow
                     key={price.type}
