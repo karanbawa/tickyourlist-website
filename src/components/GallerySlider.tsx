@@ -3,7 +3,7 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import Image, { StaticImageData } from "next/image";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useSwipeable } from "react-swipeable";
 import { variants } from "@/utils/animationVariants";
 import Link from "next/link";
@@ -33,19 +33,19 @@ export default function GallerySlider({
   navigation = true,
   hasFreeCancellationDescriptor
 }: GallerySliderProps) {
-  const [loaded, setLoaded] = useState(false);
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const images = galleryImgs;
 
-  function changePhotoId(newVal: number) {
+  const changePhotoId = useCallback((newVal: number) => {
     if (newVal > index) {
       setDirection(1);
     } else {
       setDirection(-1);
     }
     setIndex(newVal);
-  }
+    // setIsLoading(true);
+  }, [index]);
 
   const handlers = useSwipeable({
     onSwipedLeft: () => {
@@ -101,8 +101,8 @@ export default function GallerySlider({
                   fill
                   alt="listing card gallery"
                   className={`object-cover ${imageClass}`}
-                  onLoad={() => setLoaded(true)}
                   sizes="(max-width: 1025px) 100vw, 300px"
+                  priority={index === 0}
                 />
               </motion.div>
             </AnimatePresence>
@@ -112,8 +112,8 @@ export default function GallerySlider({
         {/* Buttons + bottom nav bar */}
         <>
           {/* Buttons */}
-          {loaded && navigation && (
-            <div className="opacity-0 group-hover/cardGallerySlider:opacity-100 transition-opacity ">
+          {navigation && (
+            <div className="opacity-0 group-hover/cardGallerySlider:opacity-100 transition-opacity">
               {index > 0 && (
                 <button
                   className="absolute w-8 h-8 left-3 top-[calc(50%-16px)] bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-6000 dark:hover:border-neutral-500 rounded-full flex items-center justify-center hover:border-neutral-300 focus:outline-none"
