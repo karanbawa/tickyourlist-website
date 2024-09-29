@@ -218,34 +218,47 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     )
   }
 
-  function calculateDiscountPercentage(originalPrice: number, finalPrice: number): string {
-    if (!originalPrice || !finalPrice || originalPrice <= finalPrice) {
-      return "0";
-    }
-  
-    const discount = ((originalPrice - finalPrice) / originalPrice) * 100;
-    return Math.round(discount).toString(); // Rounds to the nearest integer
+  // Update the calculateDiscountPercentage function to handle string inputs
+function calculateDiscountPercentage(originalPrice: string | number, finalPrice: string | number): string {
+  const original = typeof originalPrice === 'string' ? parseFloat(originalPrice) : originalPrice;
+  const final = typeof finalPrice === 'string' ? parseFloat(finalPrice) : finalPrice;
+
+  if (!original || !final || original <= final) {
+    return "0";
   }
 
-  const renderPreference = () => {
+  const discount = ((original - final) / original) * 100;
+  return Math.round(discount).toString(); // Rounds to the nearest integer
+}
+
+ const renderPreference = () => {
   return (
     <div className="flex flex-col">
       <h3 className="text-2xl font-semibold mb-4">Select a preference</h3>
       <div className="flex lg:justify-between gap-4 overflow-x-auto xl:overflow-x-visible">
         <div className="flex flex-grow-1 gap-4">
-          {tourGroup?.variants.map((variant: any, index: any) => (
+          {tourGroup?.variants.map((variant: any, index: number) => {
+            const listingPrices = variant.listingPricesInAllCurrencies?.[0];
+            const guestPrice = listingPrices?.prices.find((p: any) => p.type === 'GUEST');
+            const adultPrice = listingPrices?.prices.find((p: any) => p.type === 'ADULT');
+            const selectedPrice = guestPrice || adultPrice;
+
+            // if (!selectedPrice) return null; // Skip this variant if no valid price is found
+
+            return (
               <CardVariant
                 key={variant?._id}
                 title={variant?.name}
-                originalPrice={variant?.listingPrice?.originalPrice}
-                discountedPrice={variant?.listingPrice?.finalPrice}
-                discount={`Save up to ${calculateDiscountPercentage(variant?.listingPrice?.originalPrice, variant?.listingPrice?.finalPrice)}%`}
-                features={variant?.variantInfo?.split('\r\n')?.map((feature: any) => feature?.replace(/^-/, '')?.trim())}
+                originalPrice={selectedPrice?.originalPrice}
+                discountedPrice={selectedPrice?.finalPrice}
+                discount={`Save up to ${calculateDiscountPercentage(selectedPrice?.originalPrice, selectedPrice?.finalPrice)}%`}
+                features={variant?.variantInfo?.split('\r\n')?.map((feature: string) => feature?.replace(/^-/, '')?.trim())}
                 index={index}
                 onVariantSelect={handleVariantSelect}
                 isSelected={selectedVariantIndex === index}
               />
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
