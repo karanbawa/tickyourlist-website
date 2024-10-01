@@ -185,7 +185,7 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
                     List your property
                   </Link> */}
 
-                  <NotifyDropdown />
+                  {/* <NotifyDropdown /> */}
                   <AvatarDropdown />
                   <MenuBar />
                 </div>
