@@ -1,13 +1,13 @@
 import PageHome3 from './PageHome3';
 
 async function getTravelSections(cityCode: string) {
-  const res = await fetch(`${process.env.BASE_URL}/v1/tyltravelsection/get/public/travel-sections/?cityCode=${cityCode?.toUpperCase()}&domainId=${process.env.WEBSITE_ID}&currency=EUR`, {
+  const res = await fetch(`${process.env.BASE_URL}/v1/tyltravelsection/get/public/travel-sections/?cityCode=${cityCode?.toUpperCase()}&domainId=${process.env.WEBSITE_ID}&currency=AED`, {
     headers: {
       'Content-Type': 'application/json',
       'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj',
      'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
     },
-    next: { revalidate: 0 }, // Ensure Vercel does not cache this fetch
+    next: { revalidate: 10 },
   });
 
   if (!res.ok) {

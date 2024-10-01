@@ -9,7 +9,7 @@ import MenuBar from "@/shared/MenuBar";
 import { SearchTab } from "../(HeroSearchForm)/HeroSearchForm";
 import HeroSearchForm2MobileFactory from "../(HeroSearchForm2Mobile)/HeroSearchForm2MobileFactory";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import HeroSearchFormSmall from "../(HeroSearchFormSmall)/HeroSearchFormSmall";
 import { StaySearchFormFields } from "../type";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
@@ -31,13 +31,14 @@ if (typeof window !== "undefined") {
 }
 
 const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCityCode, categoriesData, currencyCode }) => {
-  const headerInnerRef = useRef<HTMLDivElement>(null);
+  const headerInnerRef = useRef<HTMLDivElement>(null); 
   const [showHeroSearch, setShowHeroSearch] = useState<StaySearchFormFields | null>(null);
   const [currentTab, setCurrentTab] = useState<SearchTab>("Experiences");
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const isThingsToDoPage = pathname?.startsWith('/things-to-do-in-');
+  const router = useRouter();
   // const [isSlugPage, setIsSlugPage] = useState(false);
   // const [shouldShowCategoryTab, setShouldShowCategoryTab] = useState(false);
 
@@ -213,7 +214,7 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
                     {collectionData && collectionData?.map((item: any, index: number) => (
                     <React.Fragment key={item.id}>
                       <span className="h-5 w-[1px] bg-neutral-300 dark:bg-neutral-700"></span>
-                      <span className="block px-4 cursor-pointer font-normal py-2.5 hover:text-purple-600">
+                      <span onClick={() => router.push(`/collection/${item.urlSlug}`)} className="block px-4 cursor-pointer font-normal py-2.5 hover:text-purple-600">
                         {item.displayName}
                       </span>
                     </React.Fragment>

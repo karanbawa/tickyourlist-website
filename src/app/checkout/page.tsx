@@ -4,7 +4,6 @@ import CheckOutPagePageMain from "./PageMain";
 async function fetchTourGroupData(tourId: string) {
   // const id = slug.match(/\d+$/)?.[0]; 
   const currency = 'INR';
-  
 
   if (!tourId) {
     throw new Error("Invalid slug2 format. Could not extract ID.");

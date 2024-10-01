@@ -11,12 +11,13 @@ export async function GET(request: Request) {
 
   try {
     const timestamp = Date.now();
-    const apiRes = await fetch(`${process.env.BASE_URL}/v1/customertravel/get/travel-collection/top/list?cityCode=${cityCode}&currency=EUR&domainId=66cacba1eeca9633c29172b9&_t=${timestamp}`, {
+    const apiRes = await fetch(`${process.env.BASE_URL}/v1/customertravel/get/travel-collection/top/list?cityCode=${cityCode}&currency=AED&domainId=66cacba1eeca9633c29172b9&_t=${timestamp}`, {
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj',
         'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
       },
+      next: { revalidate: 10 },
     });
 
     if (!apiRes.ok) {
