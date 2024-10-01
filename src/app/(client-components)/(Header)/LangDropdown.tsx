@@ -24,25 +24,25 @@ export const headerLanguage: LanguageItem[] = [
     description: "United States",
     href: "##",
     active: true,
-  },
-  {
-    id: "Vietnamese",
-    name: "Vietnamese",
-    description: "Vietnam",
-    href: "##",
-  },
-  {
-    id: "Francais-Belgique",
-    name: "Francais",
-    description: "Belgique",
-    href: "##",
-  },
-  {
-    id: "Francais-Canada",
-    name: "Francais",
-    description: "Canada",
-    href: "##",
-  },
+  }
+  // {
+  //   id: "Vietnamese",
+  //   name: "Vietnamese",
+  //   description: "Vietnam",
+  //   href: "##",
+  // },
+  // {
+  //   id: "Francais-Belgique",
+  //   name: "Francais",
+  //   description: "Belgique",
+  //   href: "##",
+  // },
+  // {
+  //   id: "Francais-Canada",
+  //   name: "Francais",
+  //   description: "Canada",
+  //   href: "##",
+  // },
 ];
 
 interface LangDropdownProps {

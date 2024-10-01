@@ -21,10 +21,11 @@ export const headerCurrency = [
     active: true,
   },
   {
-    id: "EUR",
-    name: "EUR",
+    id: "INR",
+    name: "INR",
     href: "##",
-    icon: CurrencyEuroIcon
+    icon: CurrencyRupeeIcon,
+    active: true,
   },
   {
     id: "USD",
@@ -33,30 +34,29 @@ export const headerCurrency = [
     icon: CurrencyDollarIcon,
   },
   {
-    id: "GBF",
-    name: "GBF",
+    id: "SGF",
+    name: "SGD",
     href: "##",
-    icon: CurrencyBangladeshiIcon,
+    icon: CurrencyDollarIcon,
   },
-  {
-    id: "SAR",
-    name: "SAR",
-    href: "##",
-    icon: CurrencyPoundIcon,
-  },
-  {
-    id: "QAR",
-    name: "QAR",
-    href: "##",
-    icon: CurrencyRupeeIcon,
-  },
-  {
-    id: "INR",
-    name: "INR",
-    href: "##",
-    icon: CurrencyRupeeIcon,
-    active: true,
-  },
+  // {
+  //   id: "GBF",
+  //   name: "GBF",
+  //   href: "##",
+  //   icon: CurrencyBangladeshiIcon,
+  // },
+  // {
+  //   id: "SAR",
+  //   name: "SAR",
+  //   href: "##",
+  //   icon: CurrencyPoundIcon,
+  // },
+  // {
+  //   id: "QAR",
+  //   name: "QAR",
+  //   href: "##",
+  //   icon: CurrencyRupeeIcon,
+  // }
 ];
 
 const CurrencyDropdown: React.FC = () => {

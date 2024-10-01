@@ -1,63 +1,14 @@
 "use client";
-
-import { Tab } from "@headlessui/react";
-import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import React, { FC, Fragment, useEffect, useRef, useState } from "react";
-import visaPng from "@/images/vis.png";
-import mastercardPng from "@/images/mastercard.svg";
-import Input from "@/shared/Input";
-import Label from "@/components/Label";
-import Textarea from "@/shared/Textarea";
 import ButtonPrimary from "@/shared/ButtonPrimary";
 import StartRating from "@/components/StartRating";
 import NcModal from "@/shared/NcModal";
-import ModalSelectDate from "@/components/ModalSelectDate";
-import converSelectedDateToString from "@/utils/converSelectedDateToString";
-import ModalSelectGuests from "@/components/ModalSelectGuests";
 import Image from "next/image";
 import { GuestsObject } from "../(client-components)/type";
 import { useRouter } from "next/navigation";
-import GuestsInput from "../(client-components)/(HeroSearchForm2Mobile)/GuestsInput";
 import StayDatesRangeInput from "../(listing-detail)/listing-stay-detail/StayDatesRangeInput";
 import { DEMO_AUTHORS } from "@/data/authors";
-import CardAuthorBox2 from "@/components/CardAuthorBox2";
-import CardAuthorBox from "@/components/CardAuthorBox";
 import CardVariant from "@/components/tour-group-booking/CardVariants";
-
-const demoVariants = [
-  {
-    title: "IMG Tickets",
-    originalPrice: 8339,
-    discountedPrice: 4912,
-    discount: "Save up to 41%",
-    features: [
-      "Entry into IMG Worlds of Adventure",
-      "Unlimited access to all rides",
-    ],
-  },
-  {
-    title: "IMG Tickets with Combo Meal",
-    originalPrice: 9710,
-    discountedPrice: 6511,
-    discount: "Save up to 33%",
-    features: [
-      "Combo meal voucher",
-      "Entry into IMG Worlds of Adventure",
-      "Unlimited access to all rides",
-    ],
-  },
-  {
-    title: "IMG Fast Track Tickets",
-    originalPrice: 12337,
-    discountedPrice: 10281,
-    discount: "Save up to 17%",
-    features: [
-      "Fast-track entry to all rides and attractions",
-      "Unlimited access to all rides",
-      "Tickets are valid for both UAE residents & tourists",
-    ],
-  },
-];
 
 export interface CheckOutPagePageMainProps {
   className?: string;
