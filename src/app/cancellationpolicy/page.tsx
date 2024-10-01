@@ -40,7 +40,7 @@ const Page = () => {
             <li>
               Cancellation periods may vary depending on the activity booked. Please refer to your booking confirmation for details.
             </li>
-            <li>To cancel, contact our customer support team or follow the cancellation instructions provided in your booking confirmation.</li>
+            <li>To cancel, contact our customer support team at <a href="mailto:help@tickyourlist.com">help@tickyourlist.com</a> or follow the cancellation instructions provided in your booking confirmation.            </li>
           </ul>
           <li>
             Refund:
@@ -51,9 +51,9 @@ const Page = () => {
               <li>
                 Refund eligibility and processing times may vary depending on the activity and provider. Please refer to your booking confirmation for specific refund policies.
               </li>
-              <li>Refunds will be issued to the original payment method used for booking.</li>
+              <li>Refunds will be issued to the original payment method used for booking within 7-10 working days if applicable.</li>
               <li>{`Processing fees or non-refundable portions may apply as per the activity provider's terms and conditions.`}</li>
-              <li>For any questions or assistance regarding refunds, feel free to reach out to our customer support team.</li>
+              <li>For any questions or assistance regarding refunds, feel free to reach out to our customer support team at <a href="mailto:help@tickyourlist.com">help@tickyourlist.com</a>.</li>
             </ul>
           </li>
           <li>
