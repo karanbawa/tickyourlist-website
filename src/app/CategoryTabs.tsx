@@ -262,7 +262,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ travelSections }) => {
                   <span className="block flex-shrink-0 mr-2">
                     {/* <ButtonSecondary href="/listing-stay" className="!leading-none"> */}
                       <div className="flex items-center justify-center">
-                        <Link href={urlSLug} className='text-sm underline'>View all</Link>
+                        {/* <Link href={urlSLug} className='text-sm underline'>View all</Link> */}
                         <ArrowRightIcon className="w-5 h-4 ml-3 sm:block md:hidden" />
                       </div>
                     {/* </ButtonSecondary> */}
