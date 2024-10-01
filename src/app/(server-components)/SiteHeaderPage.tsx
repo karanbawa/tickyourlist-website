@@ -1,5 +1,4 @@
 import { headers } from 'next/headers';
-// import nookies from 'nookies';
 import SiteHeader from '../(client-components)/(Header)/SiteHeader';
 
 const getCollectionData = async (cityCode: string) => {
@@ -74,35 +73,16 @@ export default async function SiteHeaderPage() {
   const headersList = headers();
   const path = headersList.get('x-invoke-path') || '/';
   
-  // Use nookies.get to retrieve cookies
-  // const cookies = nookies.get(); // Don't need to pass context for server-side
-  // let currencyCode = cookies.selectedCurrency || null;
-
-  // console.log('currencyCode before geolocation data test: ', currencyCode);
-
-  // If currency is not in cookies, fetch geolocation and determine default currency
-  // if (!currencyCode) {
-  //   const countryCode = await getGeolocation();
-  //   currencyCode = countryCurrencyMap[countryCode] || "AED";
-
-  //   // Set the currency cookie for future requests
-  //   nookies.set(null, 'selectedCurrency', currencyCode, {
-  //     maxAge: 30 * 24 * 60 * 60, // Set for 30 days
-  //     path: '/', // Make it available for the entire site
-  //     httpOnly: false, // Allow access from client-side JavaScript
-  //   });
-  // }
-
-  // console.log('currencyCode after geolocation: ', currencyCode);
-  
-  const cityMatch = path.match(/\/things-to-do-city\/([^\/\?]+)/);
+  // Corrected regex to match 'things-to-do-in-dubai' and extract 'dubai'
+  const cityMatch = path.match(/\/things-to-do-in-(.+)/);
   let initialCollectionData = null;
   let initialCategoriesData = null;
   let initialCityCode = null;
 
   if (cityMatch) {
-    initialCityCode = cityMatch[1].toUpperCase();
+    initialCityCode = cityMatch[1].toUpperCase(); // Extract 'dubai' and convert to uppercase
     try {
+      // Fetching collection and category data based on the city code
       initialCollectionData = await getCollectionData(initialCityCode);
       initialCategoriesData = await getCategoryData(initialCityCode);
     } catch (error) {

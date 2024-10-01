@@ -37,7 +37,7 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const isThingsToDoPage = pathname?.startsWith('/things-to-do-city/');
+  const isThingsToDoPage = pathname?.startsWith('/things-to-do-in-');
   // const [isSlugPage, setIsSlugPage] = useState(false);
   // const [shouldShowCategoryTab, setShouldShowCategoryTab] = useState(false);
 
@@ -125,7 +125,7 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
 
   // useEffect(() => {
   //   if (pathname) {
-  //     const isThingsToDoPage = pathname.startsWith('/things-to-do-city/');
+  //     const isThingsToDoPage = pathname.startsWith('/things-to-do-in-');
   //     // const pathParts = pathname.split('/').filter(Boolean);
   //     // const isSlugPage = pathParts.length === 1 && pathParts[0] !== 'about' && pathParts[0] !== 'add-listing';
       

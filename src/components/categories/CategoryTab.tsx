@@ -18,6 +18,7 @@ interface Subcategory {
 }
 
 interface Collection {
+  _id: string;
   id: number;
   name: string;
   displayName: string;
@@ -70,7 +71,7 @@ const CategoryTab: FC<CategoryTabProps> = ({ showDropdown, setShowDropdown, cate
         <div className="grid grid-cols-3 gap-6 pb-4">
           {collections?.map((collection) => (
             <div 
-              key={collection.id}
+              key={collection._id}
               className="cursor-pointer group flex items-center space-x-4 p-2 rounded-lg hover:bg-gray-100"
               onClick={() => handleClick(collection.urlSlug)}
               onKeyDown={(e) => e.key === 'Enter' && handleClick(collection.urlSlug)}
