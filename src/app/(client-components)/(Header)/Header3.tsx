@@ -33,7 +33,7 @@ if (typeof window !== "undefined") {
 const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCityCode, categoriesData, currencyCode }) => {
   const headerInnerRef = useRef<HTMLDivElement>(null);
   const [showHeroSearch, setShowHeroSearch] = useState<StaySearchFormFields | null>(null);
-  const [currentTab, setCurrentTab] = useState<SearchTab>("Stays");
+  const [currentTab, setCurrentTab] = useState<SearchTab>("Experiences");
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
@@ -54,7 +54,7 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
 
   useOutsideAlerter(headerInnerRef, () => {
     setShowHeroSearch(null);
-    setCurrentTab("Stays");
+    setCurrentTab("Experiences");
   });
 
   useEffect(() => {
