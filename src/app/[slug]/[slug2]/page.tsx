@@ -60,7 +60,7 @@ async function fetchTourGroupData(slug:string, slug2: string) {
     throw new Error("Invalid slug format. Could not extract slug.");
   }
 
-  const response = await fetch(`${process.env.BASE_URL}/v1/customertravel/tour-groups/EN/${slug}/${slug2}?currency=INR&domainId=${process.env.WEBSITE_ID}`, {
+  const response = await fetch(`${process.env.BASE_URL}/v1/customertravel/tour-groups/EN/${slug}/${slug2}?currency=AED&domainId=${process.env.WEBSITE_ID}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -80,6 +80,7 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
   const data = await fetchTourGroupData(params.slug, params.slug2);
   const tourGroup = data?.data?.tourgroup;
 
+  const currencyCode = tourGroup?.listingPrice?.currencyCode;
   const originalPrice = tourGroup?.listingPrice?.prices?.[0]?.originalPrice;
   const finalPrice = tourGroup?.listingPrice?.prices?.[0]?.finalPrice;
   const savedAmount = originalPrice - finalPrice;
@@ -701,14 +702,14 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
           <span className="flex items-center">
         <span className="text-sm text-neutral-500 dark:text-neutral-400">from</span>
           <span className="text-sm line-through text-neutral-500 dark:text-neutral-400 mr-2 ml-2">
-          ₹ {formatPrice(originalPrice)}
+          {currencyCode} {formatPrice(originalPrice)}
           </span>
           </span>
           {/* <StartRating reviewCount={tourGroup?.reviewCount || 0} point={tourGroup?.rating || 0} /> */}
         </div>
         <div className="flex justify-between items-end">
           <span className="text-xl font-semibold flex">
-          ₹ {formatPrice(finalPrice)}
+          {currencyCode} {formatPrice(finalPrice)}
             <span className="ml-1 text-xl font-normal text-neutral-500 dark:text-neutral-400">
               /ticket
             </span>

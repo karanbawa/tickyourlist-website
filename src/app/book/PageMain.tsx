@@ -15,6 +15,7 @@ export interface CheckOutPagePageMainProps {
   date?: any;
   tour?: any;
   variantId?: any;
+  currencyCode?: string;
 }
 
 interface PriceRowProps {
@@ -33,7 +34,8 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   tourGroup,
   tour,
   date,
-  variantId
+  variantId,
+  currencyCode
 }) => {
   const [showPromoCode, setShowPromoCode] = useState(false);
   const [firstName, setFirstName] = useState("");
@@ -268,7 +270,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       childCount: guests.guestChildren,
       infantCount: guests.guestInfants,
       amount: calculateTotalAmount().toString(),
-      currency: "INR",
+      currency: currencyCode,
       title: tourGroup?.name,
       source: "website",
       bookingDate: date,
@@ -352,7 +354,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
               <h2 className="text-white text-xl font-medium tracking-wide p-5">{tourGroup?.name}</h2>
             </div>
             <div className="absolute bottom-[-12px] right-0 flex items-center bg-green-500 text-white text-sm font-medium px-2 py-1 rounded-md">
-              ₹{totalDiscount.toFixed(2)} Saved
+              {currencyCode} {totalDiscount.toLocaleString('en-IN')} Saved
             </div>
           </div>
   
@@ -387,14 +389,14 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                   {detail.count} {detail.type}{detail.count > 1 ? 's' : ''}
                 </span>
                 <span className="text-gray-700 font-medium">
-                  ₹{detail.price.toFixed(2)}
+                  {currencyCode} {detail.price.toLocaleString('en-IN')}
                 </span>
               </div>
             ))}
   
             <div className="flex justify-between items-center bg-green-50 p-3 border-t border-gray-200 border-dashed">
               <span className="text-green-700">TickYourList discount</span>
-              <span className="text-green-700 font-medium">- ₹{totalDiscount.toFixed(2)}</span>
+              <span className="text-green-700 font-medium">- {currencyCode} {totalDiscount?.toLocaleString('en-IN')}</span>
             </div>
           </div>
   
@@ -402,7 +404,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
           <div className="px-4 py-4 border-t border-gray-200">
             <div className="flex justify-between items-center mb-2">
               <span className="text-xl font-medium text-gray-700">Total payable</span>
-              <span className="text-xl font-medium text-gray-700">₹{totalFinalPrice.toFixed(2)}</span>
+              <span className="text-xl font-medium text-gray-700">{currencyCode} {totalFinalPrice?.toLocaleString('en-IN')}</span>
             </div>
             <span className="text-sm text-gray-500 block mb-4">Your card will be charged in INR</span>
             <ButtonPrimary
@@ -462,11 +464,11 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         <div className="flex w-1/4 ml-3 justify-end relative">
           <div>
             <div>
-              <p>₹{totalPrice}</p>
+              <p>{currencyCode} {totalPrice}</p>
             </div>
             <div>
               <p className="text-xs line-through font-light">
-                ₹{totalOriginalPrice}
+                {currencyCode} {totalOriginalPrice}
               </p>
             </div>
           </div>

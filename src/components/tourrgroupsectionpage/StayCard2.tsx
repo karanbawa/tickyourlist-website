@@ -53,6 +53,7 @@ const StayCard2: FC<StayCard2Props> = ({
   const renderContent = () => {
     const originalPrice = data?.listingPrice?.prices?.[0]?.originalPrice;
     const finalPrice = data?.listingPrice?.prices?.[0]?.finalPrice;
+    const currencyCode = data?.listingPrice?.currencyCode;
     const savedAmount = originalPrice - finalPrice;
     const savedPercentage = Math.round((savedAmount / originalPrice) * 100);
 
@@ -128,11 +129,11 @@ const StayCard2: FC<StayCard2Props> = ({
                 from
               </span> 
               <span className="text-sm ml-2 line-through text-neutral-500 dark:text-neutral-400">
-                ₹ {formatPrice(originalPrice)}
+                {currencyCode} {formatPrice(originalPrice)}
               </span>
             </div>
             <span className="text-base font-semibold">
-              ₹ {formatPrice(finalPrice)}
+              {currencyCode} {formatPrice(finalPrice)}
               {size === "default" && (
                 <span className="text-sm text-neutral-500 dark:text-neutral-400 font-normal">
                   {` `}/ticket

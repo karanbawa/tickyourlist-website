@@ -62,13 +62,15 @@ const demoVariants = [
 export interface CheckOutPagePageMainProps {
   className?: string;
   tourGroup?: any;
+  currencyCode?: string
 }
 
 const DEMO_DATA = DEMO_AUTHORS.filter((_, i) => i < 4);
 
 const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   className = "",
-  tourGroup
+  tourGroup,
+  currencyCode
 }) => {
   // const [startDate, setStartDate] = useState<Date | null>(
   //   new Date("2023/02/06")
@@ -232,13 +234,16 @@ function calculateDiscountPercentage(originalPrice: string | number, finalPrice:
 }
 
  const renderPreference = () => {
+  console.log('variant.listingPricesInAllCurrencie ', tourGroup.variants);
   return (
     <div className="flex flex-col">
       <h3 className="text-2xl font-semibold mb-4">Select a preference</h3>
       <div className="flex lg:justify-between gap-4 overflow-x-auto xl:overflow-x-visible">
         <div className="flex flex-grow-1 gap-4">
           {tourGroup?.variants.map((variant: any, index: number) => {
-            const listingPrices = variant.listingPricesInAllCurrencies?.[0];
+            console.log('variant.listingPricesInAllCurrencies ', variant.listingPricesInAllCurrencies);
+            const listingPrices = variant.listingPricesInAllCurrencies?.find((currency: { currencyCode: any; }) => currency?.currencyCode === currencyCode);
+            console.log("currencytest ", currencyCode, listingPrices);
             const guestPrice = listingPrices?.prices.find((p: any) => p.type === 'GUEST');
             const adultPrice = listingPrices?.prices.find((p: any) => p.type === 'ADULT');
             const selectedPrice = guestPrice || adultPrice;
@@ -249,6 +254,7 @@ function calculateDiscountPercentage(originalPrice: string | number, finalPrice:
               <CardVariant
                 key={variant?._id}
                 title={variant?.name}
+                currencyCode={currencyCode}
                 originalPrice={selectedPrice?.originalPrice}
                 discountedPrice={selectedPrice?.finalPrice}
                 discount={`Save up to ${calculateDiscountPercentage(selectedPrice?.originalPrice, selectedPrice?.finalPrice)}%`}

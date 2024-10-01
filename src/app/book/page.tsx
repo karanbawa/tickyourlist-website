@@ -1,13 +1,13 @@
 import React, { FC } from "react";
 import CheckOutPagePageMain from "./PageMain";
 
-async function fetchTourGroupData(tourId: string, variantId: string) {
+async function fetchTourGroupData(tourId: string, variantId: string, currency: string) {
   // const id = slug.match(/\d+$/)?.[0]; 
 
   if (!tourId) {
     throw new Error("Invalid slug2 format. Could not extract ID.");
   }
-  const response = await fetch(`${process.env.BASE_URL}/v1/customertravel/tour-group/book/by-tourid/${tourId}/variant/${variantId}?currency=INR&domainId=${process.env.WEBSITE_ID}`, {
+  const response = await fetch(`${process.env.BASE_URL}/v1/customertravel/tour-group/book/by-tourid/${tourId}/variant/${variantId}?currency=${currency}&domainId=${process.env.WEBSITE_ID}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -31,13 +31,14 @@ const page: FC<BookPageProps> = async ({ searchParams }) => {
   const date = searchParams.date || ""; // Fetch date from query params
   const tour = searchParams.tour || "";
   const variantId = searchParams.variantId || "";
+  const currency = 'AED';
 
   try {
     // Fetch the data using the tourId
-    const data = await fetchTourGroupData(tourId, variantId);
+    const data = await fetchTourGroupData(tourId, variantId, currency);
     const tourGroup = data.data.tourgroup;
 
-    return <CheckOutPagePageMain tourGroup={tourGroup} date={date} tour={tour} variantId={variantId} />;
+    return <CheckOutPagePageMain tourGroup={tourGroup} date={date} tour={tour} variantId={variantId} currencyCode={currency} />;
   } catch (error) {
     console.error("Error fetching tour group data:", error);
     return <div>Failed to load tour group data.</div>;

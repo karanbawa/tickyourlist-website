@@ -6,6 +6,7 @@ import ButtonPrimary from "@/shared/ButtonPrimary";
 export interface CardVariantProps {
   className?: string;
   title: string;
+  currencyCode?: string;
   originalPrice: number;
   discountedPrice: number;
   discount: string;
@@ -18,6 +19,7 @@ export interface CardVariantProps {
 const CardVariant: FC<CardVariantProps> = ({
   className = "",
   title,
+  currencyCode,
   originalPrice,
   discountedPrice,
   discount,
@@ -40,11 +42,11 @@ const CardVariant: FC<CardVariantProps> = ({
         </div>
         <div className="mb-4">
           <span className="line-through text-sm text-neutral-500 dark:text-neutral-400">
-            ₹{originalPrice?.toLocaleString("en-IN")}
+            {currencyCode} {originalPrice?.toLocaleString("en-IN")}
           </span>
           <div className="flex items-baseline">
             <span className="text-xl font-normal">
-              ₹{discountedPrice?.toLocaleString("en-IN")}
+              {currencyCode} {discountedPrice?.toLocaleString("en-IN")}
             </span>
             <Badge className="ml-3" color="green" name={discount} />
           </div>

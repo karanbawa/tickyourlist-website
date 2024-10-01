@@ -1,9 +1,8 @@
 import React, { FC } from "react";
 import CheckOutPagePageMain from "./PageMain";
 
-async function fetchTourGroupData(tourId: string) {
+async function fetchTourGroupData(tourId: string, currency: string) {
   // const id = slug.match(/\d+$/)?.[0]; 
-  const currency = 'INR';
 
   if (!tourId) {
     throw new Error("Invalid slug2 format. Could not extract ID.");
@@ -30,6 +29,7 @@ interface CheckoutPageProps {
 const page: FC<CheckoutPageProps> = async ({ searchParams }) => {
   const tourId = searchParams.tourId || ""; // Fetch tourId from query params
   const date = searchParams.date || ""; // Fetch date from query params
+  const currency = 'AED';
 
   // Handle missing parameters
   if (!tourId) {
@@ -38,10 +38,10 @@ const page: FC<CheckoutPageProps> = async ({ searchParams }) => {
 
   try {
     // Fetch the data using the tourId
-    const data = await fetchTourGroupData(tourId);
+    const data = await fetchTourGroupData(tourId, currency);
     const tourGroup = data.data.tourgroup;
 
-    return <CheckOutPagePageMain tourGroup={tourGroup} />;
+    return <CheckOutPagePageMain tourGroup={tourGroup} currencyCode={currency} />;
   } catch (error) {
     console.error("Error fetching tour group data:", error);
     return <div>Failed to load tour group data.</div>;

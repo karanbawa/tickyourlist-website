@@ -55,7 +55,7 @@ const CategoryTab: FC<CategoryTabProps> = ({ showDropdown, setShowDropdown, cate
   if (!showDropdown) return null;
 
   const handleClick = (urlSlug: string) => {
-    router.push(urlSlug as any);
+    router.push(`/collection/${urlSlug as any}`);
   };
 
   const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
