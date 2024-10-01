@@ -85,7 +85,7 @@ const StayCard2: FC<StayCard2Props> = ({
               <span className="text-xs">{data?.descriptors[0].name}</span>
             </div>
           )}
-            <StartRating reviewCount={data.reviewCount || 0} point={data.rating || 0} />
+            <StartRating reviewCount={data.reviewCount || 0} point={data?.rating || 0} />
           </div>
           <div className="flex items-center space-x-2">
             <h2 className={`font-semibold capitalize text-neutral-900 dark:text-white ${
