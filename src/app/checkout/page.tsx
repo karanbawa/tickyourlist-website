@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import CheckOutPagePageMain from "./PageMain";
+import { cookies } from 'next/headers';
 
 async function fetchTourGroupData(tourId: string, currency: string) {
   // const id = slug.match(/\d+$/)?.[0]; 
@@ -29,7 +30,10 @@ interface CheckoutPageProps {
 const page: FC<CheckoutPageProps> = async ({ searchParams }) => {
   const tourId = searchParams.tourId || ""; // Fetch tourId from query params
   const date = searchParams.date || ""; // Fetch date from query params
-  const currency = 'AED';
+  // const currency = 'AED';
+  const cookieStore = cookies();
+  const currency = cookieStore.get('currency')?.value || 'AED'; // Default to 'USD' if no cookie
+
 
   // Handle missing parameters
   if (!tourId) {

@@ -26,6 +26,7 @@ import parse, { domToReact } from "html-react-parser";
 import SidebarBooking from "@/components/tour-group-booking/SideBarBooking";
 import MobileFooterSticky from "@/app/(listing-detail)/(components)/MobileFooterSticky";
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 
 interface Params {
   slug: string;
@@ -33,7 +34,9 @@ interface Params {
 }
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
-  const data = await fetchTourGroupData(params?.slug, params?.slug2);
+  const cookieStore = cookies();
+  const currency = cookieStore.get('currency')?.value || 'AED'; // Default to 'USD' if no cookie
+  const data = await fetchTourGroupData(params?.slug, params?.slug2, currency);
   const tourGroup = data?.data?.tourgroup;
 
   return {
@@ -54,13 +57,13 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   };
 }
 
-async function fetchTourGroupData(slug:string, slug2: string) {
+async function fetchTourGroupData(slug:string, slug2: string, currency: string) {
 
   if (!slug) {
     throw new Error("Invalid slug format. Could not extract slug.");
   }
 
-  const response = await fetch(`${process.env.BASE_URL}/v1/customertravel/tour-groups/EN/${slug}/${slug2}?currency=AED&domainId=${process.env.WEBSITE_ID}`, {
+  const response = await fetch(`${process.env.BASE_URL}/v1/customertravel/tour-groups/EN/${slug}/${slug2}?currency=${currency}&domainId=${process.env.WEBSITE_ID}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -77,8 +80,11 @@ async function fetchTourGroupData(slug:string, slug2: string) {
 
 const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }> = async ({ params }) => {
   // let [isOpenModalAmenities, setIsOpenModalAmenities] = useState(false);
-  const data = await fetchTourGroupData(params.slug, params.slug2);
+  const cookieStore = cookies();
+  const currency = cookieStore.get('currency')?.value || 'AED'; // Default to 'USD' if no cookie
+  const data = await fetchTourGroupData(params.slug, params.slug2, currency);
   const tourGroup = data?.data?.tourgroup;
+  
 
   const currencyCode = tourGroup?.listingPrice?.currencyCode;
   const originalPrice = tourGroup?.listingPrice?.prices?.[0]?.originalPrice;

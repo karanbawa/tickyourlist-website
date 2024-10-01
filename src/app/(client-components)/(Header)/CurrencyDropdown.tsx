@@ -34,7 +34,7 @@ export const headerCurrency = [
     icon: CurrencyDollarIcon,
   },
   {
-    id: "SGF",
+    id: "SGD",
     name: "SGD",
     href: "##",
     icon: CurrencyDollarIcon,
@@ -62,13 +62,8 @@ export const headerCurrency = [
 const CurrencyDropdown: React.FC = () => {
   const [selectedCurrency, setSelectedCurrency] = useState("AED");
 
-  useEffect(() => {
-    // Load the selected currency from localStorage on component mount
-    const storedCurrency = localStorage.getItem('selectedCurrency');
-    if (storedCurrency) {
-      setSelectedCurrency(storedCurrency);
-    }
-  }, []);
+  console.log("asadadas adaD ");
+  
 
   const handleCurrencyChange = (currencyId: string) => {
     console.log('cureencyId ', currencyId);

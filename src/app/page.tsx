@@ -1,7 +1,8 @@
+import { cookies } from 'next/headers';
 import PageHome3 from './PageHome3';
 
-async function getTravelSections(cityCode: string) {
-  const res = await fetch(`${process.env.BASE_URL}/v1/tyltravelsection/get/public/travel-sections/?cityCode=${cityCode?.toUpperCase()}&domainId=${process.env.WEBSITE_ID}&currency=AED`, {
+async function getTravelSections(cityCode: string, currency: string) {
+  const res = await fetch(`${process.env.BASE_URL}/v1/tyltravelsection/get/public/travel-sections/?cityCode=${cityCode?.toUpperCase()}&domainId=${process.env.WEBSITE_ID}&currency=${currency}`, {
     headers: {
       'Content-Type': 'application/json',
       'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj',
@@ -23,7 +24,9 @@ export default async function PageHome3Server({ params }: {
   params: { slug: string };
 }) {
   const cityCode = params.slug as string || 'DUBAI';
-  const travelSections = await getTravelSections(cityCode);
+  const cookieStore = cookies();
+  const currency = cookieStore.get('currency')?.value || 'AED'; // Default to 'USD' if no cookie
+  const travelSections = await getTravelSections(cityCode, currency);
 
   return <PageHome3 travelSections={travelSections} />;
 }

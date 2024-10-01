@@ -406,7 +406,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
               <span className="text-xl font-medium text-gray-700">Total payable</span>
               <span className="text-xl font-medium text-gray-700">{currencyCode} {totalFinalPrice?.toLocaleString('en-IN')}</span>
             </div>
-            <span className="text-sm text-gray-500 block mb-4">Your card will be charged in INR</span>
+            <span className="text-sm text-gray-500 block mb-4">Your card will be charged in {currencyCode}</span>
             <ButtonPrimary
               className="w-full h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center justify-center gap-2"
               style={{ backgroundColor: "#7C25E9" }}

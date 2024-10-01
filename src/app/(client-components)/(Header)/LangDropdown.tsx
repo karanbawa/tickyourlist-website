@@ -62,26 +62,52 @@ const LangDropdown: FC<LangDropdownProps> = ({
 }) => {
   const [selectedCurrency, setSelectedCurrency] = useState("AED");
 
+
   useEffect(() => {
-    const initializeCurrency = async () => {
-      const storedCurrency = localStorage.getItem('selectedCurrency');
-      if (storedCurrency) {
-        setSelectedCurrency(storedCurrency);
-      } else {
-        setSelectedCurrency(currencyCode);
-        localStorage.setItem('selectedCurrency', currencyCode);
-      }
-    };
+    // Access cookies in the client using document.cookie
+    const allCookies = document.cookie.split("; ");
+    
+    // Log all cookies for debugging
+    console.log("All Cookies: ", allCookies);
+    
+    // Find the cookie that starts with 'currency='
+    const currencyCookie = allCookies.find((cookie) => cookie.startsWith("currency="));
+    
+    // Log the currency cookie if found
+    if (currencyCookie) {
+      console.log("Currency Cookie Found: ", currencyCookie);
+      
+      // Set the selected currency from the cookie value
+      const cookieValue = currencyCookie.split("=")[1];
+      console.log("Currency Value: ", cookieValue); // Add this log to see the value
+      setSelectedCurrency(cookieValue);
+    } else {
+      console.log("Currency cookie not found");
+    }
+  }, []);
 
-    initializeCurrency();
-  }, [currencyCode]);
-
+  // Handle currency change and set the cookie
   const handleCurrencyChange = (currencyId: string) => {
-    console.log('currencyId ', currencyId);
+    console.log('AEDtest ', currencyId);
     setSelectedCurrency(currencyId);
-    localStorage.setItem('selectedCurrency', currencyId);
-    console.log('Currency changed:', currencyId);
+    document.cookie = `currency=${currencyId}; path=/; max-age=3600`; // Set cookie with 1 hour expiry
+
+    console.log(`Currency changed to ${currencyId}`);
   };
+
+  // useEffect(() => {
+  //   const initializeCurrency = async () => {
+  //     const storedCurrency = localStorage.getItem('selectedCurrency');
+  //     if (storedCurrency) {
+  //       setSelectedCurrency(storedCurrency);
+  //     } else {
+  //       setSelectedCurrency(currencyCode);
+  //       localStorage.setItem('selectedCurrency', currencyCode);
+  //     }
+  //   };
+
+  //   initializeCurrency();
+  // }, [currencyCode]);
 
   const renderLang = (close: () => void) => {
     return (
