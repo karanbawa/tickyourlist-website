@@ -208,6 +208,8 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ travelSections }) => {
           >
             <div className="inline-flex space-x-4">
               {travelSections.data.map((section: any) => (
+                <>
+                {section?.category.id.name?.toLowerCase() !== 'cruises' &&
                 <button
                   key={section.category.id.name}
                   ref={el => buttonRefs.current[section.category.id.name] = el}
@@ -224,6 +226,8 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ travelSections }) => {
                   <span className="mb-1">{getCategoryIcon(section.category.id.name)}</span>
                   <span className="text-xs sm:text-sm text-center whitespace-nowrap">{section.category.id.name}</span>
                 </button>
+}
+                </>
               ))}
             </div>
           </div>
@@ -240,6 +244,10 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ travelSections }) => {
           const sectionId = section.category.id.name;
           const scrollState = scrollStates[sectionId] || { isAtStart: true, isAtEnd: false };
           const urlSLug = section.category.id.urlSlugs.EN;
+
+          if(sectionId.toLowerCase() === 'cruises') {
+            return;
+          }
 
           return (
             <div
