@@ -185,7 +185,6 @@ function calculateDiscountPercentage(originalPrice: string | number, finalPrice:
 }
 
  const renderPreference = () => {
-  console.log('variant.listingPricesInAllCurrencie ', tourGroup.variants);
   return (
     <div className="flex flex-col">
       <h3 className="text-2xl font-semibold mb-4">Select a preference</h3>
