@@ -690,19 +690,19 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
         <div className="ml-4 space-y-6 text-sm">
           <div className="flex flex-col space-y-1">
             <span className="text-neutral-500 dark:text-neutral-400">1. Product Page</span>
-            <span className="font-semibold">Choose a date & click "Book Now"</span>
+            <span className="font-semibold">{`Choose a date & click "Book Now"`}</span>
           </div>
           <div className="flex flex-col space-y-1">
             <span className="text-neutral-500 dark:text-neutral-400">2. Checkout</span>
-            <span className="font-semibold">Pick your preferences & hit "Next"</span>
+            <span className="font-semibold">{`Pick your preferences & hit "Next"`}</span>
           </div>
           <div className="flex flex-col space-y-1">
             <span className="text-neutral-500 dark:text-neutral-400">3. Booking Details</span>
-            <span className="font-semibold">Enter guest info & number of guests</span>
+            <span className="font-semibold">{`Enter guest info & number of guests`}</span>
           </div>
           <div className="flex flex-col space-y-1">
             <span className="text-neutral-500 dark:text-neutral-400">4. Confirm & Pay</span>
-            <span className="font-semibold">Review & complete payment</span>
+            <span className="font-semibold">{`Review & complete payment`}</span>
           </div>
         </div>
       </div>
