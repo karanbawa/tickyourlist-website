@@ -18,6 +18,7 @@ const MobileFooterSticky: FC<MobileFooterStickyProps> = ({ tourGroup }) => {
 
   const originalPrice = Math.ceil(tourGroup?.listingPrice?.prices?.[0]?.originalPrice);
   const finalPrice =  Math.ceil(tourGroup?.listingPrice?.prices?.[0]?.finalPrice);
+  const currencyCode = tourGroup?.listingPrice?.currencyCode;
   const savedAmount = originalPrice - finalPrice;
   const savedPercentage = Math.ceil((savedAmount / originalPrice) * 100);
 
@@ -31,11 +32,11 @@ const MobileFooterSticky: FC<MobileFooterStickyProps> = ({ tourGroup }) => {
         <div className="flex items-center justify-between">
           <div className="flex flex-col">
             <span className="text-xs line-through text-neutral-500 dark:text-neutral-400">
-              ₹ {formatPrice(originalPrice)}
+              {currencyCode} {formatPrice(originalPrice)}
             </span>
             <div className="flex items-baseline">
               <span className="text-lg font-semibold">
-                ₹ {formatPrice(finalPrice)}
+                {currencyCode} {formatPrice(finalPrice)}
               </span>
               <span className="ml-1 text-sm font-normal text-neutral-500 dark:text-neutral-400">
                 /ticket
