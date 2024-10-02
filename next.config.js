@@ -5,8 +5,7 @@
 const nextConfig = {
   reactStrictMode: false,
   experimental: {
-    typedRoutes: true,
-    middleware: true,
+    typedRoutes: true
   },
   images: {
     remotePatterns: [

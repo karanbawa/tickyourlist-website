@@ -2,8 +2,7 @@ import { cookies } from 'next/headers';
 import PageHome3 from './PageHome3';
 
 async function getTravelSections(cityCode: string, currency: string) {
-  console.log("Currency detected:1", currency);
-  const res = await fetch(`${process.env.BASE_URL}/v1/tyltravelsection/get/public/travel-sections/?cityCode=${cityCode?.toUpperCase()}&domainId=${process.env.WEBSITE_ID}&currency=${currency}`, {
+  const res = await fetch(`http://localhost:3005/v1/tyltravelsection/get/public/travel-sections/?cityCode=${cityCode?.toUpperCase()}&domainId=${process.env.WEBSITE_ID}&currency=${currency}`, {
     headers: {
       'Content-Type': 'application/json',
       'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj',
