@@ -27,6 +27,7 @@ import SidebarBooking from "@/components/tour-group-booking/SideBarBooking";
 import MobileFooterSticky from "@/app/(listing-detail)/(components)/MobileFooterSticky";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
+import { History, Info, Shuffle, Smartphone, User, Utensils, Zap } from "lucide-react";
 
 interface Params {
   slug: string;
@@ -57,13 +58,23 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   };
 }
 
-const whyTickYourListPoints = [
-  "Trusted by thousands of explorers every month",
-  "Lowest prices and last-minute availability",
-  "10,000+ curated experiences to explore",
-  "Verified reviews and stunning photographs",
-  "24/7 expert support for all your travel needs"
-];
+
+const getIconForDescriptor = (code: string) => {
+  switch (code) {
+    case 'MOBILE_TICKET':
+      return { icon: Smartphone, color: 'text-blue-500', bgColor: 'bg-blue-100' };
+    case 'MEALS_INCLUDED':
+      return { icon: Utensils, color: 'text-green-500', bgColor: 'bg-green-100' };
+    case 'INSTANT_CONFIRMATION':
+      return { icon: Zap, color: 'text-yellow-500', bgColor: 'bg-yellow-100' };
+    case 'FREE_CANCELLATION':
+      return { icon: History, color: 'text-purple-500', bgColor: 'bg-purple-100' };
+    // Add more cases as needed
+    default:
+      return null;
+  }
+};
+
 
 async function fetchTourGroupData(slug:string, slug2: string, currency: string) {
 
@@ -132,7 +143,7 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
     <div className="listingSection__wrap !space-y-6">
       <div className="flex justify-between items-center">
         <div className="flex gap-2 flex-wrap">
-        {tourGroup?.displayTags?.slice(0,2).map((tag: any,index: any) => <Badge name={tag} key={tag} /> )}
+        {tourGroup?.displayTags?.slice(0,2).map((tag: any,index: any) => <Badge name={tag} key={tag} className='bg-purple-100 text-purple-600' /> )}
         {/* <Badge name={tourGroup?.displayTags?.[1]} /> */}
         </div>
         <LikeSaveBtns data={tourGroup} />
@@ -148,32 +159,29 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
           <span className="ml-1">{tourGroup?.city?.name}, {tourGroup?.city?.country?.displayName ? abbreviateCountryName(tourGroup?.city?.country?.displayName) : ''}</span>
         </span>
       </div>
-      <div className="flex items-center">
-        <Avatar hasChecked sizeClass="h-10 w-10" radius="rounded-full" />
-        <span className="ml-2.5 text-neutral-500 dark:text-neutral-400">
-          Hosted by{" "}
-          <span className="text-neutral-900 dark:text-neutral-200 font-medium">
-            Kevin Francis
-          </span>
-        </span>
-      </div>
-      <div className="flex items-center gap-2 flex-wrap">
+      <div className="flex items-center gap-6 flex-wrap">
         {/* <div className="flex gap-2"> */}
-        {tourGroup?.descriptors?.map((tag: any,index: any) => (
-          <div className="flex items-center space-x-3" key={tag}>
-          <i className="las la-user text-2xl"></i>
-          {/* <span> */}
-            <span className="sm:inline-block text-neutral-900 dark:text-neutral-200 font-medium">{tag?.name}</span>
-            {/* <Badge name={tag?.name} key={tag} />  */}
-          {/* </span> */}
-        </div>
-          ))}
+        {tourGroup.descriptors?.map((descriptor: { code: string; name: string }) => {
+          const iconData = getIconForDescriptor(descriptor.code);
+          if (iconData) {
+            const { icon: Icon, color, bgColor } = iconData;
+            return (
+              <div key={descriptor.code} className="flex items-center space-x-2 text-gray-700">
+                <div className={`p-2 rounded-full ${bgColor}`}>
+                  <Icon size={20} className={color} />
+                </div>
+                <span className="text-sm font-medium">{descriptor.name}</span>
+              </div>
+            );
+          }
+          return null;
+        })}
         {/* <Badge name={tourGroup?.descriptors?.[1]} />
         <Badge name={tourGroup?.displayTags?.[0]} /> */}
         {/* </div> */}
       </div>
-      <div className="w-full border-b border-neutral-100 dark:border-neutral-700" />
-      <div className="flex items-center justify-between xl:justify-start space-x-8 xl:space-x-12 text-sm text-neutral-700 dark:text-neutral-300">
+      {/* <div className="w-full border-b border-neutral-100 dark:border-neutral-700" /> */}
+      {/* <div className="flex items-center justify-between xl:justify-start space-x-8 xl:space-x-12 text-sm text-neutral-700 dark:text-neutral-300">
         <div className="flex items-center space-x-3">
           <i className="las la-user text-2xl"></i>
           <span>
@@ -198,7 +206,7 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
             2 <span className="hidden sm:inline-block">bedrooms</span>
           </span>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 
