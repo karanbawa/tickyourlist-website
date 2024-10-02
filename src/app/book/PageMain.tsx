@@ -263,8 +263,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     setLoadingConfirmPay(true);
     setConfirmPayError('');
 
-    console.log('currencyCode ', currencyCode);
-
     const data = {
       domainId: "66cacba1eeca9633c29172b9",
       nonCustomerFirstName: firstName,
@@ -288,10 +286,8 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       active: true,
     };
 
-    console.log('datatest ', data);
-
     try {
-      const response = await fetch(`${process.env.BASE_URL}/v1/tyltourcustomerbooking/add/travel-booking`, {
+      const response = await fetch(`https://api.univolenitsolutions.com/v1/tyltourcustomerbooking/add/travel-booking`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
