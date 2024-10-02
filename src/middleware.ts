@@ -24,7 +24,7 @@ function mapCountryToCurrency(countryCode: string): string {
 }
 
 export async function middleware(request: NextRequest) {
-  const country = request.geo?.country || 'US'; // Fallback to 'US' if geo info isn't available
+  const country = request.geo?.country || 'AE'; // Fallback to 'US' if geo info isn't available
   const existingCurrencyCookie = request.cookies.get('currency');
 
   if (!existingCurrencyCookie) {
