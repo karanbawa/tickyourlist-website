@@ -27,6 +27,7 @@ import SidebarBooking from "@/components/tour-group-booking/SideBarBooking";
 import MobileFooterSticky from "@/app/(listing-detail)/(components)/MobileFooterSticky";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
+import { Check } from "lucide-react";
 
 interface Params {
   slug: string;
@@ -56,6 +57,14 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     },
   };
 }
+
+const whyTickYourListPoints = [
+  "Trusted by thousands of explorers every month",
+  "Lowest prices and last-minute availability",
+  "10,000+ curated experiences to explore",
+  "Verified reviews and stunning photographs",
+  "24/7 expert support for all your travel needs"
+];
 
 async function fetchTourGroupData(slug:string, slug2: string, currency: string) {
 
@@ -667,32 +676,15 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
   const renderSidebarDetail = () => (
     <div className="listingSection__wrap lg:shadow-xl">
       <span className="text-2xl font-semibold block">
-        Pick up and drop off
+        Why TickYourList?
       </span>
-      <div className="mt-8 flex">
-        <div className="flex-shrink-0 flex flex-col items-center py-2">
-          <span className="block w-6 h-6 rounded-full border border-neutral-400"></span>
-          <span className="block flex-grow border-l border-neutral-400 border-dashed my-1"></span>
-          <span className="block w-6 h-6 rounded-full border border-neutral-400"></span>
-        </div>
-        <div className="ml-4 space-y-14 text-sm">
-          <div className="flex flex-col space-y-2">
-            <span className="text-neutral-500 dark:text-neutral-400">
-              Monday, August 12 · 10:00
-            </span>
-            <span className="font-semibold">
-              Saint Petersburg City Center
-            </span>
+      <div className="mt-8 space-y-3">
+        {whyTickYourListPoints.map((point, index) => (
+          <div key={index} className="flex items-center">
+            <Check className="w-6 h-6 text-green-500 flex-shrink-0" />
+            <span className="ml-4 text-sm text-neutral-700 dark:text-neutral-400">{point}</span>
           </div>
-          <div className="flex flex-col space-y-2">
-            <span className="text-neutral-500 dark:text-neutral-400">
-              Monday, August 16 · 10:00
-            </span>
-            <span className="font-semibold">
-              Saint Petersburg City Center
-            </span>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
