@@ -188,6 +188,7 @@ function calculateDiscountPercentage(originalPrice: string | number, finalPrice:
   return (
     <div className="flex flex-col">
       <h3 className="text-2xl font-semibold mb-4">Select a preference</h3>
+      {/* <span className="text-xs text-gray-500">Select a Preference to proceed</span> */}
       <div className="flex lg:justify-between gap-4 overflow-x-auto xl:overflow-x-visible">
         <div className="flex flex-grow-1 gap-4">
           {tourGroup?.variants.map((variant: any, index: number) => {

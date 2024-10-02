@@ -648,7 +648,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
               >
                 Confirm & pay
               </ButtonPrimary>
-              <div className="w-3/5 text-xs mt-4 pl-1"><span className="font-semibold">Please note:</span> The Razorpay payment gateway will open to securely process your transaction.</div>
+              <div className="w-4/5 text-xs mt-4 pl-1"><span className="font-semibold">Please note:</span> The Razorpay payment gateway will open to securely process your transaction.</div>
             </div>
           </div>
         </div>
