@@ -33,7 +33,6 @@ export async function middleware(request: NextRequest) {
     
     const response = NextResponse.next();
     response.cookies.set('currency', currency, { maxAge: 3600, path: '/' }); // Set the cookie for 1 hour
-    
     // Proceed without an immediate redirect to avoid the loop
     return response;
   }
