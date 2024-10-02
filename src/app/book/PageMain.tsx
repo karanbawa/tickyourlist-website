@@ -8,6 +8,7 @@ import ButtonPrimary from "@/shared/ButtonPrimary";
 import NcModal from "@/shared/NcModal";
 import { GuestsObject } from "../(client-components)/type";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export interface CheckOutPagePageMainProps {
   className?: string;
@@ -48,6 +49,12 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   const [emailError, setEmailError] = useState("");
   const [loadingConfirmPay, setLoadingConfirmPay] = useState(false);
   const [confirmPayError, setConfirmPayError] = useState('');
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+  const backgroundImageStyle = isSafari
+  ? `-webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${tourGroup?.imageUploads?.[0]?.url}')`
+  : `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${tourGroup?.imageUploads?.[0]?.url}')`;
+
 
   const router = useRouter();
 
@@ -284,7 +291,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     console.log('datatest ', data);
 
     try {
-      const response = await fetch("https://api.univolenitsolutions.com/v1/tyltourcustomerbooking/add/travel-booking", {
+      const response = await fetch(`${process.env.BASE_URL}/v1/tyltourcustomerbooking/add/travel-booking`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -354,10 +361,24 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         <div className="relative bg-white border border-gray-200 rounded-lg">
           {/* Banner Section */}
           <div className="relative mb-5">
-            <div className="relative w-full h-40 bg-center bg-cover bg-no-repeat rounded-t-lg" style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${tourGroup?.imageUploads?.[0]?.url}')` }}>
-              <h2 className="text-white text-xl font-medium tracking-wide p-5">{tourGroup?.name}</h2>
-            </div>
-            <div className="absolute bottom-[-12px] right-0 flex items-center bg-green-500 text-white text-sm font-medium px-2 py-1 rounded-md">
+          <div className="relative w-full h-40 rounded-t-lg">
+          <Image
+              src={tourGroup?.imageUploads?.[0]?.url || 'https://via.placeholder.com/400'}
+              alt="Tour Group Image"
+              layout="fill" // Ensures the image takes up the full container size
+              objectFit="cover" // Makes sure the image covers the entire container
+              className="rounded-t-lg"
+            />
+            {/* Overlay with a lower z-index */}
+            <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 z-10"></div>
+            
+            {/* Text with a higher z-index to appear on top of the overlay */}
+            <h2 className="absolute top-0 left-0 text-white text-xl font-medium tracking-wide p-5 z-20">
+              {tourGroup?.name}
+            </h2>
+          </div>
+
+            <div className="absolute bottom-[-12px] right-0 flex items-center bg-green-500 text-white text-sm font-medium px-2 py-1 rounded-md z-30">
               {currencyCode} {totalDiscount.toLocaleString('en-IN')} Saved
             </div>
           </div>
@@ -380,7 +401,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   
             <div className="flex justify-between items-center mb-5">
               <div className="flex items-center gap-1">
-                <span className="text-gray-700">Valid until: 14 Nov, 2024</span>
+                <span className="text-gray-700">Valid until: 14 Feb, 2025</span>
               </div>
             </div>
           </div>
