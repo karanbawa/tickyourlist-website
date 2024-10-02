@@ -399,11 +399,11 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
               <button className="text-sm font-medium text-blue-600 uppercase" onClick={handleEditDetails}>Edit</button>
             </div>
   
-            <div className="flex justify-between items-center mb-5">
+            {/* <div className="flex justify-between items-center mb-5">
               <div className="flex items-center gap-1">
-                <span className="text-gray-700">Valid until: 14 Feb, 2025</span>
+                <span className="text-gray-700">Valid until: {tourGroup?.ticketValidity?.ticketValidityUntilDate}</span>
               </div>
-            </div>
+            </div> */}
           </div>
   
           {/* Price Details */}
@@ -489,11 +489,11 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         <div className="flex w-1/4 ml-3 justify-end relative">
           <div>
             <div>
-              <p>{currencyCode} {totalPrice}</p>
+              <p>{currencyCode} {totalPrice?.toLocaleString('en-IN')}</p>
             </div>
             <div>
               <p className="text-xs line-through font-light">
-                {currencyCode} {totalOriginalPrice}
+                {currencyCode} {totalOriginalPrice?.toLocaleString('en-IN')}
               </p>
             </div>
           </div>
