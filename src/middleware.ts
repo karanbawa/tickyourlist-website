@@ -4,36 +4,53 @@ import type { NextRequest } from 'next/server';
 // A function to map country codes to currencies
 function mapCountryToCurrency(countryCode: string): string {
   switch (countryCode) {
-    case 'US':
-      return 'USD';
-    case 'GB':
-      return 'GBP';
-    case 'JP':
-      return 'JPY';
-    case 'EU':
-      return 'EUR';
-    case 'IN':
-      return 'INR';
-    case 'AE':
-      return 'AED';
-    case 'SG':
-      return 'SGD';
-    default:
-      return 'AED'; // Default currency if the country is unknown
+    case 'US': return 'USD';
+    case 'GB': return 'GBP';
+    case 'JP': return 'JPY';
+    case 'EU': return 'EUR';
+    case 'IN': return 'INR';
+    case 'AE': return 'AED';
+    case 'SG': return 'SGD';
+    default: return 'AED'; // Default currency if the country is unknown
   }
 }
 
+// Fetch geolocation based on IP (server-side)
+const getGeolocation = async (ip: string) => {
+  try {
+    const res = await fetch(`https://ipapi.co/json/`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch geolocation');
+    }
+
+    const data = await res.json();
+    return data.country_code;
+  } catch (error) {
+    console.error('Error fetching geolocation:', error);
+    return 'AE'; // Default to AE (United Arab Emirates) if there's an error
+  }
+};
+
 export async function middleware(request: NextRequest) {
-  const country = request.geo?.country || 'AE'; // Fallback to 'US' if geo info isn't available
   const existingCurrencyCookie = request.cookies.get('currency');
 
+  // If no currency cookie exists, we need to set one
   if (!existingCurrencyCookie) {
-    // No existing currency cookie, set one based on geo-location
-    const currency = mapCountryToCurrency(country);
-    
-    const response = NextResponse.next();
-    response.cookies.set('currency', currency, { maxAge: 3600, path: '/' }); // Set the cookie for 1 hour
-    // Proceed without an immediate redirect to avoid the loop
+    const countryCode = await getGeolocation(request.ip || '');
+    const currency = mapCountryToCurrency(countryCode);
+
+    console.log("Middleware detected countryCode: ", countryCode);
+    console.log("Middleware detected currency: ", currency);
+
+    // Set the cookie
+    const response = NextResponse.redirect(request.url);
+    response.cookies.set('currency', currency, { maxAge: 3600, path: '/' }); // Set for 1 hour
     return response;
   }
 
@@ -43,5 +60,5 @@ export async function middleware(request: NextRequest) {
 
 // Enable middleware to run on all routes
 export const config = {
-  matcher: '/:path*', // Apply to all routes
+  matcher: '/:path*',
 };

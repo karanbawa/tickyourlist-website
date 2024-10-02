@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import PageHome3 from './PageHome3';
 
+// Function to fetch travel sections based on city code and currency
 async function getTravelSections(cityCode: string, currency: string) {
   const res = await fetch(`${process.env.BASE_URL}/v1/tyltravelsection/get/public/travel-sections/?cityCode=${cityCode?.toUpperCase()}&domainId=${process.env.WEBSITE_ID}&currency=${currency}`, {
     headers: {
@@ -20,18 +21,19 @@ async function getTravelSections(cityCode: string, currency: string) {
 }
 
 export default async function PageHome3Server({ params }: { params: { slug: string } }) {
-  // const slugParts = params.slug.split('-');
-  // const cityCode = slugParts[slugParts.length - 1]?.toUpperCase() || 'DUBAI'; // Default to 'DUBAI' if no city is found
-  const cityCode = params.slug as string || 'DUBAI';
+  const cityCode = params.slug || 'DUBAI'; // Default to 'DUBAI' if no city is found
+
+  // Access cookies from the request
   const cookieStore = cookies();
-  const currency = cookieStore.get('currency')?.value || 'AED'; // Default to 'AED' if no cookie
+  const currency = cookieStore.get('currency')?.value || 'AED'; // Default to 'AED' if no currency cookie exists
 
-  console.log("Currency detected: ", currency , cookieStore.get('currency')?.value);
+  console.log("Currency detected in page: ", currency);
 
-  // Fetch travel sections based on the city code and currency
+  // Fetch travel sections based on city code and currency
   const travelSections = await getTravelSections(cityCode, currency);
 
-  console.log("travelSections datat ", travelSections?.data?.[0]?.tourGroups?.[0]?.listingPrice?.prices?.[0]?.originalPrice)
+  console.log("Travel sections data: ", travelSections?.data?.[0]?.tourGroups?.[0]?.listingPrice?.prices?.[0]?.originalPrice);
 
+  // Pass the fetched travel sections to the page component
   return <PageHome3 travelSections={travelSections} />;
 }
