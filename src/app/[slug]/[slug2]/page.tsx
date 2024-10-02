@@ -674,7 +674,7 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
 
   const renderSidebarDetail = () => (
     <div className="listingSection__wrap lg:shadow-xl">
-      <span className="text-xl font-semibold block">
+      <span className="text-xl font-semibold block underline">
         How to Book on TickYourList
       </span>
       <div className="mt-8 flex">
