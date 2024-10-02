@@ -16,10 +16,10 @@ const MobileFooterSticky: FC<MobileFooterStickyProps> = ({ tourGroup }) => {
     return price?.toLocaleString('en-IN');
   };
 
-  const originalPrice = tourGroup?.listingPrice?.prices?.[0]?.originalPrice;
-  const finalPrice = tourGroup?.listingPrice?.prices?.[0]?.finalPrice;
+  const originalPrice = Math.ceil(tourGroup?.listingPrice?.prices?.[0]?.originalPrice);
+  const finalPrice =  Math.ceil(tourGroup?.listingPrice?.prices?.[0]?.finalPrice);
   const savedAmount = originalPrice - finalPrice;
-  const savedPercentage = Math.round((savedAmount / originalPrice) * 100);
+  const savedPercentage = Math.ceil((savedAmount / originalPrice) * 100);
 
   return (
     <div className="block lg:hidden fixed bottom-0 inset-x-0 bg-white dark:bg-neutral-800 z-40">

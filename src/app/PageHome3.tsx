@@ -9,7 +9,12 @@ interface PageHome3Props {
   travelSections: any;
 }
 
+
 function PageHome3({ travelSections }: PageHome3Props) {
+  
+  console.log("travelSections ", travelSections);
+
+
   return (
     <main className="nc-PageHome3 relative overflow-hidden">
       {/* SECTION HERO */}

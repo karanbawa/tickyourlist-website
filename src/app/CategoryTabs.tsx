@@ -25,6 +25,7 @@ interface ScrollState {
 }
 
 const CategoryTabs: React.FC<CategoryTabsProps> = ({ travelSections }) => {
+  console.log('travelSectioncategorytabdata ', travelSections?.data?.[0]?.tourGroups?.[0]?.listingPrice);
   const [activeTab, setActiveTab] = useState<string>('');
   const [isSticky, setIsSticky] = useState<boolean>(false);
   const [headerHeight, setHeaderHeight] = useState<number>(0);

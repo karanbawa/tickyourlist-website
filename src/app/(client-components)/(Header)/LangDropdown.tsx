@@ -49,6 +49,7 @@ interface LangDropdownProps {
   panelClassName?: string;
   className?: string;
   currencyCode?: string;
+  cityCode?: string;
 }
 
 function classNames(...classes: any) {
@@ -85,15 +86,42 @@ const LangDropdown: FC<LangDropdownProps> = ({
       console.log("Currency cookie not found");
     }
   }, []);
-
+  
   // Handle currency change and set the cookie
   const handleCurrencyChange = (currencyId: string) => {
     console.log('AEDtest ', currencyId);
     setSelectedCurrency(currencyId);
     document.cookie = `currency=${currencyId}; path=/; max-age=3600`; // Set cookie with 1 hour expiry
+    window.location.reload();
 
     console.log(`Currency changed to ${currencyId}`);
   };
+
+   // Effect to watch for changes in the currency cookie and update state accordingly
+   useEffect(() => {
+    const checkCurrencyCookie = () => {
+      const allCookies = document.cookie.split("; ");
+      const currencyCookie = allCookies.find((cookie) =>
+        cookie.startsWith("currency=")
+      );
+      if (currencyCookie) {
+        const cookieValue = currencyCookie.split("=")[1];
+        if (cookieValue !== selectedCurrency) {
+          setSelectedCurrency(cookieValue); // Update the state if cookie changes
+          console.log("Currency updated from cookie:", cookieValue);
+        }
+      }
+    };
+
+    // Check for cookie changes initially and every time the component renders
+    checkCurrencyCookie();
+
+    // Optional: Set up an interval to keep checking for cookie changes
+    const intervalId = setInterval(checkCurrencyCookie, 1000); // Check every second
+
+    // Clean up the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, [selectedCurrency]); // Rerun the effect whenever selectedCurrency changes
 
   // useEffect(() => {
   //   const initializeCurrency = async () => {

@@ -100,12 +100,12 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     if (!hasSpecificTypes) {
       // If only guest type is available
       const guestPrice = pricing?.prices?.find((p: { type: string; }) => p.type.toLowerCase() === 'guest');
-      return (guests.guestAdults ?? 1) * (guestPrice?.finalPrice ?? 0);
+      return (guests.guestAdults ?? 1) * (Math.ceil(guestPrice?.finalPrice) ?? 0);
     } else {
       // If specific types are available
       return pricing.prices.reduce((total: number, price: any) => {
         const guestCount = guests[`guest${price?.type?.charAt(0).toUpperCase() + price?.type?.slice(1)}s` as keyof GuestsObject] ?? 0;
-        return total + (guestCount * price.finalPrice);
+        return total + (guestCount * Math.ceil(price.finalPrice));
       }, 0);
     }
   };
@@ -120,11 +120,11 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
     if (!hasSpecificTypes) {
       const guestPrice = pricing?.prices?.find((p: { type: string; }) => p.type.toLowerCase() === 'guest');
-      return (guests?.guestAdults ?? 1) * ((guestPrice?.originalPrice ?? 0) - (guestPrice?.finalPrice ?? 0));
+      return (guests?.guestAdults ?? 1) * ((Math.ceil(guestPrice?.originalPrice) ?? 0) - (Math.ceil(guestPrice?.finalPrice) ?? 0));
     } else {
       return pricing?.prices?.reduce((total: number, price: any) => {
         const guestCount = guests[`guest${price.type.charAt(0).toUpperCase() + price.type.slice(1)}s` as keyof GuestsObject] ?? 0;
-        return total + (guestCount * (price.originalPrice - price.finalPrice));
+        return total + (guestCount * (Math.ceil(price.originalPrice) - Math.ceil(price.finalPrice)));
       }, 0);
     }
   };
@@ -317,8 +317,8 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       pricing?.prices.forEach((price: any) => {
         const guestType = price.type.toLowerCase();
         const guestCount = guests[`guest${guestType.charAt(0).toUpperCase() + guestType.slice(1)}s` as keyof GuestsObject] || 0;
-        const originalPriceForType = guestCount * price.originalPrice;
-        const finalPriceForType = guestCount * price.finalPrice;
+        const originalPriceForType = guestCount * Math.ceil(price.originalPrice);
+        const finalPriceForType = guestCount * Math.ceil(price.finalPrice);
         
         totalOriginalPrice += originalPriceForType;
         totalFinalPrice += finalPriceForType;
@@ -334,8 +334,8 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     } else {
       const guestPrice = pricing?.prices?.find((p: { type: string; }) => p.type.toLowerCase() === 'guest');
       const guestCount = guests.guestAdults || 0;
-      totalOriginalPrice = guestCount * (guestPrice?.originalPrice || 0);
-      totalFinalPrice = guestCount * (guestPrice?.finalPrice || 0);
+      totalOriginalPrice = guestCount * (Math.ceil(guestPrice?.originalPrice) || 0);
+      totalFinalPrice = guestCount * (Math.ceil(guestPrice?.finalPrice) || 0);
       guestDetails.push({
         type: 'Guest',
         count: guestCount,
@@ -425,8 +425,8 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   };
 
   const PriceRow: React.FC<PriceRowProps> = ({ label, subLabel, price, guests, type }) => {
-    const totalPrice = guests * (price?.finalPrice || 0);
-    const totalOriginalPrice = guests * (price?.originalPrice || 0);
+    const totalPrice = guests * (Math.ceil(price?.finalPrice) || 0);
+    const totalOriginalPrice = guests * (Math.ceil(price?.originalPrice) || 0);
   
     return (
       <div className="flex flex-row justify-between mb-3 w-full">

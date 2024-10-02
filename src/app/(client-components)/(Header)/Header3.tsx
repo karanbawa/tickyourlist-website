@@ -176,7 +176,7 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
             {/* NAV */}
             <div className="hidden md:flex relative z-10 flex-1 justify-end text-neutral-700 dark:text-neutral-100">
               <div className="hidden lg:flex space-x-1">
-                <LangDropdown currencyCode={currencyCode} />
+                <LangDropdown currencyCode={currencyCode} cityCode={initialCityCode} />
                 <div className="flex space-x-1">
                   {/* <Link
                     href="/add-listing/1"
