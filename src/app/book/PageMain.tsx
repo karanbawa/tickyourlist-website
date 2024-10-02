@@ -171,7 +171,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       const options = {
         key: process.env.RAZORPAY_KEY_ID,
         amount,
-        currency: 'INR',
+        currency: currencyCode,
         name: "TickYourList",
         description: "Test Transaction",
         image: "https://tickyourlist-images.s3.ap-south-1.amazonaws.com/tyllogo.png",
@@ -256,6 +256,8 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     setLoadingConfirmPay(true);
     setConfirmPayError('');
 
+    console.log('currencyCode ', currencyCode);
+
     const data = {
       domainId: "66cacba1eeca9633c29172b9",
       nonCustomerFirstName: firstName,
@@ -278,6 +280,8 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       tourGroupId: tourGroup?._id,
       active: true,
     };
+
+    console.log('datatest ', data);
 
     try {
       const response = await fetch("https://api.univolenitsolutions.com/v1/tyltourcustomerbooking/add/travel-booking", {
