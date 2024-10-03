@@ -11,7 +11,7 @@ import "swiper/css/pagination";
 
 export interface SectionHero3Props {
   className?: string;
-  travelSectionBanners: any;
+  travelSectionBanners?: any;
 }
 
 const SectionHero3: FC<SectionHero3Props> = ({ className = "", travelSectionBanners }) => {

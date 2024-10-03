@@ -7,6 +7,7 @@ import converSelectedDateToString from "@/utils/converSelectedDateToString";
 import ModalReserveMobile from "./ModalReserveMobile";
 import { useData } from "@/context/DataContext";
 import { FaWhatsapp } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 interface MobileFooterStickyProps {
   tourGroup?: any
@@ -22,6 +23,11 @@ const MobileFooterSticky: FC<MobileFooterStickyProps> = ({ tourGroup }) => {
   const currencyCode = tourGroup?.listingPrice?.currencyCode;
   const savedAmount = originalPrice - finalPrice;
   const savedPercentage = Math.ceil((savedAmount / originalPrice) * 100);
+  const router = useRouter();
+
+  const handleBookNow = () => {
+    router.push('/book');
+  }
 
   return (
     <div className="block lg:hidden fixed bottom-0 inset-x-0 bg-white dark:bg-neutral-800 z-40">
@@ -52,22 +58,23 @@ const MobileFooterSticky: FC<MobileFooterStickyProps> = ({ tourGroup }) => {
               height: "30px",
               display: "flex",
               justifyContent: "center",
-              alignItems: "center"
+              alignItems: "center",
+              cursor: 'pointer'
             }}>
               <FaWhatsapp size={20} color="#fff" />
             </div>
 
-          <ModalReserveMobile
-            renderChildren={({ openModal }) => (
+          {/* <ModalReserveMobile
+            renderChildren={({ openModal }) => ( */}
               <ButtonPrimary
                 sizeClass="px-5 sm:px-7 py-3 !rounded-2xl"
-                onClick={openModal}
+                onClick={handleBookNow}
                 style={{ backgroundColor: '#7C25E9' }}
               >
                 Book Now
               </ButtonPrimary>
-            )}
-          />
+            {/* )}
+          /> */}
           </div>
         </div>
       </div>
