@@ -9,7 +9,8 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   React.useEffect(() => {
-    if (!user) {
+    if (!user && !localStorage.getItem('user')) {
+      console.log("usertest ", user);
       router.push('/login');
     }
   }, [user, router]);

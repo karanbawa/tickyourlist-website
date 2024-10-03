@@ -12,7 +12,7 @@ export const Nav = () => {
     "/account",
     "/account-savelists",
     "/account-password",
-    "/account-billing",
+    // "/account-billing",
   ];
 
   return (

@@ -16,32 +16,40 @@ import Avatar from "@/shared/Avatar";
 import ButtonSecondary from "@/shared/ButtonSecondary";
 import SocialsList from "@/shared/SocialsList";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { useAuth } from "@/context/AuthContext";
 
 export interface AuthorPageProps {}
 
 const AuthorPage: FC<AuthorPageProps> = ({}) => {
-  let [categories] = useState(["Stays", "Experiences", "Car for rent"]);
+  let [categories] = useState(["Experiences"]);
+  const { user } = useAuth();
+
+  function capitalizeFirstLetter(name: string) {
+    if (!name) return '';
+    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+  }
 
   const renderSidebar = () => {
     return (
       <div className=" w-full flex flex-col items-center text-center sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-6 sm:space-y-7 px-0 sm:p-6 xl:p-8">
-        <Avatar
+         <Avatar sizeClass="w-20 h-20" hasCheckedClass="w-6 h-6 -top-0.5 right-2" imgUrl={user?.imageUrl ?? ''} userName={user?.data?.data?.data?.customer?.firstName} />
+        {/* <Avatar
           hasChecked
           hasCheckedClass="w-6 h-6 -top-0.5 right-2"
           sizeClass="w-28 h-28"
-        />
+        /> */}
 
         {/* ---- */}
         <div className="space-y-3 text-center flex flex-col items-center">
-          <h2 className="text-3xl font-semibold">Kevin Francis</h2>
-          <StartRating className="!text-base" />
+          <h2 className="text-3xl font-semibold">{capitalizeFirstLetter(user?.data?.data?.data?.customer?.firstName)} {capitalizeFirstLetter(user?.data?.data?.data?.customer?.lastName)}</h2>
+          {/* <StartRating className="!text-base" /> */}
         </div>
 
         {/* ---- */}
-        <p className="text-neutral-500 dark:text-neutral-400">
+        {/* <p className="text-neutral-500 dark:text-neutral-400">
           Providing lake views, The Symphony 9 Tam Coc in Ninh Binh provides
           accommodation, an outdoor.
-        </p>
+        </p> */}
 
         {/* ---- */}
         <SocialsList
@@ -70,10 +78,10 @@ const AuthorPage: FC<AuthorPageProps> = ({}) => {
               />
             </svg>
             <span className="text-neutral-6000 dark:text-neutral-300">
-              Ha Noi, Viet Nam
+              {user?.data?.data?.data?.customer?.email}
             </span>
           </div>
-          <div className="flex items-center space-x-4">
+          {/* <div className="flex items-center space-x-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 text-neutral-400"
@@ -111,7 +119,7 @@ const AuthorPage: FC<AuthorPageProps> = ({}) => {
             <span className="text-neutral-6000 dark:text-neutral-300">
               Joined in March 2016
             </span>
-          </div>
+          </div> */}
         </div>
       </div>
     );
@@ -121,11 +129,11 @@ const AuthorPage: FC<AuthorPageProps> = ({}) => {
     return (
       <div className="listingSection__wrap">
         <div>
-          <h2 className="text-2xl font-semibold">{`Kevin Francis's listings`}</h2>
-          <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
+          <h2 className="text-2xl font-semibold">{`${capitalizeFirstLetter(user?.data?.data?.data?.customer?.firstName)} ${capitalizeFirstLetter(user?.data?.data?.data?.customer?.lastName)}'s listings`}</h2>
+          {/* <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
             {`Kevin Francis's listings is very rich, 5 star reviews help him to be
             more branded.`}
-          </span>
+          </span> */}
         </div>
         <div className="w-14 border-b border-neutral-200 dark:border-neutral-700"></div>
 
@@ -151,31 +159,11 @@ const AuthorPage: FC<AuthorPageProps> = ({}) => {
             <Tab.Panels>
               <Tab.Panel className="">
                 <div className="mt-8 grid grid-cols-1 gap-6 md:gap-7 sm:grid-cols-2">
-                  {DEMO_STAY_LISTINGS.filter((_, i) => i < 4).map((stay) => (
-                    <StayCard key={stay.id} data={stay} />
-                  ))}
-                </div>
-                <div className="flex mt-11 justify-center items-center">
-                  <ButtonSecondary>Show me more</ButtonSecondary>
-                </div>
-              </Tab.Panel>
-              <Tab.Panel className="">
-                <div className="mt-8 grid grid-cols-1 gap-6 md:gap-7 sm:grid-cols-2">
                   {DEMO_EXPERIENCES_LISTINGS.filter((_, i) => i < 4).map(
                     (stay) => (
                       <ExperiencesCard key={stay.id} data={stay} />
                     )
                   )}
-                </div>
-                <div className="flex mt-11 justify-center items-center">
-                  <ButtonSecondary>Show me more</ButtonSecondary>
-                </div>
-              </Tab.Panel>
-              <Tab.Panel className="">
-                <div className="mt-8 grid grid-cols-1 gap-6 md:gap-7 sm:grid-cols-2">
-                  {DEMO_CAR_LISTINGS.filter((_, i) => i < 4).map((stay) => (
-                    <CarCard key={stay.id} data={stay} />
-                  ))}
                 </div>
                 <div className="flex mt-11 justify-center items-center">
                   <ButtonSecondary>Show me more</ButtonSecondary>
