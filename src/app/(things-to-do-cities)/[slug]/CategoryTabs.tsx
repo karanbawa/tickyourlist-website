@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Home, Landmark, Search, User, Globe, Waves, Compass, ChevronLeft, ChevronRight } from 'lucide-react';
 import StayCard2 from '@/components/tourrgroupsectionpage/StayCard2';
 import Heading from '@/shared/Heading';
-import ButtonSecondary from '@/shared/ButtonSecondary';
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
 
