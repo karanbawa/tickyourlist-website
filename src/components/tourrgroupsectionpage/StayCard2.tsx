@@ -6,6 +6,7 @@ import SaleOffBadge from "@/components/SaleOffBadge";
 import Badge from "@/shared/Badge";
 import Link from "next/link";
 import { ArrowDown, History, Smartphone, X, Zap } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 export interface StayCard2Props {
   className?: string;
@@ -27,6 +28,10 @@ const StayCard2: FC<StayCard2Props> = ({
     tourType,
   } = data;
 
+  const { user } = useAuth();
+
+  // const user = JSON.parse(localStorage.getItem('user') ?? '');
+
   // Helper function to format price with commas
   const formatPrice = (price: number) => {
     return price?.toLocaleString('en-IN');
@@ -44,8 +49,9 @@ const StayCard2: FC<StayCard2Props> = ({
           imageClass="rounded-lg"
           href={urlSlugs?.EN}
         />
+        {user?.data?.data?.data?.customer &&
         <BtnLikeIcon isLiked={false} className="absolute right-3 top-3 z-[1]" />
-        {/* Add SaleOffBadge conditionally if there's a promotion */}
+      }
       </div>
     );
   };

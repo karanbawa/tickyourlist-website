@@ -109,7 +109,7 @@ const FooterNav: React.FC = () => {
         <div className={`text-[11px] leading-none mt-1 ${isActive ? "text-red-600" : ""}`}>
           Account
         </div>
-        </div>
+        </div> 
         </>
       );
     }
