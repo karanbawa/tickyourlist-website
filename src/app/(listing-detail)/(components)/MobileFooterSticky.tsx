@@ -6,6 +6,7 @@ import ButtonPrimary from "@/shared/ButtonPrimary";
 import converSelectedDateToString from "@/utils/converSelectedDateToString";
 import ModalReserveMobile from "./ModalReserveMobile";
 import { useData } from "@/context/DataContext";
+import { FaWhatsapp } from "react-icons/fa";
 
 interface MobileFooterStickyProps {
   tourGroup?: any
@@ -43,6 +44,19 @@ const MobileFooterSticky: FC<MobileFooterStickyProps> = ({ tourGroup }) => {
               </span>
             </div>
           </div>
+          <div className="flex items-center space-x-4">
+          <div style={{
+              backgroundColor: "#128c7e",
+              borderRadius: "50%",
+              width: "30px",
+              height: "30px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center"
+            }}>
+              <FaWhatsapp size={20} color="#fff" />
+            </div>
+
           <ModalReserveMobile
             renderChildren={({ openModal }) => (
               <ButtonPrimary
@@ -54,6 +68,7 @@ const MobileFooterSticky: FC<MobileFooterStickyProps> = ({ tourGroup }) => {
               </ButtonPrimary>
             )}
           />
+          </div>
         </div>
       </div>
     </div>

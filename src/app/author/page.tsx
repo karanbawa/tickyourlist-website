@@ -129,7 +129,7 @@ const AuthorPage: FC<AuthorPageProps> = ({}) => {
     return (
       <div className="listingSection__wrap">
         <div>
-          <h2 className="text-2xl font-semibold">{`${capitalizeFirstLetter(user?.data?.data?.data?.customer?.firstName)} ${capitalizeFirstLetter(user?.data?.data?.data?.customer?.lastName)}'s listings`}</h2>
+          <h2 className="text-2xl font-semibold">{`${capitalizeFirstLetter(user?.data?.data?.data?.customer?.firstName)} ${capitalizeFirstLetter(user?.data?.data?.data?.customer?.lastName)}'s bookings`}</h2>
           {/* <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
             {`Kevin Francis's listings is very rich, 5 star reviews help him to be
             more branded.`}

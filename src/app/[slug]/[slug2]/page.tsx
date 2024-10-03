@@ -28,6 +28,7 @@ import MobileFooterSticky from "@/app/(listing-detail)/(components)/MobileFooter
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import { History, Info, Shuffle, Smartphone, User, Utensils, Zap } from "lucide-react";
+import { FaWhatsapp } from 'react-icons/fa';
 
 interface Params {
   slug: string;
@@ -683,7 +684,7 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
   const renderSidebarDetail = () => (
     <div className="listingSection__wrap lg:shadow-xl">
       <span className="text-xl font-semibold block underline">
-        How to Book on TickYourList
+        How to Book on TickYourList 
       </span>
       <div className="mt-8 flex">
         <div className="flex-shrink-0 flex flex-col items-center py-2">
@@ -713,6 +714,16 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
             <span className="font-semibold">{`Review & complete payment`}</span>
           </div>
         </div>
+      </div>
+      <div className="flex flex-col">
+      <div className="font-semibold underline mb-3">Need Help In Booking?</div>
+      <ButtonPrimary
+          style={{ backgroundColor: "#075e54" }} // WhatsApp brand color
+          icon={<FaWhatsapp size={20} color="#fff" />} // Pass the WhatsApp icon
+        >
+          Whatsapp Us
+        </ButtonPrimary>
+
       </div>
     </div>
   );
