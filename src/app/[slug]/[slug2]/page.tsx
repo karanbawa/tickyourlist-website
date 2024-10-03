@@ -141,7 +141,7 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
   };
 
   const renderSection1 = () => (
-    <div className="listingSection__wrap !space-y-6">
+    <div className="listingSection__wrap !space-y-4 md:!space-y-6">
       <div className="flex justify-between items-center">
         <div className="flex gap-2 flex-wrap">
         {tourGroup?.displayTags?.slice(0,2).map((tag: any,index: any) => <Badge name={tag} key={tag} className='bg-purple-100 text-purple-600' /> )}
@@ -149,15 +149,15 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
         </div>
         <LikeSaveBtns data={tourGroup} />
       </div>
-      <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold">
+      <h1 className="text-xl sm:text-3xl lg:text-4xl font-semibold">
         {tourGroup?.name}
-      </h2>
+      </h1>
       <div className="flex items-center space-x-4">
         <StartRating />
         <span>·</span>
         <span>
           <i className="las la-map-marker-alt"></i>
-          <span className="ml-1">{tourGroup?.city?.name}, {tourGroup?.city?.country?.displayName ? abbreviateCountryName(tourGroup?.city?.country?.displayName) : ''}</span>
+          <span className="ml-1 text-xs md:text-base">{tourGroup?.city?.name}, {tourGroup?.city?.country?.displayName ? abbreviateCountryName(tourGroup?.city?.country?.displayName) : ''}</span>
         </span>
       </div>
       <div className="flex items-center gap-6 flex-wrap">
@@ -213,25 +213,25 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
 
   const renderSection2 = () => (
     <div className="listingSection__wrap">
-      <h2 className="text-2xl font-semibold">Highlights</h2>
+      <h2 className="text-lg md:text-2xl font-semibold">Highlights</h2>
       <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
-      <div className="text-neutral-6000 dark:text-neutral-300 highlights-section" dangerouslySetInnerHTML={{ __html: tourGroup?.highlights }} />
+      <div className="text-sm md:text-base text-neutral-600 dark:text-neutral-300 highlights-section" dangerouslySetInnerHTML={{ __html: tourGroup?.highlights }} />
     </div>
   );
 
   const renderSectionInclusion = () => (
     <div className="listingSection__wrap">
-      <h2 className="text-2xl font-semibold">Inclusions</h2>
+      <h2 className="text-lg md:text-2xl font-semibold">Inclusions</h2>
       <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
-      <div className="text-neutral-6000 dark:text-neutral-300 highlights-section" dangerouslySetInnerHTML={{ __html: tourGroup?.inclusions }} />
+      <div className="text-sm md:text-base text-neutral-6000 dark:text-neutral-300 highlights-section" dangerouslySetInnerHTML={{ __html: tourGroup?.inclusions }} />
     </div>
   );
 
   const renderSectionCancellationPolicy = () => (
     <div className="listingSection__wrap">
-      <h2 className="text-2xl font-semibold">Cancellation Policy</h2>
+      <h2 className="text-lg md:text-2xl font-semibold">Cancellation Policy</h2>
       <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
-      <div className="text-neutral-6000 dark:text-neutral-300 highlights-section">
+      <div className="text-sm md:text-base text-neutral-6000 dark:text-neutral-300 highlights-section">
         {!tourGroup?.cancellationPolicyV2?.cancellable ? `These tickets can't be cancelled ` : `These tickets can be cancelled `} 
         {!tourGroup?.reschedulePolicy?.reschedulable ? `or rescheduled` : `but can be rescheduled`}
       </div>
@@ -286,15 +286,15 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
     const options = {
       replace: (domNode: any) => {
         if (domNode.name === "h2") {
-          return (<><h2 className="text-2xl font-semibold">{domNode.children[0].data}</h2>
+          return (<><h2 className="text-lg md:text-2xl font-semibold">{domNode.children[0].data}</h2>
           <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
           </>);
         }
         if (domNode.name === "h3") {
-          return <h3 className="text-xl font-semibold mt-4">{domNode.children[0].data}</h3>;
+          return <h3 className="text-md md:text-xl font-semibold mt-4">{domNode.children[0].data}</h3>;
         }
         if (domNode.name === "p") {
-          return <p className="mt-2 text-neutral-6000 dark:text-neutral-300 anchor-color">{domToReact(domNode.children)}</p>;
+          return <p className="text-sm md:text-base mt-2 text-neutral-6000 dark:text-neutral-300 anchor-color">{domToReact(domNode.children)}</p>;
         }
         if (domNode.name === "img") {
           return (
@@ -307,13 +307,13 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
         }
         if (domNode.name === "ul") {
           return (
-            <ul className="list-disc pl-5 mt-2 text-neutral-6000 dark:text-neutral-300">
+            <ul className="text-sm md:text-base list-disc pl-5 mt-2 text-neutral-6000 dark:text-neutral-300">
               {domToReact(domNode.children)}
             </ul>
           );
         }
         if (domNode.name === "li") {
-          return <li className="mt-1">{domToReact(domNode.children)}</li>;
+          return <li className="text-sm md:text-base mt-1">{domToReact(domNode.children)}</li>;
         }
         if (domNode.name === "a") {
           return (
@@ -361,7 +361,7 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
 
   const renderSectionMyTickets = () => (
     <div className="listingSection__wrap">
-      <h2 className="text-2xl font-semibold">My Tickets</h2>
+      <h2 className="text-lg md:text-2xl font-semibold">My Tickets</h2>
       <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
       <HighlightsSection summary={tourGroup?.ticketDeliveryInfo} />
       {/* <div className="text-neutral-6000 dark:text-neutral-300 highlights-section" dangerouslySetInnerHTML={{ __html: tourGroup?.ticketDeliveryInfo }} /> */}
@@ -497,7 +497,7 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
 
   const renderSection5 = () => (
     <div className="listingSection__wrap">
-      <h2 className="text-2xl font-semibold">Host Information</h2>
+      <h2 className="text-xl md:text-2xl font-semibold">Host Information</h2>
       <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
       <div className="flex items-center space-x-4">
         <Avatar
@@ -818,7 +818,7 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
 
 
 
-      <main className="relative z-10 mt-11 flex flex-col lg:flex-row">
+      <main className="relative z-10 mt-6 md:mt-11 flex flex-col lg:flex-row">
           <div className="w-full lg:w-3/5 xl:w-2/3 space-y-8 lg:space-y-10 lg:pr-10">
             {renderSection1()}
              {renderSection2()}

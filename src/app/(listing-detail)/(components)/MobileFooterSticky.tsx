@@ -26,7 +26,7 @@ const MobileFooterSticky: FC<MobileFooterStickyProps> = ({ tourGroup }) => {
   const router = useRouter();
 
   const handleBookNow = () => {
-    router.push('/book');
+    router.push(`/checkout?tourId=${tourGroup?._id}`);
   }
 
   return (

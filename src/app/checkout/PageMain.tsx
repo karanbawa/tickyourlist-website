@@ -99,78 +99,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     return;
   }
 
-
-  const renderSidebar = () => {
-    return (
-      <div className="w-full flex flex-col sm:rounded-2xl lg:border border-neutral-200 dark:border-neutral-700 space-y-6 sm:space-y-8 px-0 sm:p-6 xl:p-8">
-        <div className="flex flex-col sm:flex-row sm:items-center">
-          <div className="flex-shrink-0 w-full sm:w-40">
-            <div className=" aspect-w-4 aspect-h-3 sm:aspect-h-4 rounded-2xl overflow-hidden">
-              <Image
-                alt=""
-                fill
-                sizes="200px"
-                src="https://images.pexels.com/photos/6373478/pexels-photo-6373478.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-              />
-            </div>
-          </div>
-          <div className="py-5 sm:px-5 space-y-3">
-            <div>
-              <span className="text-sm text-neutral-500 dark:text-neutral-400 line-clamp-1">
-                Hotel room in Tokyo, Jappan
-              </span>
-              <span className="text-base font-medium mt-1 block">
-                The Lounge & Bar
-              </span>
-            </div>
-            <span className="block  text-sm text-neutral-500 dark:text-neutral-400">
-              2 beds · 2 baths
-            </span>
-            <div className="w-10 border-b border-neutral-200  dark:border-neutral-700"></div>
-            <StartRating />
-          </div>
-        </div>
-        <div className="flex flex-col space-y-4">
-          <h3 className="text-2xl font-semibold">Price detail</h3>
-          <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-            <span>$19 x 3 day</span>
-            <span>$57</span>
-          </div>
-          <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-            <span>Service charge</span>
-            <span>$0</span>
-          </div>
-
-          <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
-          <div className="flex justify-between font-semibold">
-            <span>Total</span>
-            <span>$57</span>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  const renderViewBookings = () => {
-    return (
-      <div>
-            <h3 className="text-2xl font-semibold mt-6">Your ticket</h3>
-            <NcModal
-              renderTrigger={(openModal) => (
-                <span
-                  onClick={() => openModal()}
-                  className="block lg:hidden underline  mt-1 cursor-pointer"
-                >
-                  View booking details
-                </span>
-              )}
-              renderContent={renderSidebar}
-              modalTitle="Booking details"
-            />
-          </div>
-    )
-  }
-
   // Update the calculateDiscountPercentage function to handle string inputs
 function calculateDiscountPercentage(originalPrice: string | number, finalPrice: string | number): string {
   const original = typeof originalPrice === 'string' ? parseFloat(originalPrice) : originalPrice;
@@ -187,14 +115,12 @@ function calculateDiscountPercentage(originalPrice: string | number, finalPrice:
  const renderPreference = () => {
   return (
     <div className="flex flex-col">
-      <h3 className="text-2xl font-semibold mb-4">Select a preference</h3>
+      <h3 className="text-sm md:text-2xl font-semibold mt-2 md:mt-0 mb-4">Select a preference</h3>
       {/* <span className="text-xs text-gray-500">Select a Preference to proceed</span> */}
       <div className="flex lg:justify-between gap-4 overflow-x-auto xl:overflow-x-visible">
         <div className="flex flex-grow-1 gap-4">
           {tourGroup?.variants.map((variant: any, index: number) => {
-            console.log('variant.listingPricesInAllCurrencies ', variant.listingPricesInAllCurrencies);
             const listingPrices = variant.listingPricesInAllCurrencies?.find((currency: { currencyCode: any; }) => currency?.currencyCode === currencyCode);
-            console.log("currencytest ", currencyCode, listingPrices);
             const guestPrice = listingPrices?.prices.find((p: any) => p.type === 'GUEST');
             const adultPrice = listingPrices?.prices.find((p: any) => p.type === 'ADULT');
             const selectedPrice = guestPrice || adultPrice;
@@ -225,13 +151,14 @@ function calculateDiscountPercentage(originalPrice: string | number, finalPrice:
   const renderDateSelector = () => {
     return (<>
     <div>
-    <h2 className="text-[#444444] text-base md:text-lg font-medium mb-1.5">
+    <h2 className="text-[#444444] text-sm md:text-lg font-medium mb-1.5">
           Select a date
         </h2>
         <p className="text-[#444444] text-xs md:text-sm font-light">
-          All prices are in INR (₹)
+          All prices are in {currencyCode}
+          {/* All prices are in {currencyCode} (₹) */}
         </p>
-        <div className="mt-6 border border-neutral-200 dark:border-neutral-700 rounded-3xl flex flex-col sm:flex-row divide-y sm:divide-x sm:divide-y-0 divide-neutral-200 dark:divide-neutral-700 z-10">
+        <div className="mt-3 md:mt-6 border border-neutral-200 dark:border-neutral-700 rounded-3xl flex flex-col sm:flex-row divide-y sm:divide-x sm:divide-y-0 divide-neutral-200 dark:divide-neutral-700 z-10">
         <StayDatesRangeInput className="flex-1 z-[11]" onChangeDate={setStayDate} />
         </div>
     </div>
@@ -240,11 +167,11 @@ function calculateDiscountPercentage(originalPrice: string | number, finalPrice:
   
   const renderMain = () => {
     return (
-      <div className="w-full flex flex-col sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-8 px-0 sm:p-6 xl:p-8">
-        <h2 className="text-3xl lg:text-4xl font-semibold">
+      <div className="w-full flex flex-col sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-1 md:space-y-8 px-0 sm:p-6 xl:p-8">
+        <h2 className="hidden md:block sm:text-xl md:text-4xl font-semibold">
           Confirm and payment
         </h2>
-        <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
+        <div className="hidden md:block border-b border-neutral-200 dark:border-neutral-700"></div>
 
          {renderDateSelector()}
 
@@ -273,7 +200,7 @@ function calculateDiscountPercentage(originalPrice: string | number, finalPrice:
 
   return (
     <div className={`nc-CheckOutPagePageMain ${className}`}>
-      <main className="container mt-11 mb-24 lg:mb-32 flex flex-col-reverse lg:flex-row">
+      <main className="container mt-5 md:mt-11 mb-24 lg:mb-32 flex flex-col-reverse lg:flex-row">
         <div className="w-full lg:w-4/5 xl:w-4/5 lg:pr-10 ">{renderMain()}</div>
         {/* <div className="hidden lg:block flex-grow">{renderSidebar1()}</div> */}
       </main>

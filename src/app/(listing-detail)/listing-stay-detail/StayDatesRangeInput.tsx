@@ -58,7 +58,7 @@ const StayDatesRangeInput: FC<StayDatesRangeInputProps> = ({
           <span className="block xl:text-lg font-semibold">
             {formattedDate}
           </span>
-          <span className="block mt-1 text-sm text-neutral-400 leading-none font-light">
+          <span className="block mt-1 text-xs md:text-sm text-neutral-400 leading-none font-light">
             {selectedDate ? "Selected date" : "Select a date"}
           </span>
         </div>
@@ -71,7 +71,7 @@ const StayDatesRangeInput: FC<StayDatesRangeInputProps> = ({
       {({ open, close }) => (
         <>
           <Popover.Button
-            className={`flex-1 flex relative p-3 items-center space-x-3 focus:outline-none rounded-3xl ${
+            className={`text-sm md:text-base flex-1 flex relative p-3 items-center space-x-3 focus:outline-none rounded-3xl ${
               open ? "shadow-lg" : ""
             }`}
           >
@@ -91,7 +91,7 @@ const StayDatesRangeInput: FC<StayDatesRangeInputProps> = ({
             leaveTo="opacity-0 translate-y-1"
           >
             <Popover.Panel className="absolute left-auto xl:-right-[1.2rem] right-0 z-10 mt-3 top-full w-screen max-w-sm p sm:px-0 pl-[2rem]">
-              <div className="overflow-hidden rounded-3xl shadow-lg ring-1 ring-black ring-opacity-5 bg-white dark:bg-neutral-800 p-8">
+              <div className="overflow-hidden rounded-3xl shadow-lg ring-1 ring-black ring-opacity-5 bg-white dark:bg-neutral-800 p-4 md:p-8">
                 <DatePicker
                   selected={selectedDate}
                   onChange={(date) => handleDateChange(date, close)}
