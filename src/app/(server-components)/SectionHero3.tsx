@@ -1,51 +1,28 @@
 'use client'
 
 import React, { FC } from "react";
-import imagePng from "@/images/travelhero2.png";
+import { useRouter } from "next/navigation"; // Import the useRouter hook
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import ButtonPrimary from "@/shared/ButtonPrimary";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 
 export interface SectionHero3Props {
   className?: string;
+  travelSectionBanners: any;
 }
 
-// Dummy data for slides
-const slidesData = [
-  {
-    type: "image",
-    src: "/images/slide1.jpg",
-    title: "Discover New Places",
-    subtitle: "Book Tickets from TickYourList platform",
-    buttonText: "Explore Now",
-  },
-  {
-    type: "video",
-    src: "/videos/slide2.mp4",
-    title: "Experience Adventure",
-    subtitle: "Your journey begins here",
-    buttonText: "Get Started",
-  },
-  {
-    type: "image",
-    src: "/images/slide3.jpg",
-    title: "Travel the World",
-    subtitle: "Unforgettable experiences await",
-    buttonText: "Book Now",
-  },
-];
+const SectionHero3: FC<SectionHero3Props> = ({ className = "", travelSectionBanners }) => {
+  const router = useRouter(); // Initialize useRouter
 
-const SectionHero3: FC<SectionHero3Props> = ({ className = "" }) => {
+  const handleButtonClick = (url: any) => {
+    router.push(url); // Navigate to the provided URL
+  };
+
   return (
-    <div
-      className={`nc-SectionHero3 relative ${className}`}
-      data-nc-id="SectionHero3"
-    >
+    <div className={`nc-SectionHero3 relative ${className}`} data-nc-id="SectionHero3">
       <Swiper
         modules={[Pagination, Autoplay]}
         pagination={{ clickable: true }}
@@ -53,44 +30,86 @@ const SectionHero3: FC<SectionHero3Props> = ({ className = "" }) => {
         loop={true}
         className="relative"
       >
-        {slidesData.map((slide, index) => (
-          <SwiperSlide key={index}>
+        {travelSectionBanners?.slides.map((slide: any, index: number) => (
+          <SwiperSlide key={slide?._id}>
             <div className="relative aspect-w-1 aspect-h-1 sm:aspect-w-4 sm:aspect-h-3 lg:aspect-w-16 lg:aspect-h-9 xl:aspect-h-8">
               {slide.type === "image" ? (
-                <Image
-                  src={imagePng}
-                  alt={`Slide ${index + 1}`}
-                  layout="fill"
-                  objectFit="cover"
-                  priority={index === 0}
-                />
+                <>
+                  {/* Desktop Image */}
+                  <div className="hidden sm:block"> {/* Visible on desktop */}
+                    <Image
+                      src={slide?.media?.url}
+                      alt={`Slide ${slide?._id + 1}`}
+                      layout="fill"
+                      objectFit="cover"
+                      priority={index === 0}
+                    />
+                  </div>
+
+                  {/* Phone View Media */}
+                  <div className="block sm:hidden"> {/* Visible on mobile */}
+                    <Image
+                      src={slide?.phoneViewMedia?.url || slide?.media?.url} // Fallback to desktop image if phoneViewMedia is missing
+                      alt={`Slide ${slide?._id + 1}`}
+                      layout="fill"
+                      objectFit="cover"
+                      priority={index === 0}
+                    />
+                  </div>
+                </>
               ) : (
-                <video
-                  src={slide.src}
-                  className="object-cover w-full h-full"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                />
+                <>
+                  {/* Desktop Video */}
+                  <div className="hidden sm:block"> {/* Visible on desktop */}
+                    <video
+                      src={slide.media?.url}
+                      className="object-cover w-full h-full"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                    />
+                  </div>
+
+                  {/* Phone View Media */}
+                  <div className="block sm:hidden"> {/* Visible on mobile */}
+                    <video
+                      src={slide?.phoneViewMedia?.url || slide?.media?.url} // Fallback to desktop video if phoneViewMedia is missing
+                      className="object-cover w-full h-full"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                    />
+                  </div>
+                </>
               )}
-              {/* Removed the overlay div */}
-              {/* <div className="absolute inset-0 bg-black bg-opacity-40"></div> */}
+
               <div className="absolute z-10 inset-x-0 top-[10%] sm:top-[15%] text-center flex flex-col items-center max-w-2xl mx-auto space-y-4 lg:space-y-5 xl:space-y-8">
-                <span className="sm:text-lg md:text-xl font-semibold text-neutral-900">
-                  {slide.subtitle}
-                </span>
-                <h2 className="font-bold text-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight">
-                  {slide.title}
-                </h2>
-                <ButtonPrimary
-                  sizeClass="px-6 py-3 lg:px-8 lg:py-4 rounded-xl"
-                  fontSize="text-sm sm:text-base lg:text-lg font-medium"
-                  style={{ backgroundColor: "#7C25E9" }}
-                >
-                  {slide.buttonText}
-                </ButtonPrimary>
+                {slide.subtitle && (
+                  <span className="sm:text-lg md:text-xl font-semibold text-neutral-900">
+                    {slide.subtitle}
+                  </span>
+                )}
+
+                {slide.title && (
+                  <h2 className="font-bold text-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-tight">
+                    {slide.title}
+                  </h2>
+                )}
+
+                {slide.buttonText && (
+                  <ButtonPrimary
+                    sizeClass="px-6 py-3 lg:px-8 lg:py-4 rounded-xl"
+                    fontSize="text-sm sm:text-base lg:text-lg font-medium"
+                    style={{ backgroundColor: "#7C25E9" }}
+                    onClick={() => handleButtonClick(slide?.urlSlug)} // Handle button click
+                  >
+                    {slide.buttonText}
+                  </ButtonPrimary>
+                )}
               </div>
+
             </div>
           </SwiperSlide>
         ))}

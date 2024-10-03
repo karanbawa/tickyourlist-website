@@ -53,22 +53,6 @@ function PageHome3({ collectionData, tourGroups }: PageHome3Props) {
             <p className="text-gray-700 text-lg mb-6 leading-relaxed">
               {collection.subtext}
             </p>
-            
-            {/* Open hours and Duration */}
-            {/* <div className="flex flex-col sm:flex-row gap-4 mb-8">
-              <div className="flex items-center bg-green-100 text-green-800 px-4 py-2 rounded-full">
-                <ShoppingBag className="w-5 h-5 mr-2" />
-                <span className="font-medium mr-2">Open today</span>
-                <ChevronRight className="w-4 h-4 mr-1" />
-                <span>12:00 AM - 11:59 PM</span>
-              </div>
-              <div className="flex items-center bg-orange-100 text-orange-800 px-4 py-2 rounded-full">
-                <Clock className="w-5 h-5 mr-2" />
-                <span className="font-medium mr-2">Recommended Duration</span>
-                <span>2 hours</span>
-              </div>
-            </div> */}
-            
           </div>
           
           {/* Video */}
