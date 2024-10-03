@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import PageHome3 from './PageHome3';
+import { notFound } from 'next/navigation';
 
 // Function to fetch travel sections based on city code and currency
 async function getTravelSections(cityCode: string, currency: string) {
@@ -30,9 +31,9 @@ async function getTravelSectionBanners(cityCode: string, language: string) {
     next: { revalidate: 10 },
   });
 
-  // if (!res.ok) {
-  //   throw new Error('Failed to fetch travel sections');
-  // }
+  if (!res.ok) {
+    throw notFound();
+  }
 
   const data = await res.json();
   return data;
