@@ -19,7 +19,7 @@ const Avatar: FC<AvatarProps> = ({
   radius = "rounded-full",
   imgUrl = avatar1,
   userName,
-  hasChecked,
+  hasChecked = true,
   hasCheckedClass = "w-4 h-4 -top-0.5 -right-0.5",
 }) => {
   const url = imgUrl || "";
@@ -43,14 +43,15 @@ const Avatar: FC<AvatarProps> = ({
           alt={name}
         />
       ) : (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="48" fill="#7c25e9"/>
-        <circle cx="50" cy="50" r="44" fill="#7c25e9"/>
-        <circle cx="50" cy="35" r="15" fill="white"/>
-        <path d="M50 55 L50 80 M35 70 Q50 85 65 70" stroke="white" stroke-width="8" fill="none" stroke-linecap="round"/>
-      </svg>
+        <span className="wil-avatar__name">{name[0]}</span>
+      //   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      //   <circle cx="50" cy="50" r="48" fill="#7c25e9"/>
+      //   <circle cx="50" cy="50" r="44" fill="#7c25e9"/>
+      //   <circle cx="50" cy="35" r="15" fill="white"/>
+      //   <path d="M50 55 L50 80 M35 70 Q50 85 65 70" stroke="white" stroke-width="8" fill="none" stroke-linecap="round"/>
+      // </svg>
       )}
-      <span className="wil-avatar__name absolute inset-0 flex items-center justify-center">{name[0]}</span>
+      <span className="wil-avatar__name absolute inset-0 flex items-center justify-center bg-[#7c25e9] rounded-3xl">{name[0]}</span>
 
       {hasChecked && (
         <span

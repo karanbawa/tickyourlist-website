@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function AvatarDropdown({ className = "" }: Props) {
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuth(); 
 
   const handleLogout = () => {
     logout();
@@ -26,9 +26,9 @@ export default function AvatarDropdown({ className = "" }: Props) {
               <Popover.Button
                 className={`self-center w-10 h-10 sm:w-12 sm:h-12 rounded-full text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none flex items-center justify-center`}
               >
-                <Avatar sizeClass="w-8 h-8 sm:w-9 sm:h-9" imgUrl={user?.imageUrl ?? ''} />
+                <Avatar sizeClass="w-8 h-8 sm:w-9 sm:h-9" imgUrl={user?.imageUrl ?? ''} userName={user?.data?.data?.data?.customer?.firstName} />
               </Popover.Button>
-              <Transition
+              <Transition 
                 as={Fragment}
                 enter="transition ease-out duration-200"
                 enterFrom="opacity-0 translate-y-1"
@@ -41,7 +41,7 @@ export default function AvatarDropdown({ className = "" }: Props) {
                   <div className="overflow-hidden rounded-3xl shadow-lg ring-1 ring-black ring-opacity-5">
                     <div className="relative grid grid-cols-1 gap-6 bg-white dark:bg-neutral-800 py-7 px-6">
                       <div className="flex items-center space-x-3">
-                        <Avatar sizeClass="w-12 h-12" imgUrl={user?.imageUrl ?? ''} />
+                        <Avatar sizeClass="w-12 h-12" imgUrl={user?.imageUrl ?? ''} userName={user?.data?.data?.data?.customer?.firstName} />
 
                         <div className="flex-grow">
                           <h4 className="font-semibold">{user.name}</h4>

@@ -1,3 +1,4 @@
+'use client'
 import React, { FC } from "react";
 import Label from "@/components/Label";
 import Avatar from "@/shared/Avatar";
@@ -6,10 +7,15 @@ import Input from "@/shared/Input";
 import Select from "@/shared/Select";
 import Textarea from "@/shared/Textarea";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { useAuth } from "@/context/AuthContext";
+import { countries } from "@/components/auth/countries";
 
 export interface AccountPageProps {}
 
 const AccountPage = () => {
+
+  const { user } = useAuth();
+
   return (
     <ProtectedRoute>
     <div className="space-y-6 sm:space-y-8">
@@ -19,8 +25,8 @@ const AccountPage = () => {
       <div className="flex flex-col md:flex-row">
         <div className="flex-shrink-0 flex items-start">
           <div className="relative rounded-full overflow-hidden flex">
-            <Avatar sizeClass="w-32 h-32" />
-            <div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center text-neutral-50 cursor-pointer">
+            <Avatar sizeClass="w-20 h-20" userName={user?.data?.data?.data?.customer?.firstName} />
+            {/* <div className="absolute inset-0 bg-black bg-opacity-60 flex flex-col items-center justify-center text-neutral-50 cursor-pointer">
               <svg
                 width="30"
                 height="30"
@@ -38,7 +44,7 @@ const AccountPage = () => {
               </svg>
 
               <span className="mt-1 text-xs">Change Image</span>
-            </div>
+            </div> */}
             <input
               type="file"
               className="absolute inset-0 opacity-0 cursor-pointer"
@@ -47,48 +53,40 @@ const AccountPage = () => {
         </div>
         <div className="flex-grow mt-10 md:mt-0 md:pl-16 max-w-3xl space-y-6">
           <div>
-            <Label>Name</Label>
-            <Input className="mt-1.5" defaultValue="Eden Tuan" />
+            <Label>First Name</Label>
+            <Input className="mt-1.5" defaultValue={user?.data?.data?.data?.customer?.firstName} placeholder="Enter First Name" />
           </div>
-          {/* ---- */}
           <div>
-            <Label>Gender</Label>
-            <Select className="mt-1.5">
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </Select>
-          </div>
-          {/* ---- */}
-          <div>
-            <Label>Username</Label>
-            <Input className="mt-1.5" defaultValue="@eden_tuan" />
+            <Label>Last Name</Label>
+            <Input className="mt-1.5" defaultValue={user?.data?.data?.data?.customer?.lastName} placeholder="Enter Last Name" />
           </div>
           {/* ---- */}
           <div>
             <Label>Email</Label>
-            <Input className="mt-1.5" defaultValue="example@email.com" />
+            <Input className="mt-1.5" defaultValue={user?.data?.data?.data?.customer?.email} disabled={true} />
           </div>
           {/* ---- */}
-          <div className="max-w-lg">
-            <Label>Date of birth</Label>
-            <Input className="mt-1.5" type="date" defaultValue="1990-07-22" />
+          <div className="flex space-x-3">
+            <div className="w-2/5"> {/* This takes 40% width */}
+              {/* <Label>Country Code</Label>
+              <Input className="mt-1.5" defaultValue="+1" type="select" /> */}
+              <label className="block">
+                        <span className="text-neutral-800 dark:text-neutral-200">Country Code</span>
+                        <select name="phoneCode" required className="mt-2 block w-full bg-white border border-gray-300 rounded-2xl shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            {countries.map((country) => (
+                                <option key={country.code} value={country.dial_code}>
+                                    {country.name} ({country.dial_code})
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+            </div>
+            <div className="w-3/5"> {/* This takes 60% width */}
+              <Label>Phone Number</Label>
+              <Input className="mt-1.5" defaultValue="123-456-7890" />
+            </div>
           </div>
           {/* ---- */}
-          <div>
-            <Label>Addess</Label>
-            <Input className="mt-1.5" defaultValue="New york, USA" />
-          </div>
-          {/* ---- */}
-          <div>
-            <Label>Phone number</Label>
-            <Input className="mt-1.5" defaultValue="003 888 232" />
-          </div>
-          {/* ---- */}
-          <div>
-            <Label>About you</Label>
-            <Textarea className="mt-1.5" defaultValue="..." />
-          </div>
           <div className="pt-2">
             <ButtonPrimary style={{ backgroundColor: '#7C25E9' }}>Update info</ButtonPrimary>
           </div>

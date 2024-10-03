@@ -10,7 +10,11 @@ import { PathName } from "@/routers/types";
 import MenuBar from "@/shared/MenuBar";
 import isInViewport from "@/utils/isInViewport";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
+import { Popover } from "@headlessui/react";
+import Avatar from "@/shared/Avatar";
+
 
 let WIN_PREV_POSITION = 0;
 
@@ -18,6 +22,7 @@ interface NavItem {
   name: string;
   link?: PathName;
   icon: any;
+  component?: React.ReactNode;
 }
 
 const NAV: NavItem[] = [
@@ -45,6 +50,10 @@ const NAV: NavItem[] = [
 const FooterNav: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const { user } = useAuth();
+  const router = useRouter();
+
+  console.log("usertest ", user);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -84,8 +93,26 @@ const FooterNav: React.FC = () => {
     WIN_PREV_POSITION = currentScrollPos;
   };
 
+  const handleAccountPage = () => {
+    router.push('/account');
+  }
+
   const renderItem = (item: NavItem, index: number) => {
     const isActive = pathname === item.link;
+
+     // Conditionally render avatar if the user is logged in
+     if (item.name === "Log in" && user) {
+      return (
+        <>
+        <div onClick={handleAccountPage} className="cursor-pointer">
+        <Avatar sizeClass="w-8 h-8 sm:w-9 sm:h-9" imgUrl={user?.imageUrl ?? ''} userName={user?.data?.data?.data?.customer?.firstName} />
+        <div className={`text-[11px] leading-none mt-1 ${isActive ? "text-red-600" : ""}`}>
+          Account
+        </div>
+        </div>
+        </>
+      );
+    }
 
     return item.link ? (
       <Link
