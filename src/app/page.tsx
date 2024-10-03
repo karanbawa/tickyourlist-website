@@ -1,6 +1,5 @@
 import { cookies } from 'next/headers';
 import PageHome3 from './PageHome3';
-import { notFound } from 'next/navigation';
 
 // Function to fetch travel sections based on city code and currency
 async function getTravelSections(cityCode: string, currency: string) {
@@ -32,7 +31,7 @@ async function getTravelSectionBanners(cityCode: string, language: string) {
   });
 
   if (!res.ok) {
-    throw notFound();
+    throw new Error('Failed to fetch travel sections');
   }
 
   const data = await res.json();
@@ -51,8 +50,6 @@ export default async function PageHome3Server({ params }: { params: { slug: stri
   // Fetch travel sections based on city code and currency
   const travelSections = await getTravelSections(cityCode, currency);
   const travelSectionBanners = await getTravelSectionBanners(cityCode,'EN');
-
-  console.log("travelSectioBanners ", travelSectionBanners);
 
   // Pass the fetched travel sections to the page component
   return <PageHome3 travelSections={travelSections} travelSectionBanners={travelSectionBanners?.data} />;

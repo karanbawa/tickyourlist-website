@@ -38,6 +38,9 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
   const categoryDropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const isThingsToDoPage = pathname?.startsWith('/things-to-do-in-');
+  const isBookingPage = pathname?.startsWith('/book');
+  const isCheckoutPage = pathname?.startsWith('/checkout');
+  const isHiddenOnMobile = isBookingPage || isCheckoutPage;
   const router = useRouter();
   // const [isSlugPage, setIsSlugPage] = useState(false);
   // const [shouldShowCategoryTab, setShouldShowCategoryTab] = useState(false);
@@ -156,7 +159,22 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
         <div
           className={`bg-white dark:bg-neutral-900 absolute h-full inset-x-0 top-0 transition-transform will-change-[transform,opacity] ${showHeroSearch ? "duration-75" : ""} ${showHeroSearch ? currentTab === "Cars" || currentTab === "Flights" ? "scale-y-[4.4]" : "scale-y-[3.4]" : ""}`}
         ></div>
-        <div className="relative px-4 lg:container h-[88px] flex flex-col">
+        {!isHiddenOnMobile && (
+        <div className="lg:hidden relative px-4 h-[88px] flex flex-col">
+          <div className="flex-1 flex justify-between">
+            <div className="relative z-10 flex items-center">
+              <Logo />
+            </div>
+            <div className="self-center flex-1 w-full max-w-lg mx-auto">
+              <HeroSearchForm2MobileFactory />
+            </div>
+            <div className="relative z-10 flex items-center">
+              <MenuBar />
+            </div>
+          </div>
+        </div>
+      )}
+        <div className="hidden sm:flex relative px-4 lg:container h-[88px] flex flex-col">
           <div className="flex-1 flex justify-between">
             {/* Logo (lg+) */}
             <div className="relative z-10 hidden md:flex flex-1 items-center">

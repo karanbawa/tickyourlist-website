@@ -454,10 +454,10 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         <div className="flex w-1/2">
           <div className="flex flex-col justify-center">
             <div className="flex">
-              <p>{label}</p>
+              <p className="text-sm md:text-base">{label}</p>
             </div>
             <div className="flex mt-1">
-              <p className="font-light text-xs">{subLabel}</p>
+              <p className="font-light text-xs md:text-base">{subLabel}</p>
             </div>
           </div>
         </div>
@@ -485,10 +485,10 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         <div className="flex w-1/4 ml-3 justify-end relative">
           <div>
             <div>
-              <p>{currencyCode} {totalPrice?.toLocaleString('en-IN')}</p>
+              <p className="text-sm md:text-base">{currencyCode} {totalPrice?.toLocaleString('en-IN')}</p>
             </div>
             <div>
-              <p className="text-xs line-through font-light">
+              <p className="text-xs md:text-base line-through font-light">
                 {currencyCode} {totalOriginalPrice?.toLocaleString('en-IN')}
               </p>
             </div>
@@ -508,16 +508,16 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     const totalDiscount = getDiscountedPrice();
 
     return (
-      <div className="w-full flex flex-col sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-8 px-0 sm:p-6 xl:p-8">
+      <div className="w-full flex flex-col sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-3 md:space-y-8 px-0 sm:p-6 xl:p-8">
         <div>
-          <h2 className="text-3xl lg:text-4xl font-semibold">
+          <h2 className="text-md md:text-3xl lg:text-4xl font-semibold mt-2">
             Confirm and payment
           </h2>
           <NcModal
             renderTrigger={(openModal) => (
               <span
                 onClick={() => openModal()}
-                className="block lg:hidden underline mt-2 cursor-pointer"
+                className="block lg:hidden underline mt-2 cursor-pointer text-xs"
               >
                 View booking details
               </span>
@@ -528,8 +528,8 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         </div>
         <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
         <div>
-          <h3 className="text-2xl font-semibold">Guests</h3>
-          <span className="font-light text-sm">Likely to sell out</span>
+          <h3 className="text-sm md:text-2xl font-semibold">Guests</h3>
+          <span className="font-light text-xs md:text-sm">Likely to sell out</span>
 
           {pricing?.prices?.some((p: { type: string; }) => p.type.toLowerCase() === 'adult') &&
             pricing?.prices?.some((p: { type: string; }) => p.type.toLowerCase() === 'child') &&
@@ -537,7 +537,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
               <div className="w-full max-w-5xl mt-3 mx-auto">
                 <div className="p-4 md:p-5 rounded-lg max-w-5xl" style={{ backgroundColor: "#fff8e5" }}>
                   <ul className="list-none ml-0">
-                    <li className="ml-1 text-sm font-light leading-5">Infants aged 2 and under can enter for free. Simply show their ID at the venue and enter.</li>
+                    <li className="ml-1 text-xs md:text-sm font-light leading-5">Infants aged 2 and under can enter for free. Simply show their ID at the venue and enter.</li>
                   </ul>
                 </div>
               </div>
@@ -549,7 +549,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
               <div className="w-full max-w-5xl mt-3 mx-auto">
                 <div className="p-4 md:p-5 rounded-lg max-w-5xl" style={{ backgroundColor: "#fff8e5" }}>
                   <ul className="list-none ml-0">
-                    <li className="ml-1 text-sm font-light leading-5">Children shorter than 1.05 meters can enter for free with a valid ID.</li>
+                    <li className="ml-1 text-xs md:text-sm font-light leading-5">Children shorter than 1.05 meters can enter for free with a valid ID.</li>
                   </ul>
                 </div>
               </div>
@@ -559,7 +559,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         <div className="w-full flex flex-col font-normal">
           {!hasSpecificTypes ? (
             <PriceRow
-              label="Guest"
+              label="Guests"
               subLabel=""
               price={pricing?.prices?.find((p: { type: string; }) => p.type.toLowerCase() === 'guest')}
               guests={guests.guestAdults || 0}
@@ -588,7 +588,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         </div>
 
         <div>
-          <h3 className="text-2xl font-semibold">Lead Guest Details</h3>
+          <h3 className="text-md md:text-2xl font-semibold">Lead Guest Details</h3>
           <div className="w-14 border-b border-neutral-200 dark:border-neutral-700 my-5"></div>
 
           <div className="mt-6">
@@ -597,7 +597,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                 <Tab.Panel className="space-y-5">
                   <div className="flex flex-col sm:flex-row sm:space-x-5">
                     <div className="flex-1 space-y-1">
-                      <Label>First Name</Label>
+                      <Label className="text-sm md:text-base">First Name</Label>
                       <Input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                       {firstNameError && <p className="text-red-500 text-sm">{firstNameError}</p>}
                     </div>
@@ -625,7 +625,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                     {!showPromoCode && (
                       <span
                         onClick={handleTogglePromoCode}
-                        className="text-green-800 underline cursor-pointer"
+                        className="text-sm md:text-base text-green-800 underline cursor-pointer"
                       >
                         Have a Promo Code?
                       </span>
@@ -675,7 +675,11 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
   return (
     <div className={`nc-CheckOutPagePageMain ${className}`}>
-      <main className="container mt-11 mb-24 lg:mb-32 flex flex-col-reverse lg:flex-row">
+      <div className="relative px-4 lg:container h-[20px] flex flex-col border-b-q">
+          <div className="flex-1 flex justify-between">
+          </div>
+        </div>
+      <main className="container mt-5 md:mt-11 mb-24 lg:mb-32 flex flex-col-reverse lg:flex-row">
         <div className="w-full lg:w-3/5 xl:w-2/3 lg:pr-10 ">{renderMain()}</div>
         <div className="hidden lg:block flex-grow">{renderSidebar()}</div>
       </main>

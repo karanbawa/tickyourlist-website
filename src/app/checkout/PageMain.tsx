@@ -9,6 +9,9 @@ import { useRouter } from "next/navigation";
 import StayDatesRangeInput from "../(listing-detail)/listing-stay-detail/StayDatesRangeInput";
 import { DEMO_AUTHORS } from "@/data/authors";
 import CardVariant from "@/components/tour-group-booking/CardVariants";
+import { ArrowLeft, HelpCircle } from "lucide-react";
+import MobileFooterSticky from "../(listing-detail)/(components)/MobileFooterSticky";
+import MobileCheckNextButtonSticky from "../(listing-detail)/(components)/MobileCheckNextButtonSticky";
 
 export interface CheckOutPagePageMainProps {
   className?: string;
@@ -32,10 +35,13 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
    // Create a ref for the element to scroll to
    const scrollToElementRef = useRef<HTMLDivElement>(null);
 
+   const [showNextBookButtonAtFooter, setShowNextBookButtonAtFooter] = useState(false);
+
     // const [endDate, setEndDate] = useState<Date | null>(new Date("2023/02/23"));
   const router = useRouter();
 
   const handleVariantSelect = (index: number | undefined) => {
+    setShowNextBookButtonAtFooter(true);
     setSelectedVariantIndex(index !== undefined ? index : null);
   };  
 
@@ -115,7 +121,7 @@ function calculateDiscountPercentage(originalPrice: string | number, finalPrice:
  const renderPreference = () => {
   return (
     <div className="flex flex-col">
-      <h3 className="text-sm md:text-2xl font-semibold mt-2 md:mt-0 mb-4">Select a preference</h3>
+      <div className="text-sm md:text-2xl font-semibold mt-2 md:mt-0 mb-4 sm:max-md:text-[#444444]">Select a preference</div>
       {/* <span className="text-xs text-gray-500">Select a Preference to proceed</span> */}
       <div className="flex lg:justify-between gap-4 overflow-x-auto xl:overflow-x-visible">
         <div className="flex flex-grow-1 gap-4">
@@ -146,6 +152,14 @@ function calculateDiscountPercentage(originalPrice: string | number, finalPrice:
       </div>
     </div>
   );
+}
+
+const handleHelpCenter = () => {
+  router.push('/contact')
+}
+
+const handleBackButton = () => {
+  router.back();
 }
 
   const renderDateSelector = () => {
@@ -200,10 +214,23 @@ function calculateDiscountPercentage(originalPrice: string | number, finalPrice:
 
   return (
     <div className={`nc-CheckOutPagePageMain ${className}`}>
-      <main className="container mt-5 md:mt-11 mb-24 lg:mb-32 flex flex-col-reverse lg:flex-row">
+     <nav className="fixed sm:hidden top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-2 bg-white shadow-sm pt-3 pb-3">
+      <button className="text-gray-600 hover:text-gray-800 cursor-pointer" onClick={handleBackButton}>
+        <ArrowLeft size={24} />
+      </button>
+      <h1 className="text-sm font-semibold text-gray-600 truncate max-w-[60%]">
+        {tourGroup?.name}
+      </h1>
+      <button className="text-gray-600 hover:text-gray-800" onClick={handleHelpCenter}>
+        <HelpCircle size={24} />
+      </button>
+    </nav>
+      <main className="container mt-14 md:mt-11 mb-24 lg:mb-32 flex flex-col-reverse lg:flex-row">
         <div className="w-full lg:w-4/5 xl:w-4/5 lg:pr-10 ">{renderMain()}</div>
         {/* <div className="hidden lg:block flex-grow">{renderSidebar1()}</div> */}
       </main>
+       {/* STICKY FOOTER MOBILE */}
+       {showNextBookButtonAtFooter && <MobileCheckNextButtonSticky tourGroup={tourGroup} selectedVariantIndex={selectedVariantIndex} getFormattedDate={getFormattedDate} getFormatedData={getFormatedData} />}
     </div>
   );
 };

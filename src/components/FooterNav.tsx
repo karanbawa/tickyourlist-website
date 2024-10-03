@@ -148,7 +148,7 @@ const FooterNav: React.FC = () => {
       className="FooterNav block md:hidden p-2 bg-white dark:bg-neutral-800 fixed bottom-0 inset-x-0 z-30 border-t border-neutral-300 dark:border-neutral-700 
       transition-transform duration-300 ease-in-out"
       role="navigation"
-      aria-label="Footer navigation"
+      aria-label="Footer navigation" 
     >
       <div className="w-full max-w-lg flex justify-around mx-auto text-sm text-center">
         {NAV.map(renderItem)}
