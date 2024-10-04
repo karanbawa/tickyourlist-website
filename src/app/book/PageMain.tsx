@@ -9,6 +9,8 @@ import NcModal from "@/shared/NcModal";
 import { GuestsObject } from "../(client-components)/type";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { countries } from "@/components/auth/countries";
+import { useAuth } from "@/context/AuthContext";
 
 export interface CheckOutPagePageMainProps {
   className?: string;
@@ -43,17 +45,20 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
+  const [phoneCode, setPhoneCode] = useState("");
   const [firstNameError, setFirstNameError] = useState("");
   const [lastNameError, setLastNameError] = useState("");
+  const [phoneCodeError, setPhoneCodeError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [loadingConfirmPay, setLoadingConfirmPay] = useState(false);
   const [confirmPayError, setConfirmPayError] = useState('');
   const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  const { user } = useAuth();
 
   const backgroundImageStyle = isSafari
-  ? `-webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${tourGroup?.imageUploads?.[0]?.url}')`
-  : `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${tourGroup?.imageUploads?.[0]?.url}')`;
+    ? `-webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${tourGroup?.imageUploads?.[0]?.url}')`
+    : `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${tourGroup?.imageUploads?.[0]?.url}')`;
 
 
   const router = useRouter();
@@ -168,12 +173,14 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     });
   };
 
-  const handleRazorpayPayment = async (amount: any, orderId: any, booking: { nonCustomerFirstName: any; nonCustomerLastName: any; phoneNumber: any; _id: string }) => {
+  const handleRazorpayPayment = async (amount: any, orderId: any, booking: { nonCustomerFirstName: any; nonCustomerLastName: any; phoneCode: any; phoneNumber: any; _id: string, email: string }) => {
     try {
       const scriptLoaded = await loadRazorpayScript();
       if (!scriptLoaded) {
         throw new Error("Razorpay SDK failed to load. Are you online?");
       }
+
+      console.log("bookingdetails ", booking);
 
       const options = {
         key: process.env.RAZORPAY_KEY_ID,
@@ -185,8 +192,8 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         order_id: orderId,
         prefill: {
           name: `${booking?.nonCustomerFirstName} ${booking?.nonCustomerLastName}`,
-          email: "karanbawab1@gmail.com",
-          contact: booking?.phoneNumber
+          email: booking?.email,
+          contact: `${booking?.phoneCode}${booking?.phoneNumber}`
         },
         notes: {
           address: "Razorpay Corporate Office"
@@ -236,6 +243,12 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       setLastNameError("");
     }
 
+    if(!phoneCode) {
+      setPhoneCodeError("Country Code is required");
+    } else {
+      setPhoneCodeError("")
+    }
+
     if (!phoneNumber) {
       setPhoneError("Phone number is required");
       valid = false;
@@ -246,8 +259,10 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     if (!email) {
       setEmailError("Email address is required");
       valid = false;
+    } else if(!email.includes('@')) {
+      setEmailError("Email address is not correct");
     } else {
-      setEmailError("");
+      setEmailError('');
     }
 
     return valid;
@@ -268,11 +283,11 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       nonCustomerFirstName: firstName,
       nonCustomerLastName: lastName,
       email: email,
-      phoneCode: "+91",
+      phoneCode: phoneCode,
       phoneNumber: phoneNumber,
       content: "Booking content",
       tourId: tour,
-      customerUserId: "66c36e709006a19edd547e22",
+      customerUserId: user?.data?.data?.data?.customer?._id,
       adultsCount: guests.guestAdults,
       childCount: guests.guestChildren,
       infantCount: guests.guestInfants,
@@ -315,21 +330,21 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     const hasSpecificTypes = pricing?.prices?.some((p: { type: string; }) =>
       ['adult', 'child', 'infant'].includes(p.type.toLowerCase())
     );
-  
+
     let totalOriginalPrice = 0;
     let totalFinalPrice = 0;
     let guestDetails: { type: string; count: number; price: number }[] = [];
-  
+
     if (hasSpecificTypes) {
       pricing?.prices.forEach((price: any) => {
         const guestType = price.type.toLowerCase();
         const guestCount = guests[`guest${guestType.charAt(0).toUpperCase() + guestType.slice(1)}s` as keyof GuestsObject] || 0;
         const originalPriceForType = guestCount * Math.ceil(price.originalPrice);
         const finalPriceForType = guestCount * Math.ceil(price.finalPrice);
-        
+
         totalOriginalPrice += originalPriceForType;
         totalFinalPrice += finalPriceForType;
-  
+
         if (guestCount > 0) {
           guestDetails.push({
             type: price.type,
@@ -349,36 +364,36 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         price: totalFinalPrice
       });
     }
-  
+
     const totalDiscount = totalOriginalPrice - totalFinalPrice;
-  
+
     return (
       <div className="flex flex-col lg:flex-row justify-between lg:my-0 lg:max-w-sm">
         <div className="relative bg-white border border-gray-200 rounded-lg">
           {/* Banner Section */}
           <div className="relative mb-5">
-          <div className="relative w-full h-40 rounded-t-lg">
-          <Image
-              src={tourGroup?.imageUploads?.[0]?.url || 'https://via.placeholder.com/400'}
-              alt="Tour Group Image"
-              layout="fill" // Ensures the image takes up the full container size
-              objectFit="cover" // Makes sure the image covers the entire container
-              className="rounded-t-lg"
-            />
-            {/* Overlay with a lower z-index */}
-            <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 z-10"></div>
-            
-            {/* Text with a higher z-index to appear on top of the overlay */}
-            <h2 className="absolute top-0 left-0 text-white text-xl font-medium tracking-wide p-5 z-20">
-              {tourGroup?.name}
-            </h2>
-          </div>
+            <div className="relative w-full h-40 rounded-t-lg">
+              <Image
+                src={tourGroup?.imageUploads?.[0]?.url || 'https://via.placeholder.com/400'}
+                alt="Tour Group Image"
+                layout="fill" // Ensures the image takes up the full container size
+                objectFit="cover" // Makes sure the image covers the entire container
+                className="rounded-t-lg"
+              />
+              {/* Overlay with a lower z-index */}
+              <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 z-10"></div>
+
+              {/* Text with a higher z-index to appear on top of the overlay */}
+              <h2 className="absolute top-0 left-0 text-white text-xl font-medium tracking-wide p-5 z-20">
+                {tourGroup?.name}
+              </h2>
+            </div>
 
             <div className="absolute bottom-[-12px] right-0 flex items-center bg-green-500 text-white text-sm font-medium px-2 py-1 rounded-md z-30">
               {currencyCode} {totalDiscount.toLocaleString('en-IN')} Saved
             </div>
           </div>
-  
+
           {/* Selection Details */}
           <div className="px-4">
             <div className="flex justify-between items-center mb-3">
@@ -387,21 +402,21 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
               </div>
               <button className="text-sm font-medium text-blue-600 uppercase" onClick={handleEditDetails}>Edit</button>
             </div>
-  
+
             <div className="flex justify-between items-center mb-3">
               <div className="flex items-center gap-1">
                 <span className="text-gray-700">{tourGroup?.variants?.find((variant: any) => variant?._id === variantId)?.name}</span>
               </div>
               <button className="text-sm font-medium text-blue-600 uppercase" onClick={handleEditDetails}>Edit</button>
             </div>
-  
+
             {/* <div className="flex justify-between items-center mb-5">
               <div className="flex items-center gap-1">
                 <span className="text-gray-700">Valid until: {tourGroup?.ticketValidity?.ticketValidityUntilDate}</span>
               </div>
             </div> */}
           </div>
-  
+
           {/* Price Details */}
           <div className="px-4 py-4 border-t border-gray-200">
             {guestDetails.map((detail, index) => (
@@ -414,13 +429,13 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                 </span>
               </div>
             ))}
-  
+
             <div className="flex justify-between items-center bg-green-50 p-3 border-t border-gray-200 border-dashed">
               <span className="text-green-700">TickYourList discount</span>
               <span className="text-green-700 font-medium">- {currencyCode} {totalDiscount?.toLocaleString('en-IN')}</span>
             </div>
           </div>
-  
+
           {/* Total Payable and Payment Button */}
           <div className="px-4 py-4 border-t border-gray-200">
             <div className="flex justify-between items-center mb-2">
@@ -448,7 +463,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   const PriceRow: React.FC<PriceRowProps> = ({ label, subLabel, price, guests, type }) => {
     const totalPrice = guests * (Math.ceil(price?.finalPrice) || 0);
     const totalOriginalPrice = guests * (Math.ceil(price?.originalPrice) || 0);
-  
+
     return (
       <div className="flex flex-row justify-between mb-3 w-full">
         <div className="flex w-1/2">
@@ -469,9 +484,9 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                 <line x1="24" y1="15.5" x2="9" y2="15.5" stroke="#BDBDBD"></line>
               </svg>
             </button>
-  
+
             <p className="value ml-4 mr-4">{guests}</p>
-  
+
             <button onClick={() => handleGuestChange(1, type)}>
               <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="">
                 <circle cx="16" cy="16" r="16" fill="#F3E9FF"></circle>
@@ -481,7 +496,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
             </button>
           </div>
         </div>
-  
+
         <div className="flex w-1/4 ml-3 justify-end relative">
           <div>
             <div>
@@ -503,7 +518,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     const hasSpecificTypes = pricing?.prices?.some((p: { type: string; }) =>
       ['adult', 'child', 'infant'].includes(p.type.toLowerCase())
     );
-  
+
     const totalPrice = calculateTotalAmount();
     const totalDiscount = getDiscountedPrice();
 
@@ -555,36 +570,36 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
               </div>
             )}
 
-<div className="flex flex-row mt-5 font-normal">
-        <div className="w-full flex flex-col font-normal">
-          {!hasSpecificTypes ? (
-            <PriceRow
-              label="Guests"
-              subLabel=""
-              price={pricing?.prices?.find((p: { type: string; }) => p.type.toLowerCase() === 'guest')}
-              guests={guests.guestAdults || 0}
-              type="guest"
-            />
-          ) : (
-            <>
-              {pricing?.prices.map((price: any) => {
-                const guestType = price.type.toLowerCase();
-                const guestCount = guests[`guest${guestType.charAt(0).toUpperCase() + guestType.slice(1)}s` as keyof GuestsObject] || 0;
-                return (
-                  <PriceRow
-                    key={price.type}
-                    label={price.type.charAt(0).toUpperCase() + price.type.slice(1)}
-                    subLabel={price.ageRange ? `${price.ageRange.min}-${price.ageRange.max} years` : ''}
-                    price={price}
-                    guests={guestCount}
-                    type={guestType as 'adult' | 'child' | 'infant'}
-                  />
-                );
-              })}
-            </>
-          )}
-        </div>
-      </div>
+          <div className="flex flex-row mt-5 font-normal">
+            <div className="w-full flex flex-col font-normal">
+              {!hasSpecificTypes ? (
+                <PriceRow
+                  label="Guests"
+                  subLabel=""
+                  price={pricing?.prices?.find((p: { type: string; }) => p.type.toLowerCase() === 'guest')}
+                  guests={guests.guestAdults || 0}
+                  type="guest"
+                />
+              ) : (
+                <>
+                  {pricing?.prices.map((price: any) => {
+                    const guestType = price.type.toLowerCase();
+                    const guestCount = guests[`guest${guestType.charAt(0).toUpperCase() + guestType.slice(1)}s` as keyof GuestsObject] || 0;
+                    return (
+                      <PriceRow
+                        key={price.type}
+                        label={price.type.charAt(0).toUpperCase() + price.type.slice(1)}
+                        subLabel={price.ageRange ? `${price.ageRange.min}-${price.ageRange.max} years` : ''}
+                        price={price}
+                        guests={guestCount}
+                        type={guestType as 'adult' | 'child' | 'infant'}
+                      />
+                    );
+                  })}
+                </>
+              )}
+            </div>
+          </div>
         </div>
 
         <div>
@@ -609,15 +624,35 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                   </div>
 
                   <div className="flex flex-col sm:flex-row sm:space-x-5">
-                    <div className="flex-1 space-y-1">
+                    <div className="w-full sm:w-1/2 space-y-1 mb-4 sm:mb-0">
                       <Label>Email</Label>
                       <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                       {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
                     </div>
-                    <div className="flex-1 space-y-1 mt-4 sm:mt-0">
-                      <Label>Phone Number</Label>
-                      <Input value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-                      {phoneError && <p className="text-red-500 text-sm">{phoneError}</p>}
+                    <div className="w-full sm:w-3/5 flex flex-col sm:flex-row sm:space-x-4">
+                      <div className="flex-1 sm:w-2/5 space-y-1 mb-4 sm:mb-0">
+                        <Label>Country Code</Label>
+                        <select
+                          name="phoneCode"
+                          defaultValue="Select the country"
+                          onChange={(e) => setPhoneCode(e.target.value)}
+                          required
+                          className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        >
+                          <option disabled>Select country</option>
+                          {countries.map((country) => (
+                            <option key={country.code} value={country.dial_code}>
+                              {country.name} ({country.dial_code})
+                            </option>
+                          ))}
+                        </select>
+                        {phoneCodeError && <p className="text-red-500 text-sm">{phoneCodeError}</p>}
+                      </div>
+                      <div className="flex-1 space-y-1">
+                        <Label>Phone Number</Label>
+                        <Input value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+                        {phoneError && <p className="text-red-500 text-sm">{phoneError}</p>}
+                      </div>
                     </div>
                   </div>
 
@@ -676,9 +711,9 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   return (
     <div className={`nc-CheckOutPagePageMain ${className}`}>
       <div className="relative px-4 lg:container h-[20px] flex flex-col border-b-q">
-          <div className="flex-1 flex justify-between">
-          </div>
+        <div className="flex-1 flex justify-between">
         </div>
+      </div>
       <main className="container mt-5 md:mt-11 mb-24 lg:mb-32 flex flex-col-reverse lg:flex-row">
         <div className="w-full lg:w-3/5 xl:w-2/3 lg:pr-10 ">{renderMain()}</div>
         <div className="hidden lg:block flex-grow">{renderSidebar()}</div>
