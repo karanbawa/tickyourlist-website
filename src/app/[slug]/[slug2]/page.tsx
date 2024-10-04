@@ -721,7 +721,7 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
           style={{ backgroundColor: "#075e54" }} // WhatsApp brand color
           icon={<FaWhatsapp size={20} color="#fff" />} // Pass the WhatsApp icon
         >
-          Whatsapp Us
+          Chat on WhatsApp
         </ButtonPrimary>
 
       </div>
