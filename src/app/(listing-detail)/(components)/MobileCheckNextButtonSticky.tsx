@@ -79,11 +79,11 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
             </button>
           </div>
           
-          <div className="bg-yellow-50 p-3 rounded-md mb-4 text-sm">
+          <div className="bg-yellow-50 p-3 rounded-md mb-4 text-xs">
             Infants aged 2 and under can enter for free. Simply show their ID at the venue and enter.
           </div>
           
-          <div className="text-sm mb-4">
+          <div className="text-xs mb-4">
             ⚡ Likely to sell out
           </div>
           
@@ -91,8 +91,8 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
             {/* Adult Ticket Selector */}
             <div className="flex justify-between items-center">
               <div>
-                <p className="font-semibold">Adult</p>
-                <p className="text-sm text-gray-500">Above 12 yrs</p>
+                <p className="font-medium">Adult</p>
+                <p className="text-xs text-gray-500">Above 12 yrs</p>
               </div>
               <div className="flex items-center">
                 <button className="p-2 rounded-full border hover:bg-gray-100" onClick={() => setAdultTickets(Math.max(0, adultTickets - 1))}>-</button>
@@ -105,8 +105,8 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
             {/* Child Ticket Selector */}
             <div className="flex justify-between items-center">
               <div>
-                <p className="font-semibold">Child</p>
-                <p className="text-sm text-gray-500">3 to 11 yrs</p>
+                <p className="font-medium">Child</p>
+                <p className="text-xs text-gray-500">3 to 11 yrs</p>
               </div>
               <div className="flex items-center">
                 <button className="p-2 rounded-full border hover:bg-gray-100" onClick={() => setChildTickets(Math.max(0, childTickets - 1))}>-</button>
