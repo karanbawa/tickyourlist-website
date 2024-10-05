@@ -30,6 +30,19 @@ const MobileFooterSticky: FC<MobileFooterStickyProps> = ({ tourGroup }) => {
     router.push(`/checkout?tourId=${tourGroup?._id}&date=${today}`);
   }
 
+  const handleWhatsappRedirect = () => {
+    console.log("whatsapptest ");
+    const phoneNumber = "+918588938349"; // replace with the WhatsApp number you want to send the message to
+    const message = `Hello, I'm interested in personalized itineraries and vacation planning. Here is the link: https://tickyourlist.com/${tourGroup?.urlSlugs?.EN}`;
+    const encodedMessage = encodeURIComponent(message);
+
+    // Construct WhatsApp URL
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+    // Redirect to WhatsApp
+    window.open(whatsappUrl, "_blank");
+  };
+
   return (
     <div className="block lg:hidden fixed bottom-0 inset-x-0 bg-white dark:bg-neutral-800 z-40">
       <span className="absolute -top-[1.8rem] left-0 right-0 text-xs text-green-600 font-medium bg-green-100 pt-2 pb-2 pl-5">
@@ -61,7 +74,9 @@ const MobileFooterSticky: FC<MobileFooterStickyProps> = ({ tourGroup }) => {
               justifyContent: "center",
               alignItems: "center",
               cursor: 'pointer'
-            }}>
+            }}
+            onClick={handleWhatsappRedirect}
+            >
               <FaWhatsapp size={20} color="#fff" />
             </div>
 

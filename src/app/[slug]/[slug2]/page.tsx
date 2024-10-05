@@ -29,6 +29,7 @@ import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import { History, Info, Shuffle, Smartphone, User, Utensils, Zap } from "lucide-react";
 import { FaWhatsapp } from 'react-icons/fa';
+import WhatsappButton from "@/components/whatsappButton/WhatsappButton";
 
 interface Params {
   slug: string;
@@ -455,6 +456,19 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
   //   </Transition>
   // );
 
+  const handleWhatsappRedirect = () => {
+    const phoneNumber = "+918588938349"; // replace with the WhatsApp number you want to send the message to
+    const message = `Hello, I'm interested in personalized itineraries and vacation planning. Here is the link: https://tickyourlist.com/${tourGroup?.urlSlugs?.EN}`;
+    const encodedMessage = encodeURIComponent(message);
+    
+    // Construct WhatsApp URL
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    
+     // Redirect to WhatsApp
+    window.open(whatsappUrl, "_blank");
+  };
+  
+
   const renderSection4 = () => (
     <div className="listingSection__wrap">
       <div>
@@ -717,12 +731,7 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
       </div>
       <div className="flex flex-col">
       <div className="font-semibold underline mb-3">Need Help In Booking?</div>
-      <ButtonPrimary
-          style={{ backgroundColor: "#075e54" }} // WhatsApp brand color
-          icon={<FaWhatsapp size={20} color="#fff" />} // Pass the WhatsApp icon
-        >
-          Chat on WhatsApp
-        </ButtonPrimary>
+      <WhatsappButton tourGroupUrl={tourGroup?.urlSlugs.EN} />
 
       </div>
     </div>

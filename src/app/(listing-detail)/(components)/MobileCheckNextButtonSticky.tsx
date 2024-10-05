@@ -6,7 +6,6 @@ import ButtonPrimary from "@/shared/ButtonPrimary";
 import converSelectedDateToString from "@/utils/converSelectedDateToString";
 import ModalReserveMobile from "./ModalReserveMobile";
 import { useData } from "@/context/DataContext";
-import { FaWhatsapp } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
 interface MobileCheckNextButtonStickyProps {
