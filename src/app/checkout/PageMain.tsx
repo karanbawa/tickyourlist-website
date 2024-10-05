@@ -219,7 +219,7 @@ const handleBackButton = () => {
 
           {renderPreference()}
 
-          {selectedVariantIndex !== null && selectedVariantIndex !== undefined && (
+          {!isMobileView && selectedVariantIndex !== null && selectedVariantIndex !== undefined && (
             <>
              <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
                             <div ref={scrollToElementRef} className="flex justify-between items-center">
