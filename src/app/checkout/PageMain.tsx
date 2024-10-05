@@ -36,6 +36,22 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
    const scrollToElementRef = useRef<HTMLDivElement>(null);
 
    const [showNextBookButtonAtFooter, setShowNextBookButtonAtFooter] = useState(false);
+   const [isMobileView, setIsMobileView] = useState(false);
+
+   useEffect(() => {
+    const handleResize = () => {
+      setIsMobileView(window.innerWidth < 768); // Adjust this breakpoint as needed
+    };
+  
+    // Set initial value
+    handleResize();
+  
+    // Add event listener
+    window.addEventListener('resize', handleResize);
+  
+    // Clean up
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
     // const [endDate, setEndDate] = useState<Date | null>(new Date("2023/02/23"));
   const router = useRouter();
@@ -121,7 +137,7 @@ function calculateDiscountPercentage(originalPrice: string | number, finalPrice:
  const renderPreference = () => {
   return (
     <div className="flex flex-col">
-      <div className="text-sm md:text-2xl font-semibold mt-2 md:mt-0 mb-4 sm:max-md:text-[#444444]">Select a preference</div>
+      <div className="text-md md:text-2xl font-semibold mt-2 md:mt-0 mb-4 sm:max-md:text-[#444444]">Select a preference</div>
       {/* <span className="text-xs text-gray-500">Select a Preference to proceed</span> */}
       <div className="flex lg:justify-between gap-4 overflow-x-auto xl:overflow-x-visible">
         <div className="flex flex-grow-1 gap-4">
@@ -164,8 +180,8 @@ const handleBackButton = () => {
 
   const renderDateSelector = () => {
     return (<>
-    <div>
-    <h2 className="text-[#444444] text-sm md:text-lg font-medium mb-1.5">
+    <div className="mt-2">
+    <h2 className="text-[#444444] text-md md:text-lg font-medium mb-1.5">
           Select a date
         </h2>
         <p className="text-[#444444] text-xs md:text-sm font-light">
@@ -181,7 +197,7 @@ const handleBackButton = () => {
   
   const renderMain = () => {
     return (
-      <div className="w-full flex flex-col sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-1 md:space-y-8 px-0 sm:p-6 xl:p-8">
+      <div className="w-full flex flex-col sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-5 md:space-y-8 px-0 sm:p-6 xl:p-8">
         <h2 className="hidden md:block sm:text-xl md:text-4xl font-semibold">
           Confirm and payment
         </h2>
@@ -214,7 +230,7 @@ const handleBackButton = () => {
 
   return (
     <div className={`nc-CheckOutPagePageMain ${className}`}>
-     <nav className="fixed sm:hidden top-0 left-0 right-0 z-50 flex items-center justify-between px-4 py-2 bg-white shadow-sm pt-3 pb-3">
+     <nav className="fixed sm:hidden top-0 left-0 right-0 z-50 flex items-center justify-between px-4 pt-4 pb-4 bg-white shadow-sm pt-3 pb-3">
       <button className="text-gray-600 hover:text-gray-800 cursor-pointer" onClick={handleBackButton}>
         <ArrowLeft size={24} />
       </button>

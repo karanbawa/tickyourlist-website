@@ -34,7 +34,7 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({ tou
 
   return (
     <div className="block lg:hidden fixed bottom-0 inset-x-0 bg-white dark:bg-neutral-800 z-40">
-      <div className="container py-2 sm:py-3 border-t border-neutral-200 dark:border-neutral-6000">
+      <div className="container py-3 sm:py-3 border-t border-neutral-200 dark:border-neutral-6000">
         <div className="flex items-center justify-between">
           <div className="flex flex-col">
             <span className="text-sm text-neutral-6000 dark:text-neutral-400 font-semibold">

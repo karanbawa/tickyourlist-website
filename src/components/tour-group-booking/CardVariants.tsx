@@ -34,7 +34,7 @@ const CardVariant: FC<CardVariantProps> = ({
 
   return (
     <div
-      className={`nc-CardVariant relative flex flex-col w-full max-w-[18rem] px-4 py-6 sm:px-8 sm:py-10 border border-neutral-200 dark:border-neutral-700 rounded-2xl ${className}`}
+      className={`nc-CardVariant relative flex flex-col w-full min-w-[13rem] max-w-[30rem] px-4 py-6 sm:px-8 sm:py-10 border border-neutral-200 dark:border-neutral-700 rounded-2xl ${className}`}
     >
       <div className="flex flex-col h-full">
         <div className="title-container mb-2">

@@ -26,7 +26,8 @@ const MobileFooterSticky: FC<MobileFooterStickyProps> = ({ tourGroup }) => {
   const router = useRouter();
 
   const handleBookNow = () => {
-    router.push(`/checkout?tourId=${tourGroup?._id}`);
+    const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    router.push(`/checkout?tourId=${tourGroup?._id}&date=${today}`);
   }
 
   return (
