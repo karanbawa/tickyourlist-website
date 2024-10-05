@@ -40,7 +40,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
    useEffect(() => {
     const handleResize = () => {
-      setIsMobileView(window.innerWidth < 768); // Adjust this breakpoint as needed
+      setIsMobileView(window.innerWidth < 640); // Adjust this breakpoint as needed
     };
   
     // Set initial value
