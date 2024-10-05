@@ -53,26 +53,38 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-    // const [endDate, setEndDate] = useState<Date | null>(new Date("2023/02/23"));
   const router = useRouter();
 
   const handleVariantSelect = (index: number | undefined) => {
     setShowNextBookButtonAtFooter(true);
     setSelectedVariantIndex(index !== undefined ? index : null);
-  };  
+  };
 
   useEffect(() => {
-    if (selectedVariantIndex !== null && scrollToElementRef.current) {
+    if (!isMobileView && selectedVariantIndex !== null && scrollToElementRef.current) {
       const elementTop = scrollToElementRef.current.getBoundingClientRect().top + window.scrollY;
       const offset = window.innerHeight * 0.5;
       const targetPosition = elementTop - offset;
-
+  
       window.scrollTo({
         top: targetPosition,
         behavior: "smooth",
       });
     }
-  }, [selectedVariantIndex]);
+  }, [selectedVariantIndex, isMobileView]);
+
+  // useEffect(() => {
+  //   if (selectedVariantIndex !== null && scrollToElementRef.current) {
+  //     const elementTop = scrollToElementRef.current.getBoundingClientRect().top + window.scrollY;
+  //     const offset = window.innerHeight * 0.5;
+  //     const targetPosition = elementTop - offset;
+
+  //     window.scrollTo({
+  //       top: targetPosition,
+  //       behavior: "smooth",
+  //     });
+  //   }
+  // }, [selectedVariantIndex]);
 
 
   useEffect(() => {
@@ -246,7 +258,15 @@ const handleBackButton = () => {
         {/* <div className="hidden lg:block flex-grow">{renderSidebar1()}</div> */}
       </main>
        {/* STICKY FOOTER MOBILE */}
-       {showNextBookButtonAtFooter && <MobileCheckNextButtonSticky tourGroup={tourGroup} selectedVariantIndex={selectedVariantIndex} getFormattedDate={getFormattedDate} getFormatedData={getFormatedData} />}
+       {isMobileView && showNextBookButtonAtFooter && (
+          <MobileCheckNextButtonSticky 
+            tourGroup={tourGroup} 
+            selectedVariantIndex={selectedVariantIndex} 
+            getFormattedDate={getFormattedDate} 
+            getFormatedData={getFormatedData} 
+          />
+        )}
+       {/* {showNextBookButtonAtFooter && <MobileCheckNextButtonSticky tourGroup={tourGroup} selectedVariantIndex={selectedVariantIndex} getFormattedDate={getFormattedDate} getFormatedData={getFormatedData} />} */}
     </div>
   );
 };

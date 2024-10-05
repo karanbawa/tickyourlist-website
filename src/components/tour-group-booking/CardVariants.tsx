@@ -41,14 +41,14 @@ const CardVariant: FC<CardVariantProps> = ({
           <h2 className="text-sm md:text-lg font-semibold h-[3rem] md:h-[5rem]">{title}</h2>
         </div>
         <div className="mb-4">
-          <span className="line-through text-xs md:text-sm text-neutral-500 dark:text-neutral-400">
+          <span className="line-through text-xs md:text-cs text-neutral-500 dark:text-neutral-400">
             {currencyCode} {originalPrice?.toLocaleString("en-IN")}
           </span>
           <div className="flex items-baseline">
-            <span className="text-xs md:text-xl font-normal">
+            <span className="text-xs md:text-lg font-normal">
               {currencyCode} {discountedPrice?.toLocaleString("en-IN")}
             </span>
-            <Badge className="ml-3 text-xs md:text-base" color="green" name={discount} />
+            <Badge className="ml-3 text-xs md:text-md" color="green" name={discount} />
           </div>
         </div>
         <div>
