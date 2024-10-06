@@ -78,11 +78,29 @@ const CountryCodeSelector: FC<CountryCodeSelectorProps> = ({
   };
 
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const numericValue = value.replace(/\D/g, ''); // Remove non-numeric characters
+    
     if (setPhoneNumber) {
-      setPhoneNumber(e.target.value);
+      setPhoneNumber(numericValue);
     }
     if (setPhoneError) {
       setPhoneError('');
+    }
+  };
+
+  const handlePhoneNumberKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // Allow: backspace, delete, tab, escape, enter, and number keys
+    if ([46, 8, 9, 27, 13].indexOf(e.keyCode) !== -1 ||
+      // Allow: Ctrl+A, Command+A
+      (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+      // Allow: home, end, left, right, down, up
+      (e.keyCode >= 35 && e.keyCode <= 40)) {
+      return;
+    }
+    // Ensure that it is a number and stop the keypress
+    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+      e.preventDefault();
     }
   };
 
@@ -122,6 +140,7 @@ const CountryCodeSelector: FC<CountryCodeSelectorProps> = ({
           type="tel"
           value={phoneNumber}
           onChange={handlePhoneNumberChange}
+          onKeyDown={handlePhoneNumberKeyDown}
           placeholder="Phone number"
           className="flex-grow rounded-l-none !border-l-0"
           rounded="rounded-r-2xl"
