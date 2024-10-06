@@ -160,7 +160,7 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
           className={`bg-white dark:bg-neutral-900 absolute h-full inset-x-0 top-0 transition-transform will-change-[transform,opacity] ${showHeroSearch ? "duration-75" : ""} ${showHeroSearch ? currentTab === "Cars" || currentTab === "Flights" ? "scale-y-[4.4]" : "scale-y-[3.4]" : ""}`}
         ></div>
         {!isHiddenOnMobile && (
-        <div className="lg:hidden relative px-4 h-[88px] flex flex-col">
+        <div className="md:hidden relative px-4 h-[88px] flex flex-col">
           <div className="flex-1 flex justify-between">
             <div className="relative z-10 flex items-center">
               <Logo />
@@ -174,26 +174,26 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
           </div>
         </div>
       )}
-        <div className="hidden sm:flex relative px-4 lg:container h-[88px] flex flex-col">
+        <div className="hidden md:flex relative px-4 lg:container h-[88px] flex flex-col">
           <div className="flex-1 flex justify-between">
             {/* Logo (lg+) */}
-            <div className="relative z-10 hidden md:flex flex-1 items-center">
+            <div className="relative z-10 hidden sm:flex flex-1 items-center">
               <Logo />
             </div>
 
-            <div className="flex flex-[2] lg:flex-none mx-auto">
-              <div className="flex-1 hidden lg:flex self-center">
+            <div className="flex flex-[2] sm:flex-none mx-auto">
+              <div className="flex-1 hidden sm:flex self-center">
                 {renderButtonOpenHeroSearch()}
               </div>
-              <div className="self-center flex-1 lg:hidden w-full max-w-lg mx-auto">
+              {/* <div className="self-center flex-1 lg:hidden w-full max-w-lg mx-auto">
                 <HeroSearchForm2MobileFactory />
-              </div>
+              </div> */}
               {renderHeroSearch()}
             </div>
 
             {/* NAV */}
-            <div className="hidden md:flex relative z-10 flex-1 justify-end text-neutral-700 dark:text-neutral-100">
-              <div className="hidden lg:flex space-x-1">
+            <div className="hidden sm:flex relative z-10 flex-1 justify-end text-neutral-700 dark:text-neutral-100">
+              <div className="hidden sm:flex space-x-1">
                 <LangDropdown currencyCode={currencyCode} cityCode={initialCityCode} />
                 <div className="flex space-x-1">
                   {/* <Link
