@@ -171,7 +171,7 @@ const CountryCodeSelector: FC<CountryCodeSelectorProps> = ({
           <div
             className="fixed inset-x-0 bottom-0 bg-white z-50 transition-all duration-300 ease-out"
             style={{ 
-              height: '80vh',
+              height: '65vh',
               borderTopLeftRadius: '16px', 
               borderTopRightRadius: '16px',
               boxShadow: '0px -4px 10px rgba(0, 0, 0, 0.1)',
