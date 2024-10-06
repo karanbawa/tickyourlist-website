@@ -156,7 +156,7 @@ const MobileViewReviewPaybookingdetails: FC<MobileViewReviewPaybookingdetails> =
         </div>
 
         {/* White Card with Details */}
-        <div className="bg-white rounded-2xl absolute left-4 right-4 bottom-0 translate-y-20 z-20 p-4 sm:p-6 shadow-lg">
+        <div className="bg-white rounded-2xl absolute left-4 right-4 bottom-0 translate-y-20 z-20 p-4 sm:p-6 shadow-lg" onClick={handleReveal}>
           <h2 className="text-md font-semibold mb-3">{tourGroup?.name}</h2>
 
           <ul className="list-none p-0 m-0 space-y-2">
@@ -178,7 +178,7 @@ const MobileViewReviewPaybookingdetails: FC<MobileViewReviewPaybookingdetails> =
 
           <div className="flex items-center justify-between pt-4 mt-4 border-t border-gray-200">
             <p className="font-semibold text-md">Total payable</p>
-            <div className="flex items-center" onClick={handleReveal}>
+            <div className="flex items-center">
               <span className="font-semibold text-md mr-1">{currencyCode} {totalFinalPrice.toLocaleString('en-IN')}</span>
               <ChevronDown className="w-5 h-5" aria-hidden="true" />
             </div>

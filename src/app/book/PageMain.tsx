@@ -600,9 +600,9 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
         <div>
           <h3 className="text-md md:text-2xl font-semibold mt-2 sm:mt-0">Lead Guest Details</h3>
-          <div className="w-14 border-b border-neutral-200 dark:border-neutral-700 my-5"></div>
+          <div className="hidden sm:block w-14 border-b border-neutral-200 dark:border-neutral-700 my-5"></div>
 
-          <div className="mt-6">
+          <div className="mt-3 sm:mt-6">
             <Tab.Group>
               <Tab.Panels>
                 <Tab.Panel className="space-y-5">
@@ -612,7 +612,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                       <Input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} />
                       {fullNameError && <p className="text-red-500 text-sm">{fullNameError}</p>}
                     </div>
-                    <div className="w-full sm:w-1/2 space-y-1 mb-4 sm:mb-0">
+                    <div className="w-full sm:w-1/2 space-y-1  mt-2 sm:mb-0">
                       <Label>Email</Label>
                       <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                       {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
