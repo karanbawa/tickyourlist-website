@@ -138,7 +138,7 @@ const CountryCodeSelector: FC<CountryCodeSelectorProps> = ({
           onChange={handlePhoneNumberChange}
           onKeyDown={handlePhoneNumberKeyDown}
           placeholder="Phone number"
-          className="flex-grow rounded-l-none !border-l-0"
+          className="flex-grow rounded-l-none !border-l-0 text-base sm:text-lg"
           rounded="rounded-r-2xl"
         />
       </div>

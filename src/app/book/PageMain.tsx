@@ -1,7 +1,7 @@
 'use client'
 
 import { Tab } from "@headlessui/react";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Input from "@/shared/Input";
 import Label from "@/components/Label";
 import ButtonPrimary from "@/shared/ButtonPrimary";
@@ -14,6 +14,7 @@ import { useAuth } from "@/context/AuthContext";
 import MobileViewReviewPaybookingdetails from "@/components/bookingdetails/MobileViewReviewPaybookingdetails";
 import MobileConfimAndPayButton from "../(listing-detail)/(components)/MobileConfimAndPayButton";
 import CountryCodeSelector from "@/components/bookingdetails/CountryCodeSelector";
+import Head from "next/head";
 
 export interface CheckOutPagePageMainProps {
   className?: string;
@@ -143,6 +144,23 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       }, 0);
     }
   };
+
+  useEffect(() => {
+    // This effect will run only on the client-side
+    if (typeof window !== 'undefined') {
+      // Prevent zoom on focus for iOS devices
+      const preventZoom = (e: TouchEvent) => {
+        if (e.touches.length > 1) {
+          e.preventDefault();
+        }
+      };
+      document.addEventListener('touchmove', preventZoom, { passive: false });
+      
+      return () => {
+        document.removeEventListener('touchmove', preventZoom);
+      };
+    }
+  }, []);
 
   const handleTogglePromoCode = () => {
     setShowPromoCode(!showPromoCode);
@@ -601,7 +619,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                   <div className="flex flex-col sm:flex-row sm:space-x-5">
                     <div className="flex-1 space-y-1">
                       <Label className="text-sm md:text-base">Full Name</Label>
-                      <Input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+                      <Input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} className="w-full p-3 border rounded-md text-base sm:text-lg" />
                       {fullNameError && <p className="text-red-500 text-sm">{fullNameError}</p>}
                     </div>
                     <div className="w-full sm:w-1/2 space-y-1  mt-2 sm:mt-0 sm:mb-0">
@@ -613,7 +631,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                   <div className="flex flex-col sm:flex-row sm:space-x-5">
                   <div className="w-full sm:w-1/2 space-y-1  mt-2 sm:mt-0 sm:mb-0">
                       <Label className="text-sm md:text-base">Email</Label>
-                      <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                      <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full p-3 border rounded-md text-base sm:text-lg" />
                       {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
                     </div>
                   </div>
@@ -671,6 +689,10 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   };
 
   return (
+    <>
+    <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+      </Head>
     <div className={`nc-CheckOutPagePageMain ${className}`}>
       {/* <div className="relative px-4 lg:container h-[20px] flex flex-col border-b-q">
         <div className="flex-1 flex justify-between">
@@ -690,6 +712,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         </div>
       )}
     </div>
+    </>
   );
 };
 
