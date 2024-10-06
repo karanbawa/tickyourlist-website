@@ -198,7 +198,7 @@ const CountryCodeSelector: FC<CountryCodeSelectorProps> = ({
                       <input
                         type="text"
                         placeholder="Type country name or country code"
-                        className="w-full pl-10 pr-4 py-2 border rounded-md focus:ring-primary-200 focus:border-primary-300"
+                        className="w-full pl-10 pr-4 py-2 border rounded-md focus:ring-primary-200 focus:border-primary-300 text-sm"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                       />
