@@ -48,7 +48,7 @@ interface PriceRowProps {
 
 export interface GuestsObject {
   guestAdults?: number;
-  guestChildren?: number;
+  guestChilds?: number;
   guestInfants?: number;
 }
 
@@ -63,7 +63,7 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
   const [isRevealed, setIsRevealed] = useState(false);
   const [guests, setGuests] = useState<GuestsObject>({
     guestAdults: 1,
-    guestChildren: 0,
+    guestChilds: 0,
     guestInfants: 0,
   });
 
@@ -76,7 +76,27 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
 
   const handleBookNow = () => {
     const variant = tourGroup.variants[selectedVariantIndex];
-    router.push(`/book?tourId=${tourGroup._id}&date=${getFormatedData()}&tour=${variant.tours[0]._id}&variantId=${variant._id}`);
+    const hasSpecificTypes = pricing?.prices?.some((p: { type: string; }) =>
+      ['adult', 'child', 'infant'].includes(p.type.toLowerCase())
+    );
+
+    console.log("hasSpecificTypes ", hasSpecificTypes, guests);
+
+    let paxQuery = '';
+    if (hasSpecificTypes) {
+      const paxParams = [];
+      if (guests.guestAdults && guests.guestAdults > 0) paxParams.push(`pax.adult=${guests.guestAdults}`);
+      if (guests.guestChilds && guests.guestChilds > 0) paxParams.push(`pax.child=${guests.guestChilds}`);
+      if (guests.guestInfants && guests.guestInfants > 0) paxParams.push(`pax.infant=${guests.guestInfants}`);
+      paxQuery = paxParams.length > 0 ? `&${paxParams.join('&')}` : '';
+    } else {
+      const totalGuests = (guests.guestAdults || 0) + (guests.guestChilds || 0) + (guests.guestInfants || 0);
+      if (totalGuests > 0) {
+        paxQuery = `&pax.guests=${totalGuests}`;
+      }
+    }
+
+    router.push(`/book?tourId=${tourGroup._id}&date=${getFormatedData()}&tour=${variant.tours[0]._id}&variantId=${variant._id}${paxQuery}`);
   };
 
   const handleGuestChange = (change: number, type: 'guest' | 'adult' | 'child' | 'infant') => {
@@ -123,7 +143,7 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
     
     if (!hasSpecificTypes) {
       const guestPrice = pricing.prices.find(p => p.type.toLowerCase() === 'guest');
-      return (((guests.guestAdults || 0) + (guests.guestChildren || 0)) * (Math.ceil(guestPrice?.finalPrice || 0))).toFixed(2);
+      return (((guests.guestAdults || 0) + (guests.guestChilds || 0)) * (Math.ceil(guestPrice?.finalPrice || 0))).toFixed(2);
     }
     
     return pricing.prices.reduce((total, price) => {
@@ -259,30 +279,30 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
           )}
           
           {!hasSpecificTypes && pricing ? (
-        <PriceRow
-          label="Guests"
-          subLabel=""
-          price={pricing.prices.find(p => p.type.toLowerCase() === 'guest') || pricing.prices[0]}
-          guests={(guests.guestAdults || 0) + (guests.guestChildren || 0)}
-          type="guest"
-        />
-      ) : (
-        pricing?.prices.map((price) => {
-          const guestType = price.type.toLowerCase() as 'adult' | 'child' | 'infant';
-          const guestKey = `guest${price.type.charAt(0).toUpperCase() + price.type.slice(1)?.toLowerCase()}s` as keyof GuestsObject;
-          console.log('pricepricepriceprice', price, guestKey, guests[guestKey]); 
-          return (
-            <PriceRow
-              key={price.type} 
-              label={price.type.charAt(0).toUpperCase() + price.type.slice(1)}
-              subLabel={price.ageRange ? `${price.ageRange.max ? `${price.ageRange.min}-${price.ageRange.max} years` : `Above ${price.ageRange.min} years`}`: ''}
-              price={price}
-              guests={guests[guestKey] || 0}
-              type={guestType}
-            />
-          );
-        })
-      )}
+          <PriceRow
+            label="Guests"
+            subLabel=""
+            price={pricing.prices.find(p => p.type.toLowerCase() === 'guest') || pricing.prices[0]}
+            guests={(guests.guestAdults || 0) + (guests.guestChilds || 0)}
+            type="guest"
+          />
+        ) : (
+          pricing?.prices.map((price) => {
+            const guestType = price.type.toLowerCase() as 'adult' | 'child' | 'infant';
+            const guestKey = `guest${price.type.charAt(0).toUpperCase() + price.type.slice(1)?.toLowerCase()}s` as keyof GuestsObject;
+            console.log('pricepricepriceprice', price, guestKey, guests[guestKey]); 
+            return (
+              <PriceRow
+                key={price.type} 
+                label={price.type.charAt(0).toUpperCase() + price.type.slice(1)}
+                subLabel={price.ageRange ? `${price.ageRange.max ? `${price.ageRange.min}-${price.ageRange.max} years` : `Above ${price.ageRange.min} years`}`: ''}
+                price={price}
+                guests={guests[guestKey] || 0}
+                type={guestType}
+              />
+            );
+          })
+        )}
           
           <div className="flex justify-between font-medium text-md mt-6 mb-6">
             <span>Total payable</span>
