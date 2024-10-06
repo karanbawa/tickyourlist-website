@@ -28,7 +28,6 @@ import MobileFooterSticky from "@/app/(listing-detail)/(components)/MobileFooter
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import { History, Info, Shuffle, Smartphone, User, Utensils, Zap } from "lucide-react";
-import { FaWhatsapp } from 'react-icons/fa';
 import WhatsappButton from "@/components/whatsappButton/WhatsappButton";
 
 interface Params {
