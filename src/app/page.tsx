@@ -45,8 +45,6 @@ export default async function PageHome3Server({ params }: { params: { slug: stri
   const cookieStore = cookies();
   const currency = cookieStore.get('currency')?.value || 'AED'; // Default to 'AED' if no currency cookie exists
 
-  console.log("Currency detected in page: ", currency);
-
   // Fetch travel sections based on city code and currency
   const travelSections = await getTravelSections(cityCode, currency);
   const travelSectionBanners = await getTravelSectionBanners(cityCode,'EN');

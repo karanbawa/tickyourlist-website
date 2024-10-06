@@ -198,9 +198,6 @@ const searchDatabase = (query, options = {}) => {
     typoTolerance = "min",
     preferenceOrder = [],
   } = options;
-
-  console.log("Searching for:", query); // Debugging log
-
   const queryWords = query.toLowerCase().split(/\s+/);
 
   const results = mockDatabase
@@ -273,8 +270,6 @@ const searchDatabase = (query, options = {}) => {
       return 0;
     })
     .slice(0, hitsPerPage);
-
-  console.log("Search results:", results); // Debugging log
   return results;
 };
 

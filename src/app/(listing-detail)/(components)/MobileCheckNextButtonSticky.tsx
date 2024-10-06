@@ -80,8 +80,6 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
       ['adult', 'child', 'infant'].includes(p.type.toLowerCase())
     );
 
-    console.log("hasSpecificTypes ", hasSpecificTypes, guests);
-
     let paxQuery = '';
     if (hasSpecificTypes) {
       const paxParams = [];
@@ -100,13 +98,10 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
   };
 
   const handleGuestChange = (change: number, type: 'guest' | 'adult' | 'child' | 'infant') => {
-    console.log("change ", change, type, pricing);
     setGuests(prevGuests => {
       const hasSpecificTypes = pricing?.prices?.some((p: { type: string; }) =>
         ['adult', 'child', 'infant'].includes(p.type.toLowerCase())
       );
-
-      console.log("hasSpecificTypeshasSpecificTypes ", hasSpecificTypes);
 
       if (!hasSpecificTypes) {
         // If only guest type is available
@@ -118,10 +113,7 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
       } else {
         // If specific types (adult, child, infant) are available
         const key = `guest${type.charAt(0).toUpperCase() + type.slice(1)}s` as keyof GuestsObject;
-        console.log("keys ", key, prevGuests);
         const newValue = Math.max(0, (prevGuests[key] || 0) + change);
-
-        console.log("newValue ", newValue);
 
         // Ensure at least 1 adult
         if (key === 'guestAdults' && newValue < 1) {
@@ -290,7 +282,6 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
           pricing?.prices.map((price) => {
             const guestType = price.type.toLowerCase() as 'adult' | 'child' | 'infant';
             const guestKey = `guest${price.type.charAt(0).toUpperCase() + price.type.slice(1)?.toLowerCase()}s` as keyof GuestsObject;
-            console.log('pricepricepriceprice', price, guestKey, guests[guestKey]); 
             return (
               <PriceRow
                 key={price.type} 

@@ -68,9 +68,6 @@ const LangDropdown: FC<LangDropdownProps> = ({
     // Access cookies in the client using document.cookie
     const allCookies = document.cookie.split("; ");
     
-    // Log all cookies for debugging
-    console.log("All Cookies: ", allCookies);
-    
     // Find the cookie that starts with 'currency='
     const currencyCookie = allCookies.find((cookie) => cookie.startsWith("currency="));
     
@@ -80,7 +77,6 @@ const LangDropdown: FC<LangDropdownProps> = ({
       const cookieValue = currencyCookie.split("=")[1];
       setSelectedCurrency(cookieValue);
     } else {
-      console.log("Currency cookie not found");
     }
   }, []);
   
@@ -102,7 +98,6 @@ const LangDropdown: FC<LangDropdownProps> = ({
         const cookieValue = currencyCookie.split("=")[1];
         if (cookieValue !== selectedCurrency) {
           setSelectedCurrency(cookieValue); // Update the state if cookie changes
-          console.log("Currency updated from cookie:", cookieValue);
         }
       }
     };

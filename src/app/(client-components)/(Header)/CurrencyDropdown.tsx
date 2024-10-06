@@ -61,16 +61,12 @@ export const headerCurrency = [
 
 const CurrencyDropdown: React.FC = () => {
   const [selectedCurrency, setSelectedCurrency] = useState("AED");
-
-  console.log("asadadas adaD ");
   
 
   const handleCurrencyChange = (currencyId: string) => {
-    console.log('cureencyId ', currencyId);
     setSelectedCurrency(currencyId);
     // Save the selected currency to localStorage
     localStorage.setItem('selectedCurrency', currencyId);
-    console.log('Currency changed:', currencyId); // Add this line for debugging
   };
 
   const selectedCurrencyObj = headerCurrency.find(currency => currency.id === selectedCurrency);

@@ -87,9 +87,7 @@ const SiteHeader : React.FC<SiteHeaderProps> = ({ initialCollectionData, initial
   const [categoriesData, setCategoriesData] = useState(initialCategoriesData);
 
   useEffect(() => {
-    console.log("pathName ", pathname);
     const cityMatch = pathname.match(/\/things-to-do-in-(.+)/);
-    console.log('cityMatchdata ', cityMatch);
     if (cityMatch) {
       const cityCode = cityMatch[1].toUpperCase();
       const cacheKey = `collection-data-things-to-do-in-${cityCode}`;

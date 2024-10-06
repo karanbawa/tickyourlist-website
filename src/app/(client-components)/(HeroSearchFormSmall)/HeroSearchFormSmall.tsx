@@ -67,7 +67,6 @@ const HeroSearchFormSmall: FC<HeroSearchFormSmallProps> = ({
   );
 
   const renderForm = () => {
-    console.log(tabActive);
     switch (tabActive) {
       // case "Stays":
       //   return <StaySearchForm defaultFieldFocus={defaultFieldFocus} />;
