@@ -229,7 +229,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
   const validateFields = () => {
     let valid = true;
-    if (!fullName) {
+    if (!fullName.trim()) {
       setFullNameError("Full Name is required");
       valid = false;
     } else {
@@ -242,14 +242,14 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     //   setPhoneCodeError("")
     // }
 
-    if (!phoneNumber) {
+    if (!phoneNumber.trim()) {
       setPhoneError("Phone number is required");
       valid = false;
     } else {
       setPhoneError("");
     }
 
-    if (!email) {
+    if (!email.trim()) {
       setEmailError("Email address is required");
       valid = false;
     } else if(!email.includes('@')) {
@@ -509,9 +509,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     const hasSpecificTypes = pricing?.prices?.some((p: { type: string; }) =>
       ['adult', 'child', 'infant'].includes(p.type.toLowerCase())
     );
-
-    const totalPrice = calculateTotalAmount();
-    const totalDiscount = getDiscountedPrice();
 
     return (
       <div className="w-full flex flex-col sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-3 md:space-y-8 px-0 p-0 sm:p-6 xl:p-8">
