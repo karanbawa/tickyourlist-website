@@ -5,7 +5,7 @@ import StartRating from "@/components/StartRating";
 import NcModal from "@/shared/NcModal";
 import Image from "next/image";
 import { GuestsObject } from "../(client-components)/type";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import StayDatesRangeInput from "../(listing-detail)/listing-stay-detail/StayDatesRangeInput";
 import { DEMO_AUTHORS } from "@/data/authors";
 import CardVariant from "@/components/tour-group-booking/CardVariants";
@@ -37,6 +37,14 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
    const [showNextBookButtonAtFooter, setShowNextBookButtonAtFooter] = useState(false);
    const [isMobileView, setIsMobileView] = useState(false);
+   const searchParams = useSearchParams();
+
+   useEffect(() => {
+    const dateParam = searchParams.get("date");
+    if (dateParam) {
+      setStayDate(new Date(dateParam));
+    }
+  }, [searchParams]);
 
    useEffect(() => {
     const handleResize = () => {
@@ -86,17 +94,29 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   //   }
   // }, [selectedVariantIndex]);
 
-
   useEffect(() => {
-    if (stayDate && tourGroup?.id) {
+    if (stayDate && tourGroup?._id) {
       const formattedDate = encodeURIComponent(
-        stayDate?.toLocaleDateString("en-CA")
+        stayDate.toLocaleDateString("en-CA")
       );
-      router.push(
-        `/checkout?tourId=${tourGroup._id}&date=${formattedDate}`
-      );
+      const newUrl = `/checkout?tourId=${tourGroup._id}&date=${formattedDate}`;
+      
+      // Update the URL without triggering a page reload
+      window.history.pushState({}, '', newUrl);
     }
-  }, [stayDate, tourGroup?._id, router]);
+  }, [stayDate, tourGroup?._id]);
+
+
+  // useEffect(() => {
+  //   if (stayDate && tourGroup?.id) {
+  //     const formattedDate = encodeURIComponent(
+  //       stayDate?.toLocaleDateString("en-CA")
+  //     );
+  //     router.push(
+  //       `/checkout?tourId=${tourGroup._id}&date=${formattedDate}`
+  //     );
+  //   }
+  // }, [stayDate, tourGroup?._id, router]);
 
   const [guests, setGuests] = useState<GuestsObject>({
     guestAdults: 2,
@@ -106,7 +126,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
 
   const getFormattedDate = () => {
-    const searchParams = new URLSearchParams(window.location.search);
     const dateParam = searchParams.get("date");
     if(dateParam) {
     const parsedDate = new Date(dateParam);

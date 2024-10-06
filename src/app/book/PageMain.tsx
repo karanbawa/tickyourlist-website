@@ -65,10 +65,12 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
   const router = useRouter();
 
+  console.log("totalChilds ", totalChilds);
+
   const [guests, setGuests] = useState<GuestsObject>({
-    guestAdults: 1,
-    guestChildren: 0,
-    guestInfants: 0,
+    guestAdults: parseInt(totalGuests || totalAdults || '1'),
+    guestChildren: parseInt(totalChilds || '0'),
+    guestInfants: parseInt(totalInfants || '0')
   });
 
   const handleGuestChange = (change: number, type: 'guest' | 'adult' | 'child' | 'infant' = 'guest') => {
@@ -583,7 +585,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                       <PriceRow
                         key={price.type}
                         label={price.type.charAt(0).toUpperCase() + price.type.slice(1)}
-                        subLabel={price.ageRange ? `${price.ageRange.min}-${price.ageRange.max} years` : ''}
+                        subLabel={price.ageRange ? `${price.ageRange.max ? `${price.ageRange.min}-${price.ageRange.max} years` : `Above ${price.ageRange.min} years`}`: ''}
                         price={price}
                         guests={guestCount}
                         type={guestType as 'adult' | 'child' | 'infant'}
