@@ -1,6 +1,7 @@
 import React, { FC, useState } from 'react';
 import { ChevronLeft, ChevronDown, HelpCircle, Calendar, Users, Ticket, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export interface MobileViewReviewPaybookingdetails {
   className?: string;
@@ -72,13 +73,16 @@ const MobileViewReviewPaybookingdetails:FC<MobileViewReviewPaybookingdetails> = 
     <div className="font-sans h-[17rem] flex flex-col">
       <div className="relative">
         {/* Background Image */}
-        <div 
-          className="h-48 bg-cover bg-center"
-          style={{ 
-            backgroundImage: `url('${tourGroup?.imageUploads?.[0]?.url}')`,
-            filter: "brightness(50%)"
-          }}
-        ></div>
+        <div className="relative h-48">
+        {/* Next.js Image Component */}
+        <Image
+          src={tourGroup?.imageUploads?.[0]?.url || '/api/placeholder/400/320'}
+          alt={tourGroup?.name || 'Tour image'}
+          layout="fill"
+          objectFit="cover"
+          className="brightness-50"
+        />
+        </div>
 
         {/* Overlay Content */}
         <div className="absolute top-0 left-0 right-0 z-10 text-white p-4">
