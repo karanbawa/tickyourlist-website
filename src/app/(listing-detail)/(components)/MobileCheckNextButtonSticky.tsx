@@ -275,7 +275,7 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
             <PriceRow
               key={price.type} 
               label={price.type.charAt(0).toUpperCase() + price.type.slice(1)}
-              subLabel={price.ageRange ? `${price.ageRange.min}-${price.ageRange.max} years` : ''}
+              subLabel={price.ageRange ? `${price.ageRange.max ? `${price.ageRange.min}-${price.ageRange.max} years` : `Above ${price.ageRange.min} years`}`: ''}
               price={price}
               guests={guests[guestKey] || 0}
               type={guestType}
