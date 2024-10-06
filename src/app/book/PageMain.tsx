@@ -57,7 +57,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   const [email, setEmail] = useState("");
   const [phoneCode, setPhoneCode] = useState("");
   const [fullNameError, setFullNameError] = useState("");
-  const [phoneCodeError, setPhoneCodeError] = useState("");
+  // const [phoneCodeError, setPhoneCodeError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [loadingConfirmPay, setLoadingConfirmPay] = useState(false);
@@ -241,11 +241,11 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       setFullNameError("");
     }
 
-    if(!phoneCode) {
-      setPhoneCodeError("Country Code is required");
-    } else {
-      setPhoneCodeError("")
-    }
+    // if(!phoneCode) {
+    //   setPhoneCodeError("Country Code is required");
+    // } else {
+    //   setPhoneCodeError("")
+    // }
 
     if (!phoneNumber) {
       setPhoneError("Phone number is required");
@@ -615,7 +615,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                     </div>
                     <div className="w-full sm:w-1/2 space-y-1  mt-2 sm:mt-0 sm:mb-0">
                     <Label className="text-sm md:text-base">Phone Number</Label>
-                    <CountryCodeSelector />
+                    <CountryCodeSelector phoneError={phoneError} setPhoneError={setPhoneError} setPhoneNumber={setPhoneNumber} phoneCode={phoneCode} phoneNumber={phoneNumber} setPhoneCode={setPhoneCode}   />
                     </div>
                   </div>
 

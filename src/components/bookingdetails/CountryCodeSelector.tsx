@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, FC } from 'react';
 import { Search, ChevronDown, X } from 'lucide-react';
 import Input from '@/shared/Input';
 
@@ -14,12 +14,38 @@ const countries = [
   { name: 'American Samoa', code: '+1684', flag: '🇦🇸' },
 ];
 
-const CountryCodeSelector = () => {
+interface CountryCodeSelectorProps {
+    phoneError?: string;
+    setPhoneError?: any;
+    phoneNumber?: string;
+    phoneCode?: string;
+    setPhoneNumber?: any;
+    setPhoneCode?: any;
+}
+
+const CountryCodeSelector: FC<CountryCodeSelectorProps> = ({
+    phoneError,
+    setPhoneError,
+    phoneNumber,
+    phoneCode,
+    setPhoneNumber,
+    setPhoneCode
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState(countries[0]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredCountries, setFilteredCountries] = useState(countries);
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [isWebView, setIsWebView] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsWebView(window.innerWidth >= 640); // Adjust breakpoint as needed
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     setFilteredCountries(
@@ -30,16 +56,59 @@ const CountryCodeSelector = () => {
     );
   }, [searchQuery]);
 
-  const handleOpen = () => {
-    setIsOpen(true);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleOpen = () => setIsOpen(true);
+  const handleClose = () => setIsOpen(false);
+
+  const handleCountrySelect = (country: typeof countries[0]) => {
+    setSelectedCountry(country);
+    if (setPhoneCode) {
+      setPhoneCode(country.code);
+    }
+    handleClose();
   };
 
-  const handleClose = () => {
-    setIsOpen(false);
+  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (setPhoneNumber) {
+      setPhoneNumber(e.target.value);
+    }
+    if (setPhoneError) {
+      setPhoneError('');
+    }
   };
+
+  const renderCountryList = () => (
+    <div className="overflow-y-auto">
+      {filteredCountries.map((country) => (
+        <div
+          key={country.code}
+          className="flex items-center py-2 px-3 cursor-pointer hover:bg-gray-100"
+          onClick={() => handleCountrySelect(country)}
+        >
+          <span className="mr-2">{country.flag}</span>
+          <span className="flex-grow">
+            {country.name} {country.nativeName && `(${country.nativeName})`}
+          </span>
+          <span className="text-gray-500">{country.code}</span>
+          {country.code === selectedCountry.code && (
+            <span className="ml-2 text-green-500">✓</span>
+          )}
+        </div>
+      ))}
+    </div>
+  );
 
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownRef}>
       <div className="flex rounded-2xl overflow-hidden">
         <div 
           className="flex items-center px-4 cursor-pointer bg-gray-100 border-r border-neutral-200"
@@ -51,88 +120,83 @@ const CountryCodeSelector = () => {
         </div>
         <Input 
           type="tel"
-        //   value={phoneNumber}
-        //   onChange={handlePhoneChange}
+          value={phoneNumber}
+          onChange={handlePhoneNumberChange}
           placeholder="Phone number"
           className="flex-grow rounded-l-none !border-l-0"
           rounded="rounded-r-2xl"
         />
-        {/* {phoneError && <p className="text-red-500 text-sm">{phoneError}</p>} */}
       </div>
+      {phoneError && <p className="text-red-500 text-sm">{phoneError}</p>}
       
       {isOpen && (
         <>
-          <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300"
-            onClick={handleClose}
-          ></div>
-
-          <div
-            className="fixed inset-x-0 bottom-0 bg-white z-50 transition-all duration-300 ease-out"
-            style={{ 
-              height: '80vh',
-              borderTopLeftRadius: '16px', 
-              borderTopRightRadius: '16px',
-              boxShadow: '0px -4px 10px rgba(0, 0, 0, 0.1)',
-              transform: 'translateY(0)',
-              animation: 'slideUp 300ms ease-out'
-            }}
-          >
-            <div className="flex flex-col h-full">
-              <div className="p-4">
-                <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-semibold">Search country code</h3>
-                  <X 
-                    className="cursor-pointer" 
-                    size={24} 
-                    onClick={handleClose} 
-                  />
-                </div>
-                <div className="relative mb-4">
+          {isWebView ? (
+            <div className="absolute z-50 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+              <div className="sticky top-0 z-10 bg-white px-2 py-2">
+                <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                   <input
                     type="text"
-                    placeholder="Type country name or country code"
+                    placeholder="Search countries"
                     className="w-full pl-10 pr-4 py-2 border rounded-md focus:ring-primary-200 focus:border-primary-300"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />
                 </div>
               </div>
-              <div className="flex-grow overflow-y-auto px-4 pb-4">
-                {filteredCountries.map((country) => (
-                  <div
-                    key={country.code}
-                    className="flex items-center py-2 cursor-pointer hover:bg-gray-100"
-                    onClick={() => {
-                      setSelectedCountry(country);
-                      handleClose();
-                    }}
-                  >
-                    <span className="mr-2">{country.flag}</span>
-                    <span className="flex-grow">
-                      {country.name} {country.nativeName && `(${country.nativeName})`}
-                    </span>
-                    <span className="text-gray-500">{country.code}</span>
-                    {country.code === selectedCountry.code && (
-                      <span className="ml-2 text-green-500">✓</span>
-                    )}
-                  </div>
-                ))}
-              </div>
+              {renderCountryList()}
             </div>
-          </div>
+          ) : (
+            <>
+              <div
+                className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300"
+                onClick={handleClose}
+              ></div>
+              <div
+                className="fixed inset-x-0 bottom-0 bg-white z-50 transition-all duration-300 ease-out"
+                style={{ 
+                  height: '80vh',
+                  borderTopLeftRadius: '16px', 
+                  borderTopRightRadius: '16px',
+                  boxShadow: '0px -4px 10px rgba(0, 0, 0, 0.1)',
+                  transform: 'translateY(0)',
+                  animation: 'slideUp 300ms ease-out'
+                }}
+              >
+                <div className="flex flex-col h-full">
+                  <div className="p-4">
+                    <div className="flex justify-between items-center mb-4">
+                      <h3 className="text-lg font-semibold">Search country code</h3>
+                      <X 
+                        className="cursor-pointer" 
+                        size={24} 
+                        onClick={handleClose} 
+                      />
+                    </div>
+                    <div className="relative mb-4">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                      <input
+                        type="text"
+                        placeholder="Type country name or country code"
+                        className="w-full pl-10 pr-4 py-2 border rounded-md focus:ring-primary-200 focus:border-primary-300"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  {renderCountryList()}
+                </div>
+              </div>
+            </>
+          )}
         </>
       )}
 
       <style jsx>{`
         @keyframes slideUp {
-          from {
-            transform: translateY(100%);
-          }
-          to {
-            transform: translateY(0);
-          }
+          from { transform: translateY(100%); }
+          to { transform: translateY(0); }
         }
       `}</style>
     </div>
