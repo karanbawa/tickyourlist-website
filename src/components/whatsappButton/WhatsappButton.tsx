@@ -24,7 +24,7 @@ const WhatsappButton: React.FC<WhatsappButtonProps> = ({ tourGroupUrl }) => {
 
   return (
     <ButtonPrimary
-      style={{ backgroundColor: "#075e54" }} // WhatsApp brand color
+      style={{ backgroundColor: "#2c9e71" }} // WhatsApp brand color
       icon={<FaWhatsapp size={20} color="#fff" />} // Pass the WhatsApp icon
       onClick={handleWhatsappRedirect}
     >

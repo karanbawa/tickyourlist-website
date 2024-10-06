@@ -66,7 +66,7 @@ const MobileFooterSticky: FC<MobileFooterStickyProps> = ({ tourGroup }) => {
           </div>
           <div className="flex items-center space-x-4">
           <div style={{
-              backgroundColor: "#128c7e",
+              backgroundColor: "#1a9a5b",
               borderRadius: "50%",
               width: "30px",
               height: "30px",
