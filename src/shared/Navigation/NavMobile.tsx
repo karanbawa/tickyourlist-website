@@ -16,11 +16,13 @@ import LangDropdown from "@/app/(client-components)/(Header)/LangDropdown";
 export interface NavMobileProps {
   data?: NavItemType[];
   onClickClose?: () => void;
+  currencyCode?: string;
 }
 
 const NavMobile: React.FC<NavMobileProps> = ({ 
   data = NAVIGATION_DEMO,
   onClickClose,
+  currencyCode
 }) => {
   const _renderMenuChild = (item: NavItemType) => {
     return (
@@ -127,16 +129,9 @@ const NavMobile: React.FC<NavMobileProps> = ({
         {data.map(_renderItem)}
       </ul>
       <div className="flex items-center justify-between py-6 px-5">
-        <a
-          className="inline-block"
-          href=""
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {/* <ButtonPrimary>Get Template</ButtonPrimary> */}
-        </a>
-
+        <div className="inline-block text-xs"></div>
         <LangDropdown
+          currencyCode={currencyCode}
           className="flex"
           panelClassName="z-10 w-screen max-w-[280px] px-4 mb-3 right-3 bottom-full sm:px-0"
         />

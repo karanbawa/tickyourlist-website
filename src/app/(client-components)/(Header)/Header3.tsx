@@ -162,15 +162,15 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
         {!isHiddenOnMobile && (
         <div className="md:hidden relative px-4 h-[88px] flex flex-col">
           <div className="flex-1 flex justify-between">
-            {/* <div className="relative z-10 flex items-center">
-              <Logo className = "w-15" />
-            </div> */}
+            <div className="relative z-10 flex items-center">
+              <Logo className = "w-[4rem]" />
+            </div>
             <div className="self-center flex-1 w-full max-w-lg mx-auto">
               <HeroSearchForm2MobileFactory />
             </div>
-            {/* <div className="relative z-10 flex items-center">
-              <MenuBar />
-            </div> */}
+            <div className="relative z-10 flex items-center">
+              <MenuBar currencyCode={currencyCode} />
+            </div>
           </div>
         </div>
       )}
@@ -194,10 +194,10 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
             {/* NAV */}
             <div className="hidden sm:flex relative z-10 flex-1 justify-end text-neutral-700 dark:text-neutral-100">
               <div className="hidden sm:flex space-x-1">
-                <LangDropdown currencyCode={currencyCode} cityCode={initialCityCode} />
+                <LangDropdown currencyCode={currencyCode} />
                 <div className="flex space-x-1">
                   {/* <Link
-                    href="/add-listing/1"
+                    href="/a`dd-listing/1"
                     className="self-center hidden xl:inline-flex px-4 py-2 border border-neutral-300 hover:border-neutral-400 dark:border-neutral-700 rounded-full items-center text-sm text-gray-700 dark:text-neutral-300 font-medium"
                     aria-label="List your property"
                   >
@@ -206,7 +206,7 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
 
                   {/* <NotifyDropdown /> */}
                   <AvatarDropdown />
-                  <MenuBar />
+                  <MenuBar currencyCode={currencyCode} />
                 </div>
               </div>
             </div>

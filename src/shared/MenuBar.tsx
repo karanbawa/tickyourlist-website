@@ -7,10 +7,12 @@ import { usePathname } from "next/navigation";
 export interface MenuBarProps {
   className?: string;
   iconClassName?: string;
+  currencyCode?: string;
 }
 const MenuBar: React.FC<MenuBarProps> = ({
   className = "p-2.5 rounded-lg text-neutral-700 dark:text-neutral-300",
   iconClassName = "h-8 w-8",
+  currencyCode
 }) => {
   const [isVisable, setIsVisable] = useState(false);
 
@@ -54,7 +56,7 @@ const MenuBar: React.FC<MenuBarProps> = ({
                 leaveTo="opacity-0 translate-x-56"
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden transition-all ">
-                  <NavMobile onClickClose={handleCloseMenu} />
+                  <NavMobile onClickClose={handleCloseMenu} currencyCode={currencyCode} />
                 </Dialog.Panel>
               </Transition.Child>
             </div>
