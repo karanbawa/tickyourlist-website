@@ -66,8 +66,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
   const router = useRouter();
 
-  console.log("totalChilds ", totalChilds);
-
   const [guests, setGuests] = useState<GuestsObject>({
     guestAdults: parseInt(totalGuests || totalAdults || '1'),
     guestChildren: parseInt(totalChilds || '0'),
@@ -185,8 +183,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         throw new Error("Razorpay SDK failed to load. Are you online?");
       }
 
-      console.log("bookingdetails ", booking);
-
       const options = {
         key: process.env.RAZORPAY_KEY_ID,
         amount,
@@ -221,7 +217,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       const rzp1 = new (window as any).Razorpay(options);
       rzp1.open();
     } catch (error: any) {
-      console.error("Payment initialization failed:", error?.message);
       alert(error?.message || "Something went wrong during payment initialization.");
     }
   };
@@ -315,7 +310,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       const result = await response.json();
       await handleRazorpayPayment(result?.data?.booking?.amount, result.data.razorpayOrderId, result?.data?.booking);
     } catch (error: any) {
-      console.error("An error occurred during booking:", error);
       setConfirmPayError(error?.message || 'Failed to Save the Record. Please try again!');
     } finally {
       setLoadingConfirmPay(false);
