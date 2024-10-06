@@ -264,6 +264,7 @@ const handleBackButton = () => {
             selectedVariantIndex={selectedVariantIndex} 
             getFormattedDate={getFormattedDate} 
             getFormatedData={getFormatedData} 
+            currencyCode = {currencyCode}
           />
         )}
        {/* {showNextBookButtonAtFooter && <MobileCheckNextButtonSticky tourGroup={tourGroup} selectedVariantIndex={selectedVariantIndex} getFormattedDate={getFormattedDate} getFormatedData={getFormatedData} />} */}
