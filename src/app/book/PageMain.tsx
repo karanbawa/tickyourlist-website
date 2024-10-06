@@ -12,6 +12,7 @@ import Image from "next/image";
 import { countries } from "@/components/auth/countries";
 import { useAuth } from "@/context/AuthContext";
 import MobileViewReviewPaybookingdetails from "@/components/bookingdetails/MobileViewReviewPaybookingdetails";
+import MobileConfimAndPayButton from "../(listing-detail)/(components)/MobileConfimAndPayButton";
 
 export interface CheckOutPagePageMainProps {
   className?: string;
@@ -50,13 +51,11 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   totalInfants
 }) => {
   const [showPromoCode, setShowPromoCode] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [phoneCode, setPhoneCode] = useState("");
-  const [firstNameError, setFirstNameError] = useState("");
-  const [lastNameError, setLastNameError] = useState("");
+  const [fullNameError, setFullNameError] = useState("");
   const [phoneCodeError, setPhoneCodeError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -176,7 +175,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     });
   };
 
-  const handleRazorpayPayment = async (amount: any, orderId: any, booking: { nonCustomerFirstName: any; nonCustomerLastName: any; phoneCode: any; phoneNumber: any; _id: string, email: string }) => {
+  const handleRazorpayPayment = async (amount: any, orderId: any, booking: { nonCustomerFullName: any; phoneCode: any; phoneNumber: any; _id: string, email: string }) => {
     try {
       const scriptLoaded = await loadRazorpayScript();
       if (!scriptLoaded) {
@@ -194,7 +193,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         image: "https://tickyourlist-images.s3.ap-south-1.amazonaws.com/tyllogo.png",
         order_id: orderId,
         prefill: {
-          name: `${booking?.nonCustomerFirstName} ${booking?.nonCustomerLastName}`,
+          name: `${booking?.nonCustomerFullName}`,
           email: booking?.email,
           contact: `${booking?.phoneCode}${booking?.phoneNumber}`
         },
@@ -232,18 +231,11 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
   const validateFields = () => {
     let valid = true;
-    if (!firstName) {
-      setFirstNameError("First Name is required");
+    if (!fullName) {
+      setFullNameError("Full Name is required");
       valid = false;
     } else {
-      setFirstNameError("");
-    }
-
-    if (!lastName) {
-      setLastNameError("Last Name is required");
-      valid = false;
-    } else {
-      setLastNameError("");
+      setFullNameError("");
     }
 
     if(!phoneCode) {
@@ -283,8 +275,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
     const data = {
       domainId: "66cacba1eeca9633c29172b9",
-      nonCustomerFirstName: firstName,
-      nonCustomerLastName: lastName,
+      nonCustomerFullName: fullName,
       email: email,
       phoneCode: phoneCode,
       phoneNumber: phoneNumber,
@@ -606,7 +597,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         </div>
 
         <div>
-          <h3 className="text-md md:text-2xl font-semibold">Lead Guest Details</h3>
+          <h3 className="text-md md:text-2xl font-semibold mt-2 sm:mt-0">Lead Guest Details</h3>
           <div className="w-14 border-b border-neutral-200 dark:border-neutral-700 my-5"></div>
 
           <div className="mt-6">
@@ -615,23 +606,18 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                 <Tab.Panel className="space-y-5">
                   <div className="flex flex-col sm:flex-row sm:space-x-5">
                     <div className="flex-1 space-y-1">
-                      <Label className="text-sm md:text-base">First Name</Label>
-                      <Input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-                      {firstNameError && <p className="text-red-500 text-sm">{firstNameError}</p>}
+                      <Label className="text-sm md:text-base">Full Name</Label>
+                      <Input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+                      {fullNameError && <p className="text-red-500 text-sm">{fullNameError}</p>}
                     </div>
-                    <div className="flex-1 space-y-1">
-                      <Label>Last Name</Label>
-                      <Input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-                      {lastNameError && <p className="text-red-500 text-sm">{lastNameError}</p>}
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row sm:space-x-5">
                     <div className="w-full sm:w-1/2 space-y-1 mb-4 sm:mb-0">
                       <Label>Email</Label>
                       <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                       {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
                     </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row sm:space-x-5">
                     <div className="w-full sm:w-3/5 flex flex-col sm:flex-row sm:space-x-4">
                       <div className="flex-1 sm:w-2/5 space-y-1 mb-4 sm:mb-0">
                         <Label>Country Code</Label>
@@ -724,6 +710,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         <div className="w-full lg:w-3/5 xl:w-2/3 lg:pr-10 ">{renderMain()}</div>
         <div className="hidden lg:block flex-grow">{renderSidebar()}</div>
       </main>
+      <MobileConfimAndPayButton tourGroup={tourGroup} totalGuests={totalGuests} totalAdults={totalAdults} totalChilds={totalChilds} totalInfants={totalInfants} onClickConfirmAndPay={handleConfirmAndPay} />
       {confirmPayError && (
         <div className="fixed bottom-4 right-4 bg-red-500 text-white p-4 rounded">
           {confirmPayError}
