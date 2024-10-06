@@ -232,8 +232,10 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
       <h2 className="text-lg md:text-2xl font-semibold">Cancellation Policy</h2>
       <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
       <div className="text-sm md:text-base text-neutral-6000 dark:text-neutral-300 highlights-section">
-        {!tourGroup?.cancellationPolicyV2?.cancellable ? `These tickets can't be cancelled ` : `These tickets can be cancelled `} 
-        {!tourGroup?.reschedulePolicy?.reschedulable ? `or rescheduled` : `but can be rescheduled`}
+        {!tourGroup?.cancellationPolicyV2?.cancellable ? `These tickets cannot be cancelled` : `Tickets can be cancelled up to 72 hours before the booking date.`}
+        {!tourGroup?.reschedulePolicy?.reschedulable 
+            ? ` Rescheduling is not allowed.` 
+            : ` However, rescheduling is available.`}
       </div>
     </div>
   );

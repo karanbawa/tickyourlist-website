@@ -24,7 +24,7 @@ async function fetchTourGroupData(tourId: string, variantId: string, currency: s
 }
 
 interface BookPageProps {
-  searchParams: { tourId?: string; date?: string ; tour?: string; variantId?: string };
+  searchParams: { tourId?: string; date?: string ; tour?: string; variantId?: string; guests?: string; adult?: string; child?: string; infant?: string  };
 }
 
 const page: FC<BookPageProps> = async ({ searchParams }) => {
@@ -32,6 +32,12 @@ const page: FC<BookPageProps> = async ({ searchParams }) => {
   const date = searchParams.date || ""; // Fetch date from query params
   const tour = searchParams.tour || "";
   const variantId = searchParams.variantId || "";
+  const totalGuests = searchParams?.guests;
+  const totalAdults = searchParams?.adult;
+  const totalChilds = searchParams?.child;
+  const totalInfants = searchParams?.infant;
+
+  console.log("searchParamsdata ", searchParams);
   const cookieStore = cookies();
   const currency = cookieStore.get('currency')?.value || 'AED'; // Default to 'USD' if no cookie
 
@@ -40,7 +46,7 @@ const page: FC<BookPageProps> = async ({ searchParams }) => {
     const data = await fetchTourGroupData(tourId, variantId, currency);
     const tourGroup = data.data.tourgroup;
 
-    return <CheckOutPagePageMain tourGroup={tourGroup} date={date} tour={tour} variantId={variantId} currencyCode={currency} />;
+    return <CheckOutPagePageMain tourGroup={tourGroup} date={date} tour={tour} variantId={variantId} currencyCode={currency} totalGuests={totalGuests} totalAdults={totalAdults} totalChilds={totalChilds} totalInfants={totalInfants} />;
   } catch (error) {
     console.error("Error fetching tour group data:", error);
     return <div>Failed to load tour group data.</div>;

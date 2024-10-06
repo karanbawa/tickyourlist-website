@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { countries } from "@/components/auth/countries";
 import { useAuth } from "@/context/AuthContext";
+import MobileViewReviewPaybookingdetails from "@/components/bookingdetails/MobileViewReviewPaybookingdetails";
 
 export interface CheckOutPagePageMainProps {
   className?: string;
@@ -19,6 +20,10 @@ export interface CheckOutPagePageMainProps {
   tour?: any;
   variantId?: any;
   currencyCode?: string;
+  totalGuests?: string;
+  totalAdults?: string;
+  totalChilds?: string;
+  totalInfants?: string;
 }
 
 interface PriceRowProps {
@@ -38,7 +43,11 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   tour,
   date,
   variantId,
-  currencyCode
+  currencyCode,
+  totalGuests,
+  totalAdults,
+  totalChilds,
+  totalInfants
 }) => {
   const [showPromoCode, setShowPromoCode] = useState(false);
   const [firstName, setFirstName] = useState("");
@@ -53,13 +62,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   const [emailError, setEmailError] = useState("");
   const [loadingConfirmPay, setLoadingConfirmPay] = useState(false);
   const [confirmPayError, setConfirmPayError] = useState('');
-  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
   const { user } = useAuth();
-
-  const backgroundImageStyle = isSafari
-    ? `-webkit-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${tourGroup?.imageUploads?.[0]?.url}')`
-    : `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${tourGroup?.imageUploads?.[0]?.url}')`;
-
 
   const router = useRouter();
 
@@ -523,8 +526,8 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     const totalDiscount = getDiscountedPrice();
 
     return (
-      <div className="w-full flex flex-col sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-3 md:space-y-8 px-0 sm:p-6 xl:p-8">
-        <div>
+      <div className="w-full flex flex-col sm:rounded-2xl sm:border border-neutral-200 dark:border-neutral-700 space-y-3 md:space-y-8 px-0 p-0 sm:p-6 xl:p-8">
+        <div className="hidden sm:block">
           <h2 className="text-md md:text-3xl lg:text-4xl font-semibold mt-2">
             Confirm and payment
           </h2>
@@ -541,8 +544,8 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
             modalTitle="Booking details"
           />
         </div>
-        <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
-        <div>
+        <div className="hidden sm:block border-b border-neutral-200 dark:border-neutral-700"></div>
+        <div className="hidden sm:block">
           <h3 className="text-sm md:text-2xl font-semibold">Guests</h3>
           <span className="font-light text-xs md:text-sm">Likely to sell out</span>
 
@@ -710,11 +713,14 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
   return (
     <div className={`nc-CheckOutPagePageMain ${className}`}>
-      <div className="relative px-4 lg:container h-[20px] flex flex-col border-b-q">
+      {/* <div className="relative px-4 lg:container h-[20px] flex flex-col border-b-q">
         <div className="flex-1 flex justify-between">
         </div>
-      </div>
-      <main className="container mt-5 md:mt-11 mb-24 lg:mb-32 flex flex-col-reverse lg:flex-row">
+      </div> */}
+      <div className="block sm:hidden">
+            <MobileViewReviewPaybookingdetails tourGroup={tourGroup} date={date} tour={tour} variantId={variantId} currencyCode={currencyCode} getFormattedDate={getFormattedDate} totalGuests={totalGuests} totalAdults={totalAdults} totalChilds={totalChilds} totalInfants={totalInfants} />
+          </div>
+      <main className="container mt-0 sm:mt-5 md:mt-11 mb-24 lg:mb-32 flex flex-col-reverse lg:flex-row">
         <div className="w-full lg:w-3/5 xl:w-2/3 lg:pr-10 ">{renderMain()}</div>
         <div className="hidden lg:block flex-grow">{renderSidebar()}</div>
       </main>

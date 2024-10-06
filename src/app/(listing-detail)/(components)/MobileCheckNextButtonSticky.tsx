@@ -83,14 +83,14 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
     let paxQuery = '';
     if (hasSpecificTypes) {
       const paxParams = [];
-      if (guests.guestAdults && guests.guestAdults > 0) paxParams.push(`pax.adult=${guests.guestAdults}`);
-      if (guests.guestChilds && guests.guestChilds > 0) paxParams.push(`pax.child=${guests.guestChilds}`);
-      if (guests.guestInfants && guests.guestInfants > 0) paxParams.push(`pax.infant=${guests.guestInfants}`);
+      if (guests.guestAdults && guests.guestAdults > 0) paxParams.push(`adult=${guests.guestAdults}`);
+      if (guests.guestChilds && guests.guestChilds > 0) paxParams.push(`child=${guests.guestChilds}`);
+      if (guests.guestInfants && guests.guestInfants > 0) paxParams.push(`infant=${guests.guestInfants}`);
       paxQuery = paxParams.length > 0 ? `&${paxParams.join('&')}` : '';
     } else {
       const totalGuests = (guests.guestAdults || 0) + (guests.guestChilds || 0) + (guests.guestInfants || 0);
       if (totalGuests > 0) {
-        paxQuery = `&pax.guests=${totalGuests}`;
+        paxQuery = `&guests=${totalGuests}`;
       }
     }
 
