@@ -53,8 +53,6 @@ const FooterNav: React.FC = () => {
   const { user } = useAuth();
   const router = useRouter();
 
-  console.log("usertest ", user);
-
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.addEventListener("scroll", handleScroll);

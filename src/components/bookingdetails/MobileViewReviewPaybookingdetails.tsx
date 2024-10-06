@@ -114,7 +114,7 @@ const MobileViewReviewPaybookingdetails:FC<MobileViewReviewPaybookingdetails> = 
             
             <li className="flex items-center">
               <Ticket className="w-4 h-4 mr-3 text-gray-500" aria-hidden="true" />
-              <p className="text-gray-700 text-xs">Discover: 24-Hour HOHO Pass</p>
+              <p className="text-gray-700 text-xs">{tourGroup?.variants?.find((variant: any) => variant?._id === variantId)?.name}</p>
             </li>
           </ul>
           
@@ -159,7 +159,7 @@ const MobileViewReviewPaybookingdetails:FC<MobileViewReviewPaybookingdetails> = 
 
           <div className="flex items-center mb-4">
             <Ticket className="w-4 h-4 mr-2 text-gray-500" aria-hidden="true" />
-            <p className="text-gray-700 text-sm">Discover{`:`} 24-Hour HOHO Pass</p>
+            <p className="text-gray-700 text-sm">{tourGroup?.variants?.find((variant: any) => variant?._id === variantId)?.name}</p>
           </div>
 
           <div className="border-t border-gray-200 my-4"></div>
