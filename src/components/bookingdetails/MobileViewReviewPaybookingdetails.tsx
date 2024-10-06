@@ -137,35 +137,39 @@ const MobileViewReviewPaybookingdetails:FC<MobileViewReviewPaybookingdetails> = 
       >
         <div className="p-4 h-full overflow-y-auto">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold">Order details</h2>
+            <h2 className="text-lg font-semibold">Order details</h2>
             <button className="p-2 rounded-full hover:bg-gray-100" onClick={handleClose}>
               <X className="h-6 w-6" />
             </button>
           </div>
           
           <div className="flex items-center mb-4">
-            <img src="/api/placeholder/100/60" alt="Big Bus Tour" className="w-20 h-12 object-cover rounded mr-3" />
-            <h3 className="text-lg font-semibold">Big Bus: Dubai Hop-On Hop-Off Bus Tour with Dhow Creek Cruise</h3>
+            <Image src={tourGroup?.imageUploads?.[0]?.url || '/api/placeholder/400/320'}
+              alt={tourGroup?.name || 'Tour image'}
+              width={70}
+              height={70}
+              className="brightness-50 rounded-md" />
+            <h3 className="text-sm font-semibold ml-2">{tourGroup?.name}</h3>
           </div>
 
           <div className="flex items-center mb-2">
-            <Calendar className="w-5 h-5 mr-2 text-gray-500" aria-hidden="true" />
-            <time dateTime="2024-10-08" className="text-gray-700">Tue, Oct 8, 2024</time>
+            <Calendar className="w-4 h-4 mr-2 text-gray-500" aria-hidden="true" />
+            <time dateTime="2024-10-08" className="text-gray-700 text-sm">{getFormattedDate()}</time>
           </div>
 
           <div className="flex items-center mb-4">
-            <Ticket className="w-5 h-5 mr-2 text-gray-500" aria-hidden="true" />
-            <p className="text-gray-700">Discover{`:`} 24-Hour HOHO Pass</p>
+            <Ticket className="w-4 h-4 mr-2 text-gray-500" aria-hidden="true" />
+            <p className="text-gray-700 text-sm">Discover{`:`} 24-Hour HOHO Pass</p>
           </div>
 
           <div className="border-t border-gray-200 my-4"></div>
 
           <div className="space-y-4 mb-4">
-            <div className="flex justify-between">
+            <div className="flex justify-between text-sm">
               <span>3 Adults (€78.10 each)</span>
-              <span className="font-semibold">€234.27</span>
+              <span className="font-semibold text-sm">€234.27</span>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between text-sm">
               <span>3 Children (€48.35 each)</span>
               <span className="font-semibold">€145.02</span>
             </div>
@@ -181,7 +185,7 @@ const MobileViewReviewPaybookingdetails:FC<MobileViewReviewPaybookingdetails> = 
           <div className="bg-gray-100 p-4 rounded-md text-sm text-gray-600">
             <p>
               <span className="inline-block mr-2">ℹ️</span>
-              {`You are paying in AED and the total is AED 1,530. The total you pay could differ slightly depending on your bank's exchange rates.`}
+              {`You are paying in INR and the total is INR 1,530. The total you pay could differ slightly depending on your bank's exchange rates.`}
             </p>
           </div>
         </div>
