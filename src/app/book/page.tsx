@@ -28,8 +28,8 @@ interface BookPageProps {
 }
 
 const page: FC<BookPageProps> = async ({ searchParams }) => {
-  const tourId = searchParams.tourId || ""; // Fetch tourId from query params
-  const date = searchParams.date || ""; // Fetch date from query params
+  const tourId = searchParams.tourId || "";
+  const date = searchParams.date || "";
   const tour = searchParams.tour || "";
   const variantId = searchParams.variantId || "";
   const totalGuests = searchParams?.guests;
@@ -37,7 +37,6 @@ const page: FC<BookPageProps> = async ({ searchParams }) => {
   const totalChilds = searchParams?.child;
   const totalInfants = searchParams?.infant;
 
-  console.log("searchParamsdata ", searchParams);
   const cookieStore = cookies();
   const currency = cookieStore.get('currency')?.value || 'AED'; // Default to 'USD' if no cookie
 
@@ -48,7 +47,6 @@ const page: FC<BookPageProps> = async ({ searchParams }) => {
 
     return <CheckOutPagePageMain tourGroup={tourGroup} date={date} tour={tour} variantId={variantId} currencyCode={currency} totalGuests={totalGuests} totalAdults={totalAdults} totalChilds={totalChilds} totalInfants={totalInfants} />;
   } catch (error) {
-    console.error("Error fetching tour group data:", error);
     return <div>Failed to load tour group data.</div>;
   }
 };

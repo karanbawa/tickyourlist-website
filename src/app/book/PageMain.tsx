@@ -13,6 +13,7 @@ import { countries } from "@/components/auth/countries";
 import { useAuth } from "@/context/AuthContext";
 import MobileViewReviewPaybookingdetails from "@/components/bookingdetails/MobileViewReviewPaybookingdetails";
 import MobileConfimAndPayButton from "../(listing-detail)/(components)/MobileConfimAndPayButton";
+import CountryCodeSelector from "@/components/bookingdetails/CountryCodeSelector";
 
 export interface CheckOutPagePageMainProps {
   className?: string;
@@ -612,38 +613,17 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                       <Input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} />
                       {fullNameError && <p className="text-red-500 text-sm">{fullNameError}</p>}
                     </div>
-                    <div className="w-full sm:w-1/2 space-y-1  mt-2 sm:mb-0">
-                      <Label>Email</Label>
-                      <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                      {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
+                    <div className="w-full sm:w-1/2 space-y-1  mt-2 sm:mt-0 sm:mb-0">
+                    <Label className="text-sm md:text-base">Phone Number</Label>
+                    <CountryCodeSelector />
                     </div>
                   </div>
 
                   <div className="flex flex-col sm:flex-row sm:space-x-5">
-                    <div className="w-full sm:w-3/5 flex flex-col sm:flex-row sm:space-x-4">
-                      <div className="flex-1 sm:w-2/5 space-y-1 mb-4 sm:mb-0">
-                        <Label>Country Code</Label>
-                        <select
-                          name="phoneCode"
-                          defaultValue="Select the country"
-                          onChange={(e) => setPhoneCode(e.target.value)}
-                          required
-                          className="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        >
-                          <option disabled>Select country</option>
-                          {countries.map((country) => (
-                            <option key={country.code} value={country.dial_code}>
-                              {country.name} ({country.dial_code})
-                            </option>
-                          ))}
-                        </select>
-                        {phoneCodeError && <p className="text-red-500 text-sm">{phoneCodeError}</p>}
-                      </div>
-                      <div className="flex-1 space-y-1">
-                        <Label>Phone Number</Label>
-                        <Input value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-                        {phoneError && <p className="text-red-500 text-sm">{phoneError}</p>}
-                      </div>
+                  <div className="w-full sm:w-1/2 space-y-1  mt-2 sm:mt-0 sm:mb-0">
+                      <Label className="text-sm md:text-base">Email</Label>
+                      <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                      {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
                     </div>
                   </div>
 
