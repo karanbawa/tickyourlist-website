@@ -132,14 +132,15 @@ const CountryCodeSelector: FC<CountryCodeSelectorProps> = ({
           <span className="mr-2">{selectedCountry.code}</span>
           <ChevronDown size={20} />
         </div>
-        <Input 
+        <input 
           type="tel"
           value={phoneNumber}
           onChange={handlePhoneNumberChange}
           onKeyDown={handlePhoneNumberKeyDown}
           placeholder="Phone number"
-          className="flex-grow rounded-l-none !border-l-0 text-base sm:text-lg"
-          rounded="rounded-r-2xl"
+          // className="flex-grow rounded-l-none !border-l-0 text-base sm:text-lg"
+          className="w-full p-[0.9rem] md:p-3 rounded-r-2xl block border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900"
+          // rounded="rounded-r-2xl"
         />
       </div>
       {phoneError && <p className="text-red-500 text-sm mt-1">{phoneError}</p>}
@@ -154,7 +155,7 @@ const CountryCodeSelector: FC<CountryCodeSelectorProps> = ({
                  <input
                    type="text"
                    placeholder="Search countries"
-                   className="w-full pl-10 pr-4 py-2 border rounded-md focus:ring-primary-200 focus:border-primary-300"
+                   className="w-full p-[0.9rem] md:p-3 rounded-r-2xl block border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900"
                    value={searchQuery}
                    onChange={(e) => setSearchQuery(e.target.value)}
                  />
@@ -194,7 +195,7 @@ const CountryCodeSelector: FC<CountryCodeSelectorProps> = ({
                   <input
                     type="text"
                     placeholder="Search country or code"
-                    className="w-full pl-10 pr-4 py-2 border rounded-md focus:ring-primary-200 focus:border-primary-300 text-sm"
+                    className="w-full pl-10 pr-4 py-2 border rounded-md focus:ring-primary-200 focus:border-primary-300"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                   />

@@ -619,7 +619,12 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                   <div className="flex flex-col sm:flex-row sm:space-x-5">
                     <div className="flex-1 space-y-1">
                       <Label className="text-sm md:text-base">Full Name</Label>
-                      <Input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} className="w-full p-3 border rounded-md text-base sm:text-lg" />
+                      <input 
+                        type="text" 
+                        value={fullName} 
+                        onChange={(e) => setFullName(e.target.value)}
+                        className="rounded-2xl w-full p-[0.9rem] md:p-3 block border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900"
+                      />
                       {fullNameError && <p className="text-red-500 text-sm">{fullNameError}</p>}
                     </div>
                     <div className="w-full sm:w-1/2 space-y-1  mt-2 sm:mt-0 sm:mb-0">
