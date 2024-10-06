@@ -35,12 +35,21 @@ interface MobileCheckNextButtonStickyProps {
   currencyCode?: any;
 }
 
-type GuestType = 'Adults' | 'Children' | 'Infants';
+interface PriceRowProps {
+  label: string;
+  subLabel: string;
+  price: {
+    finalPrice: number;
+    originalPrice: number;
+  };
+  guests: number;
+  type: 'guest' | 'adult' | 'child' | 'infant';
+}
 
-interface Guests {
-  Adults: number;
-  Children: number;
-  Infants: number;
+export interface GuestsObject {
+  guestAdults?: number;
+  guestChildren?: number;
+  guestInfants?: number;
 }
 
 const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
@@ -52,10 +61,10 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
 }) => {
   const router = useRouter();
   const [isRevealed, setIsRevealed] = useState(false);
-  const [guests, setGuests] = useState<Guests>({
-    Adults: 1,
-    Children: 0,
-    Infants: 0,
+  const [guests, setGuests] = useState<GuestsObject>({
+    guestAdults: 1,
+    guestChildren: 0,
+    guestInfants: 0,
   });
 
   const pricing = tourGroup.variants[selectedVariantIndex]?.listingPricesInAllCurrencies.find(
@@ -70,11 +79,41 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
     router.push(`/book?tourId=${tourGroup._id}&date=${getFormatedData()}&tour=${variant.tours[0]._id}&variantId=${variant._id}`);
   };
 
-  const handleGuestChange = (change: number, type: GuestType) => {
-    setGuests(prev => ({
-      ...prev,
-      [type]: Math.max(0, prev[type] + change)
-    }));
+  const handleGuestChange = (change: number, type: 'guest' | 'adult' | 'child' | 'infant') => {
+    console.log("change ", change, type, pricing);
+    setGuests(prevGuests => {
+      const hasSpecificTypes = pricing?.prices?.some((p: { type: string; }) =>
+        ['adult', 'child', 'infant'].includes(p.type.toLowerCase())
+      );
+
+      console.log("hasSpecificTypeshasSpecificTypes ", hasSpecificTypes);
+
+      if (!hasSpecificTypes) {
+        // If only guest type is available
+        const newGuestAdults = Math.max(1, (prevGuests.guestAdults || 0) + change);
+        return {
+          ...prevGuests,
+          guestAdults: newGuestAdults,
+        };
+      } else {
+        // If specific types (adult, child, infant) are available
+        const key = `guest${type.charAt(0).toUpperCase() + type.slice(1)}s` as keyof GuestsObject;
+        console.log("keys ", key, prevGuests);
+        const newValue = Math.max(0, (prevGuests[key] || 0) + change);
+
+        console.log("newValue ", newValue);
+
+        // Ensure at least 1 adult
+        if (key === 'guestAdults' && newValue < 1) {
+          return prevGuests;
+        }
+
+        return {
+          ...prevGuests,
+          [key]: newValue,
+        };
+      }
+    });
   };
 
   const hasSpecificTypes = pricing?.prices.some(p => ['adult', 'child', 'infant'].includes(p.type.toLowerCase()));
@@ -84,24 +123,22 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
     
     if (!hasSpecificTypes) {
       const guestPrice = pricing.prices.find(p => p.type.toLowerCase() === 'guest');
-      return ((guests.Adults + guests.Children) * (Math.ceil(guestPrice?.finalPrice || 0))).toFixed(2);
+      return (((guests.guestAdults || 0) + (guests.guestChildren || 0)) * (Math.ceil(guestPrice?.finalPrice || 0))).toFixed(2);
     }
     
     return pricing.prices.reduce((total, price) => {
-      const guestCount = guests[price.type.charAt(0).toUpperCase() + price.type.slice(1) as GuestType] || 0;
+      const guestType = `guest${price.type.charAt(0).toUpperCase() + price.type.slice(1).toLowerCase()}s` as keyof GuestsObject;
+      const guestCount = guests[guestType] || 0;
       return total + (guestCount * Math.ceil(price.finalPrice));
     }, 0).toFixed(2);
   };
 
-  const PriceRow: React.FC<{
-    label: string;
-    subLabel: string;
-    price: Price;
-    guests: number;
-    type: GuestType;
-  }> = ({ label, subLabel, price, guests, type }) => {
+  const PriceRow: React.FC<PriceRowProps> = ({ label, subLabel, price, guests, type }) => {
     const totalPrice = guests * (Math.ceil(price.finalPrice) || 0);
+
     const totalOriginalPrice = guests * (Math.ceil(price.originalPrice) || 0);
+    const isDecrementDisabled = (type === 'adult' && guests <= 1) || 
+                                (!hasSpecificTypes && type === 'guest' && guests <= 1);
 
     return (
       <div className="flex flex-row justify-between mb-3 w-full">
@@ -117,7 +154,11 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
         </div>
         <div className="flex w-1/6 ml-3">
           <div className="flex flex-row w-full justify-end items-center">
-            <button onClick={() => handleGuestChange(-1, type)}>
+            <button 
+              onClick={() => handleGuestChange(-1, type)}
+              disabled={isDecrementDisabled}
+              className={isDecrementDisabled ? 'opacity-50 cursor-not-allowed' : ''}
+            >
               <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="disabled-icon">
                 <circle cx="16" cy="16" r="16" fill="#F8F8F8"></circle>
                 <line x1="24" y1="15.5" x2="9" y2="15.5" stroke="#BDBDBD"></line>
@@ -218,28 +259,30 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
           )}
           
           {!hasSpecificTypes && pricing ? (
+        <PriceRow
+          label="Guests"
+          subLabel=""
+          price={pricing.prices.find(p => p.type.toLowerCase() === 'guest') || pricing.prices[0]}
+          guests={(guests.guestAdults || 0) + (guests.guestChildren || 0)}
+          type="guest"
+        />
+      ) : (
+        pricing?.prices.map((price) => {
+          const guestType = price.type.toLowerCase() as 'adult' | 'child' | 'infant';
+          const guestKey = `guest${price.type.charAt(0).toUpperCase() + price.type.slice(1)?.toLowerCase()}s` as keyof GuestsObject;
+          console.log('pricepricepriceprice', price, guestKey, guests[guestKey]); 
+          return (
             <PriceRow
-              label="Guests"
-              subLabel=""
-              price={pricing.prices.find(p => p.type.toLowerCase() === 'guest') || pricing.prices[0]}
-              guests={guests.Adults + guests.Children}
-              type="Adults"
+              key={price.type} 
+              label={price.type.charAt(0).toUpperCase() + price.type.slice(1)}
+              subLabel={price.ageRange ? `${price.ageRange.min}-${price.ageRange.max} years` : ''}
+              price={price}
+              guests={guests[guestKey] || 0}
+              type={guestType}
             />
-          ) : (
-            pricing?.prices.map((price) => {
-              const guestType = price.type.charAt(0).toUpperCase() + price.type.slice(1) as GuestType;
-              return (
-                <PriceRow
-                  key={price.type}
-                  label={guestType}
-                  subLabel={price.ageRange ? `${price.ageRange.min}-${price.ageRange.max} years` : ''}
-                  price={price}
-                  guests={guests[guestType]}
-                  type={guestType}
-                />
-              );
-            })
-          )}
+          );
+        })
+      )}
           
           <div className="flex justify-between font-medium text-md mt-6 mb-6">
             <span>Total payable</span>
