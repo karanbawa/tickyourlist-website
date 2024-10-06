@@ -209,6 +209,35 @@ const handleBackButton = () => {
   router.back();
 }
 
+const handlePaxNow = () => {
+  console.log("paxQuerytest ", selectedVariantIndex);
+  if(selectedVariantIndex !== null) {
+  const variant = tourGroup.variants?.[selectedVariantIndex];
+  console.log("variantschweck ", variant);
+  const pricing = tourGroup.variants[selectedVariantIndex]?.listingPricesInAllCurrencies.find(
+    (currency: any) => currency.currencyCode === currencyCode
+  );
+  const hasSpecificTypes = pricing?.prices?.some((p: { type: string; }) =>
+    ['adult', 'child', 'infant'].includes(p.type.toLowerCase())
+  );
+
+  let paxQuery = '';
+  if (hasSpecificTypes) {
+    const paxParams = [];
+    if (guests.guestAdults && guests.guestAdults > 0) paxParams.push(`adult=1`);
+    if (guests.guestChildren && guests.guestChildren > 0) paxParams.push(`child=0`);
+    if (guests.guestInfants && guests.guestInfants > 0) paxParams.push(`infant=0`);
+    paxQuery = paxParams.length > 0 ? `&${paxParams.join('&')}` : '';
+  } else {
+      paxQuery = `&guests=1`;
+  }
+
+  console.log("paxQuerypaxQuery ", paxQuery);
+
+  router.push(`/book?tourId=${tourGroup?._id}&date=${getFormatedData()}&tour=${tourGroup?.variants?.[selectedVariantIndex]?.tours?.[0]?._id}&variantId=${tourGroup?.variants?.[selectedVariantIndex]?._id}&${paxQuery}`);
+}
+};
+
   const renderDateSelector = () => {
     return (<>
     <div className="mt-2">
@@ -247,7 +276,7 @@ const handleBackButton = () => {
                     <div>{getFormattedDate()}</div>
                   </div>
                   <div>
-                    <ButtonPrimary href={`/book?tourId=${tourGroup?._id}&date=${getFormatedData()}&tour=${tourGroup?.variants?.[selectedVariantIndex]?.tours?.[0]?._id}&variantId=${tourGroup?.variants?.[selectedVariantIndex]?._id}`} className="w-full h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center justify-center gap-2" style={{ backgroundColor: '#7C25E9' }}>Next</ButtonPrimary>
+                    <ButtonPrimary onClick={handlePaxNow} className="w-full h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center justify-center gap-2" style={{ backgroundColor: '#7C25E9' }}>Next</ButtonPrimary>
                   </div>
                 </div>
 
