@@ -186,7 +186,7 @@ const CountryCodeSelector: FC<CountryCodeSelectorProps> = ({
                 <div className="flex flex-col h-full">
                   <div className="p-4">
                     <div className="flex justify-between items-center mb-4">
-                      <h3 className="text-lg font-semibold">Search country code</h3>
+                      <h3 className="text-md font-semibold">Search country code</h3>
                       <X 
                         className="cursor-pointer" 
                         size={24} 
