@@ -16,6 +16,12 @@ export interface MobileViewReviewPaybookingdetails {
   totalInfants?: string;
 }
 
+interface GuestsObject {
+  guestAdults: number;
+  guestChilds: number;
+  guestInfants: number;
+}
+
 const MobileViewReviewPaybookingdetails:FC<MobileViewReviewPaybookingdetails> = ({
   className = "",
   tourGroup,
@@ -29,7 +35,10 @@ const MobileViewReviewPaybookingdetails:FC<MobileViewReviewPaybookingdetails> = 
   totalChilds,
   totalInfants
 }) => {
-  console.log('MobileViewReviewPaybookingdetails ', tourGroup);
+  const pricing = tourGroup?.listingPrice?.listingPrice;
+  const hasSpecificTypes = pricing?.prices?.some((p: { type: string; }) =>
+    ['adult', 'child', 'infant'].includes(p.type.toLowerCase())
+  );
   const [isRevealed, setIsRevealed] = useState(false);
   const router = useRouter();
 
@@ -42,6 +51,21 @@ const MobileViewReviewPaybookingdetails:FC<MobileViewReviewPaybookingdetails> = 
 
   const handleBackButton = () => {
     router.back();
+  }
+
+  const renderGuestInfo = () => {
+    if (totalGuests) {
+      return `${totalGuests} Guests`;
+    } else if (hasSpecificTypes) {
+      const guestTypes = [];
+      if (totalAdults) guestTypes.push(`${totalAdults} Adults`);
+      if (totalChilds) guestTypes.push(`${totalChilds} Children`);
+      if (totalInfants) guestTypes.push(`${totalInfants} Infants`);
+      return guestTypes.join(', ');
+    } else {
+      const total = parseInt(totalAdults || '0') + parseInt(totalChilds || '0') + parseInt(totalInfants || '0');
+      return `${total} Guests`;
+    }
   }
 
   return (
@@ -81,7 +105,7 @@ const MobileViewReviewPaybookingdetails:FC<MobileViewReviewPaybookingdetails> = 
             
             <li className="flex items-center">
               <Users className="w-4 h-4 mr-3 text-gray-500" aria-hidden="true" />
-              <p className="text-gray-700  text-xs">6 Guests</p>
+              <p className="text-gray-700  text-xs">{renderGuestInfo()}</p>
             </li>
             
             <li className="flex items-center">
@@ -127,7 +151,7 @@ const MobileViewReviewPaybookingdetails:FC<MobileViewReviewPaybookingdetails> = 
 
           <div className="flex items-center mb-4">
             <Ticket className="w-5 h-5 mr-2 text-gray-500" aria-hidden="true" />
-            <p className="text-gray-700">Discover: 24-Hour HOHO Pass</p>
+            <p className="text-gray-700">Discover{`:`} 24-Hour HOHO Pass</p>
           </div>
 
           <div className="border-t border-gray-200 my-4"></div>
