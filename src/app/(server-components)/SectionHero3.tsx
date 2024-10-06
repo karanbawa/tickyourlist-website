@@ -32,7 +32,7 @@ const SectionHero3: FC<SectionHero3Props> = ({ className = "", travelSectionBann
       >
         {travelSectionBanners?.slides.map((slide: any, index: number) => (
           <SwiperSlide key={slide?._id}>
-            <div className="relative aspect-w-1 aspect-h-1 sm:aspect-w-4 sm:aspect-h-3 lg:aspect-w-16 lg:aspect-h-9 xl:aspect-h-8">
+            <div className="relative aspect-w-1 aspect-h-1 sm:aspect-w-4 sm:aspect-h-3 lg:aspect-w-16 lg:aspect-h-6 xl:aspect-h-6">
               {slide.type === "image" ? (
                 <>
                   {/* Desktop Image */}
@@ -55,6 +55,7 @@ const SectionHero3: FC<SectionHero3Props> = ({ className = "", travelSectionBann
                       layout="fill"
                       objectFit="cover"
                       priority={index === 0}
+                      className="rounded-lg"
                     />
                   </div>
                 </>
