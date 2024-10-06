@@ -163,7 +163,7 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
         <div className="md:hidden relative px-4 h-[88px] flex flex-col">
           <div className="flex-1 flex justify-between">
             <div className="relative z-10 flex items-center">
-              <Logo />
+              <Logo className = "w-14" />
             </div>
             <div className="self-center flex-1 w-full max-w-lg mx-auto">
               <HeroSearchForm2MobileFactory />
