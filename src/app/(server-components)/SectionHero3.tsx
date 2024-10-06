@@ -43,6 +43,7 @@ const SectionHero3: FC<SectionHero3Props> = ({ className = "", travelSectionBann
                       layout="fill"
                       objectFit="cover"
                       priority={index === 0}
+                      className="rounded-2xl"
                     />
                   </div>
 
