@@ -76,11 +76,8 @@ const LangDropdown: FC<LangDropdownProps> = ({
     
     // Log the currency cookie if found
     if (currencyCookie) {
-      console.log("Currency Cookie Found: ", currencyCookie);
-      
       // Set the selected currency from the cookie value
       const cookieValue = currencyCookie.split("=")[1];
-      console.log("Currency Value: ", cookieValue); // Add this log to see the value
       setSelectedCurrency(cookieValue);
     } else {
       console.log("Currency cookie not found");
@@ -89,12 +86,9 @@ const LangDropdown: FC<LangDropdownProps> = ({
   
   // Handle currency change and set the cookie
   const handleCurrencyChange = (currencyId: string) => {
-    console.log('AEDtest ', currencyId);
     setSelectedCurrency(currencyId);
     document.cookie = `currency=${currencyId}; path=/; max-age=3600`; // Set cookie with 1 hour expiry
     window.location.reload();
-
-    console.log(`Currency changed to ${currencyId}`);
   };
 
    // Effect to watch for changes in the currency cookie and update state accordingly
@@ -217,7 +211,7 @@ const LangDropdown: FC<LangDropdownProps> = ({
               <div className="p-3 sm:p-6 rounded-2xl bg-white dark:bg-neutral-800 shadow-lg ring-1 ring-black ring-opacity-5">
                 <Tab.Group>
                   <Tab.List className="flex space-x-1 rounded-full bg-gray-100 dark:bg-slate-700 p-1">
-                    {["Currency", "Language"].map((category) => (
+                    {["Language", "Currency"].map((category) => (
                       <Tab
                         key={category}
                         className={({ selected }) =>
@@ -241,17 +235,17 @@ const LangDropdown: FC<LangDropdownProps> = ({
                         "focus:outline-none focus:ring-0"
                       )}
                     >
-                      {renderCurr(close)}
+                      {renderLang(close)}
                     </Tab.Panel>
-                    <Tab.Panel
+                  </Tab.Panels>
+                  <Tab.Panel
                       className={classNames(
                         "rounded-xl p-3",
                         "focus:outline-none focus:ring-0"
                       )}
                     >
-                      {renderLang(close)}
+                      {renderCurr(close)}
                     </Tab.Panel>
-                  </Tab.Panels>
                 </Tab.Group>
               </div>
             </Popover.Panel>
