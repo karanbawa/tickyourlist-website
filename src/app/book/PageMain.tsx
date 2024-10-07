@@ -2,14 +2,12 @@
 
 import { Tab } from "@headlessui/react";
 import React, { FC, useEffect, useState } from "react";
-import Input from "@/shared/Input";
 import Label from "@/components/Label";
 import ButtonPrimary from "@/shared/ButtonPrimary";
 import NcModal from "@/shared/NcModal";
 import { GuestsObject } from "../(client-components)/type";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { countries } from "@/components/auth/countries";
 import { useAuth } from "@/context/AuthContext";
 import MobileViewReviewPaybookingdetails from "@/components/bookingdetails/MobileViewReviewPaybookingdetails";
 import MobileConfimAndPayButton from "../(listing-detail)/(components)/MobileConfimAndPayButton";

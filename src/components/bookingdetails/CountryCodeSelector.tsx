@@ -1,18 +1,7 @@
 import React, { useState, useEffect, useRef, FC } from 'react';
 import { Search, ChevronDown, X } from 'lucide-react';
 import Input from '@/shared/Input';
-
-const countries = [
-  { name: 'India', nativeName: 'भारत', code: '+91', flag: '🇮🇳' },
-  { name: 'United Arab Emirates', nativeName: 'الإمارات العربية المتحدة', code: '+971', flag: '🇦🇪' },
-  { name: 'United States', code: '+1', flag: '🇺🇸' },
-  { name: 'United Kingdom', code: '+44', flag: '🇬🇧' },
-  { name: 'Afghanistan', nativeName: 'افغانستان', code: '+93', flag: '🇦🇫' },
-  { name: 'Åland Islands', code: '+358', flag: '🇦🇽' },
-  { name: 'Albania', nativeName: 'Shqipëri', code: '+355', flag: '🇦🇱' },
-  { name: 'Algeria', nativeName: 'الجزائر', code: '+213', flag: '🇩🇿' },
-  { name: 'American Samoa', code: '+1684', flag: '🇦🇸' },
-];
+import { countries } from '@/shared/countries';
 
 interface CountryCodeSelectorProps {
   phoneError?: string;
