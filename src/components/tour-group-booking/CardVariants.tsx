@@ -69,7 +69,7 @@ const CardVariant: FC<CardVariantProps> = ({
         </div>
         <div className="flex-grow overflow-auto mb-6">
           <ul className="space-y-2 text-xs sm:text-sm text-left text-neutral-600 dark:text-neutral-400">
-            {features.map((feature, idx) => (
+            {features?.map((feature, idx) => (
               <li key={idx} className="flex items-start">
                 <span className="mr-2">•</span>
                 {feature}
