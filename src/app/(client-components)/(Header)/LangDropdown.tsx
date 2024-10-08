@@ -61,7 +61,7 @@ const LangDropdown: FC<LangDropdownProps> = ({
   className = "hidden md:flex",
   currencyCode
 }) => {
-  const [selectedCurrency, setSelectedCurrency] = useState("AED");
+  const [selectedCurrency, setSelectedCurrency] = useState(currencyCode);
 
 
   useEffect(() => {
