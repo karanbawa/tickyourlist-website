@@ -1,5 +1,27 @@
-import { headers } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import SiteHeader from '../(client-components)/(Header)/SiteHeader';
+
+// Function to map country codes to currencies
+function mapCountryToCurrency(countryCode: string) {
+  switch (countryCode) {
+    case 'US':
+      return 'USD';
+    case 'GB':
+      return 'GBP';
+    case 'JP':
+      return 'JPY';
+    case 'EU':
+      return 'EUR';
+    case 'IN':
+      return 'INR';
+    case 'AE':
+      return 'AED';
+    case 'SG':
+      return 'SGD';
+    default:
+      return 'AED'; // Default currency if the country is unknown
+  }
+}
 
 const getCollectionData = async (cityCode: string) => {
   const timestamp = Date.now();
@@ -37,37 +59,6 @@ const getCategoryData = async (cityCode: string) => {
   return res.json();
 };
 
-// Country to currency mapping
-const countryCurrencyMap: { [key: string]: string } = {
-  AE: "AED",
-  US: "USD",
-  GB: "GBP",
-  EU: "EUR",
-  IN: 'INR',
-};
-
-// Fetch geolocation based on IP (server-side)
-const getGeolocation = async () => {
-  try {
-    const res = await fetch('https://ipapi.co/json/', {
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
-      },
-    });
-
-    if (!res.ok) {
-      throw new Error('Failed to fetch geolocation');
-    }
-
-    const data = await res.json();
-    return data.country_code;
-  } catch (error) {
-    console.error('Error fetching geolocation:', error);
-    return 'AE'; // Default to AE (United Arab Emirates) if there's an error
-  }
-};
-
 
 export default async function SiteHeaderPage() {
   const headersList = headers();
@@ -90,12 +81,26 @@ export default async function SiteHeaderPage() {
     }
   }
 
+  // Access cookies from the request
+  const cookieStore = cookies();
+  let currency = cookieStore.get('currency')?.value; // Default to 'AED' if no currency cookie exists
+
+  if (!currency) {
+    // No currency cookie, get country from headers
+    const headersList = headers();
+    const country = headersList.get('x-vercel-ip-country') ?? 'AE'; // Fallback to 'AE' if not available
+    currency = mapCountryToCurrency(country);
+
+    // Optionally set the currency cookie for future requests
+    // Note: Setting cookies in server components is not straightforward; you may need to adjust your approach
+  }
+
   return (
     <SiteHeader 
       initialCollectionData={initialCollectionData?.data} 
       initialCityCode={initialCityCode || ''}
       initialCategoriesData={initialCategoriesData?.data}
-      currencyCode={'AED'}
+      currencyCode={currency}
     />
   );
 }
