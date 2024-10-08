@@ -21,13 +21,38 @@ function mapCountryToCurrency(countryCode: string): string {
       return 'AED'; // Default currency if the country is unknown
   }
 }
+
+// // Fetch geolocation based on IP (server-side)
+const getGeolocation = async (ip: string) => {
+  try {
+    const res = await fetch(`https://ipapi.co/json/`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch geolocation');
+    }
+
+    const data = await res.json();
+    return data.country_code;
+  } catch (error) {
+    console.error('Error fetching geolocation:', error);
+    return 'AE'; // Default to AE (United Arab Emirates) if there's an error
+  }
+};
+
 export async function middleware(request: NextRequest) {
-  const country = request.geo?.country || 'AE'; // Fallback to 'US' if geo info isn't available
+  // const country = request.geo?.country || 'AE'; // Fallback to 'US' if geo info isn't available
+  const country = await getGeolocation(request.ip || '');
   const existingCurrencyCookie = request.cookies.get('currency');
   if (!existingCurrencyCookie) {
     // No existing currency cookie, set one based on geo-location
     const currency = mapCountryToCurrency(country);
     const response = NextResponse.next();
+    response.cookies.set('country', country, { maxAge: 3600, path: '/' });
     response.cookies.set('currency', currency, { maxAge: 3600, path: '/' }); // Set the cookie for 1 hour
     // Proceed without an immediate redirect to avoid the loop
     return response;

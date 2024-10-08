@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, FC } from 'react';
 import { Search, ChevronDown, X } from 'lucide-react';
-import Input from '@/shared/Input';
 import { countries } from '@/shared/countries';
 
 interface CountryCodeSelectorProps {
@@ -26,6 +25,10 @@ const CountryCodeSelector: FC<CountryCodeSelectorProps> = ({
   const [filteredCountries, setFilteredCountries] = useState(countries);
   const [isWebView, setIsWebView] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const validateCountryCode = (code: string) => {
+    return countries.some(country => country.code === code);
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -55,15 +58,36 @@ const CountryCodeSelector: FC<CountryCodeSelectorProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    // Set default country based on location cookie
+    const allCookies = document.cookie.split("; ");
+    const countryCookie = allCookies.find((cookie) => cookie.startsWith("country="));
+    if (countryCookie) {
+      const countryCode = countryCookie.split("=")[1];
+      const defaultCountry = countries.find(country => country.countryCode === countryCode);
+      if (defaultCountry && validateCountryCode(defaultCountry.code)) {
+        setSelectedCountry(defaultCountry);
+        if (setPhoneCode) {
+          setPhoneCode(defaultCountry.code);
+        }
+      }
+    }
+  }, [setPhoneCode]);
+
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
 
   const handleCountrySelect = (country: typeof countries[0]) => {
-    setSelectedCountry(country);
-    if (setPhoneCode) {
-      setPhoneCode(country.code);
+    if (validateCountryCode(country.code)) {
+      setSelectedCountry(country);
+      if (setPhoneCode) {
+        setPhoneCode(country.code);
+      }
+      handleClose();
+    } else {
+      console.error(`Invalid country code: ${country.code}`);
+      // Optionally, you could set an error state here to display to the user
     }
-    handleClose();
   };
 
   const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
