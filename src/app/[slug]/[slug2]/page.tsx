@@ -26,18 +26,51 @@ import parse, { domToReact } from "html-react-parser";
 import SidebarBooking from "@/components/tour-group-booking/SideBarBooking";
 import MobileFooterSticky from "@/app/(listing-detail)/(components)/MobileFooterSticky";
 import { notFound } from "next/navigation";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { History, Info, Shuffle, Smartphone, User, Utensils, Zap } from "lucide-react";
 import WhatsappButton from "@/components/whatsappButton/WhatsappButton";
+
 
 interface Params {
   slug: string;
   slug2: string
 }
 
+// Function to map country codes to currencies
+function mapCountryToCurrency(countryCode: string) {
+  switch (countryCode) {
+    case 'US':
+      return 'USD';
+    case 'GB':
+      return 'GBP';
+    case 'JP':
+      return 'JPY';
+    case 'EU':
+      return 'EUR';
+    case 'IN':
+      return 'INR';
+    case 'AE':
+      return 'AED';
+    case 'SG':
+      return 'SGD';
+    default:
+      return 'AED'; // Default currency if the country is unknown
+  }
+}
+
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const cookieStore = cookies();
-  const currency = cookieStore.get('currency')?.value ?? 'AED'; // Default to 'USD' if no cookie
+  let currency = cookieStore.get('currency')?.value; // Default to 'USD' if no cookie
+
+  if (!currency) {
+    // No currency cookie, get country from headers
+    const headersList = headers();
+    const country = headersList.get('x-vercel-ip-country') ?? 'AE'; // Fallback to 'AE' if not available
+    currency = mapCountryToCurrency(country);
+
+    // Optionally set the currency cookie for future requests
+    // Note: Setting cookies in server components is not straightforward; you may need to adjust your approach
+  }
   const data = await fetchTourGroupData(params?.slug, params?.slug2, currency);
   const tourGroup = data?.data?.tourgroup;
 
@@ -101,7 +134,17 @@ async function fetchTourGroupData(slug:string, slug2: string, currency: string) 
 const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }> = async ({ params }) => {
   // let [isOpenModalAmenities, setIsOpenModalAmenities] = useState(false);
   const cookieStore = cookies();
-  const currency = cookieStore.get('currency')?.value ?? 'AED'; // Default to 'USD' if no cookie
+  let currency = cookieStore.get('currency')?.value; // Default to 'USD' if no cookie
+
+  if (!currency) {
+    // No currency cookie, get country from headers
+    const headersList = headers();
+    const country = headersList.get('x-vercel-ip-country') ?? 'AE'; // Fallback to 'AE' if not available
+    currency = mapCountryToCurrency(country);
+
+    // Optionally set the currency cookie for future requests
+    // Note: Setting cookies in server components is not straightforward; you may need to adjust your approach
+  }
   const data = await fetchTourGroupData(params.slug, params.slug2, currency);
   const tourGroup = data?.data?.tourgroup;
   

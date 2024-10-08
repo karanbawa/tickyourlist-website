@@ -1,6 +1,28 @@
 import React, { FC } from "react";
 import CheckOutPagePageMain from "./PageMain";
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
+
+// Function to map country codes to currencies
+function mapCountryToCurrency(countryCode: string) {
+  switch (countryCode) {
+    case 'US':
+      return 'USD';
+    case 'GB':
+      return 'GBP';
+    case 'JP':
+      return 'JPY';
+    case 'EU':
+      return 'EUR';
+    case 'IN':
+      return 'INR';
+    case 'AE':
+      return 'AED';
+    case 'SG':
+      return 'SGD';
+    default:
+      return 'AED'; // Default currency if the country is unknown
+  }
+}
 
 async function fetchTourGroupData(tourId: string, currency: string) {
   // const id = slug.match(/\d+$/)?.[0]; 
@@ -31,7 +53,17 @@ const page: FC<CheckoutPageProps> = async ({ searchParams }) => {
   const tourId = searchParams.tourId || ""; // Fetch tourId from query params
   const date = searchParams.date || ""; // Fetch date from query params
   const cookieStore = cookies();
-  const currency = cookieStore.get('currency')?.value ?? 'AED'; // Default to 'USD' if no cookie
+  let currency = cookieStore.get('currency')?.value; // Default to 'USD' if no cookie
+
+  if (!currency) {
+    // No currency cookie, get country from headers
+    const headersList = headers();
+    const country = headersList.get('x-vercel-ip-country') ?? 'AE'; // Fallback to 'AE' if not available
+    currency = mapCountryToCurrency(country);
+
+    // Optionally set the currency cookie for future requests
+    // Note: Setting cookies in server components is not straightforward; you may need to adjust your approach
+  }
 
 
   // Handle missing parameters

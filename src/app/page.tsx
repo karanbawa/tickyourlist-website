@@ -65,7 +65,7 @@ export default async function PageHome3Server({ params }: { params: { slug: stri
 
   // Access cookies from the request
   const cookieStore = cookies();
-  let currency = cookieStore.get('currency')?.value ?? 'AED'; // Default to 'AED' if no currency cookie exists
+  let currency = cookieStore.get('currency')?.value; // Default to 'AED' if no currency cookie exists
 
   if (!currency) {
     // No currency cookie, get country from headers
