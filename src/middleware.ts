@@ -45,14 +45,17 @@ const getGeolocation = async (ip: string) => {
 };
 
 export async function middleware(request: NextRequest) {
-  const countrycode = request.geo?.country || 'AE'; // Fallback to 'US' if geo info isn't available
-  const countryIp = await getGeolocation(request.ip || '');
-  const country = countryIp || countrycode;
+  const country = request.geo?.country || 'AE'; // Fallback to 'US' if geo info isn't available
+  // const countryIp = await getGeolocation(request.ip || '');
+  // const country = countryIp || countrycode;
+  const countrytest = request.geo;
   const existingCurrencyCookie = request.cookies.get('currency');
   if (!existingCurrencyCookie) {
     // No existing currency cookie, set one based on geo-location
     const currency = mapCountryToCurrency(country);
     const response = NextResponse.next();
+    console.log("countrytest ", countrytest);
+    response.cookies.set('countrytest', JSON.stringify(countrytest), { maxAge: 3600, path: '/' });
     response.cookies.set('country', country, { maxAge: 3600, path: '/' });
     response.cookies.set('currency', currency, { maxAge: 3600, path: '/' }); // Set the cookie for 1 hour
     // Proceed without an immediate redirect to avoid the loop
