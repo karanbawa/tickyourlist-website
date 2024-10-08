@@ -37,7 +37,7 @@ interface Params {
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const cookieStore = cookies();
-  const currency = cookieStore.get('currency')?.value || 'AED'; // Default to 'USD' if no cookie
+  const currency = cookieStore.get('currency')?.value ?? 'AED'; // Default to 'USD' if no cookie
   const data = await fetchTourGroupData(params?.slug, params?.slug2, currency);
   const tourGroup = data?.data?.tourgroup;
 
@@ -101,7 +101,7 @@ async function fetchTourGroupData(slug:string, slug2: string, currency: string) 
 const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }> = async ({ params }) => {
   // let [isOpenModalAmenities, setIsOpenModalAmenities] = useState(false);
   const cookieStore = cookies();
-  const currency = cookieStore.get('currency')?.value || 'AED'; // Default to 'USD' if no cookie
+  const currency = cookieStore.get('currency')?.value ?? 'AED'; // Default to 'USD' if no cookie
   const data = await fetchTourGroupData(params.slug, params.slug2, currency);
   const tourGroup = data?.data?.tourgroup;
   

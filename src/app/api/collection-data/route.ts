@@ -7,7 +7,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const cityCode = searchParams.get('cityCode');
   const cookieStore = cookies();
-  const currency = cookieStore.get('currency')?.value || 'AED'; // Default to 'USD' if no cookie
+  const currency = cookieStore.get('currency')?.value ?? 'AED'; // Default to 'USD' if no cookie
   console.log('collectioncurrencychecl ', currency);
   // const cookies = Cookie.parse(request.headers.cookie || '');
 

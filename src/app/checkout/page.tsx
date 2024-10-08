@@ -32,7 +32,7 @@ const page: FC<CheckoutPageProps> = async ({ searchParams }) => {
   const date = searchParams.date || ""; // Fetch date from query params
   // const currency = 'AED';
   const cookieStore = cookies();
-  const currency = cookieStore.get('currency')?.value || 'AED'; // Default to 'USD' if no cookie
+  const currency = cookieStore.get('currency')?.value ?? 'AED'; // Default to 'USD' if no cookie
 
 
   // Handle missing parameters

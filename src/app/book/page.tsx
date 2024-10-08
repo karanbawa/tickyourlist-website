@@ -38,7 +38,7 @@ const page: FC<BookPageProps> = async ({ searchParams }) => {
   const totalInfants = searchParams?.infant;
 
   const cookieStore = cookies();
-  const currency = cookieStore.get('currency')?.value || 'AED'; // Default to 'USD' if no cookie
+  const currency = cookieStore.get('currency')?.value ?? 'AED'; // Default to 'USD' if no cookie
 
   try {
     // Fetch the data using the tourId

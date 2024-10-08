@@ -42,7 +42,7 @@ export default async function PageHome3Server({ params }: { params: { slug: stri
   const slugParts = params.slug.split('-');
   const cityCode = slugParts[slugParts.length - 1]?.toUpperCase() || 'DUBAI'; // Default to 'DUBAI' if no city is found
   const cookieStore = cookies();
-  const currency = cookieStore.get('currency')?.value || 'AED'; // Default to 'USD' if no cookie
+  const currency = cookieStore.get('currency')?.value ?? 'AED'; // Default to 'USD' if no cookie
   // Fetch travel sections based on the city code
   const travelSections = await getTravelSections(cityCode, currency);
   const travelSectionBanners = await getTravelSectionBanners(cityCode,'EN');

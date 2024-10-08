@@ -22,30 +22,8 @@ function mapCountryToCurrency(countryCode: string): string {
   }
 }
 
-// // Fetch geolocation based on IP (server-side)
-const getGeolocation = async (ip: string) => {
-  try {
-    const res = await fetch(`https://ipapi.co/json/`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
-      },
-    });
-
-    if (!res.ok) {
-      throw new Error('Failed to fetch geolocation');
-    }
-
-    const data = await res.json();
-    return data.country_code;
-  } catch (error) {
-    console.error('Error fetching geolocation:', error);
-    return 'AE'; // Default to AE (United Arab Emirates) if there's an error
-  }
-};
-
 export async function middleware(request: NextRequest) {
-  const country = request.geo?.country || 'AE'; // Fallback to 'US' if geo info isn't available
+  const country = request.geo?.country ?? 'AE'; // Fallback to 'US' if geo info isn't available
   // const countryIp = await getGeolocation(request.ip || '');
   // const country = countryIp || countrycode;
   const countrytest = request?.geo?.country;
