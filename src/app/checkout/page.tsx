@@ -30,7 +30,6 @@ interface CheckoutPageProps {
 const page: FC<CheckoutPageProps> = async ({ searchParams }) => {
   const tourId = searchParams.tourId || ""; // Fetch tourId from query params
   const date = searchParams.date || ""; // Fetch date from query params
-  // const currency = 'AED';
   const cookieStore = cookies();
   const currency = cookieStore.get('currency')?.value ?? 'AED'; // Default to 'USD' if no cookie
 

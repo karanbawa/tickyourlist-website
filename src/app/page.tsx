@@ -1,5 +1,27 @@
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import PageHome3 from './PageHome3';
+
+// Function to map country codes to currencies
+function mapCountryToCurrency(countryCode: string) {
+  switch (countryCode) {
+    case 'US':
+      return 'USD';
+    case 'GB':
+      return 'GBP';
+    case 'JP':
+      return 'JPY';
+    case 'EU':
+      return 'EUR';
+    case 'IN':
+      return 'INR';
+    case 'AE':
+      return 'AED';
+    case 'SG':
+      return 'SGD';
+    default:
+      return 'AED'; // Default currency if the country is unknown
+  }
+}
 
 // Function to fetch travel sections based on city code and currency
 async function getTravelSections(cityCode: string, currency: string) {
@@ -43,7 +65,17 @@ export default async function PageHome3Server({ params }: { params: { slug: stri
 
   // Access cookies from the request
   const cookieStore = cookies();
-  const currency = cookieStore.get('currency')?.value ?? 'AED'; // Default to 'AED' if no currency cookie exists
+  let currency = cookieStore.get('currency')?.value ?? 'AED'; // Default to 'AED' if no currency cookie exists
+
+  if (!currency) {
+    // No currency cookie, get country from headers
+    const headersList = headers();
+    const country = headersList.get('x-vercel-ip-country') ?? 'AE'; // Fallback to 'AE' if not available
+    currency = mapCountryToCurrency(country);
+
+    // Optionally set the currency cookie for future requests
+    // Note: Setting cookies in server components is not straightforward; you may need to adjust your approach
+  }
 
   // Fetch travel sections based on city code and currency
   const travelSections = await getTravelSections(cityCode, currency);

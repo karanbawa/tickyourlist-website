@@ -26,7 +26,6 @@ export async function middleware(request: NextRequest) {
   const country = request.geo?.country ?? 'AE'; // Fallback to 'US' if geo info isn't available
   // const countryIp = await getGeolocation(request.ip || '');
   // const country = countryIp || countrycode;
-  const countrytest = request?.geo?.country;
   const existingCurrencyCookie = request.cookies.get('currency');
   if (!existingCurrencyCookie) {
     // No existing currency cookie, set one based on geo-location

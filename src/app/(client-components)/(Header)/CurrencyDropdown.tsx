@@ -60,7 +60,7 @@ export const headerCurrency = [
 ];
 
 const CurrencyDropdown: React.FC = () => {
-  const [selectedCurrency, setSelectedCurrency] = useState("AED");
+  const [selectedCurrency, setSelectedCurrency] = useState("");
   
 
   const handleCurrencyChange = (currencyId: string) => {
