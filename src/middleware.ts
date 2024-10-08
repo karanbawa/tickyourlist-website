@@ -54,8 +54,6 @@ export async function middleware(request: NextRequest) {
     // No existing currency cookie, set one based on geo-location
     const currency = mapCountryToCurrency(country);
     const response = NextResponse.next();
-    console.log("countrytest ", countrytest);
-    response.cookies.set('countrytest', JSON.stringify(countrytest), { maxAge: 3600, path: '/' });
     response.cookies.set('country', country, { maxAge: 3600, path: '/' });
     response.cookies.set('currency', currency, { maxAge: 3600, path: '/' }); // Set the cookie for 1 hour
     // Proceed without an immediate redirect to avoid the loop

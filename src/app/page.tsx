@@ -43,7 +43,10 @@ export default async function PageHome3Server({ params }: { params: { slug: stri
 
   // Access cookies from the request
   const cookieStore = cookies();
-  const currency = cookieStore.get('currency')?.value || 'AED'; // Default to 'AED' if no currency cookie exists
+  const currency = cookieStore.get('currency')?.value; // Default to 'AED' if no currency cookie exists
+  if(!currency) {
+    return;
+  }
 
   // Fetch travel sections based on city code and currency
   const travelSections = await getTravelSections(cityCode, currency);
