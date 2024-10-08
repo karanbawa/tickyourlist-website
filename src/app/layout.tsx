@@ -61,17 +61,19 @@ export default function RootLayout({
             strategy="afterInteractive"
             dangerouslySetInnerHTML={{
               __html: `
-              (function(d, w, c) {
-                  w.BrevoConversationsID = '${process.env.BREVO_CONVERSTATIONS_ID}';
-                  w[c] = w[c] || function() {
-                      (w[c].q = w[c].q || []).push(arguments);
-                  };
-                  var s = d.createElement('script');
-                  s.async = true;
-                  s.src = 'https://conversations-widget.brevo.com/brevo-conversations.js';
-                  if (d.head) d.head.appendChild(s);
-              })(document, window, 'BrevoConversations');
-           `,
+                if (window.innerWidth > 768) {
+                  (function(d, w, c) {
+                      w.BrevoConversationsID = '${process.env.BREVO_CONVERSTATIONS_ID}';
+                      w[c] = w[c] || function() {
+                          (w[c].q = w[c].q || []).push(arguments);
+                      };
+                      var s = d.createElement('script');
+                      s.async = true;
+                      s.src = 'https://conversations-widget.brevo.com/brevo-conversations.js';
+                      if (d.head) d.head.appendChild(s);
+                  })(document, window, 'BrevoConversations');
+                }
+              `,
             }}
           />
           <Script
