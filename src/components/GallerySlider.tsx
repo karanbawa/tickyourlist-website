@@ -37,23 +37,27 @@ export default function GallerySlider({
   const [direction, setDirection] = useState(0);
   const images = galleryImgs;
 
-  const changePhotoId = useCallback((newVal: number) => {
+  const changePhotoId = useCallback((newVal: number, e?: React.MouseEvent) => {
+    if (e) {
+      e.stopPropagation();
+    }
     if (newVal > index) {
       setDirection(1);
     } else {
       setDirection(-1);
     }
     setIndex(newVal);
-    // setIsLoading(true);
   }, [index]);
 
   const handlers = useSwipeable({
-    onSwipedLeft: () => {
+    onSwipedLeft: (eventData) => {
+      eventData.event.stopPropagation();
       if (index < images?.length - 1) {
         changePhotoId(index + 1);
       }
     },
-    onSwipedRight: () => {
+    onSwipedRight: (eventData) => {
+      eventData.event.stopPropagation();
       if (index > 0) {
         changePhotoId(index - 1);
       }
@@ -73,6 +77,7 @@ export default function GallerySlider({
       <div
         className={`relative group group/cardGallerySlider ${className}`}
         {...handlers}
+        onClick={(e) => e.stopPropagation()}
       >
         {hasFreeCancellationDescriptor && (
           <div className="flex absolute top-3 left-3 z-10 bg-white text-black px-2 py-1 rounded-md text-xs">

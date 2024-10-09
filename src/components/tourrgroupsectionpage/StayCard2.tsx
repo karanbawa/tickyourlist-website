@@ -7,6 +7,7 @@ import Badge from "@/shared/Badge";
 import Link from "next/link";
 import { ArrowDown, History, Smartphone, X, Zap } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 export interface StayCard2Props {
   className?: string;
@@ -29,6 +30,14 @@ const StayCard2: FC<StayCard2Props> = ({
   } = data;
 
   const { user } = useAuth();
+  const router = useRouter();
+
+  const handleRedirectToTourPage = (e: React.MouseEvent) => {
+    // Check if the click originated from the slider
+    if (!(e.target as HTMLElement).closest('.nc-GallerySlider')) {
+      router.push(urlSlugs?.EN);
+    }
+  }
 
   // const user = JSON.parse(localStorage.getItem('user') ?? '');
 
@@ -47,7 +56,7 @@ const StayCard2: FC<StayCard2Props> = ({
           ratioClass="aspect-w-12 aspect-h-11"
           galleryImgs={imageUploads?.map((img: any) => img.url)}
           imageClass="rounded-lg"
-          href={urlSlugs?.EN}
+          href={urlSlugs?.EN} 
         />
         {user?.data?.data?.data?.customer &&
         <BtnLikeIcon isLiked={false} className="absolute right-3 top-3 z-[1]" />
@@ -156,7 +165,7 @@ const StayCard2: FC<StayCard2Props> = ({
   };
 
   return (
-    <div className={`nc-StayCard2 group relative ${className}`}>
+    <div className={`nc-StayCard2 group relative ${className}`} onClick={handleRedirectToTourPage}>
       {renderSliderGallery()}
       <Link href={urlSlugs?.EN}>{renderContent()}</Link>
     </div>
