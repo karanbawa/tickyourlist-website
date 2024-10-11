@@ -75,7 +75,7 @@ export default function GallerySlider({
       }}
     >
       <div
-        className={`relative group group/cardGallerySlider nc-GallerySlider ${className}`}
+        className={`relative group group/cardGallerySlider ${className}`}
         {...handlers}
         onClick={(e) => e.stopPropagation()}
       >
