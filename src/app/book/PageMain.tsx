@@ -51,11 +51,13 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   totalInfants
 }) => {
   const [showPromoCode, setShowPromoCode] = useState(false);
-  const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [phoneCode, setPhoneCode] = useState("");
-  const [fullNameError, setFullNameError] = useState("");
+  const [firstNameError, setFirstNameError] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
   // const [phoneCodeError, setPhoneCodeError] = useState("");
   const [phoneError, setPhoneError] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -67,7 +69,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
   const [guests, setGuests] = useState<GuestsObject>({
     guestAdults: parseInt(totalGuests || totalAdults || '1'),
-    guestChildren: parseInt(totalChilds || '0'),
+    guestChilds: parseInt(totalChilds || '0'),
     guestInfants: parseInt(totalInfants || '0')
   });
 
@@ -105,22 +107,60 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
   const calculateTotalAmount = () => {
     const pricing = tourGroup?.listingPrice?.listingPrice;
-    if (!pricing) return 0;
-
-    const hasSpecificTypes = pricing?.prices?.some((p: { type: string; }) =>
+    if (!pricing) return { totalPrice: 0, guestPrice: 0, adultPrice: 0, childPrice: 0, infantPrice: 0 };
+  
+    const hasSpecificTypes = pricing?.prices?.some((p: { type: string }) =>
       ['adult', 'child', 'infant'].includes(p.type.toLowerCase())
     );
-
+  
     if (!hasSpecificTypes) {
       // If only guest type is available
-      const guestPrice = pricing?.prices?.find((p: { type: string; }) => p.type.toLowerCase() === 'guest');
-      return (guests.guestAdults ?? 1) * (Math.ceil(guestPrice?.finalPrice) ?? 0);
+      const guestPrice = pricing?.prices?.find((p: { type: string }) => p.type.toLowerCase() === 'guest');
+      const finalGuestPrice = Math.ceil(guestPrice?.finalPrice) ?? 0;
+      const totalPrice = (guests.guestAdults ?? 1) * finalGuestPrice;
+      return {
+        totalPrice,
+        guestPrice: finalGuestPrice,
+        adultPrice: null,
+        childPrice: null,
+        infantPrice: null,
+        type: 'Guest'
+      };
     } else {
       // If specific types are available
-      return pricing.prices.reduce((total: number, price: any) => {
-        const guestCount = guests[`guest${price?.type?.charAt(0).toUpperCase() + price?.type?.slice(1)}s` as keyof GuestsObject] ?? 0;
-        return total + (guestCount * Math.ceil(price.finalPrice));
-      }, 0);
+      let adultPrice = 0;
+      let childPrice = 0;
+      let infantPrice = 0;
+      let totalPrice = 0;
+  
+      pricing.prices.forEach((price: any) => {
+        const type = price.type.toLowerCase();
+        const finalPrice = Math.ceil(price.finalPrice);
+        const guestCount = guests[`guest${type.charAt(0).toUpperCase() + type.slice(1)}s` as keyof GuestsObject] ?? 0;
+  
+        totalPrice += guestCount * finalPrice;
+  
+        switch (type) {
+          case 'adult':
+            adultPrice = finalPrice;
+            break;
+          case 'child':
+            childPrice = finalPrice;
+            break;
+          case 'infant':
+            infantPrice = finalPrice;
+            break;
+        }
+      });
+  
+      return {
+        totalPrice,
+        guestPrice: null, // Set to 0 when specific types are available
+        adultPrice,
+        childPrice,
+        infantPrice,
+        type: 'Variant'
+      };
     }
   };
 
@@ -192,7 +232,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     });
   };
 
-  const handleRazorpayPayment = async (amount: any, orderId: any, booking: { nonCustomerFullName: any; phoneCode: any; phoneNumber: any; _id: string, email: string }) => {
+  const handleRazorpayPayment = async (amount: any, orderId: any, booking: { nonCustomerFirstName: any; nonCustomerLastName: any; phoneCode: any; phoneNumber: any; _id: string, email: string }) => {
     try {
       const scriptLoaded = await loadRazorpayScript();
       if (!scriptLoaded) {
@@ -208,7 +248,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         image: "https://tickyourlist-images.s3.ap-south-1.amazonaws.com/tyllogo.png",
         order_id: orderId,
         prefill: {
-          name: `${booking?.nonCustomerFullName}`,
+          name: `${booking?.nonCustomerFirstName} ${booking?.nonCustomerLastName}`,
           email: booking?.email,
           contact: `${booking?.phoneCode}${booking?.phoneNumber}`
         },
@@ -245,11 +285,18 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
   const validateFields = () => {
     let valid = true;
-    if (!fullName.trim()) {
-      setFullNameError("Full Name is required");
+    if (!firstName.trim()) {
+      setFirstNameError("First Name is required");
       valid = false;
     } else {
-      setFullNameError("");
+      setFirstNameError("");
+    }
+
+    if (!lastName.trim()) {
+      setLastNameError("Last Name is required");
+      valid = false;
+    } else {
+      setLastNameError("");
     }
 
     // if(!phoneCode) {
@@ -287,9 +334,14 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     setLoadingConfirmPay(true);
     setConfirmPayError('');
 
+    const priceInfo = calculateTotalAmount();
+    const { totalPrice, guestPrice, adultPrice, childPrice, infantPrice, type } = priceInfo;
+
     const data = {
       domainId: "66cacba1eeca9633c29172b9",
-      nonCustomerFullName: fullName,
+      type: type,
+      nonCustomerFirstName: firstName,
+      nonCustomerLastName: lastName,
       email: email,
       phoneCode: phoneCode,
       phoneNumber: phoneNumber,
@@ -297,12 +349,16 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       tourId: tour,
       customerUserId: user?.data?.data?.data?.customer?._id,
       adultsCount: guests.guestAdults,
-      childCount: guests.guestChildren,
-      infantCount: guests.guestInfants,
-      amount: calculateTotalAmount().toString(),
+      childCount: guests.guestChilds,
+      infantCount: guests?.guestInfants,
+      childPrice: childPrice?.toString(),
+      infantPrice: infantPrice?.toString(),
+      guestPrice: guestPrice?.toString(),
+      adultPrice: adultPrice?.toString(),
+      amount: totalPrice?.toString(),
       currency: currencyCode,
       title: tourGroup?.name,
-      source: "website",
+      source: "TickYourList",
       bookingDate: date,
       variantId,
       tourGroupId: tourGroup?._id,
@@ -310,7 +366,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     };
 
     try {
-      const response = await fetch(`https://api.univolenitsolutions.com/v1/tyltourcustomerbooking/add/travel-booking`, {
+      const response = await fetch(`http://localhost:3005/v1/tyltourcustomerbooking/add/travel-booking`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -616,22 +672,32 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                 <Tab.Panel className="space-y-5">
                   <div className="flex flex-col sm:flex-row sm:space-x-5">
                     <div className="flex-1 space-y-1">
-                      <Label className="text-sm md:text-base">Full Name</Label>
+                      <Label className="text-sm md:text-base">First Name</Label>
                       <input 
                         type="text" 
-                        value={fullName} 
-                        onChange={(e) => setFullName(e.target.value)}
+                        value={firstName} 
+                        onChange={(e) => setFirstName(e.target.value)}
                         className="rounded-2xl w-full p-[0.9rem] md:p-3 block border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900"
                       />
-                      {fullNameError && <p className="text-red-500 text-sm">{fullNameError}</p>}
+                      {firstNameError && <p className="text-red-500 text-sm">{firstNameError}</p>}
                     </div>
-                    <div className="w-full sm:w-1/2 space-y-1  mt-2 sm:mt-0 sm:mb-0">
-                    <Label className="text-sm md:text-base">Phone Number</Label>
-                    <CountryCodeSelector phoneError={phoneError} setPhoneError={setPhoneError} setPhoneNumber={setPhoneNumber} phoneCode={phoneCode} phoneNumber={phoneNumber} setPhoneCode={setPhoneCode}   />
+                    <div className="flex-1 space-y-1 mt-2 sm:mt-0">
+                      <Label className="text-sm md:text-base">Last Name</Label>
+                      <input 
+                        type="text" 
+                        value={lastName} 
+                        onChange={(e) => setLastName(e.target.value)}
+                        className="rounded-2xl w-full p-[0.9rem] md:p-3 block border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900"
+                      />
+                      {lastNameError && <p className="text-red-500 text-sm">{lastNameError}</p>}
                     </div>
                   </div>
 
                   <div className="flex flex-col sm:flex-row sm:space-x-5">
+                  <div className="w-full sm:w-1/2 space-y-1 sm:mt-0 sm:mb-0">
+                    <Label className="text-sm md:text-base">Phone Number</Label>
+                    <CountryCodeSelector phoneError={phoneError} setPhoneError={setPhoneError} setPhoneNumber={setPhoneNumber} phoneCode={phoneCode} phoneNumber={phoneNumber} setPhoneCode={setPhoneCode}   />
+                    </div>
                   <div className="w-full sm:w-1/2 space-y-1  mt-2 sm:mt-0 sm:mb-0">
                       <Label className="text-sm md:text-base">Email</Label>
                       <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="rounded-2xl w-full p-[0.9rem] md:p-3 block border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900" />

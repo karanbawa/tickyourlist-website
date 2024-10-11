@@ -1,6 +1,7 @@
 export interface GuestsObject {
   guestAdults?: number;
   guestChildren?: number;
+  guestChilds?: number;
   guestInfants?: number;
 }
 
