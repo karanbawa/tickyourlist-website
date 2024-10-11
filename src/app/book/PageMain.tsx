@@ -124,7 +124,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         adultPrice: null,
         childPrice: null,
         infantPrice: null,
-        type: 'Guest'
+        type: 'GUEST'
       };
     } else {
       // If specific types are available
@@ -159,7 +159,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         adultPrice,
         childPrice,
         infantPrice,
-        type: 'Variant'
+        type: 'AGEGROUP'
       };
     }
   };
@@ -299,12 +299,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       setLastNameError("");
     }
 
-    // if(!phoneCode) {
-    //   setPhoneCodeError("Country Code is required");
-    // } else {
-    //   setPhoneCodeError("")
-    // }
-
     if (!phoneNumber.trim()) {
       setPhoneError("Phone number is required");
       valid = false;
@@ -348,7 +342,8 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       content: "Booking content",
       tourId: tour,
       customerUserId: user?.data?.data?.data?.customer?._id,
-      adultsCount: guests.guestAdults,
+      guestsCount: type === 'GUEST' ? guests.guestAdults : null,
+      adultsCount: type !== 'GUEST' ? guests.guestAdults : null,
       childCount: guests.guestChilds,
       infantCount: guests?.guestInfants,
       childPrice: childPrice?.toString(),
