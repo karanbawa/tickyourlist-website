@@ -16,7 +16,6 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import LangDropdown from "./LangDropdown";
 import CategoryTab from "@/components/categories/CategoryTab";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import AlgoliaLikeSearch from './AlgoliaLikeSearch';
 
 interface Header3Props {
   className?: string;
@@ -104,7 +103,6 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
   );
 
   const renderButtonOpenHeroSearch = () => (
-    // <AlgoliaLikeSearch />
     <div
       className={`w-full relative flex items-center justify-between border border-neutral-200 dark:border-neutral-600 rounded-full shadow hover:shadow-md transition-all ${showHeroSearch ? "translate-y-20 scale-[2.55] opacity-0 pointer-events-none invisible" : "visible"}`}
     >
@@ -114,11 +112,11 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
         </span>
         <span className="h-5 w-[1px] bg-neutral-300 dark:bg-neutral-700"></span>
         <span onClick={() => setShowHeroSearch("dates")} className="block px-4 cursor-pointer py-3" aria-label="Search Check In Dates">
-          Category
+          Check In
         </span>
         <span className="h-5 w-[1px] bg-neutral-300 dark:bg-neutral-700"></span>
         <span onClick={() => setShowHeroSearch("guests")} className="block px-4 cursor-pointer font-normal py-3" aria-label="Add Guests">
-          Experiences
+          Add guests
         </span>
       </div>
       <div className="flex-shrink-0 ml-auto pr-2 cursor-pointer" onClick={() => setShowHeroSearch("location")} aria-label="Open Search">

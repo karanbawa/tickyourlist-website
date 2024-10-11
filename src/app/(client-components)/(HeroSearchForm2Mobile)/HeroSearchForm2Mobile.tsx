@@ -88,7 +88,7 @@ const HeroSearchForm2Mobile = () => {
                       </div>
 
                       <Tab.List className="pt-12 flex w-full justify-center font-semibold text-sm sm:text-base text-neutral-500 dark:text-neutral-400 space-x-6 sm:space-x-8">
-                        {["Experiences"].map(
+                        {["Stay", "Experiences", "Cars", "Flights"].map(
                           (item, index) => (
                             <Tab key={index} as={Fragment}>
                               {({ selected }) => (
@@ -113,17 +113,17 @@ const HeroSearchForm2Mobile = () => {
                       </Tab.List>
                       <div className="flex-1 pt-3 px-1.5 sm:px-4 flex overflow-hidden">
                         <Tab.Panels className="flex-1 overflow-y-auto hiddenScrollbar py-4">
-                          {/* <Tab.Panel>
-                            <div className="transition-opacity animate-[myblur_0.4s_ease-in-out]">
-                              <StaySearchForm />
-                            </div>
-                          </Tab.Panel> */}
                           <Tab.Panel>
                             <div className="transition-opacity animate-[myblur_0.4s_ease-in-out]">
                               <StaySearchForm />
                             </div>
                           </Tab.Panel>
-                          {/* <Tab.Panel>
+                          <Tab.Panel>
+                            <div className="transition-opacity animate-[myblur_0.4s_ease-in-out]">
+                              <StaySearchForm />
+                            </div>
+                          </Tab.Panel>
+                          <Tab.Panel>
                             <div className="transition-opacity animate-[myblur_0.4s_ease-in-out]">
                               <CarsSearchForm />
                             </div>
@@ -132,7 +132,7 @@ const HeroSearchForm2Mobile = () => {
                             <div className="transition-opacity animate-[myblur_0.4s_ease-in-out]">
                               <FlightSearchForm />
                             </div>
-                          </Tab.Panel> */}
+                          </Tab.Panel>
                         </Tab.Panels>
                       </div>
                       <div className="px-4 py-3 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-700 flex justify-between">

@@ -7,13 +7,11 @@ import Link from "next/link";
 interface Props {
   className?: string;
   href: PathName;
-  style?: any;
 }
 
 const ButtonSubmit: FC<Props> = ({
   className = "",
   href = "/listing-stay-map",
-  style
 }) => {
   return (
     <Link
@@ -21,7 +19,7 @@ const ButtonSubmit: FC<Props> = ({
       type="button"
       className={`h-14 w-14 rounded-full bg-primary-6000 hover:bg-primary-700 flex items-center justify-center text-neutral-50 focus:outline-none ${className}`}
       onClick={() => {
-        (document.querySelector(".nc-Footer") as HTMLElement | null)?.click(); 
+        (document.querySelector(".nc-Footer") as HTMLElement | null)?.click();
       }}
     >
       <span className="mr-3 md:hidden">Search</span>

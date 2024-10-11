@@ -134,9 +134,9 @@ const StaySearchForm = () => {
         {/*  */}
         {renderInputLocation()}
         {/*  */}
-        {/* {renderInputDates()} */}
+        {renderInputDates()}
         {/*  */}
-        {/* {renderInputGuests()} */}
+        {renderInputGuests()}
       </div>
     </div>
   );
