@@ -29,6 +29,12 @@ const solutions: SolutionItem[] = [
     icon: IconTwo,
   },
   {
+    name: "Cars",
+    description: "Car rental description",
+  href: "/listing-car",
+    icon: IconThree,
+  },
+  {
     name: "Experiences",
     description: "Tour and experiences",
     href: "/listing-experiences",
