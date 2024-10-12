@@ -361,7 +361,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     };
 
     try {
-      const response = await fetch(`http://localhost:3005/v1/tyltourcustomerbooking/add/travel-booking`, {
+      const response = await fetch(`${process.env.WEBSITE_ID}/v1/tyltourcustomerbooking/add/travel-booking`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

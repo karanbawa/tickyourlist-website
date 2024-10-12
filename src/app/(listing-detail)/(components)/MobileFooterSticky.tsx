@@ -31,7 +31,7 @@ const MobileFooterSticky: FC<MobileFooterStickyProps> = ({ tourGroup }) => {
   }
 
   const handleWhatsappRedirect = () => {
-    const phoneNumber = "+918588938349"; // replace with the WhatsApp number you want to send the message to
+    const phoneNumber = "+971529061536"; // replace with the WhatsApp number you want to send the message to
     const message = `Hello, I'm interested in personalized itineraries and vacation planning. Here is the link: https://tickyourlist.com/${tourGroup?.urlSlugs?.EN}`;
     const encodedMessage = encodeURIComponent(message);
 

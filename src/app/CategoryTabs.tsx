@@ -7,6 +7,7 @@ import Heading from '@/shared/Heading';
 import ButtonSecondary from '@/shared/ButtonSecondary';
 import { ArrowRightIcon } from '@heroicons/react/24/solid';
 import Link from 'next/link';
+import { useAuth } from '@/context/AuthContext';
 
 const noScrollbarClass = `
   scrollbar-hide overflow-x-auto
@@ -37,6 +38,30 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ travelSections }) => {
   const isManualScrollRef = useRef<boolean>(false);
   const scrollContainerRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const [scrollStates, setScrollStates] = useState<{ [key: string]: ScrollState }>({});
+  const [wishlist, setWishlist] = useState<string[]>([]);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      if (user?.data?.data?.data?.tokens?.accessToken) {
+        try {
+          const response = await fetch('/api/get-wishlist', {
+            headers: {
+              'Authorization': `Bearer ${user.data.data.data.tokens.accessToken}`
+            }
+          });
+          const data = await response.json();
+          if (data.wishlist) {
+            setWishlist(data.wishlist);
+          }
+        } catch (error) {
+          console.error('Error fetching wishlist:', error);
+        }
+      }
+    };
+
+    fetchWishlist();
+  }, [user]);
 
   const updateScrollState = (sectionId: string) => {
     const container = scrollContainerRefs.current[sectionId];
@@ -299,7 +324,13 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ travelSections }) => {
               >
                 <div className="flex space-x-4 px-4">
                   {section.tourGroups?.map((tourgroup: any) => (
-                    <StayCard2 key={tourgroup.id} data={tourgroup} className="min-w-[300px] max-w-[300px] flex-shrink-0" />
+                    <StayCard2 key={tourgroup.id} data={tourgroup} isLiked={wishlist.includes(tourgroup.id)} onLikeChange={(newStatus) => {
+                      if (newStatus) {
+                        setWishlist(prev => [...prev, tourgroup.id]);
+                      } else {
+                        setWishlist(prev => prev.filter(id => id !== tourgroup.id));
+                      }
+                    }} className="min-w-[300px] max-w-[300px] flex-shrink-0" />
                   ))}
                 </div>
               </div>

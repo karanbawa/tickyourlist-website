@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import GallerySlider from "@/components/GallerySlider";
 import StartRating from "@/components/StartRating";
 import BtnLikeIcon from "@/components/BtnLikeIcon";
@@ -13,15 +13,20 @@ export interface StayCard2Props {
   className?: string;
   data: any;
   size?: "default" | "small";
+  isLiked?: boolean;
+  onLikeChange?: (newStatus: boolean) => void;
 }
 
 const StayCard2: FC<StayCard2Props> = ({
   size = "default",
   className = "",
   data,
+  isLiked,
+  onLikeChange
 }) => {
   const {
     id,
+    _id,
     name,
     imageUploads,
     urlSlugs,
@@ -46,20 +51,47 @@ const StayCard2: FC<StayCard2Props> = ({
     return price?.toLocaleString('en-IN');
   };
 
+  const handleLikeChange = async (newLikeStatus: boolean) => {
+    try {
+      const token = user?.data?.data?.data?.tokens?.accessToken || user?.data?.data?.tokens?.accessToken;
+      const response = await fetch('/api/tourgroupwishlistaddition', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ tourGroupId: _id ?? id, action: newLikeStatus ? 'like' : 'unlike' }),
+      });
+
+      if (response.ok, onLikeChange) {
+        onLikeChange(newLikeStatus);
+      } else {
+        console.error('Failed to update like status');
+      }
+    } catch (error) {
+      console.error('Error updating like status:', error);
+    }
+  };
+
   const renderSliderGallery = () => {
     const hasFreeCancellationDescriptor = data?.descriptors?.some((descriptor: any) => descriptor.code === "FREE_CANCELLATION");
     return (
       <div className="relative w-full">
         <GallerySlider
           hasFreeCancellationDescriptor={hasFreeCancellationDescriptor}
-          uniqueID={`StayCard2_${id}`}
+          uniqueID={`TOURGROU_${_id}`}
           ratioClass="aspect-w-12 aspect-h-11"
           galleryImgs={imageUploads?.map((img: any) => img.url)}
           imageClass="rounded-lg"
           href={urlSlugs?.EN} 
         />
         {user?.data?.data?.data?.customer &&
-        <BtnLikeIcon isLiked={false} className="absolute right-3 top-3 z-[1]" />
+        <BtnLikeIcon
+        isLiked={isLiked}
+        className="absolute right-3 top-3 z-[1]"
+        stayId={_id}
+        onLikeChange={handleLikeChange}
+      />
       }
       </div>
     );

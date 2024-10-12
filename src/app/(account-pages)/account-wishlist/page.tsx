@@ -9,12 +9,39 @@ import {
   DEMO_EXPERIENCES_LISTINGS,
   DEMO_STAY_LISTINGS,
 } from "@/data/listings";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import ButtonSecondary from "@/shared/ButtonSecondary";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import StayCard2 from "@/components/tourrgroupsectionpage/StayCard2";
+import { useAuth } from "@/context/AuthContext";
 
 const AccountSavelists = () => {
   let [categories] = useState(["Experiences"]);
+  const { user } = useAuth();
+  const [tourGroups, setTourGroups] = useState([]);
+
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      if (user?.data?.data?.data?.tokens?.accessToken) {
+        try {
+          const response = await fetch('/api/userwishlist', {
+            headers: {
+              'Authorization': `Bearer ${user.data.data.data.tokens.accessToken}`
+            }
+          });
+          const data = await response.json();
+          if (data.tourGroup) {
+            console.log("sadadadadasd ", data);
+            setTourGroups(data.tourGroup);
+          }
+        } catch (error) {
+          console.error('Error fetching wishlist:', error);
+        }
+      }
+    };
+
+    fetchWishlist();
+  }, [user]);
 
   const renderSection1 = () => {
     return (
@@ -47,9 +74,15 @@ const AccountSavelists = () => {
             <Tab.Panels>
               <Tab.Panel className="mt-8">
                 <div className="grid grid-cols-1 gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                  {DEMO_EXPERIENCES_LISTINGS.filter((_, i) => i < 8).map(
-                    (stay) => (
-                      <ExperiencesCard key={stay.id} data={stay} />
+                  {tourGroups?.filter((_, i) => i < 8).map(
+                    (tourgroup: any) => (
+                      // <></>
+                      <StayCard2 key={tourgroup._id} data={tourgroup} isLiked={true} className="min-w-[300px] max-w-[300px] flex-shrink-0" onLikeChange={(newStatus) => {
+                        if (!newStatus) {
+                          console.log(tourGroups);
+                          setTourGroups(prev => prev.filter((data: any) => data?._id !== tourgroup._id));
+                        }
+                      }} />
                     )
                   )}
                 </div>

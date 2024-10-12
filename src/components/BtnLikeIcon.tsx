@@ -1,33 +1,42 @@
 "use client";
 
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 
 export interface BtnLikeIconProps {
   className?: string;
   colorClass?: string;
   isLiked?: boolean;
+  stayId?: string;
+  onLikeChange?: (newLikeStatus: boolean) => void;
 }
 
 const BtnLikeIcon: FC<BtnLikeIconProps> = ({
   className = "",
   colorClass = "text-white bg-black bg-opacity-30 hover:bg-opacity-50",
-  isLiked = false,
+  isLiked,
+  stayId,
+  onLikeChange
 }) => {
-  const [likedState, setLikedState] = useState(isLiked);
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if(onLikeChange) {
+    onLikeChange(!isLiked);
+    }
+  };
 
   return (
     <div
       className={`nc-BtnLikeIcon w-8 h-8 flex items-center justify-center rounded-full cursor-pointer ${
-        likedState ? "nc-BtnLikeIcon--liked" : ""
+        isLiked ? "nc-BtnLikeIcon--liked" : ""
       }  ${colorClass} ${className}`}
       data-nc-id="BtnLikeIcon"
       title="Save"
-      onClick={() => setLikedState(!likedState)}
+      onClick={handleClick}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="h-5 w-5"
-        fill={likedState ? "currentColor" : "none"}
+        fill={isLiked ? "currentColor" : "none"}
         viewBox="0 0 24 24"
         stroke="currentColor"
       >

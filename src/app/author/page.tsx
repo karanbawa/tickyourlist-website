@@ -6,23 +6,42 @@ import CommentListing from "@/components/CommentListing";
 import ExperiencesCard from "@/components/ExperiencesCard";
 import StartRating from "@/components/StartRating";
 import StayCard from "@/components/StayCard2";
-import {
-  DEMO_CAR_LISTINGS,
-  DEMO_EXPERIENCES_LISTINGS,
-  DEMO_STAY_LISTINGS,
-} from "@/data/listings";
-import React, { FC, Fragment, useState } from "react";
+import React, { FC, Fragment, useEffect, useState } from "react";
 import Avatar from "@/shared/Avatar";
 import ButtonSecondary from "@/shared/ButtonSecondary";
 import SocialsList from "@/shared/SocialsList";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { useAuth } from "@/context/AuthContext";
+import BookingCard from "@/components/customerbookingsPage/BookingCard";
 
 export interface AuthorPageProps {}
 
 const AuthorPage: FC<AuthorPageProps> = ({}) => {
   let [categories] = useState(["Experiences"]);
   const { user } = useAuth();
+  const [bookings, setBookings] = useState([]);
+
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      if (user?.data?.data?.data?.tokens?.accessToken) {
+        try {
+          const response = await fetch('/api/getcustomertravelbookings', {
+            headers: {
+              'Authorization': `Bearer ${user.data.data.data.tokens.accessToken}`
+            }
+          });
+          const data = await response.json();
+          if (data.bookings) {
+            setBookings(data.bookings);
+          }
+        } catch (error) {
+          console.error('Error fetching wishlist:', error);
+        }
+      }
+    };
+
+    fetchWishlist();
+  }, [user]);
 
   function capitalizeFirstLetter(name: string) {
     if (!name) return '';
@@ -159,15 +178,15 @@ const AuthorPage: FC<AuthorPageProps> = ({}) => {
             <Tab.Panels>
               <Tab.Panel className="">
                 <div className="mt-8 grid grid-cols-1 gap-6 md:gap-7 sm:grid-cols-2">
-                  {DEMO_EXPERIENCES_LISTINGS.filter((_, i) => i < 4).map(
-                    (stay) => (
-                      <ExperiencesCard key={stay.id} data={stay} />
+                  {bookings.map(
+                    (bookingDetails: any) => (
+                      <BookingCard key={bookingDetails._id} booking={bookingDetails} />
                     )
                   )}
                 </div>
-                <div className="flex mt-11 justify-center items-center">
+                {bookings?.length  ? <div className="flex mt-11 justify-center items-center">
                   <ButtonSecondary>Show me more</ButtonSecondary>
-                </div>
+                </div>: <div className="text-center text-md font-semibold">No Bookings Done Yet !!</div>}
               </Tab.Panel>
             </Tab.Panels>
           </Tab.Group>
@@ -206,7 +225,7 @@ const AuthorPage: FC<AuthorPageProps> = ({}) => {
         </div>
         <div className="w-full lg:w-3/5 xl:w-2/3 space-y-8 lg:space-y-10 lg:pl-10 flex-shrink-0">
           {renderSection1()}
-          {renderSection2()}
+          {/* {renderSection2()} */}
         </div>
       </main>
     </div>
