@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ message: 'No token provided' }, { status: 401 });
     }
 
-    const response = await fetch(`${process.env.WEBSITE_ID}/v1/customeractivities/get/wishlist`, {
+    const response = await fetch(`${process.env.BASE_URL}/v1/customeractivities/get/wishlist`, {
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj',

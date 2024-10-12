@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ message: 'No token provided' }, { status: 401 });
     }
 
-    const response = await fetch(`${process.env.WEBSITE_ID}/v1/customeractivities/get/customer/travel-bookings?domainId=66cacba1eeca9633c29172b9&page=1&limit=20`, {
+    const response = await fetch(`${process.env.BASE_URL}/v1/customeractivities/get/customer/travel-bookings?domainId=66cacba1eeca9633c29172b9&page=1&limit=20`, {
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj',

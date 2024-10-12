@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
         action: formData.action
     }
 
-    const response = await fetch(`${process.env.WEBSITE_ID}/v1/customeractivities/add/wishlist`, {
+    const response = await fetch(`${process.env.BASE_URL}/v1/customeractivities/add/wishlist`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

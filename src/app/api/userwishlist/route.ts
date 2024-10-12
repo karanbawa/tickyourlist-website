@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ message: 'No token provided' }, { status: 401 });
     }
 
-    const response = await fetch(`${process.env.WEBSITE_ID}/v1/customeractivities/get/user/wishlist?currency=${currency}`, {
+    const response = await fetch(`${process.env.BASE_URL}/v1/customeractivities/get/user/wishlist?currency=${currency}`, {
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj',
