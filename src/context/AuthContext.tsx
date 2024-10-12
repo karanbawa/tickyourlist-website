@@ -33,10 +33,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loginSuccess, setLoginSuccess] = useState<string | null>(null);
 
   useEffect(() => {
-    // Check if user is already logged in (e.g., from cookies or localStorage)
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
+    // Check if user is already logged in (e.g., from cookies or localStorage) and if the data has expired
+    const savedData = localStorage.getItem('user');
+    if (savedData) {
+      const { user: savedUser, expiration } = JSON.parse(savedData);
+      if (new Date().getTime() < expiration) {
+        setUser(savedUser);
+      } else {
+        localStorage.removeItem('user'); // Remove expired data
+      }
     }
   }, []);
 
@@ -53,9 +58,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [logoutError, loginError, logoutSuccess, loginSuccess]);
 
-  const login = (userData: any) => {
+  
+  const login = (userData: any, expirationMinutes: number = 60) => {
+    const expiration = new Date().getTime() + expirationMinutes * 60 * 1000; // Set expiration in milliseconds
     setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
+    localStorage.setItem('user', JSON.stringify({ user: userData, expiration }));
     setLoginSuccess('Logged in successfully');
   };
 
