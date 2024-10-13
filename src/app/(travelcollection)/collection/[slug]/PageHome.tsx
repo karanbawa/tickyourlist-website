@@ -24,16 +24,16 @@ function PageHome3({ collectionData, tourGroups }: PageHome3Props) {
         <nav className="text-sm text-gray-500 mb-6">
           <ol className="list-none p-0 inline-flex">
             <li className="flex items-center">
-              <Link href="/" className="hover:text-gray-700 underline">Home</Link>
+              <Link href="/" className="hover:text-gray-700 underline text-xs">Home</Link>
               <ChevronRight className="w-4 h-4 mx-2" />
             </li>
             <li className="flex items-center">
-              <Link href={`/things-to-do-in-${collection?.cityCode?.toLowerCase()}`} className="hover:text-gray-700 underline">
+              <Link href={`/things-to-do-in-${collection?.cityCode?.toLowerCase()}`} className="hover:text-gray-700 underline text-xs">
                 Things to do in {collection?.cityCode?.charAt(0)?.toUpperCase() + collection?.cityCode?.slice(1)?.toLowerCase()}
               </Link>
               <ChevronRight className="w-4 h-4 mx-2" />
             </li>
-            <li className="text-gray-700">{collection.displayName}</li>
+            <li className="text-gray-700 text-xs">{collection.displayName}</li>
           </ol>
         </nav>
         
@@ -42,15 +42,15 @@ function PageHome3({ collectionData, tourGroups }: PageHome3Props) {
             {/* Rating */}
             <div className="flex items-center mb-3">
               <Star className="w-6 h-6 text-pink-500 fill-current" />
-              <span className="text-pink-500 font-bold text-xl ml-1">{collection.ratingsInfo.averageRating.toFixed(1)}</span>
-              <span className="text-gray-500 ml-2">({collection.ratingsInfo.ratingsCount.toLocaleString()} ratings)</span>
+              <span className="text-pink-500 font-bold text-md ml-1">{collection.ratingsInfo.averageRating.toFixed(1)}</span>
+              <span className="text-gray-500 text-sm ml-2">({collection.ratingsInfo.ratingsCount.toLocaleString()} ratings)</span>
             </div>
             
             {/* Title */}
-            <h1 className="text-4xl font-bold mb-6">{collection.displayName}</h1>
+            <h1 className="text-3xl font-semibold mb-6">{collection.displayName}</h1>
             
             {/* Description */}
-            <p className="text-gray-700 text-lg mb-6 leading-relaxed">
+            <p className="text-gray-700 text-base mb-6 leading-relaxed">
               {collection.subtext}
             </p>
           </div>

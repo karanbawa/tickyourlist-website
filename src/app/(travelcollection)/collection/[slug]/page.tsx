@@ -13,7 +13,7 @@ async function getCollectionDetails(slug: string) {
         'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj',
         'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
       },
-      next: { revalidate: 10 },
+      next: { revalidate: 1000 },
     });
 
     const text = await res.text();
