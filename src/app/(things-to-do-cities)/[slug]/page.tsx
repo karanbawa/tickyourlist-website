@@ -1,5 +1,6 @@
 import { cookies, headers } from 'next/headers';
 import PageHome3 from './PageHome3';
+import { notFound } from 'next/navigation';
 
 // Function to map country codes to currencies
 function mapCountryToCurrency(countryCode: string) {
@@ -34,7 +35,7 @@ async function getTravelSections(cityCode: string, currency: string) {
   });
 
   if (!res.ok) {
-    throw new Error('Failed to fetch travel sections');
+    throw notFound();
   }
 
   const data = await res.json();
@@ -52,7 +53,7 @@ async function getTravelSectionBanners(cityCode: string, language: string) {
   });
 
   if (!res.ok) {
-    throw new Error('Failed to fetch travel sections');
+    throw notFound();
   }
 
   const data = await res.json();

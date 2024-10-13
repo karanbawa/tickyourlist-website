@@ -10,7 +10,7 @@ interface CategoryTabsProps {
 
 const CategoryTabs: React.FC<CategoryTabsProps> = ({ tourGroups }) => {
   if (!tourGroups || tourGroups.length === 0) {
-    return <div>No tour groups available</div>;
+    return <div className='text-md font-semibold text-center mt-6'>No Tours available !!</div>;
   }
 
   return (
