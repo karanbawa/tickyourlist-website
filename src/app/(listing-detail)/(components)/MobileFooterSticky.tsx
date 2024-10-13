@@ -1,6 +1,6 @@
 'use client'
 
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import ModalSelectDate from "@/components/ModalSelectDate";
 import ButtonPrimary from "@/shared/ButtonPrimary";
 import converSelectedDateToString from "@/utils/converSelectedDateToString";
@@ -9,6 +9,7 @@ import { useData } from "@/context/DataContext";
 import { FaWhatsapp } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { Route } from "next";
 
 interface MobileFooterStickyProps {
   tourGroup?: any
@@ -27,10 +28,22 @@ const MobileFooterSticky: FC<MobileFooterStickyProps> = ({ tourGroup }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
+
+  // Use effect to clean up loading state
+    useEffect(() => {
+      return () => {
+        setIsLoading(false);
+      };
+    }, []);
+
   const handleBookNow = () => {
     setIsLoading(true);
     const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
-    router.push(`/checkout?tourId=${tourGroup?._id}&date=${today}`);
+    const url = `/checkout?tourId=${tourGroup?._id}&date=${today}`;
+
+    router.prefetch(url as Route);
+
+    router.push(url as Route);
     // setIsLoading(false);
   }
 

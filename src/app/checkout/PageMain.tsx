@@ -12,6 +12,7 @@ import CardVariant from "@/components/tour-group-booking/CardVariants";
 import { ArrowLeft, HelpCircle, Loader2 } from "lucide-react";
 import MobileFooterSticky from "../(listing-detail)/(components)/MobileFooterSticky";
 import MobileCheckNextButtonSticky from "../(listing-detail)/(components)/MobileCheckNextButtonSticky";
+import { Route } from "next";
 
 export interface CheckOutPagePageMainProps {
   className?: string;
@@ -210,6 +211,13 @@ const handleBackButton = () => {
   router.back();
 }
 
+// Use effect to clean up loading state
+useEffect(() => {
+  return () => {
+    setIsLoading(false);
+  };
+}, []);
+
 const handlePaxNow = () => {
   setIsLoading(true);
   if(selectedVariantIndex !== null) {
@@ -232,8 +240,13 @@ const handlePaxNow = () => {
       paxQuery = `&guests=1`;
   }
 
+  const url = `/book?tourId=${tourGroup?._id}&date=${getFormattedDate()}&tour=${variant?.tours?.[0]?._id}&variantId=${variant?._id}${paxQuery}`;
+
+  // / Use router.prefetch to start loading the next page
+    router.prefetch(url as Route);
+
   router.push(`/book?tourId=${tourGroup?._id}&date=${getFormatedData()}&tour=${tourGroup?.variants?.[selectedVariantIndex]?.tours?.[0]?._id}&variantId=${tourGroup?.variants?.[selectedVariantIndex]?._id}&${paxQuery}`);
-  setIsLoading(false);
+  // setIsLoading(false);
 }
 };
 

@@ -6,6 +6,7 @@ import ButtonPrimary from "@/shared/ButtonPrimary";
 import { GuestsObject } from "@/app/(client-components)/type";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { Route } from "next";
 
 interface SidebarBookingProps {
   tourGroup: any;
@@ -43,9 +44,9 @@ const SidebarBooking: FC<SidebarBookingProps> = ({ tourGroup }) => {
       const formattedDate = encodeURIComponent(
         stayDate.toLocaleDateString("en-CA")
       );
-      // Simulate a delay to show the loader
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      router.push(`/checkout?tourId=${tourGroup._id}&date=${formattedDate}`);
+      const url = `/checkout?tourId=${tourGroup._id}&date=${formattedDate}`;
+      router.prefetch(url as Route);
+      router.push(url as Route);
     }
 
     setIsLoading(false);
