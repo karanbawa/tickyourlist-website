@@ -5,6 +5,7 @@ import StayDatesRangeInput from "@/app/(listing-detail)/listing-stay-detail/Stay
 import ButtonPrimary from "@/shared/ButtonPrimary";
 import { GuestsObject } from "@/app/(client-components)/type";
 import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 interface SidebarBookingProps {
   tourGroup: any;
@@ -12,6 +13,8 @@ interface SidebarBookingProps {
 
 const SidebarBooking: FC<SidebarBookingProps> = ({ tourGroup }) => {
   const [stayDate, setStayDate] = useState<Date | null>(null);
+  const [showError, setShowError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [guests, setGuests] = useState<GuestsObject>({
     guestAdults: 1,
     guestChildren: 0,
@@ -28,56 +31,53 @@ const SidebarBooking: FC<SidebarBookingProps> = ({ tourGroup }) => {
     );
   };
 
-  const handleBookNow = () => {
+  const handleBookNow = async () => {
+    if (!stayDate) {
+      setShowError(true);
+      return;
+    }
+
+    setIsLoading(true);
+
     if (tourGroup?.id && stayDate) {
       const formattedDate = encodeURIComponent(
-        stayDate?.toLocaleDateString("en-CA")
+        stayDate.toLocaleDateString("en-CA")
       );
+      // Simulate a delay to show the loader
+      await new Promise(resolve => setTimeout(resolve, 1000));
       router.push(`/checkout?tourId=${tourGroup._id}&date=${formattedDate}`);
     }
+
+    setIsLoading(false);
+  };
+
+  const handleDateChange = (date: Date | null) => {
+    setStayDate(date);
+    setShowError(false);
   };
 
   return (
     <>
-      <form className="flex flex-col border border-neutral-200 dark:border-neutral-700 rounded-3xl">
-        <StayDatesRangeInput className="flex-1 z-[11]" onChangeDate={setStayDate} />
-        {/* <div className="w-full border-b border-neutral-200 dark:border-neutral-700"></div>
-        <GuestsInput className="flex-1" onChangeGuests={setGuests} /> */}
+      <form>
+        <StayDatesRangeInput 
+          className="flex-1 z-[11] flex flex-col border border-neutral-200 dark:border-neutral-700 rounded-3xl" 
+          onChangeDate={handleDateChange} 
+        />
+        {showError && (
+          <span className="text-red-500 mt-0 ml-2">Please select a date</span>
+        )}
       </form>
-      {/* <div className="flex flex-col space-y-4">
-        <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-          <span>$119 x {totalGuests()} tickets</span>
-          <span>${119 * totalGuests()}</span>
-        </div>
-        <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-          <span>Service charge</span>
-          <span>$0</span>
-        </div>
-        <div className="border-b border-neutral-200 dark:border-neutral-700"></div>
-        <div className="flex justify-between font-semibold">
-          <span>Total</span>
-          <span>${119 * totalGuests()}</span>
-        </div>
-        <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-          <span>Adults</span>
-          <span>{guests.guestAdults}</span>
-        </div>
-        <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-          <span>Children</span>
-          <span>{guests.guestChildren()}</span>
-        </div>
-        <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
-          <span>Infants</span>
-          <span>{guests.guestInfants()}</span>
-        </div>
-      </div> */}
       <ButtonPrimary
         onClick={handleBookNow}
         style={{ backgroundColor: "#7C25E9" }}
-        // style={{ backgroundColor: stayDate ? "#7C25E9" : 'gray' }}
-        disabled={!stayDate} // Disable the button if stayDate is null
+        disabled={isLoading}
+        className="relative flex"
+        childrenClassname="flex"
       >
-        {stayDate ? `Book Now` : `Select a Date`}
+        {isLoading && (
+          <Loader2 className="mr-2 h-4 w-4 animate-spin mt-1" />
+        )}
+        {stayDate ? "Book Now" : "Select a Date"}
       </ButtonPrimary>
     </>
   );

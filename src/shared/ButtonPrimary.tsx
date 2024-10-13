@@ -3,6 +3,7 @@ import React from "react";
 
 export interface ButtonPrimaryProps extends ButtonProps {
   icon?: React.ReactNode;
+  childrenClassname?: any;
 }
 
 const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
@@ -10,6 +11,7 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
   icon,
   style = {}, // Initialize style as an empty object or use it as passed
   children,
+  childrenClassname,
   ...args
 }) => {
   return (
@@ -19,7 +21,7 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
       {...args}
     >
       {icon && <span>{icon}</span>} {/* Render icon if it exists */}
-      <span>{children}</span> {/* Button content */}
+      <span className={childrenClassname}>{children}</span> {/* Button content */}
     </Button>
   );
 };

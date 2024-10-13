@@ -9,7 +9,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import StayDatesRangeInput from "../(listing-detail)/listing-stay-detail/StayDatesRangeInput";
 import { DEMO_AUTHORS } from "@/data/authors";
 import CardVariant from "@/components/tour-group-booking/CardVariants";
-import { ArrowLeft, HelpCircle } from "lucide-react";
+import { ArrowLeft, HelpCircle, Loader2 } from "lucide-react";
 import MobileFooterSticky from "../(listing-detail)/(components)/MobileFooterSticky";
 import MobileCheckNextButtonSticky from "../(listing-detail)/(components)/MobileCheckNextButtonSticky";
 
@@ -38,6 +38,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
    const [showNextBookButtonAtFooter, setShowNextBookButtonAtFooter] = useState(false);
    const [isMobileView, setIsMobileView] = useState(false);
    const searchParams = useSearchParams();
+   const [isLoading, setIsLoading] = useState(false);
 
    useEffect(() => {
     const dateParam = searchParams.get("date");
@@ -210,10 +211,9 @@ const handleBackButton = () => {
 }
 
 const handlePaxNow = () => {
-  console.log("paxQuerytest ", selectedVariantIndex);
+  setIsLoading(true);
   if(selectedVariantIndex !== null) {
   const variant = tourGroup.variants?.[selectedVariantIndex];
-  console.log("variantschweck ", variant);
   const pricing = tourGroup.variants[selectedVariantIndex]?.listingPricesInAllCurrencies.find(
     (currency: any) => currency.currencyCode === currencyCode
   );
@@ -232,9 +232,8 @@ const handlePaxNow = () => {
       paxQuery = `&guests=1`;
   }
 
-  console.log("paxQuerypaxQuery ", paxQuery);
-
   router.push(`/book?tourId=${tourGroup?._id}&date=${getFormatedData()}&tour=${tourGroup?.variants?.[selectedVariantIndex]?.tours?.[0]?._id}&variantId=${tourGroup?.variants?.[selectedVariantIndex]?._id}&${paxQuery}`);
+  setIsLoading(false);
 }
 };
 
@@ -276,8 +275,13 @@ const handlePaxNow = () => {
                     <div>{getFormattedDate()}</div>
                   </div>
                   <div>
-                    <ButtonPrimary onClick={handlePaxNow} className="w-full h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center justify-center gap-2" style={{ backgroundColor: '#7C25E9' }}>Next</ButtonPrimary>
-                  </div>
+                    <ButtonPrimary onClick={handlePaxNow} className="w-full h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center justify-center gap-2" style={{ backgroundColor: '#7C25E9' }} childrenClassname="flex">
+                    {isLoading && (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin mt-1" />
+                      )}
+                      Next
+                      </ButtonPrimary>
+                  </div> 
                 </div>
 
                     <div className="border-b border-neutral-200 dark:border-neutral-700"></div>

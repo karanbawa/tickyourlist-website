@@ -8,6 +8,7 @@ import ModalReserveMobile from "./ModalReserveMobile";
 import { useData } from "@/context/DataContext";
 import { FaWhatsapp } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 interface MobileFooterStickyProps {
   tourGroup?: any
@@ -24,10 +25,13 @@ const MobileFooterSticky: FC<MobileFooterStickyProps> = ({ tourGroup }) => {
   const savedAmount = originalPrice - finalPrice;
   const savedPercentage = Math.ceil((savedAmount / originalPrice) * 100);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleBookNow = () => {
+    setIsLoading(true);
     const today = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
     router.push(`/checkout?tourId=${tourGroup?._id}&date=${today}`);
+    // setIsLoading(false);
   }
 
   const handleWhatsappRedirect = () => {
@@ -85,7 +89,11 @@ const MobileFooterSticky: FC<MobileFooterStickyProps> = ({ tourGroup }) => {
                 sizeClass="px-5 sm:px-7 py-3 !rounded-2xl"
                 onClick={handleBookNow}
                 style={{ backgroundColor: '#7C25E9' }}
+                childrenClassname="flex"
               >
+                {isLoading && (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin mt-1" />
+                )}
                 Book Now
               </ButtonPrimary>
             {/* )}
