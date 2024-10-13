@@ -1,5 +1,5 @@
 // app/api/wishlist/route.ts
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 // Function to map country codes to currencies
@@ -29,6 +29,15 @@ export async function GET(request: NextRequest) {
     const token = request.headers.get('authorization');
     const cookieStore = cookies();
     let currency = cookieStore.get('currency')?.value; // Default to 'USD' if no cookie
+    if (!currency) {
+      // No currency cookie, get country from headers
+      const headersList = headers();
+      const country = headersList.get('x-vercel-ip-country') ?? 'AE'; // Fallback to 'AE' if not available
+      currency = mapCountryToCurrency(country);
+  
+      // Optionally set the currency cookie for future requests
+      // Note: Setting cookies in server components is not straightforward; you may need to adjust your approach
+    }
 
     if (!token) {
       return NextResponse.json({ message: 'No token provided' }, { status: 401 });

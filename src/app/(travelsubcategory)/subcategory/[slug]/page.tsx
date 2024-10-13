@@ -25,19 +25,18 @@ function mapCountryToCurrency(countryCode: string) {
   }
 }
 
-async function getCollectionDetails(slug: string, currency: string) {
-  
-  const url = `${process.env.BASE_URL}/v1/customertravel/get/travel-collection/by-slug/EN/${slug}?currencyCode=${currency}&page=1&limit=20&domainId=66cacba1eeca9633c29172b9`;
+async function getSubCategoryDetails(slug: string, currency: string) {
+  const url = `${process.env.BASE_URL}/v1/customertravel/get/travel-subcategory/by-slug/EN/${slug}?currencyCode=${currency}&page=1&limit=20&domainId=66cacba1eeca9633c29172b9`;
 
   try {
-    const res = await fetch(url, { 
+    const res = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj',
         'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
       },
-      next: { revalidate: 1000 },
+      next: { revalidate: 5 },
     });
 
     const text = await res.text();
@@ -72,7 +71,7 @@ type Props = {
   ): Promise<Metadata> {
     // read route params
     const slug = params.slug;
-    const cookieStore = cookies();
+  const cookieStore = cookies();
     let currency = cookieStore.get('currency')?.value; // Default to 'AED' if no currency cookie exists
     if (!currency) {
       // No currency cookie, get country from headers
@@ -85,7 +84,7 @@ type Props = {
     }
   
     // fetch data
-    const collectionData = await getCollectionDetails(slug, currency);
+    const collectionData = await getSubCategoryDetails(slug, currency);
   
     // optionally access and extend (rather than replace) parent metadata
     const previousImages = (await parent).openGraph?.images || []
@@ -97,21 +96,21 @@ type Props = {
       }
     }
   
-    const collection = collectionData?.data?.collection;
+    const currentSubCategory = collectionData?.data?.currentSubcategory;
   
     return {
-      title: collection?.title || collection?.displayName,
-      description: collection?.metaDescription || collection?.subtext,
+      title: currentSubCategory?.metaTitle || currentSubCategory?.displayName,
+      description: currentSubCategory?.metaDescription,
       openGraph: {
-        title: collection?.title || collection?.displayName,
-        description: collection?.metaDescription || collection?.subtext,
-        images: [collection?.heroMedia.url, ...previousImages],
+        title: currentSubCategory?.heading || currentSubCategory?.displayName,
+        description: currentSubCategory?.metaDescription,
+        images: [currentSubCategory?.medias?.[0]?.url, ...previousImages],
       },
       twitter: {
         card: 'summary_large_image',
-        title: collection?.title || collection?.displayName,
-        description: collection?.metaDescription || collection?.subtext,
-        images: [collection?.heroMedia?.url],
+        title: currentSubCategory?.metaTitle || currentSubCategory?.displayName,
+        description: currentSubCategory?.metaDescription,
+        images: [currentSubCategory?.medias?.[0]?.url],
       },
     }
   }
@@ -121,23 +120,24 @@ export default async function Page({ params }: {
 }) {
   const slug = params.slug;
   const cookieStore = cookies();
-  let currency = cookieStore.get('currency')?.value; // Default to 'AED' if no currency cookie exists
-  if (!currency) {
-    // No currency cookie, get country from headers
-    const headersList = headers();
-    const country = headersList.get('x-vercel-ip-country') ?? 'AE'; // Fallback to 'AE' if not available
-    currency = mapCountryToCurrency(country);
-
-    // Optionally set the currency cookie for future requests
-    // Note: Setting cookies in server components is not straightforward; you may need to adjust your approach
-  }
+    let currency = cookieStore.get('currency')?.value; // Default to 'AED' if no currency cookie exists
+    if (!currency) {
+      // No currency cookie, get country from headers
+      const headersList = headers();
+      const country = headersList.get('x-vercel-ip-country') ?? 'AE'; // Fallback to 'AE' if not available
+      currency = mapCountryToCurrency(country);
   
-  const collectionData = await getCollectionDetails(slug, currency);
+      // Optionally set the currency cookie for future requests
+      // Note: Setting cookies in server components is not straightforward; you may need to adjust your approach
+    }
 
-  if (!collectionData) {
+  
+  const subcategoryData = await getSubCategoryDetails(slug, currency);
+
+  if (!subcategoryData) {
     return notFound();
   }
 
-  return <PageHome3 collectionData={collectionData?.data?.collection} tourGroups={collectionData?.data?.tourGroups} />;
+  return <PageHome3 category={subcategoryData?.data?.category} currentSubcategory={subcategoryData?.data?.currentSubcategory} relatedSubcategories={subcategoryData?.data?.relatedSubcategories} tourGroups={subcategoryData?.data?.tourGroups} />;
 
 }
