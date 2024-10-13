@@ -12,6 +12,19 @@ const StartRating: FC<StartRatingProps> = ({
   point = 4.5,
   reviewCount = 112,
 }) => {
+
+  const formatReviewCount = (count: number) => {
+    if (count >= 1000000) {
+      return (count / 1000000).toFixed(1) + 'm';
+    } else if (count >= 1000) {
+      return (count / 1000).toFixed(1) + 'k';
+    } else {
+      return count.toString();
+    }
+  };
+
+  const formattedCount = formatReviewCount(reviewCount);
+
   return (
     <div
       className={`nc-StartRating flex items-center space-x-1 text-sm  ${className}`}
@@ -21,9 +34,9 @@ const StartRating: FC<StartRatingProps> = ({
         <StarIcon className="w-[18px] h-[18px] text-orange-500" />
       </div>
       <span className="font-medium ">{point}</span>
-      {/* <span className="text-neutral-500 dark:text-neutral-400">
-        ({reviewCount})
-      </span> */}
+      <span className="text-neutral-500 dark:text-neutral-400">
+      ({formattedCount})
+      </span>
     </div>
   );
 };

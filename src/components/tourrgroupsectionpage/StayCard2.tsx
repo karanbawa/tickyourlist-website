@@ -58,7 +58,7 @@ const StayCard2: FC<StayCard2Props> = ({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}` 
         },
         body: JSON.stringify({ tourGroupId: _id ?? id, action: newLikeStatus ? 'like' : 'unlike' }),
       });
