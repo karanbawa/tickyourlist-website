@@ -88,7 +88,8 @@ const HeroSearchForm2Mobile = () => {
                       </div>
 
                       <Tab.List className="pt-12 flex w-full justify-center font-semibold text-sm sm:text-base text-neutral-500 dark:text-neutral-400 space-x-6 sm:space-x-8">
-                        {["Stay", "Experiences", "Cars", "Flights"].map(
+                      {/* {["Stay", "Experiences", "Cars", "Flights"].map( */}
+                        {["Search Experiences"].map(
                           (item, index) => (
                             <Tab key={index} as={Fragment}>
                               {({ selected }) => (
