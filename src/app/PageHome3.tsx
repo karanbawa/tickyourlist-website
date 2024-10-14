@@ -1,9 +1,6 @@
 import React from "react";
-import SectionSubscribe2 from "@/components/SectionSubscribe2";
 import SectionHero3 from "@/app/(server-components)/SectionHero3";
 import CategoryTabs from "./CategoryTabs";
-// import AlgoliaLikeSearch from './AlgoliaLikeSearch';
-// import SectionGridFeaturePlaces from "@/components/tourrgroupsectionpage/SectionGridFeaturePlaces";
 
 interface PageHome3Props {
   travelSections: any;

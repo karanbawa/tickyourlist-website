@@ -24,7 +24,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ tourGroups }) => {
             {tourGroups.map((tourGroup) => (
               <div key={tourGroup.id} className="flex justify-center">
                 <StayCard2 
-                  data={tourGroup} 
+                  data={tourGroup}
                   className="w-full max-w-sm"
                 />
               </div>

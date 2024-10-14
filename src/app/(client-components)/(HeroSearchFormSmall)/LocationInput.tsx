@@ -28,14 +28,14 @@ const LocationInput: FC<LocationInputProps> = ({
 
   const [value, setValue] = useState("");
   const [showPopover, setShowPopover] = useState(autoFocus);
-  const [searchResults, setSearchResults] = useState<any[]>([]); // For storing result objects with more info
-  const [recentSearches, setRecentSearches] = useState<any[]>([]); // Include details like image, title, location
+  const [searchResults, setSearchResults] = useState<any[]>([]); // To store formatted result objects
+  const [recentSearches, setRecentSearches] = useState<any[]>([]); // To store recent searches
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setShowPopover(autoFocus);
-    if (autoFocus && !!inputRef?.current) {
+    if (autoFocus && inputRef?.current) {
       setTimeout(() => {
         inputRef?.current?.focus();
       }, 200);
@@ -77,10 +77,11 @@ const LocationInput: FC<LocationInputProps> = ({
         }
       );
       const data = await response?.json();
+      console.log("formatteddata ", data);
       const results = data?.map((hit: any) => ({
-        name: hit?.name,            // Name of the location or attraction
-        location: hit?.location,    // Optional location field
-        image: hit?.image           // Optional image for the attraction
+        name: hit?._formatted?.name || hit?.name,
+        location: `${hit?.cityName}${hit?.countryDisplayName ? `, ${hit?.countryDisplayName}` : ''}` || "Unknown Location",
+        image: hit?.images?.[0] || "/default-image.png", // Get the first image or a default image
       }));
       setSearchResults(results);
     } catch (err) {
@@ -185,8 +186,7 @@ const LocationInput: FC<LocationInputProps> = ({
               className="h-10 w-10 rounded-md object-cover"
             />
             <div>
-              <span className="block text-neutral-700 dark:text-neutral-200 font-medium">
-                {item?.name}
+              <span className="block text-neutral-700 dark:text-neutral-200 font-medium" dangerouslySetInnerHTML={{ __html: item?.name }}>
               </span>
               <span className="block text-neutral-500 text-sm">
                 {item?.location || "Unknown Location"}
