@@ -150,6 +150,7 @@ const HeroSearchForm2Mobile = () => {
                           Clear all
                         </button>
                         <ButtonSubmit
+                          style={{ backgroundColor: '#7C25E9' }}
                           onClick={() => {
                             closeModal();
                           }}

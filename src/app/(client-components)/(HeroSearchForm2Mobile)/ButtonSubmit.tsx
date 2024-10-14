@@ -5,15 +5,18 @@ interface Props {
   className?: string;
   onClick?: () => void;
   href?: PathName;
+  style?: any;
 }
 const ButtonSubmit: FC<Props> = ({
   className = "",
   onClick = () => {},
   href = "/listing-stay",
+  style
 }) => {
   return (
     <button
       type="submit"
+      style={style}
       onClick={(e) => {
         e.preventDefault();
         onClick();
