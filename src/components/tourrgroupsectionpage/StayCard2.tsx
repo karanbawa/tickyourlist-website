@@ -172,14 +172,20 @@ const StayCard2: FC<StayCard2Props> = ({
         <div className="flex items-end">
           <div className="flex flex-col">
             <div className="flex items-center">
-              <span className="text-sm text-neutral-500 dark:text-neutral-400">
+            {savedPercentage !== 0 && (<><span className="text-sm text-neutral-500 dark:text-neutral-400">
                 from
               </span> 
               <span className="text-sm ml-2 line-through text-neutral-500 dark:text-neutral-400">
                 {currencyCode} {formatPrice(originalPrice)}
               </span>
+              </>
+              )}
+              {savedPercentage === 0 && (<span className="text-sm text-neutral-500 dark:text-neutral-400 invisible">
+                from
+              </span>
+              )}
             </div>
-            <span className="text-base font-semibold">
+            <span className="text-base font-semibold mt-auto">
               {currencyCode} {formatPrice(finalPrice)}
               {size === "default" && (
                 <span className="text-sm text-neutral-500 dark:text-neutral-400 font-normal">
@@ -188,9 +194,9 @@ const StayCard2: FC<StayCard2Props> = ({
               )}
             </span>
           </div>
-          <span className="flex items-center bg-green-800 text-white text-xs font-medium px-2 py-1 rounded-md ml-2">
-            Save up to {savedPercentage}%
-          </span>
+          {savedPercentage !== 0 && <span className="flex items-center bg-green-800 text-white text-xs font-medium px-2 py-1 rounded-md ml-2">
+            Save up to {savedPercentage}% 
+          </span> }
         </div>
       </div>
     );
