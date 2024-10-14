@@ -1,13 +1,20 @@
 "use client";
 
 import converSelectedDateToString from "@/utils/converSelectedDateToString";
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import { GuestsObject } from "../../type";
 import GuestsInput from "../GuestsInput";
 import LocationInput from "../LocationInput";
 import DatesRangeInput from "../DatesRangeInput";
 
-const StaySearchForm = () => {
+interface Props {
+  className?: string;
+  onClick?: () => void;
+}
+
+const StaySearchForm: FC<Props> = ({
+  onClick = () => {}
+}) => {
   //
   const [fieldNameShow, setFieldNameShow] = useState<
     "location" | "dates" | "guests"
@@ -55,6 +62,9 @@ const StaySearchForm = () => {
             onChange={(value) => {
               setLocationInputTo(value);
               setFieldNameShow("dates");
+            }}
+            onClick={() => {
+              onClick();
             }}
           />
         )}
@@ -134,9 +144,9 @@ const StaySearchForm = () => {
         {/*  */}
         {renderInputLocation()}
         {/*  */}
-        {renderInputDates()}
+        {/* {renderInputDates()} */}
         {/*  */}
-        {renderInputGuests()}
+        {/* {renderInputGuests()} */}
       </div>
     </div>
   );
