@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { FC } from "react";
 import ClearDataButton from "./ClearDataButton";
 import useOutsideAlerter from "@/hooks/useOutsideAlerter";
-import { MapPinIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
 
 export interface LocationInputProps {
   onInputDone?: (value: string) => void;
@@ -23,6 +23,7 @@ const LocationInput: FC<LocationInputProps> = ({
   className = "nc-flex-1.5",
   divHideVerticalLineClass = "left-10 -right-0.5",
 }) => {
+  const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -77,11 +78,11 @@ const LocationInput: FC<LocationInputProps> = ({
         }
       );
       const data = await response?.json();
-      console.log("formatteddata ", data);
       const results = data?.map((hit: any) => ({
         name: hit?._formatted?.name || hit?.name,
         location: `${hit?.cityName}${hit?.countryDisplayName ? `, ${hit?.countryDisplayName}` : ''}` || "Unknown Location",
         image: hit?.images?.[0] || "/default-image.png", // Get the first image or a default image
+        urlSlug: hit?.urlSlugs?.EN
       }));
       setSearchResults(results);
     } catch (err) {
@@ -103,10 +104,19 @@ const LocationInput: FC<LocationInputProps> = ({
   };
 
   // Handle selecting a location and save to recent searches
+  // Handle selecting a location and redirect to the URL slug
   const handleSelectLocation = (item: any) => {
     setValue(item?.name);
-    onInputDone && onInputDone(item?.name);
     setShowPopover(false);
+
+    // Redirect to the selected location's URL slug
+    if (item?.urlSlug) {
+      router.prefetch(item.urlSlug);
+      router.push(item.urlSlug);  // Programmatic navigation using the slug
+    }
+
+    // Optionally call the callback with the selected location name
+    onInputDone && onInputDone(item?.name);
 
     // Save the selected location to recent searches
     saveToRecentSearches(item);
@@ -151,8 +161,7 @@ const LocationInput: FC<LocationInputProps> = ({
                 className="h-10 w-10 rounded-md object-cover"
               />
               <div>
-                <span className="block text-neutral-700 dark:text-neutral-200 font-medium">
-                  {item?.name}
+                <span className="block text-neutral-700 dark:text-neutral-200 font-medium" dangerouslySetInnerHTML={{ __html: item?.name }}>
                 </span>
                 <span className="block text-neutral-500 text-sm">
                   {item?.location || "Unknown Location"} {/* Show location if available */}
