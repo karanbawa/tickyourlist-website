@@ -106,13 +106,13 @@ const LocationInput: FC<LocationInputProps> = ({
   // Handle selecting a location and save to recent searches
   // Handle selecting a location and redirect to the URL slug
   const handleSelectLocation = (item: any) => {
-    
-    setValue("");  // Clear the state which controls the input field
-  if (inputRef?.current) {
-    inputRef.current.value = "";  // Clear the actual input field
-  }
 
-    setValue(item?.name);
+    setValue("");  // Clear the state which controls the input field
+    if (inputRef?.current) {
+      inputRef.current.value = "";  // Clear the actual input field
+    }
+
+    // setValue(item?.name);
     setShowPopover(false);
 
     // Redirect to the selected location's URL slug
