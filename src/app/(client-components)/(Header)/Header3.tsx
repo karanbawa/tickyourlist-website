@@ -111,12 +111,12 @@ const Header3: FC<Header3Props> = ({ className = "", collectionData, initialCity
           Location
         </span>
         <span className="h-5 w-[1px] bg-neutral-300 dark:bg-neutral-700"></span>
-        <span onClick={() => setShowHeroSearch("dates")} className="block px-4 cursor-pointer py-3" aria-label="Search Check In Dates">
-          Check In
+        <span onClick={() => setShowHeroSearch("location")} className="block px-4 cursor-pointer py-3" aria-label="Search Check In Dates">
+          Collection
         </span>
         <span className="h-5 w-[1px] bg-neutral-300 dark:bg-neutral-700"></span>
-        <span onClick={() => setShowHeroSearch("guests")} className="block px-4 cursor-pointer font-normal py-3" aria-label="Add Guests">
-          Add guests
+        <span onClick={() => setShowHeroSearch("location")} className="block px-4 cursor-pointer font-normal py-3" aria-label="Add Guests">
+          Experiences
         </span>
       </div>
       <div className="flex-shrink-0 ml-auto pr-2 cursor-pointer" onClick={() => setShowHeroSearch("location")} aria-label="Open Search">

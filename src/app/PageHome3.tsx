@@ -27,7 +27,7 @@ function PageHome3({ travelSections, travelSectionBanners }: PageHome3Props) {
         ) : (
           <div>No travel sections available</div>
         )}
-        <SectionSubscribe2 />
+        {/* <SectionSubscribe2 /> */}
       </div>
     </main>
   );
