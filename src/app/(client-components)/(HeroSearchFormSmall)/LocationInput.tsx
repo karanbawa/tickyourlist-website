@@ -106,6 +106,12 @@ const LocationInput: FC<LocationInputProps> = ({
   // Handle selecting a location and save to recent searches
   // Handle selecting a location and redirect to the URL slug
   const handleSelectLocation = (item: any) => {
+    
+    setValue("");  // Clear the state which controls the input field
+  if (inputRef?.current) {
+    inputRef.current.value = "";  // Clear the actual input field
+  }
+
     setValue(item?.name);
     setShowPopover(false);
 
@@ -120,6 +126,7 @@ const LocationInput: FC<LocationInputProps> = ({
 
     // Save the selected location to recent searches
     saveToRecentSearches(item);
+    setSearchResults([]);
   };
 
   // Save to localStorage
