@@ -88,7 +88,7 @@ const HeroSearchFormSmall: FC<HeroSearchFormSmallProps> = ({
       aria-label="Hero search form small"
     >
       {renderTab()}
-      <div className="mt-2">{renderForm()}</div>
+      <div className="mt-2 flex justify-center">{renderForm()}</div>
     </div>
   );
 };

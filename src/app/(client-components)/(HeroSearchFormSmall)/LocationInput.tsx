@@ -3,6 +3,7 @@ import { FC } from "react";
 import ClearDataButton from "./ClearDataButton";
 import useOutsideAlerter from "@/hooks/useOutsideAlerter";
 import { useRouter } from "next/navigation";
+import ButtonSubmit from "./ButtonSubmit";
 
 export interface LocationInputProps {
   onInputDone?: (value: string) => void;
@@ -18,7 +19,7 @@ const RECENT_SEARCHES_KEY = "recentSearches"; // Key to store in localStorage
 const LocationInput: FC<LocationInputProps> = ({
   autoFocus = false,
   onInputDone,
-  placeHolder = "Location",
+  placeHolder = "Search Destination",
   desc = "Where are you going?",
   className = "nc-flex-1.5",
   divHideVerticalLineClass = "left-10 -right-0.5",
@@ -222,7 +223,8 @@ const LocationInput: FC<LocationInputProps> = ({
           showPopover ? "nc-hero-field-focused--2" : ""
         }`}
       >
-        <div className="flex-1">
+        <div className="flex flex-1">
+          <div className="flex-1">
           <input
             className="block w-full bg-transparent border-none focus:ring-0 p-0 focus:outline-none focus:placeholder-neutral-400 xl:text-base font-semibold placeholder-neutral-800 dark:placeholder-neutral-200 truncate"
             placeholder={placeHolder}
@@ -234,6 +236,10 @@ const LocationInput: FC<LocationInputProps> = ({
           <span className="block mt-0.5 text-sm text-neutral-400 font-light ">
             <span className="line-clamp-1">{!!value ? placeHolder : desc}</span>
           </span>
+          </div>
+           <div>
+            <ButtonSubmit href="/"  />
+           </div> 
           {value && showPopover && (
             <ClearDataButton onClick={() => setValue("")} />
           )}

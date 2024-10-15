@@ -322,7 +322,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ travelSections }) => {
                 ref={el => scrollContainerRefs.current[sectionId] = el}
                 onScroll={() => updateScrollState(sectionId)}
               >
-                <div className="flex space-x-4 px-4">
+                <div className="flex space-x-4 px-4"> 
                   {section.tourGroups?.map((tourgroup: any) => (
                     <StayCard2 key={tourgroup.id} data={tourgroup} isLiked={wishlist.includes(tourgroup.id)} onLikeChange={(newStatus) => {
                       if (newStatus) {

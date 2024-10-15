@@ -66,7 +66,7 @@ const StayCard2: FC<StayCard2Props> = ({
       if (response.ok, onLikeChange) {
         onLikeChange(newLikeStatus);
       } else {
-        console.error('Failed to update like status');
+        console.error('Failed to update like status'); 
       }
     } catch (error) {
       console.error('Error updating like status:', error);
