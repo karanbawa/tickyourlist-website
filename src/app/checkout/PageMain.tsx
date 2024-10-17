@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, Fragment, useEffect, useRef, useState } from "react";
+import React, { FC, Fragment, useEffect, useMemo, useRef, useState } from "react";
 import ButtonPrimary from "@/shared/ButtonPrimary";
 import StartRating from "@/components/StartRating";
 import NcModal from "@/shared/NcModal";
@@ -127,31 +127,21 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     guestInfants: 1,
   });
 
-
-  const getFormattedDate = () => {
-    const dateParam = searchParams.get("date");
-    console.log('Raw date param:', dateParam);
-  
-    if (dateParam) {
-      const parsedDate = DateTime.fromISO(dateParam, { zone: 'local' });
-  
-      if (parsedDate.isValid) {
-        const formattedDate = parsedDate.toLocaleString({
-          weekday: 'short',
-          day: '2-digit',
-          month: 'short',
-          year: 'numeric',
-        });
-        console.log('Formatted date:', formattedDate);
-        return formattedDate;
-      } else {
-        console.error('Invalid date format:', dateParam);
-        return undefined;
-      }
-    } else {
-      return undefined;
+  // Memoized formatted date to prevent unnecessary recalculations
+  const formattedDate = useMemo(() => {
+    if (!stayDate) return undefined;
+    const parsedDate = DateTime.fromJSDate(stayDate, { zone: "local" });
+    if (parsedDate.isValid) {
+      return parsedDate.toLocaleString({
+        weekday: "short",
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      });
     }
-  };
+    console.error("Invalid stayDate:", stayDate);
+    return undefined;
+  }, [stayDate]);
 
   const getFormatedData= () => {
     if (tourGroup?.id && stayDate) {
@@ -251,7 +241,7 @@ const handlePaxNow = () => {
       paxQuery = `&guests=1`;
   }
 
-  const url = `/book?tourId=${tourGroup?._id}&date=${getFormattedDate()}&tour=${variant?.tours?.[0]?._id}&variantId=${variant?._id}${paxQuery}`;
+  const url = `/book?tourId=${tourGroup?._id}&date=${formattedDate}&tour=${variant?.tours?.[0]?._id}&variantId=${variant?._id}${paxQuery}`;
 
   // / Use router.prefetch to start loading the next page
     router.prefetch(url as Route);
@@ -296,7 +286,7 @@ const handlePaxNow = () => {
                             <div ref={scrollToElementRef} className="flex justify-between items-center">
                   <div className="flex-1 max-w-[70%]">
                     <div className="font-semibold truncate">{tourGroup?.variants?.[selectedVariantIndex]?.name}</div>
-                    <div>{getFormattedDate()}</div>
+                    <div>{formattedDate}</div>
                   </div>
                   <div>
                     <ButtonPrimary onClick={handlePaxNow} className="w-full h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center justify-center gap-2" style={{ backgroundColor: '#7C25E9' }} childrenClassname="flex">
@@ -338,7 +328,7 @@ const handlePaxNow = () => {
           <MobileCheckNextButtonSticky 
             tourGroup={tourGroup} 
             selectedVariantIndex={selectedVariantIndex} 
-            getFormattedDate={getFormattedDate} 
+            getFormattedDate={formattedDate} 
             getFormatedData={getFormatedData} 
             currencyCode = {currencyCode}
           />
