@@ -35,6 +35,11 @@ const StayDatesRangeInput: FC<StayDatesRangeInputProps> = ({
     if (dateParam) {
       const parsedDate = DateTime.fromISO(dateParam, { zone: "local" });
 
+      console.log("parsedDateparsedDate ", parsedDate);
+
+
+      console.log("parsedDateparsedDatetest ", parsedDate.isValid);
+
       if (parsedDate.isValid) {
         const newDate = parsedDate.toJSDate();
         const formattedDate = formatDateToYYYYMMDD(parsedDate);

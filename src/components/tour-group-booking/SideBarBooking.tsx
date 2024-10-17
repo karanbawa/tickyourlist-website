@@ -42,7 +42,7 @@ const SidebarBooking: FC<SidebarBookingProps> = ({ tourGroup }) => {
 
     if (tourGroup?.id && stayDate) {
       const formattedDate = encodeURIComponent(
-        stayDate.toLocaleDateString("en-US")
+        stayDate.toLocaleDateString("en-CA")
       );
       const url = `/checkout?tourId=${tourGroup._id}&date=${formattedDate}`;
       router.prefetch(url as Route);

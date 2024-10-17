@@ -139,7 +139,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         year: "numeric",
       });
     }
-    console.error("Invalid stayDate:", stayDate);
     return undefined;
   }, [stayDate]);
 
