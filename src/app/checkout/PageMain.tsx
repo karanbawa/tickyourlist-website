@@ -13,6 +13,7 @@ import { ArrowLeft, HelpCircle, Loader2 } from "lucide-react";
 import MobileFooterSticky from "../(listing-detail)/(components)/MobileFooterSticky";
 import MobileCheckNextButtonSticky from "../(listing-detail)/(components)/MobileCheckNextButtonSticky";
 import { Route } from "next";
+const { DateTime } = require('luxon');
 
 export interface CheckOutPagePageMainProps {
   className?: string;
@@ -129,19 +130,28 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
   const getFormattedDate = () => {
     const dateParam = searchParams.get("date");
-    if(dateParam) {
-    const parsedDate = new Date(dateParam);
-    console.log('parsedDate ', parsedDate);
-    return  parsedDate.toLocaleDateString("en-CA", {
-        weekday: "short",
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-      });
-    }else {
+    console.log('Raw date param:', dateParam);
+  
+    if (dateParam) {
+      const parsedDate = DateTime.fromISO(dateParam, { zone: 'local' });
+  
+      if (parsedDate.isValid) {
+        const formattedDate = parsedDate.toLocaleString({
+          weekday: 'short',
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric',
+        });
+        console.log('Formatted date:', formattedDate);
+        return formattedDate;
+      } else {
+        console.error('Invalid date format:', dateParam);
+        return undefined;
+      }
+    } else {
       return undefined;
     }
-  }
+  };
 
   const getFormatedData= () => {
     if (tourGroup?.id && stayDate) {
