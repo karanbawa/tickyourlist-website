@@ -68,7 +68,7 @@ const StayDatesRangeInput: FC<StayDatesRangeInputProps> = ({
 
   const renderInput = () => {
     const formattedDate = selectedDate
-      ? selectedDate.toLocaleDateString("en-US", {
+      ? selectedDate.toLocaleDateString("en-CA", {
           weekday: "short",
           day: "2-digit",
           month: "short",

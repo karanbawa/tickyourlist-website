@@ -214,7 +214,7 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
               </span>
               <div className="flex items-baseline">
                 <span className="ml-1 text-xs font-normal text-neutral-500 dark:text-neutral-400">
-                  {getFormattedDate()}
+                  {getFormattedDate}
                 </span>
               </div>
             </div>

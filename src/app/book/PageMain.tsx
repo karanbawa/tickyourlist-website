@@ -207,7 +207,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
   const getFormattedDate = () => {
     if (date) {
       const parsedDate = new Date(date);
-      return parsedDate.toLocaleDateString("en-US", {
+      return parsedDate.toLocaleDateString("en-CA", {
         weekday: "short",
         day: "2-digit",
         month: "short",
