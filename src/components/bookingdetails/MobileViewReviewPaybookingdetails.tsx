@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react';
 import { ChevronLeft, ChevronDown, HelpCircle, Calendar, Users, Ticket, X } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { Route } from 'next';
 
 export interface MobileViewReviewPaybookingdetails {
   className?: string;
@@ -56,7 +57,12 @@ const MobileViewReviewPaybookingdetails: FC<MobileViewReviewPaybookingdetails> =
   }
 
   const handleBackButton = () => {
-    router.back();
+    // router.back();
+    const tourId = tourGroup?._id;
+    const selectedDate = date;
+
+    const targetUrl = `${window.location.origin}/checkout?tourId=${tourId}&date=${selectedDate}`;
+    router.replace(targetUrl as Route);
   }
 
   const renderGuestInfo = () => {

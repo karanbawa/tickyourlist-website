@@ -208,8 +208,12 @@ const handleHelpCenter = () => {
 }
 
 const handleBackButton = () => {
-  router.back();
-}
+  const urlSlug = tourGroup?.urlSlugs?.EN;
+
+    const targetUrl = `${window.location.origin}/${urlSlug}`;
+    router.replace(targetUrl as Route);
+  // }
+};
 
 // Use effect to clean up loading state
 useEffect(() => {
