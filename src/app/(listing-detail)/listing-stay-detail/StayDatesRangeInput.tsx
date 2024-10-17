@@ -27,7 +27,8 @@ const StayDatesRangeInput: FC<StayDatesRangeInputProps> = ({
     console.log("searchParamsdatePratams ", searchParams, dateParam);
 
     if (dateParam) {
-      const parsedDate = new Date(dateParam);
+      // const parsedDate = new Date(dateParam);
+      const parsedDate = new Date(`${dateParam}T00:00:00Z`);
       if (!isNaN(parsedDate.getTime())) {
         setSelectedDate(parsedDate);
         onChangeDate(parsedDate); // Update the parent component with the parsed date
