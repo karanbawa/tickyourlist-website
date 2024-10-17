@@ -3,6 +3,7 @@
 import { MapPinIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import React, { useState, useEffect, useRef, FC } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface Props {
   onClick?: () => void;
@@ -131,11 +132,14 @@ const LocationInput: FC<Props> = ({
               onClick={() => handleSelectLocation(item)}
               key={item.name}
             >
-              <img
-                src={item.image || "/default-image.png"} // Default image if no image is available
-                alt={item.name}
-                className="h-10 w-10 rounded-md object-cover"
-              />
+              <Image
+                  src={item.image || "/default-image.png"} // Use default image if not available
+                  alt={item.name}
+                  layout="fill" // Ensures image fills the container
+                  objectFit="cover" // Makes sure image maintains aspect ratio
+                  className="rounded-md"
+                  priority={true} // Optional: Load images eagerly for fast rendering
+                />
               <div>
                 <span className="block text-neutral-700 dark:text-neutral-200 font-medium">
                   {item.name}
@@ -168,14 +172,21 @@ const LocationInput: FC<Props> = ({
               onClick={() => handleSelectLocation(item)}
               key={item.name}
             >
-              <img
-                src={item.image || "/default-image.png"} // Default image if no image is available
-                alt={item.name}
-                className="h-10 w-10 rounded-md object-cover"
-              />
+              <div className="relative h-10 w-10 rounded-md overflow-hidden">
+                <Image
+                  src={item.image || "/default-image.png"} // Use default image if not available
+                  alt={item.name}
+                  layout="fill" // Ensures image fills the container
+                  objectFit="cover" // Makes sure image maintains aspect ratio
+                  className="rounded-md"
+                  priority={true} // Optional: Load images eagerly for fast rendering
+                />
+              </div>
               <div>
-                <span className="block text-neutral-700 dark:text-neutral-200 font-medium" dangerouslySetInnerHTML={{ __html: item.name }}>
-                </span>
+                <span
+                  className="block text-neutral-700 dark:text-neutral-200 font-medium"
+                  dangerouslySetInnerHTML={{ __html: item.name }}
+                ></span>
                 <span className="block text-neutral-500 text-sm">
                   {item.location || "Unknown Location"}
                 </span>
