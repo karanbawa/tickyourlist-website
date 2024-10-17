@@ -12,7 +12,7 @@ export interface ExperiencesSearchFormProps {
 const ExperiencesSearchForm: FC<ExperiencesSearchFormProps> = ({ defaultFieldFocus }) => {
   const renderForm = () => {
     return (
-      <form className="w-full relative flex flex-row rounded-full border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 max-w-[40rem]">
+      <form className="w-full relative flex flex-row rounded-full border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800 max-w-[37rem]">
         <LocationInput
           // onInputDone={() => setDateFocused(true)}
           className="flex-[1.5]"

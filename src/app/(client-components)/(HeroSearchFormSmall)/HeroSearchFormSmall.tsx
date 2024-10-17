@@ -35,7 +35,7 @@ const HeroSearchFormSmall: FC<HeroSearchFormSmallProps> = ({
     setTabActive(tab);
     if (onTabChange) {
       onTabChange(tab);
-    }
+    } 
   };
 
   const renderTab = () => (

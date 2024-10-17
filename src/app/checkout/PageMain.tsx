@@ -131,7 +131,8 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     const dateParam = searchParams.get("date");
     if(dateParam) {
     const parsedDate = new Date(dateParam);
-    return  parsedDate.toLocaleDateString("en-US", {
+    console.log('parsedDate ', parsedDate);
+    return  parsedDate.toLocaleDateString("en-CA", {
         weekday: "short",
         day: "2-digit",
         month: "short",

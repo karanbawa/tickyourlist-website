@@ -24,6 +24,8 @@ const StayDatesRangeInput: FC<StayDatesRangeInputProps> = ({
     const searchParams = new URLSearchParams(window.location.search);
     const dateParam = searchParams.get("date");
 
+    console.log("searchParamsdatePratams ", searchParams, dateParam);
+
     if (dateParam) {
       const parsedDate = new Date(dateParam);
       if (!isNaN(parsedDate.getTime())) {
@@ -34,6 +36,7 @@ const StayDatesRangeInput: FC<StayDatesRangeInputProps> = ({
   }, [onChangeDate]);
 
   const handleDateChange = (date: Date | null, closePopover: () => void) => {
+    console.log('datetest ', date);
     setSelectedDate(date);
     onChangeDate(date);
     closePopover(); // Close the Popover when the date is selected
