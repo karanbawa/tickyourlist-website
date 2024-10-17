@@ -7,6 +7,7 @@ import DatePickerCustomHeaderTwoMonth from "@/components/DatePickerCustomHeaderT
 import DatePickerCustomDay from "@/components/DatePickerCustomDay";
 import DatePicker from "react-datepicker";
 import ClearDataButton from "@/app/(client-components)/(HeroSearchForm)/ClearDataButton";
+const { DateTime } = require('luxon');
 
 export interface StayDatesRangeInputProps {
   className?: string;
@@ -19,19 +20,30 @@ const StayDatesRangeInput: FC<StayDatesRangeInputProps> = ({
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
+  function formatDateToYYYYMMDD(date: any) {
+    // Ensure the date is formatted as 'YYYY-MM-DD'
+    return date.toFormat('yyyy-MM-dd');
+  }
+
   useEffect(() => {
-    // Parse the date from the URL query parameters
     const searchParams = new URLSearchParams(window.location.search);
     const dateParam = searchParams.get("date");
-
-    console.log("searchParamsdatePratams ", searchParams, dateParam);
-
+  
+    console.log("searchParams and dateParam: ", searchParams, dateParam);
+  
     if (dateParam) {
-      // const parsedDate = new Date(dateParam);
-      const parsedDate = new Date(`${dateParam}T00:00:00Z`);
-      if (!isNaN(parsedDate.getTime())) {
-        setSelectedDate(parsedDate);
-        onChangeDate(parsedDate); // Update the parent component with the parsed date
+      // Parse the date as a local date using Luxon
+      const parsedDate = DateTime.fromISO(dateParam, { zone: "local" });
+  
+      if (parsedDate.isValid) {
+        const formattedDate = formatDateToYYYYMMDD(parsedDate); // Format as 'YYYY-MM-DD'
+        console.log("Formatted Date:", formattedDate);
+  
+        // Store or set the parsed date without any time zone shift
+        setSelectedDate(parsedDate.toJSDate()); // Set as JavaScript Date object
+        onChangeDate(parsedDate.toJSDate()); // Update the parent component
+      } else {
+        console.error("Invalid date format:", dateParam);
       }
     }
   }, [onChangeDate]);

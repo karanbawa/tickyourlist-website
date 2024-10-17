@@ -23,8 +23,6 @@ const MobileConfimAndPayButton: FC<MobileConfimAndPayButtonProps> = ({ tourGroup
     return price?.toLocaleString('en-IN');
   };
 
-  console.log("tourGroupdata ", tourGroup);
-
   const calculatePricing = () => {
     const pricing = tourGroup?.listingPrice?.listingPrice;
     const prices = pricing?.prices || [];
