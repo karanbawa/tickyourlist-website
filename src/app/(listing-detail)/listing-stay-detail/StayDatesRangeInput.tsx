@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, FC, Fragment, useEffect } from "react";
+import React, { useState, FC, Fragment, useEffect, useRef } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { CalendarIcon } from "@heroicons/react/24/outline";
 import DatePickerCustomHeaderTwoMonth from "@/components/DatePickerCustomHeaderTwoMonth";
@@ -19,6 +19,7 @@ const StayDatesRangeInput: FC<StayDatesRangeInputProps> = ({
   onChangeDate,
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const prevDateRef = useRef<Date | null>(null)
 
   function formatDateToYYYYMMDD(date: any) {
     // Ensure the date is formatted as 'YYYY-MM-DD'
@@ -28,20 +29,23 @@ const StayDatesRangeInput: FC<StayDatesRangeInputProps> = ({
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const dateParam = searchParams.get("date");
-  
+
     console.log("searchParams and dateParam: ", searchParams, dateParam);
-  
+
     if (dateParam) {
-      // Parse the date as a local date using Luxon
       const parsedDate = DateTime.fromISO(dateParam, { zone: "local" });
-  
+
       if (parsedDate.isValid) {
-        const formattedDate = formatDateToYYYYMMDD(parsedDate); // Format as 'YYYY-MM-DD'
+        const newDate = parsedDate.toJSDate();
+        const formattedDate = formatDateToYYYYMMDD(parsedDate);
         console.log("Formatted Date:", formattedDate);
-  
-        // Store or set the parsed date without any time zone shift
-        setSelectedDate(parsedDate.toJSDate()); // Set as JavaScript Date object
-        onChangeDate(parsedDate.toJSDate()); // Update the parent component
+
+        // Check if the new date is different from the previous one
+        if (prevDateRef.current?.getTime() !== newDate.getTime()) {
+          prevDateRef.current = newDate; // Update the previous date
+          setSelectedDate(newDate);
+          onChangeDate(newDate); // Only call if the date is different
+        }
       } else {
         console.error("Invalid date format:", dateParam);
       }
@@ -49,10 +53,12 @@ const StayDatesRangeInput: FC<StayDatesRangeInputProps> = ({
   }, [onChangeDate]);
 
   const handleDateChange = (date: Date | null, closePopover: () => void) => {
-    console.log('datetest ', date);
-    setSelectedDate(date);
-    onChangeDate(date);
-    closePopover(); // Close the Popover when the date is selected
+    if (date && prevDateRef.current?.getTime() !== date.getTime()) {
+      setSelectedDate(date);
+      onChangeDate(date); // Trigger only if the date is different
+      prevDateRef.current = date; // Store the new date
+    }
+    closePopover();
   };
 
   const renderInput = () => {
