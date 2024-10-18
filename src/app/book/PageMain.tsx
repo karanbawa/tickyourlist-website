@@ -13,6 +13,7 @@ import MobileViewReviewPaybookingdetails from "@/components/bookingdetails/Mobil
 import MobileConfimAndPayButton from "../(listing-detail)/(components)/MobileConfimAndPayButton";
 import CountryCodeSelector from "@/components/bookingdetails/CountryCodeSelector";
 import Head from "next/head";
+import PayPalButton from "./PaypalButton";
 
 export interface CheckOutPagePageMainProps {
   className?: string;
@@ -735,16 +736,21 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                 </Tab.Panel>
               </Tab.Panels>
             </Tab.Group>
-            <div className="pt-8">
+            <div className="pt-8 flex">
+              <div className="w-2/5">
               <ButtonPrimary
-                className="w-2/5 h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center justify-center gap-2"
+                className="w-full h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center justify-center gap-2"
                 style={{ backgroundColor: "#7C25E9" }}
                 onClick={handleConfirmAndPay}
                 loading={loadingConfirmPay}
               >
                 Confirm & pay
               </ButtonPrimary>
-              <div className="w-4/5 text-xs mt-4 pl-1"><span className="font-semibold">Please note:</span> The Razorpay payment gateway will open to securely process your transaction.</div>
+              <div className="w-4/5 text-xs mt-4 pl-1"><span className="font-semibold">Please note:</span> India Card Holder Please pay via razorpay, The Razorpay payment gateway will open to securely process your transaction.</div>
+              </div>
+              {/* <div className="w-4/5 text-xs mt-4 pl-1"><span className="font-semibold">Please note:</span> The Razorpay payment gateway will open to securely process your transaction.</div> */}
+              <div className="text-lg mt-4 pl-8 text-center"><span className="font-bold">OR</span></div>
+              <PayPalButton className="mt-5 mb-5 w-2/5 h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center justify-center gap-2" />
             </div>
           </div>
         </div>

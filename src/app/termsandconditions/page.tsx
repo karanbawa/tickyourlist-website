@@ -36,7 +36,7 @@ const Page = () => {
           <ul>
             <li>
               By accessing and placing an order with TickYourList (registered
-              under Scrollit), you confirm that you are in agreement with and
+              under SNG India), you confirm that you are in agreement with and
               bound by the terms of service contained in the Terms &
               Conditions outlined below. These terms apply to the entire
               website and any email or other type of communication between you
@@ -101,8 +101,7 @@ const Page = () => {
             </li>
             <li>
               Company: when this policy mentions “Company,” “we,” “us,” or
-              “our,” it refers to TickYourList, 119, Backside Basement,
-              Sarvanchal Residency, New Delhi, India that is responsible for
+              “our,” it refers to TickYourList, F/F, B-48 Dashrathpuri, New Delhi - 110045 that is responsible for
               your information under these Terms & Conditions.
             </li>
             <li>
@@ -319,9 +318,9 @@ const Page = () => {
         <title>Terms & Conditions | TickYourList</title>
         <meta
           name="description"
-          content="Read the Terms & Conditions of TickYourList, a registered entity under Scrollit. By accessing and placing an order with TickYourList, you agree to be bound by these terms."
+          content="Read the Terms & Conditions of TickYourList, a registered entity under SNG India. By accessing and placing an order with TickYourList, you agree to be bound by these terms."
         />
-        <meta name="keywords" content="Terms and Conditions, TickYourList, Scrollit, License, Refund Policy, Cookies" />
+        <meta name="keywords" content="Terms and Conditions, TickYourList, SNG India, License, Refund Policy, Cookies" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href="https://www.tickyourlist.com/terms-and-conditions" />
       </Head>

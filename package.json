@@ -11,6 +11,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
+    "@paypal/react-paypal-js": "^8.7.0",
     "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^2.2.7",
     "@tailwindcss/aspect-ratio": "^0.4.2",
@@ -18,7 +19,7 @@
     "@tailwindcss/typography": "^0.5.10",
     "@types/google-map-react": "^2.1.10",
     "@types/node": "20.9.2",
-    "@types/react": "18.2.37",
+    "@types/react": "^18.2.37",
     "@types/react-datepicker": "^4.19.3",
     "@types/react-dom": "18.2.15",
     "@types/react-redux": "^7.1.33",
