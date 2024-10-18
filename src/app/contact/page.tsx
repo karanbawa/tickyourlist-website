@@ -11,7 +11,8 @@ export interface PageContactProps {}
 const info = [
   {
     title: "🗺 ADDRESS",
-    desc: "118, Basement, Sarvanchal Residency, Pocket 10, Sector 23, Dwarka, New Delhi, Delhi, 110077", 
+    desc: "F/F, B-48 Dashrathpuri, New Delhi - 110045", 
+    // desc: "118, Basement, Sarvanchal Residency, Pocket 10, Sector 23, Dwarka, New Delhi, Delhi, 110077", 
   },
   {
     title: "💌 EMAIL",
