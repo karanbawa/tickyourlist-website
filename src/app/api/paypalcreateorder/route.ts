@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer A21AAKbNdE7jy34rdLVgumJT8dfs2rtr4urI5OUSMrZE46Y9T8jVEaAnUuwgMXRbSVd0jD5m0yMxLQDfQS5DqyeOkeheSX_yQ`, // Add your PayPal access token here
+        'Authorization': `Bearer A21AAK1b_F_mW2VztmgH5IuvyGxqyOrpDGAL1UBSwTE5NjR5acYP32T6tC45biwOahKk5_rvGWyznimBRkrxF4u7SUdgVyO-g`, // Add your PayPal access token here
       },
       body: JSON.stringify({
         intent: 'CAPTURE',
