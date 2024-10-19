@@ -133,13 +133,12 @@ const LocationInput: FC<Props> = ({
               key={item.name}
             >
               <Image
-                  src={item.image || "/default-image.png"} // Use default image if not available
-                  alt={item.name}
-                  layout="fill" // Ensures image fills the container
-                  objectFit="cover" // Makes sure image maintains aspect ratio
-                  className="rounded-md"
-                  priority={true} // Optional: Load images eagerly for fast rendering
-                />
+                src={item.image || "/default-image.png"} // Default image if no image is available
+                alt={item.name}
+                className="h-10 w-10 rounded-md object-cover"
+                width={20}
+                height={20}
+              />
               <div>
                 <span className="block text-neutral-700 dark:text-neutral-200 font-medium">
                   {item.name}
@@ -172,21 +171,16 @@ const LocationInput: FC<Props> = ({
               onClick={() => handleSelectLocation(item)}
               key={item.name}
             >
-              <div className="relative h-10 w-10 rounded-md overflow-hidden">
-                <Image
-                  src={item.image || "/default-image.png"} // Use default image if not available
-                  alt={item.name}
-                  layout="fill" // Ensures image fills the container
-                  objectFit="cover" // Makes sure image maintains aspect ratio
-                  className="rounded-md"
-                  priority={true} // Optional: Load images eagerly for fast rendering
-                />
-              </div>
+              <Image
+                src={item.image || "/default-image.png"} // Default image if no image is available
+                alt={item.name}
+                className="h-10 w-10 rounded-md object-cover"
+                width={10}
+                height={10}
+              />
               <div>
-                <span
-                  className="block text-neutral-700 dark:text-neutral-200 font-medium"
-                  dangerouslySetInnerHTML={{ __html: item.name }}
-                ></span>
+                <span className="block text-neutral-700 dark:text-neutral-200 font-medium" dangerouslySetInnerHTML={{ __html: item.name }}>
+                </span>
                 <span className="block text-neutral-500 text-sm">
                   {item.location || "Unknown Location"}
                 </span>

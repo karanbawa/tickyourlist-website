@@ -17,6 +17,13 @@ export async function POST(request: NextRequest) {
 
     console.log("paypalOrderUrl ", paypalOrderUrl);
 
+    // Calculate the total amount
+    const totalAmount = cart.reduce(
+      (total: number, item: { quantity: number; price: number }) =>
+        total + item.quantity * item.price,
+      0
+    ).toFixed(2);
+
     // Send a request to PayPal to create the order
     const response = await fetch(paypalOrderUrl, {
       method: 'POST',
@@ -30,14 +37,13 @@ export async function POST(request: NextRequest) {
           {
             amount: {
               currency_code: 'USD',
-              value: cart.reduce(
-                (total: number, item: { quantity: number; price: number }) =>
-                  total + item.quantity * item.price,
-                0
-              ).toFixed(2),
+              value: totalAmount,
             },
           },
         ],
+        application_context: {
+          shipping_preference: 'NO_SHIPPING',
+        },
       }),
     });
 
