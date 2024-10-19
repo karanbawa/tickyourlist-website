@@ -122,14 +122,14 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
       
 
     return (
-        <div className={`${className}`}>
+        <div className={`${className} w-full`}>
             <PayPalScriptProvider options={initialOptions}>
                 <PayPalButtons
                     style={{
                         shape: "rect",
                         layout: "vertical",
                         color: "gold",
-                        label: "paypal",
+                        label: "paypal"
                     }}
                     createOrder={createOrder}
                     onApprove={onApprove}
