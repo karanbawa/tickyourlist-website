@@ -140,8 +140,7 @@ const LocationInput: FC<Props> = ({
                 height={20}
               />
               <div>
-                <span className="block text-neutral-700 dark:text-neutral-200 font-medium">
-                  {item.name}
+                <span className="block text-neutral-700 dark:text-neutral-200 font-medium"  dangerouslySetInnerHTML={{ __html: item.name }}>
                 </span>
                 <span className="block text-neutral-500 text-sm">
                   {item.location || "Unknown Location"} {/* Show location if available */}
