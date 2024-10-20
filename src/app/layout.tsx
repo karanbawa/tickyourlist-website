@@ -57,6 +57,19 @@ export default function RootLayout({
             </DataProvider>
           </AuthProvider>
           <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-6JM1JBYKM5"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-6JM1JBYKM5');
+          `}
+        </Script>
+
+          <Script
             id="brevo-conversations-script"
             strategy="afterInteractive"
             dangerouslySetInnerHTML={{
