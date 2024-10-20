@@ -224,33 +224,6 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
         <Badge name={tourGroup?.displayTags?.[0]} /> */}
         {/* </div> */}
       </div>
-      {/* <div className="w-full border-b border-neutral-100 dark:border-neutral-700" /> */}
-      {/* <div className="flex items-center justify-between xl:justify-start space-x-8 xl:space-x-12 text-sm text-neutral-700 dark:text-neutral-300">
-        <div className="flex items-center space-x-3">
-          <i className="las la-user text-2xl"></i>
-          <span>
-            6 <span className="hidden sm:inline-block">guests</span>
-          </span>
-        </div>
-        <div className="flex items-center space-x-3">
-          <i className="las la-bed text-2xl"></i>
-          <span>
-            6 <span className="hidden sm:inline-block">beds</span>
-          </span>
-        </div>
-        <div className="flex items-center space-x-3">
-          <i className="las la-bath text-2xl"></i>
-          <span>
-            3 <span className="hidden sm:inline-block">baths</span>
-          </span>
-        </div>
-        <div className="flex items-center space-x-3">
-          <i className="las la-door-open text-2xl"></i>
-          <span>
-            2 <span className="hidden sm:inline-block">bedrooms</span>
-          </span>
-        </div>
-      </div> */}
     </div>
   );
 
