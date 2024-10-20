@@ -1,6 +1,6 @@
 "use client";
 
-import { MapPinIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import React, { useState, useEffect, useRef, FC } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -13,7 +13,7 @@ interface Props {
   headingText?: string;
 }
 
-const RECENT_SEARCHES_KEY = "recentSearchesMobile"; // Key to store recent searches in localStorage
+const RECENT_SEARCHES_KEY = "recentSearchesMobile";
 
 const LocationInput: FC<Props> = ({
   onChange = () => {},
@@ -38,7 +38,6 @@ const LocationInput: FC<Props> = ({
     }
   }, [defaultValue]);
 
-  // Fetch search results from the API
   const fetchSearchResults = async (query: string) => {
     if (!query) return;
     setLoading(true);
@@ -68,7 +67,6 @@ const LocationInput: FC<Props> = ({
     }
   };
 
-  // Handle input change and fetch search results
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.currentTarget.value;
     setValue(inputValue);
@@ -79,33 +77,27 @@ const LocationInput: FC<Props> = ({
     }
   };
 
-  // Handle selecting a location and save to recent searches
   const handleSelectLocation = (item: any) => {
     setValue("");
     if (inputRef.current) {
-      inputRef.current.value = "";  // Clear the input field
+      inputRef.current.value = "";
     }
 
-    // Redirect to the selected location's URL slug
     if (item.urlSlug) {
       router.prefetch(item.urlSlug);
       router.push(item.urlSlug);
     }
 
-    // Optionally trigger onChange callback
     onChange && onChange(item.name);
     onClick();
 
-    // Save the selected location to recent searches
     saveToRecentSearches(item);
     setSearchResults([]);
   };
 
-  // Save to localStorage
   const saveToRecentSearches = (location: any) => {
     let updatedRecentSearches = [...recentSearches];
 
-    // Prevent duplicate entries
     if (!updatedRecentSearches.some((search) => search.name === location.name)) {
       updatedRecentSearches = [location, ...updatedRecentSearches.slice(0, 4)];
     }
@@ -113,6 +105,35 @@ const LocationInput: FC<Props> = ({
     setRecentSearches(updatedRecentSearches);
     localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updatedRecentSearches));
   };
+
+  const renderLocationItem = (item: any) => (
+    <div
+      className="py-2 mb-1 flex items-center space-x-3 text-sm cursor-pointer hover:bg-neutral-100"
+      onClick={() => handleSelectLocation(item)}
+      key={item.name}
+    >
+      <div className="flex-shrink-0">
+        <Image
+          src={item.image || "/default-image.png"}
+          alt={item.name}
+          width={48}
+          height={48}
+          className="rounded-md object-cover"
+          quality={80}
+          onError={(e) => {
+            e.currentTarget.src = "/default-image.png";
+          }}
+        />
+      </div>
+      <div className="flex-grow min-w-0">
+        <span className="block text-neutral-700 dark:text-neutral-200 font-medium truncate" dangerouslySetInnerHTML={{ __html: item.name }}>
+        </span>
+        <span className="block text-neutral-500 text-sm truncate">
+          {item.location || "Unknown Location"}
+        </span>
+      </div>
+    </div>
+  );
 
   const renderRecentSearches = () => {
     if (recentSearches.length === 0) {
@@ -124,30 +145,9 @@ const LocationInput: FC<Props> = ({
     }
     return (
       <>
-        <p className="block font-semibold text-base">Recent searches</p>
-        <div className="mt-3">
-          {recentSearches.map((item) => (
-            <div
-              className="py-2 mb-1 flex items-center space-x-3 text-sm cursor-pointer hover:bg-neutral-100"
-              onClick={() => handleSelectLocation(item)}
-              key={item.name}
-            >
-              <Image
-                src={item.image || "/default-image.png"} // Default image if no image is available
-                alt={item.name}
-                className="h-10 w-10 rounded-md object-cover"
-                width={20}
-                height={20}
-              />
-              <div>
-                <span className="block text-neutral-700 dark:text-neutral-200 font-medium"  dangerouslySetInnerHTML={{ __html: item.name }}>
-                </span>
-                <span className="block text-neutral-500 text-sm">
-                  {item.location || "Unknown Location"} {/* Show location if available */}
-                </span>
-              </div>
-            </div>
-          ))}
+        <p className="block font-semibold text-base mb-3">Recent searches</p>
+        <div className="space-y-2">
+          {recentSearches.map(renderLocationItem)}
         </div>
       </>
     );
@@ -162,30 +162,9 @@ const LocationInput: FC<Props> = ({
     }
     return (
       <>
-        <p className="block font-semibold text-base">Locations</p>
-        <div className="mt-3">
-          {searchResults.map((item) => (
-            <div
-              className="py-2 mb-1 flex items-center space-x-3 text-sm cursor-pointer hover:bg-neutral-100"
-              onClick={() => handleSelectLocation(item)}
-              key={item.name}
-            >
-              <Image
-                src={item.image || "/default-image.png"} // Default image if no image is available
-                alt={item.name}
-                className="h-10 w-10 rounded-md object-cover"
-                width={10}
-                height={10}
-              />
-              <div>
-                <span className="block text-neutral-700 dark:text-neutral-200 font-medium" dangerouslySetInnerHTML={{ __html: item.name }}>
-                </span>
-                <span className="block text-neutral-500 text-sm">
-                  {item.location || "Unknown Location"}
-                </span>
-              </div>
-            </div>
-          ))}
+        <p className="block font-semibold text-base mb-3">Locations</p>
+        <div className="space-y-2">
+          {searchResults.map(renderLocationItem)}
         </div>
       </>
     );
@@ -194,12 +173,12 @@ const LocationInput: FC<Props> = ({
   return (
     <div className={`${className}`}>
       <div className="p-5">
-        <span className="block font-semibold text-xl sm:text-2xl">
+        <span className="block font-semibold text-xl sm:text-2xl mb-5">
           {headingText}
         </span>
-        <div className="relative mt-5">
+        <div className="relative">
           <input
-            className="block w-full bg-transparent border px-4 py-3 pr-12 border-neutral-900 dark:border-neutral-200 rounded-xl focus:ring-0 focus:outline-none text-base leading-none placeholder-neutral-500 dark:placeholder-neutral-300 truncate font-bold"
+            className="block w-full bg-transparent border px-4 py-3 pr-12 border-neutral-900 dark:border-neutral-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent text-base leading-none placeholder-neutral-500 dark:placeholder-neutral-300 truncate font-bold"
             placeholder="Search destinations"
             value={value}
             onChange={handleInputChange}
