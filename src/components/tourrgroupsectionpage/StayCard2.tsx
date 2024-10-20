@@ -136,11 +136,11 @@ const StayCard2: FC<StayCard2Props> = ({
             <StartRating reviewCount={data.reviewCount || 0} point={data?.rating || 0} />
           </div>
           <div className="flex items-center space-x-2">
-            <h2 className={`font-semibold capitalize text-neutral-900 dark:text-white ${
+            <h1 className={`font-semibold capitalize text-neutral-900 dark:text-white ${
               size === "default" ? "text-base" : "text-base"
             }`}>
-              <span className="line-clamp-1">{name}</span>
-            </h2>
+             {name}
+            </h1>
           </div>
           <div className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm space-x-1.5">
             {size === "default" && (
