@@ -101,7 +101,7 @@ const Footer: React.FC = () => {
           {widgetMenus.map(renderWidgetMenuItem)}
         </div>
       </div>
-      <footer className="container flex flex-row justify-between mb-4">
+      <footer className="container flex flex-row justify-between mb-20">
         <div className="flex flex-row space-x-2 text-xs">
           <div>
             <span className="font-bold">
