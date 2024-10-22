@@ -16,7 +16,7 @@ export interface WidgetFooterMenu {
 
 const widgetMenus: WidgetFooterMenu[] = [
   {
-    id: "5",
+    id: "1",
     title: "Get Help 24/7",
     menus: [
       { href: "/contact", label: "Help Center" },
@@ -52,7 +52,7 @@ const widgetMenus: WidgetFooterMenu[] = [
     ],
   },
   {
-    id: "4",
+    id: "3",
     title: "We Accept",
     menus: [
       { href: "#", label: "Visa" },
@@ -62,6 +62,16 @@ const widgetMenus: WidgetFooterMenu[] = [
       { href: "#", label: "Apple Pay" },
     ],
   },
+  {
+    id: "4",
+    title: "Policies",
+    menus: [
+      { href: "/privacypolicy", label: "Privacy Policy" },
+      { href: "/shippingpolicy", label: "Shipping Policy" },
+      { href: "/termsandconditions", label: "Terms & Conditions" },
+      { href: "/cancellationpolicy", label: "Cancellation & Refund Policy" }
+    ],
+  }
 ];
 
 const Footer: React.FC = () => {
@@ -101,7 +111,7 @@ const Footer: React.FC = () => {
           {widgetMenus.map(renderWidgetMenuItem)}
         </div>
       </div>
-      <footer className="container flex flex-row justify-between mb-20">
+      <footer className="container flex flex-row justify-between mb-20 hidden sm:block">
         <div className="flex flex-row space-x-2 text-xs">
           <div>
             <span className="font-bold">
