@@ -4,6 +4,7 @@ import ClearDataButton from "./ClearDataButton";
 import useOutsideAlerter from "@/hooks/useOutsideAlerter";
 import { useRouter } from "next/navigation";
 import ButtonSubmit from "./ButtonSubmit";
+import Image from "next/image";
 
 export interface LocationInputProps {
   onInputDone?: (value: string) => void;
@@ -163,10 +164,16 @@ const LocationInput: FC<LocationInputProps> = ({
               key={item?.name}
               className="flex px-4 sm:px-6 items-center space-x-3 py-4 hover:bg-neutral-100 dark:hover:bg-neutral-700 cursor-pointer"
             >
-              <img
+              <Image
                 src={item?.image || "/default-image.png"} // Default image if no image is available
                 alt={item?.name}
-                className="h-10 w-10 rounded-md object-cover"
+                className="rounded-md object-cover"
+                width={60}
+                height={60}
+                quality={80}
+                onError={(e) => {
+                  e.currentTarget.src = "/default-image.png";
+                }}
               />
               <div>
                 <span className="block text-neutral-700 dark:text-neutral-200 font-medium" dangerouslySetInnerHTML={{ __html: item?.name }}>
@@ -197,11 +204,17 @@ const LocationInput: FC<LocationInputProps> = ({
             key={item?.name}
             className="flex px-4 sm:px-6 items-center space-x-3 py-4 hover:bg-neutral-100 dark:hover:bg-neutral-700 cursor-pointer"
           >
-            <img
-              src={item?.image || "/default-image.png"}
-              alt={item?.name}
-              className="h-10 w-10 rounded-md object-cover"
-            />
+            <Image
+                src={item?.image || "/default-image.png"} // Default image if no image is available
+                alt={item?.name}
+                className="rounded-md object-cover"
+                width={60}
+                height={60}
+                quality={80}
+                onError={(e) => {
+                  e.currentTarget.src = "/default-image.png";
+                }}
+              />
             <div>
               <span className="block text-neutral-700 dark:text-neutral-200 font-medium" dangerouslySetInnerHTML={{ __html: item?.name }}>
               </span>
