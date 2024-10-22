@@ -3,7 +3,7 @@ import { DEMO_POSTS } from "@/data/posts";
 import { PostDataType } from "@/data/types";
 import Badge from "@/shared/Badge";
 import Image from "next/image";
-import travelhero2Image from "@/images/company/cancellationpolicy.png";
+import travelhero2Image from "@/images/company/shipping_policy.jpg";
 import Link from "next/link";
 import { Route } from "@/routers/types";
 import Head from "next/head";
