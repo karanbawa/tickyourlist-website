@@ -118,6 +118,10 @@ const Footer: React.FC = () => {
           </div>
           <div className="font-bold">.</div>
           <div>
+            <Link href={"/shippingpolicy" as Route}>Shipping Policy</Link>
+          </div>
+          <div className="font-bold">.</div>
+          <div>
             <Link href={"/termsandconditions" as Route}>Terms & Conditions</Link>
           </div>
         </div>
