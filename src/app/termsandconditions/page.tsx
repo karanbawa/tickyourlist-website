@@ -332,14 +332,14 @@ const Page = () => {
       <div className="nc-SingleContent container space-y-10">
         {renderContent()}
       </div>
-      <div className="relative bg-neutral-100 dark:bg-neutral-800 py-16 lg:py-28 mt-16 lg:mt-24">
+      {/* <div className="relative bg-neutral-100 dark:bg-neutral-800 py-16 lg:py-28 mt-16 lg:mt-24">
         <div className="container">
           <h2 className="text-3xl font-semibold">New blogs</h2>
           <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
             {DEMO_POSTS.filter((_, i) => i < 4).map(renderPostRelated)}
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
