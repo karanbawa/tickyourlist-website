@@ -72,7 +72,9 @@ const CardVariant: FC<CardVariantProps> = ({
             {features?.map((feature, idx) => (
               <li key={idx} className="flex items-start">
                 <span className="mr-2">•</span>
-                {feature}
+                <span
+                  dangerouslySetInnerHTML={{ __html: feature }}
+                />
               </li>
             ))}
           </ul>
