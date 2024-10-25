@@ -164,7 +164,7 @@ const CountryCodeSelector: FC<CountryCodeSelectorProps> = ({
            <div className="absolute z-50 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
              <div className="sticky top-0 z-10 bg-white px-2 py-2">
                <div className="relative">
-                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                 {/* <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} /> */}
                  <input
                    type="text"
                    placeholder="Search countries"
