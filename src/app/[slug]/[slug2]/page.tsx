@@ -1,5 +1,4 @@
-import React, { FC, Fragment } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import React, { FC } from "react";
 import { ArrowRightIcon, Squares2X2Icon } from "@heroicons/react/24/outline";
 import CommentListing from "@/components/CommentListing";
 import FiveStartIconForRate from "@/components/FiveStartIconForRate";
@@ -7,18 +6,10 @@ import StartRating from "@/components/StartRating";
 import Avatar from "@/shared/Avatar";
 import Badge from "@/shared/Badge";
 import ButtonCircle from "@/shared/ButtonCircle";
-import ButtonPrimary from "@/shared/ButtonPrimary";
 import ButtonSecondary from "@/shared/ButtonSecondary";
-import ButtonClose from "@/shared/ButtonClose";
 import Input from "@/shared/Input";
 import LikeSaveBtns from "@/components/LikeSaveBtns";
 import Image from "next/image";
-// import { usePathname, useRouter } from "next/navigation";
-import { Amenities_demos, PHOTOS } from "@/app/(listing-detail)/listing-stay-detail/constant";
-import StayDatesRangeInput from "@/app/(listing-detail)/listing-stay-detail/StayDatesRangeInput";
-import GuestsInput from "@/app/(listing-detail)/listing-stay-detail/GuestsInput";
-import SectionDateRange from "@/app/(listing-detail)/SectionDateRange";
-import { Route } from "next";
 import { Metadata } from 'next';
 import HandleImageClick from "@/components/tourgroupproductpage/HandleImageClick";
 import './Highlights.css';
@@ -256,47 +247,6 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
     </div>
   );
 
-  // const HighlightsSection = ({ summary }: { summary: string }) => {
-  //   const options = {
-  //     replace: (domNode: any) => {
-  //       if (domNode.name === "h2") {
-  //         return <h2 className="text-2xl font-semibold">{domNode.children[0].data}</h2>;
-  //       }
-  //       if (domNode.name === "h3") {
-  //         return <h3 className="text-xl font-semibold mt-4">{domNode.children[0].data}</h3>;
-  //       }
-  //       if (domNode.name === "p") {
-  //         return <p className="mt-2 text-neutral-6000 dark:text-neutral-300">{domToReact(domNode.children)}</p>;
-  //       }
-  //       if (domNode.name === "img") {
-  //         return (
-  //           <img
-  //             className="my-4 rounded-lg"
-  //             src={domNode.attribs.src}
-  //             alt={domNode.attribs.alt}
-  //           />
-  //         );
-  //       }
-  //       if (domNode.name === "ul") {
-  //         return (
-  //           <ul className="list-disc pl-5 mt-2 text-neutral-6000 dark:text-neutral-300">
-  //             {domToReact(domNode.children)}
-  //           </ul>
-  //         );
-  //       }
-  //       if (domNode.name === "li") {
-  //         return <li className="mt-1">{domToReact(domNode.children)}</li>;
-  //       }
-  //     },
-  //   };
-  
-  //   return (
-  //     <div className="listingSection__wrap">
-  //       {parse(summary, options)}
-  //     </div>
-  //   );
-  // };
-
   const HighlightsSection = ({ summary }: { summary: string }) => {
     // Split the summary into sections based on <h2> tags
     const sections = summary?.split(/(?=<h2>)/g);
@@ -362,14 +312,6 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
 
     <HighlightsSection summary={tourGroup?.summary} />
 
-    // <div className="listingSection__wrap">
-    //   <h2 className="text-2xl font-semibold">Your Experience</h2>
-    //   <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
-    //   <div className="text-neutral-6000 dark:text-neutral-300 highlights-section">
-    //     {!tourGroup?.cancellationPolicyV2?.cancellable ? `These tickets can't be cancelled ` : `These tickets can be cancelled `} 
-    //     {!tourGroup?.reschedulePolicy?.reschedulable ? `or rescheduled` : `but can be rescheduled`}
-    //   </div>
-    // </div>
   );
 
   const renderSectionFaq = () => (
@@ -382,96 +324,8 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
       <h2 className="text-lg md:text-2xl font-semibold">My Tickets</h2>
       <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
       <HighlightsSection summary={tourGroup?.ticketDeliveryInfo} />
-      {/* <div className="text-neutral-6000 dark:text-neutral-300 highlights-section" dangerouslySetInnerHTML={{ __html: tourGroup?.ticketDeliveryInfo }} /> */}
     </div>
   );
-
-  // const renderSection3 = () => (
-  //   <div className="listingSection__wrap">
-  //     <div>
-  //       <h2 className="text-2xl font-semibold">Amenities</h2>
-  //       <span className="block mt-2 text-neutral-500 dark:text-neutral-400">
-  //         {`About the property's amenities and services`}
-  //       </span>
-  //     </div>
-  //     <div className="w-14 border-b border-neutral-200 dark:border-neutral-700" />
-  //     <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 text-sm text-neutral-700 dark:text-neutral-300">
-  //       {Amenities_demos.filter((_, i) => i < 12).map((item) => (
-  //         <div key={item.name} className="flex items-center space-x-3">
-  //           <i className={`text-3xl las ${item.icon}`}></i>
-  //           <span>{item.name}</span>
-  //         </div>
-  //       ))}
-  //     </div>
-  //     <div className="w-14 border-b border-neutral-200" />
-  //     <div>
-  //       <ButtonSecondary onClick={openModalAmenities}>
-  //         View more 20 amenities
-  //       </ButtonSecondary>
-  //     </div>
-  //     {renderModalAmenities()}
-  //   </div>
-  // );
-
-  // const renderModalAmenities = () => (
-  //   <Transition appear show={isOpenModalAmenities} as={Fragment}>
-  //     <Dialog
-  //       as="div"
-  //       className="fixed inset-0 z-50 overflow-y-auto"
-  //       onClose={closeModalAmenities}
-  //     >
-  //       <div className="min-h-screen px-4 text-center">
-  //         <Transition.Child
-  //           as={Fragment}
-  //           enter="ease-out duration-300"
-  //           enterFrom="opacity-0"
-  //           enterTo="opacity-100"
-  //           leave="ease-in duration-200"
-  //           leaveFrom="opacity-100"
-  //           leaveTo="opacity-0"
-  //         >
-  //           <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-40" />
-  //         </Transition.Child>
-  //         <span className="inline-block h-screen align-middle" aria-hidden="true">
-  //           &#8203;
-  //         </span>
-  //         <Transition.Child
-  //           as={Fragment}
-  //           enter="ease-out duration-300"
-  //           enterFrom="opacity-0 scale-95"
-  //           enterTo="opacity-100 scale-100"
-  //           leave="ease-in duration-200"
-  //           leaveFrom="opacity-100 scale-100"
-  //           leaveTo="opacity-0 scale-95"
-  //         >
-  //           <div className="inline-block py-8 h-screen w-full max-w-4xl">
-  //             <div className="inline-flex pb-2 flex-col w-full text-left align-middle transition-all transform overflow-hidden rounded-2xl bg-white dark:bg-neutral-900 dark:border dark:border-neutral-700 dark:text-neutral-100 shadow-xl h-full">
-  //               <div className="relative flex-shrink-0 px-6 py-4 border-b border-neutral-200 dark:border-neutral-800 text-center">
-  //                 <h3 className="text-lg font-medium leading-6 text-gray-900">
-  //                   Amenities
-  //                 </h3>
-  //                 <span className="absolute left-3 top-3">
-  //                   <ButtonClose onClick={closeModalAmenities} />
-  //                 </span>
-  //               </div>
-  //               <div className="px-8 overflow-auto text-neutral-700 dark:text-neutral-300 divide-y divide-neutral-200">
-  //                 {Amenities_demos.filter((_, i) => i < 1212).map((item) => (
-  //                   <div
-  //                     key={item.name}
-  //                     className="flex items-center py-2.5 sm:py-4 lg:py-5 space-x-5 lg:space-x-8"
-  //                   >
-  //                     <i className={`text-4xl text-neutral-6000 las ${item.icon}`}></i>
-  //                     <span>{item.name}</span>
-  //                   </div>
-  //                 ))}
-  //               </div>
-  //             </div>
-  //           </div>
-  //         </Transition.Child>
-  //       </div>
-  //     </Dialog>
-  //   </Transition>
-  // );
 
   const handleWhatsappRedirect = () => {
     const phoneNumber = "+971529061536"; // replace with the WhatsApp number you want to send the message to

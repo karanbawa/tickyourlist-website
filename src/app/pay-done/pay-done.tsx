@@ -106,7 +106,7 @@ const PayPage: FC<PayPageProps> = ({
           <div className="flex text-neutral-6000 dark:text-neutral-300">
               <span className="flex-1">Booking code</span>
               <span className="flex-1 font-medium text-neutral-900 dark:text-neutral-100">
-                #222-333-111
+               {bookingDetails?._id}
               </span>
             </div>
           <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
@@ -124,7 +124,7 @@ const PayPage: FC<PayPageProps> = ({
             <div className="flex text-neutral-6000 dark:text-neutral-300">
               <span className="flex-1">Total</span>
               <span className="flex-1 font-medium text-neutral-900 dark:text-neutral-100">
-                INR {bookingDetails?.amount}
+                {bookingDetails?.currency} {bookingDetails?.amount}
               </span>
             </div>
             {/* <div className="flex justify-between text-neutral-6000 dark:text-neutral-300">
