@@ -93,7 +93,15 @@ const PayPage: FC<PayPageProps> = ({
 
               <div className="flex flex-col">
                 <span className="text-sm text-neutral-400">Guests</span>
-                <span className="mt-1.5 text-lg font-semibold">{(bookingDetails?.childCount + bookingDetails?.adultsCount)} {(bookingDetails?.childCount + bookingDetails?.adultsCount) > 1 ? 'Guests' : 'Guest'}</span>
+                <span className="mt-1.5 text-lg font-semibold">
+                    {bookingDetails?.type === 'GUEST'
+                      ? `${bookingDetails?.guestsCount} ${bookingDetails?.guestsCount > 1 ? 'Guests' : 'Guest'}`
+                      : `${bookingDetails?.childCount + bookingDetails?.adultsCount + bookingDetails?.infantCount} ${
+                          bookingDetails?.childCount + bookingDetails?.adultsCount + bookingDetails?.infantCount > 1
+                            ? 'Guests'
+                            : 'Guest'
+                        }`}
+                  </span>
               </div>
             </div>
           </div>

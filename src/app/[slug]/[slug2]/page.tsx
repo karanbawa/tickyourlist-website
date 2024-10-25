@@ -187,7 +187,7 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
         {tourGroup?.name}
       </h1>
       <div className="flex items-center space-x-4">
-        <StartRating />
+        <StartRating point={tourGroup?.rating} reviewCount={tourGroup?.reviewCount} />
         <span>·</span>
         <span>
           <i className="las la-map-marker-alt"></i>
@@ -396,7 +396,7 @@ const ListingTourGroupDetailPage: FC<{ params: { slug: string, slug2: string } }
             Kevin Francis
           </a>
           <div className="mt-1.5 flex items-center text-sm text-neutral-500 dark:text-neutral-400">
-            <StartRating />
+            <StartRating point={tourGroup?.rating} reviewCount={tourGroup?.reviewCount} />
             <span className="mx-2">·</span>
             <span>12 places</span>
           </div>
