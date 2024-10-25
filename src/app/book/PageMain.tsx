@@ -362,7 +362,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     };
 
     try {
-      const response = await fetch(`${process.env.BASE_URL}/v1/tyltourcustomerbooking/add/travel-booking`, {
+      const response = await fetch(`https://api.univolenitsolutions.com/v1/tyltourcustomerbooking/add/travel-booking`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -468,12 +468,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
               </div>
               <button className="text-sm font-medium text-blue-600 uppercase" onClick={handleEditDetails}>Edit</button>
             </div>
-
-            {/* <div className="flex justify-between items-center mb-5">
-              <div className="flex items-center gap-1">
-                <span className="text-gray-700">Valid until: {tourGroup?.ticketValidity?.ticketValidityUntilDate}</span>
-              </div>
-            </div> */}
           </div>
 
           {/* Price Details */}
