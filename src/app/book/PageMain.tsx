@@ -13,7 +13,6 @@ import MobileViewReviewPaybookingdetails from "@/components/bookingdetails/Mobil
 import MobileConfimAndPayButton from "../(listing-detail)/(components)/MobileConfimAndPayButton";
 import CountryCodeSelector from "@/components/bookingdetails/CountryCodeSelector";
 import Head from "next/head";
-import PayPalButton from "./PaypalButton";
 
 export interface CheckOutPagePageMainProps {
   className?: string;
@@ -319,8 +318,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     return valid;
   };
 
-  // ... (keep the existing Razorpay and payment handling functions)
-
   const handleConfirmAndPay = async () => {
     if (!validateFields()) {
       return;
@@ -360,7 +357,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       tourGroupId: tourGroup?._id,
       active: true,
     };
-
+     
     try {
       const response = await fetch(`https://api.univolenitsolutions.com/v1/tyltourcustomerbooking/add/travel-booking`, {
         method: "POST",
@@ -742,9 +739,6 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
               </ButtonPrimary>
               </div>
               <div className="w-full sm:w-4/5 text-xs mt-4 pl-1"><span className="font-semibold">Please note:</span> The Razorpay payment gateway will open to securely process your transaction.</div>
-              {/* <div className="w-4/5 text-xs mt-4 pl-1"><span className="font-semibold">Please note:</span> The Razorpay payment gateway will open to securely process your transaction.</div> */}
-              {/* <div className="text-lg mt-4 pl-8 text-center mb-8 sm:mb-0"><span className="font-bold">OR</span></div>
-              <PayPalButton className="w-full sm:w-2/5 z-30 mt-5 mb-5 h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center sm:justify-center gap-2" /> */}
             </div>
           </div>
         </div>
