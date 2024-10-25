@@ -736,8 +736,8 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                 </Tab.Panel>
               </Tab.Panels>
             </Tab.Group>
-            <div className="pt-8 flex flex-col sm:flex-row">
-              <div className="w-full sm:w-2/5">
+            <div className="pt-8 flex flex-col">
+              <div className="w-full sm:w-3/5">
               <ButtonPrimary
                 className="w-full h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center justify-center gap-2"
                 style={{ backgroundColor: "#7C25E9" }}
@@ -746,11 +746,11 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
               >
                 Confirm & pay
               </ButtonPrimary>
-              <div className="w-full sm:w-4/5 text-xs mt-4 pl-1"><span className="font-semibold">Please note:</span> India Card Holder Please pay via razorpay, The Razorpay payment gateway will open to securely process your transaction.</div>
               </div>
+              <div className="w-full sm:w-4/5 text-xs mt-4 pl-1"><span className="font-semibold">Please note:</span> The Razorpay payment gateway will open to securely process your transaction.</div>
               {/* <div className="w-4/5 text-xs mt-4 pl-1"><span className="font-semibold">Please note:</span> The Razorpay payment gateway will open to securely process your transaction.</div> */}
-              <div className="text-lg mt-4 pl-8 text-center mb-8 sm:mb-0"><span className="font-bold">OR</span></div>
-              <PayPalButton className="w-full sm:w-2/5 z-30 mt-5 mb-5 h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center sm:justify-center gap-2" />
+              {/* <div className="text-lg mt-4 pl-8 text-center mb-8 sm:mb-0"><span className="font-bold">OR</span></div>
+              <PayPalButton className="w-full sm:w-2/5 z-30 mt-5 mb-5 h-12 active:scale-95 text-white text-lg font-medium rounded-lg flex items-center sm:justify-center gap-2" /> */}
             </div>
           </div>
         </div>
