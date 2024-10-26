@@ -246,7 +246,7 @@ const MobileViewReviewPaybookingdetails: FC<MobileViewReviewPaybookingdetails> =
           <div className="bg-gray-100 p-4 rounded-md text-sm text-gray-600">
             <p>
               <span className="inline-block mr-2">ℹ️</span>
-              {`You are paying in INR and the total is INR 1,530. The total you pay could differ slightly depending on your bank's exchange rates.`}
+              {`You are paying in ${currencyCode} and the total is ${currencyCode} ${totalFinalPrice.toLocaleString('en-IN')}. The total you pay could differ slightly depending on your bank's exchange rates.`}
             </p>
           </div>
         </div>
