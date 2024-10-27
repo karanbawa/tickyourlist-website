@@ -90,7 +90,7 @@ const PaymentConfirmation: React.FC<PaymentConfirmationProps> = ({
       <main className="container mt-11 mb-24 lg:mb-32">
         <div className="max-w-4xl mx-auto text-center">
           <h2>Verifying your payment...</h2>
-          <p>This may take a few moments. Please don't refresh the page.</p>
+          <p>{`This may take a few moments. Please don't refresh the page.`}</p>
         </div>
       </main>
     </div>    
