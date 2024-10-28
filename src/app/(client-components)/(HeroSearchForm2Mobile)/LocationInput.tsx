@@ -13,7 +13,7 @@ interface Props {
   headingText?: string;
 }
 
-const RECENT_SEARCHES_KEY = "recentSearchesMobile";
+const RECENT_SEARCHES_KEY = "recentSearches";
 
 const LocationInput: FC<Props> = ({
   onChange = () => {},
@@ -57,7 +57,8 @@ const LocationInput: FC<Props> = ({
         name: hit?._formatted?.name || hit?.name,
         location: `${hit?.cityName}${hit?.countryDisplayName ? `, ${hit?.countryDisplayName}` : ""}` || "Unknown Location",
         image: hit?.images?.[0] || "/default-image.png",
-        urlSlug: hit?.urlSlugs?.EN
+        urlSlug: hit?.urlSlugs?.EN,
+        filterName: hit?.name
       }));
       setSearchResults(results);
     } catch (err) {
@@ -96,12 +97,14 @@ const LocationInput: FC<Props> = ({
   };
 
   const saveToRecentSearches = (location: any) => {
-    let updatedRecentSearches = [...recentSearches];
-
-    if (!updatedRecentSearches.some((search) => search.name === location.name)) {
-      updatedRecentSearches = [location, ...updatedRecentSearches.slice(0, 4)];
-    }
-
+    // Remove any existing entries with the same name
+    const filteredSearches = recentSearches.filter(
+      (search) => search.filterName !== location.filterName
+    );
+    
+    // Add the new search at the beginning and limit to 5 items
+    const updatedRecentSearches = [location, ...filteredSearches].slice(0, 5);
+    
     setRecentSearches(updatedRecentSearches);
     localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updatedRecentSearches));
   };

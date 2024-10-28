@@ -84,7 +84,8 @@ const LocationInput: FC<LocationInputProps> = ({
         name: hit?._formatted?.name || hit?.name,
         location: `${hit?.cityName}${hit?.countryDisplayName ? `, ${hit?.countryDisplayName}` : ''}` || "Unknown Location",
         image: hit?.images?.[0] || "/default-image.png", // Get the first image or a default image
-        urlSlug: hit?.urlSlugs?.EN
+        urlSlug: hit?.urlSlugs?.EN,
+        filterName: hit?.name
       }));
       setSearchResults(results);
     } catch (err) {
@@ -133,15 +134,16 @@ const LocationInput: FC<LocationInputProps> = ({
 
   // Save to localStorage
   const saveToRecentSearches = (location: any) => {
-    let updatedRecentSearches = [...recentSearches];
-
-    // Prevent duplicate entries
-    if (!updatedRecentSearches?.some(search => search?.name === location?.name)) {
-      updatedRecentSearches = [location, ...updatedRecentSearches.slice(0, 4)]; // Keep max 5 recent searches
-    }
-
+    // Remove any existing entries with the same name
+    const filteredSearches = recentSearches.filter(
+      (search) => search.filterName !== location.filterName
+    );
+    
+    // Add the new search at the beginning and limit to 5 items
+    const updatedRecentSearches = [location, ...filteredSearches].slice(0, 5);
+    
     setRecentSearches(updatedRecentSearches);
-    localStorage?.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updatedRecentSearches));
+    localStorage.setItem(RECENT_SEARCHES_KEY, JSON.stringify(updatedRecentSearches));
   };
 
   const renderRecentSearches = () => {
