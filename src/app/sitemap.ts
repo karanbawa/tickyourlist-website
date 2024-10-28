@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const currentDate = new Date().toISOString().split('T')[0] // Format: YYYY-MM-DD
+  const currentDate = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
 
   return [
     // High Priority Pages
@@ -11,150 +11,162 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'daily',
       priority: 1.0,
     },
+
+    // Weekly Updated Pages with Priority 0.9
     {
-      url: 'https://www.tickyourlist.com/things-to-do-in-dubai/',
-      lastModified: currentDate,
-      changeFrequency: 'daily',
-      priority: 0.9,
-    },
-    {
-      url: 'https://www.tickyourlist.com/things-to-do-in-abu-dhabi/',
-      lastModified: currentDate,
-      changeFrequency: 'daily',
-      priority: 0.9,
-    },
-    // Weekly Updated Pages
-    // Add all your weekly pages here
-    {
-      url: 'https://www.tickyourlist.com/img-world-tickets/img-worlds-of-adventure-tickets',
+      url: 'https://www.tickyourlist.com/tickets/book-img-worlds-of-adventure-tickets',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: 'https://www.tickyourlist.com/burj-khalifa-tickets/burj-khalifa-at-the-top-tickets-level-124-125',
+      url: 'https://www.tickyourlist.com/tickets/book-ski-dubai-snow-park-tickets',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: 'https://www.tickyourlist.com/seaworld-abu-dhabi/tickets-to-seaworld-abu-dhabi',
+      url: 'https://www.tickyourlist.com/tickets/book-motiongate-dubai-tickets',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: 'https://www.tickyourlist.com/museum-of-the-future-tickets/museum-of-the-future-dubai-tickets',
+      url: 'https://www.tickyourlist.com/aquaventure-waterpark-tickets/book-aquaventure-waterpark-tickets',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: 'https://www.tickyourlist.com/dubai-miracle-garden-tickets/dubai-miracle-garden',
+      url: 'https://www.tickyourlist.com/warner-bros-world-abu-dhabi-tickets/book-warner-bros-world-abu-dhabi-tickets',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: 'https://www.tickyourlist.com/ferrari-world-tickets/ferrari-world-abu-dhabi-tickets-free-shuttle',
+      url: 'https://www.tickyourlist.com/dubai-parks-and-resorts-tickets/book-dubai-parks-resorts-2-parks-pass',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: 'https://www.tickyourlist.com/aquaventure-waterpark-tickets/aquaventure-waterpark-tickets',
+      url: 'https://www.tickyourlist.com/yas-waterworld-tickets/book-yas-waterworld-tickets',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.9,
     },
-    // Medium Priority Pages
+    {
+      url: 'https://www.tickyourlist.com/seaworld-abu-dhabi/book-seaworld-abu-dhabi',
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://www.tickyourlist.com/ferrari-world-tickets/book-ferrari-world-abu-dhabi-tickets',
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://www.tickyourlist.com/yas-island-tickets/book-yas-island-multi-park-tickets',
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://www.tickyourlist.com/dubai-miracle-garden-tickets/book-dubai-miracle-garden-tickets',
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://www.tickyourlist.com/aya-universe-tickets/book-aya-universe-tickets',
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://www.tickyourlist.com/museum-of-the-future-tickets/book-museum-of-the-future-dubai-tickets',
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://www.tickyourlist.com/dubai-desert-safari/book-premium-dubai-desert-safari',
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://www.tickyourlist.com/dubai-desert-safari/book-dubai-desert-safari-with-unlimited-bbq-buffet-dinner-live-shows',
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://www.tickyourlist.com/dubai-frame-tickets/book-dubai-frame-tickets',
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: 'https://www.tickyourlist.com/dubai-aquarium-tickets/book-dubai-aquarium-underwater-zoo-tickets',
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+
     // Weekly Updated Pages with Priority 0.8
     {
-      url: 'https://www.tickyourlist.com/ski-dubai-tickets/ski-dubai',
+      url: 'https://www.tickyourlist.com/tickets/book-real-madrid-world-tickets',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: 'https://www.tickyourlist.com/real-madrid-park-tickets/real-madrid-world-tickets',
+      url: 'https://www.tickyourlist.com/legoland-dubai-tickets/book-legoland-dubai-tickets',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: 'https://www.tickyourlist.com/motiongate-dubai-tickets/motiongate-dubai-tickets',
+      url: 'https://www.tickyourlist.com/the-green-planet-dubai-tickets/book-green-planet-tickets',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: 'https://www.tickyourlist.com/legoland-dubai-tickets/legoland-dubai-tickets',
+      url: 'https://www.tickyourlist.com/wild-wadi-tickets/book-wild-wadi-water-park-tickets',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: 'https://www.tickyourlist.com/the-green-planet-dubai-tickets/green-planet-tickets',
+      url: 'https://www.tickyourlist.com/dubai-legoland-waterpark-tickets/book-legoland-waterpark-tickets',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: 'https://www.tickyourlist.com/wild-wadi-tickets/wild-wadi-water-park-tickets',
+      url: 'https://www.tickyourlist.com/dubai-butterfly-garden-tickets/book-dubai-butterfly-garden-tickets',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: 'https://www.tickyourlist.com/dubai-legoland-waterpark-tickets/legoland-waterpark-tickets',
+      url: 'https://www.tickyourlist.com/kidzania-dubai-tickets/book-kidzania-dubai-tickets',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: 'https://www.tickyourlist.com/dubai-butterfly-garden-tickets/dubai-butterfly-garden-tickets',
+      url: 'https://www.tickyourlist.com/trick-art-museum-dubai-tickets/book-3d-world-dubai-trick-art-selfie-museum',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: 'https://www.tickyourlist.com/kidzania-dubai-tickets/kidzania-dubai-tickets',
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://www.tickyourlist.com/trick-art-museum-dubai-tickets/3d-world-dubai-trick-art-selfie-museum',
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://www.tickyourlist.com/warner-bros-world-abu-dhabi-tickets/warner-bros-worldtm-abu-dhabi-tickets',
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://www.tickyourlist.com/dubai-parks-and-resorts-tickets/dubai-parks-resorts-2-parks-pass',
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://www.tickyourlist.com/yas-waterworld-tickets/yas-waterworld-tickets',
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://www.tickyourlist.com/exclusive-aya-universe-tickets-save-25-TickYourList/tickets-to-aya-universe',
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://www.tickyourlist.com/dubai-frame-tickets/dubai-frame-tickets',
+      url: 'https://www.tickyourlist.com/global-village-dubai-tickets/book-global-village-dubai',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.8,
@@ -172,25 +184,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: 'https://www.tickyourlist.com/jebel-jais-zipline-tickets-TickYourList/jebel-jais-flight-tickets',
+      url: 'https://www.tickyourlist.com/jebel-jais-zipline-tickets/jebel-jais-flight-tickets',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: 'https://www.tickyourlist.com/dubai-desert-safari/dubai-desert-safari-with-sandboarding-camel-ride-bbq-dinner',
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://www.tickyourlist.com/xline-dubai-zipline-tickets-TickYourList/xline-dubai-marina-zip-line',
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://www.tickyourlist.com/dubai-desert-safari/desert-safari-with-unlimited-bbq-buffet-dinner-live-shows',
+      url: 'https://www.tickyourlist.com/xline-dubai-zipline-tickets/book-xline-dubai-marina-zip-line',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.8,
@@ -214,16 +214,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: 'https://www.tickyourlist.com/helicopter-tours/skyhub-gyrocopter-flight-experience-at-the-palm-drop-zone',
+      url: 'https://www.tickyourlist.com/helicopter-tours/book-gyrocopter-flight-dubai-tickets',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: 'https://www.tickyourlist.com/hot-air-balloon-dubai/hot-air-balloon-ride-in-dubai-with-transfers',
+      url: 'https://www.tickyourlist.com/hot-air-balloon-dubai/book-hot-air-balloon-flight-tickets',
       lastModified: currentDate,
       changeFrequency: 'weekly',
-      priority: 0.8,
+      priority: 0.9,
     },
     {
       url: 'https://www.tickyourlist.com/hot-air-balloon-dubai/the-dubai-balloon-at-atlantis-tickets',
@@ -238,7 +238,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: 'https://www.tickyourlist.com/arte-museum-tickets/arte-museum-tickets',
+      url: 'https://www.tickyourlist.com/arte-museum-tickets/book-arte-museum-tickets',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.8,
@@ -253,7 +253,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: 'https://www.tickyourlist.com/sky-views-observatory-tickets/sky-views-observatory-ticket-with-glass-slide',
       lastModified: currentDate,
       changeFrequency: 'weekly',
-      priority: 0.8,
+      priority: 0.9,
     },
     {
       url: 'https://www.tickyourlist.com/burj-al-arab-tour/guided-tour-of-inside-burj-al-arab',
@@ -268,25 +268,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
-      url: 'https://www.tickyourlist.com/emirates-dubai-7s/emirates-dubai-sevens-one-day-pass',
+      url: 'https://www.tickyourlist.com/la-perle-dubai-tickets/book-la-perle-by-dragone-tickets',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: 'https://www.tickyourlist.com/la-perle-dubai-tickets/la-perle-by-dragone-tickets',
-      lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://www.tickyourlist.com/dubai-crocodile-park/tickets-to-dubai-crocodile-park',
+      url: 'https://www.tickyourlist.com/dubai-crocodile-park/book-dubai-crocodile-park-tickets',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
       url: 'https://www.tickyourlist.com/aquaventure-waterpark-tickets/atlantis-the-lost-chambers-aquarium-tickets',
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: 'https://www.tickyourlist.com/dubai-safari-park-tickets/dubai-safari-park',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.8,
@@ -333,24 +333,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.8,
     },
+
     // Lower Priority Pages
-    {
-      url: 'https://www.tickyourlist.com/about',
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.3,
-    },
     {
       url: 'https://www.tickyourlist.com/contact',
       lastModified: currentDate,
       changeFrequency: 'monthly',
-      priority: 0.3,
+      priority: 0.5,
+    },
+    {
+      url: 'https://www.tickyourlist.com/about',
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.5,
+    },
+    {
+      url: 'https://www.tickyourlist.com/careers',
+      lastModified: currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.5,
     },
     {
       url: 'https://www.tickyourlist.com/blog',
       lastModified: currentDate,
       changeFrequency: 'weekly',
       priority: 0.6,
-    }
-  ]
+    },
+  ];
 }

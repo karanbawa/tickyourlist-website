@@ -20,14 +20,53 @@ const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
 });
 
+// Define your JSON-LD schemas
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Tick Your List",
+  "url": "https://www.tickyourlist.com",
+  "description": "Book top attractions, tours, and experiences with Tick Your List. Enjoy seamless online booking for theme parks, adventures, museums, and more worldwide.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://www.tickyourlist.com/search?query={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org/",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Tick Your List: Book Top Attractions, Tours & Experiences",
+    "item": "https://tickyourlist.com/"
+  },{
+    "@type": "ListItem",
+    "position": 2,
+    "name": "IMG Worlds of Adventure Tickets",
+    "item": "https://www.tickyourlist.com/tickets/book-img-worlds-of-adventure"
+  },{
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Ski Dubai Snow Park Tickets",
+    "item": "https://www.tickyourlist.com/tickets/book-ski-dubai-snow-park-tickets"
+  },{
+    "@type": "ListItem",
+    "position": 4,
+    "name": "SeaWorld Abu Dhabi Tickets",
+    "item": "https://www.tickyourlist.com/seaworld-abu-dhabi/tickets-to-seaworld-abu-dhabi"
+  }]
+};
+
+
 export const metadata: Metadata = {
-  title: "Tickyourlist: Things To Do, Attractions, Tours, Events & Experiences",
-  description: "Things To Do, Attractions, Tours, Events & Experiences, Booking Online",
-  keywords: "Things To Do, Attractions, Tours, Events & Experiences, Booking Online",
+  title: "Tick Your List: Book Top Attractions, Tours, & Unique Experiences",
+  description: "Discover and book top attractions, tours, and unforgettable experiences with Tick Your List. Enjoy seamless online booking for theme parks, adventures, museums, and more, worldwide.",
+  keywords: "Tick Your List, IMG Worlds of Adventure, IMG Adventure tickets, Yas Island tickets, Ferrari World, Yas Waterworld, SeaWorld Abu Dhabi tickets, Ski Dubai, Dubai Aquarium, Miracle Garden tickets, Desert Safari, Motiongate rides, Aquaventure tickets, TYL packages, TickYourList, Tick Your List",
   icons: {
     icon: '/favicon.ico',
-    // shortcut: '/favicon.ico', // optional
-    // apple: '/apple-touch-icon.png', // optional for Apple devices
   },
 };
 
@@ -45,6 +84,19 @@ export default function RootLayout({
       <html lang="en" className={poppins.className}>
         <Head>
           <link rel="icon" href="/images/logo/tyllogo.png" /> {/* Add this line */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(websiteSchema)
+            }}
+          />
+          {/* Breadcrumb Schema */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(breadcrumbSchema)
+            }}
+          />
         </Head>
         <body className="bg-white text-base dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
           <AuthProvider>
