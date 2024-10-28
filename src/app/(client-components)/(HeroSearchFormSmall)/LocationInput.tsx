@@ -20,7 +20,7 @@ const RECENT_SEARCHES_KEY = "recentSearches"; // Key to store in localStorage
 const LocationInput: FC<LocationInputProps> = ({
   autoFocus = false,
   onInputDone,
-  placeHolder = "Search Destination",
+  placeHolder = "Search Experiences",
   desc = "Where are you going?",
   className = "nc-flex-1.5",
   divHideVerticalLineClass = "left-10 -right-0.5",

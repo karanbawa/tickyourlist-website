@@ -182,7 +182,7 @@ const LocationInput: FC<Props> = ({
         <div className="relative">
           <input
             className="block w-full bg-transparent border px-4 py-3 pr-12 border-neutral-900 dark:border-neutral-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent text-base leading-none placeholder-neutral-500 dark:placeholder-neutral-300 truncate font-bold"
-            placeholder="Search destinations"
+            placeholder="Search Experiences"
             value={value}
             onChange={handleInputChange}
             ref={inputRef}
