@@ -3,29 +3,26 @@
 import React, { useEffect, useState } from "react";
 import PayPage from "./pay-done";
 
-// Fetch payment confirmation data from the backend
-async function fetchPaymentConfirmation(
+// utils/route.ts
+
+export async function fetchPaymentConfirmation(
   razorpayOrderId: string,
   razorpayPaymentId: string,
   razorpaySignature: string,
   bookingId: string
 ) {
-  const response = await fetch(
-    `${process.env.BASE_URL}/v1/tyltourcustomerbooking/razorpay/payment-confirmation`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj' || "",
-      },
-      body: JSON.stringify({
-        razorpay_payment_id: razorpayPaymentId,
-        razorpay_order_id: razorpayOrderId,
-        razorpay_signature: razorpaySignature,
-        bookingId,
-      }),
-    }
-  );
+  const response = await fetch(`/api/payment-confirmation`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      razorpay_order_id: razorpayOrderId,
+      razorpay_payment_id: razorpayPaymentId,
+      razorpay_signature: razorpaySignature,
+      bookingId,
+    }),
+  });
 
   if (!response.ok) {
     throw new Error("Failed to fetch payment confirmation");
@@ -33,6 +30,7 @@ async function fetchPaymentConfirmation(
 
   return response.json();
 }
+
 
 interface PaymentConfirmationProps {
   searchParams: {
