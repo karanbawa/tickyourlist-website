@@ -97,15 +97,21 @@ export default function RootLayout({
               __html: JSON.stringify(breadcrumbSchema)
             }}
           />
-          <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16506531479"></script>
-          <script type="pageurltracking" dangerouslySetInnerHTML={({
-            __html: JSON.stringify(` window.dataLayer = window.dataLayer || [];
+          <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-16506531479"
+          strategy="afterInteractive"
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+        >
+          {`
+            window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-
-            gtag('config', '${process.env.pageurltracking}');`)
-          })}>
-          </script>
+            gtag('config', 'AW-16506531479');
+          `}
+        </Script>
         </Head>
         <body className="bg-white text-base dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
           <AuthProvider>
