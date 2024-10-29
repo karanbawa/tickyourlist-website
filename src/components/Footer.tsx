@@ -115,7 +115,7 @@ const Footer: React.FC = () => {
         <div className="flex flex-row space-x-2 text-xs">
           <div>
             <span className="font-bold">
-              <Link href={"" as Route}>© TickYourList Inc (Managed by SNG India)</Link>
+              <Link href={"" as Route}>© TickYourList</Link>
             </span>
           </div>
           <div className="font-bold">.</div>

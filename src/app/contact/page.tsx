@@ -10,20 +10,27 @@ export interface PageContactProps {}
 
 const info = [
   {
-    title: "🗺 ADDRESS",
-    desc: "F/F, B-48 Dashrathpuri, New Delhi - 110045", 
-    // desc: "118, Basement, Sarvanchal Residency, Pocket 10, Sector 23, Dwarka, New Delhi, Delhi, 110077", 
+    title: "🗺 ADDRESS (UAE)",
+    desc: "203-68, Bena Complex C, Oud Metha, Dubai",
+  },
+  {
+    title: "🗺 ADDRESS (USA)",
+    desc: "1111B S Governors Ave STE 23601 Dover, Delaware 19904",
+  },
+  {
+    title: "🗺 ADDRESS (INDIA)",
+    desc: "F/F, B-48 Dashrathpuri, New Delhi - 110045",
   },
   {
     title: "💌 EMAIL",
     desc: "help@tickyourlist.com",
   },
   {
-    title: "☎ PHONE",
+    title: "☎ PHONE (INDIA)",
     desc: "+91 7982053440",
   },
   {
-    title: "☎ PHONE",
+    title: "☎ PHONE (UAE)",
     desc: "+971 529061536",
   },
 ];
