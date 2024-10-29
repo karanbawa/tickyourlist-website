@@ -169,6 +169,18 @@ export default function RootLayout({
           `,
             }}
           />
+          <Script id="checkoutpagetracking" 
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.addEventListener("load", function () {
+              if (window.location.href.includes("/book?tourId")) {
+                gtag("event", "conversion", {
+                  send_to: "AW-16506531479/8pFTCI2AluMZEJfd9r49",
+                })
+              }
+            })`
+          }} />
+
         </body>
       </html>
     </GoogleOAuthProvider>
