@@ -97,21 +97,20 @@ export default function RootLayout({
               __html: JSON.stringify(breadcrumbSchema)
             }}
           />
-          <Script
-          src="https://www.googletagmanager.com/gtag/js?id=AW-16506531479"
-          strategy="afterInteractive"
-        />
-        <Script
-          id="google-analytics"
-          strategy="afterInteractive"
-        >
-          {`
+          <script 
+        async 
+        src="https://www.googletagmanager.com/gtag/js?id=AW-16506531479">
+      </script>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'AW-16506531479');
-          `}
-        </Script>
+          `
+        }}
+      />
         </Head>
         <body className="bg-white text-base dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
           <AuthProvider>
