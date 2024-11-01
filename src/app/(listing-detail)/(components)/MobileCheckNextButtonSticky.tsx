@@ -12,6 +12,7 @@ interface Price {
     min: number;
     max: number;
   };
+  desceription?: string;
 }
 
 interface Pricing {
