@@ -181,7 +181,7 @@ export const NAVIGATION_DEMO: NavItemType[] = [
   },
   {
     id: ncNanoId(),
-    href: "tel:+971529061536",
+    href: "tel:+15185477064",
     name: "Call Us",
     type: "megaMenu",
     megaMenu: megaMenuDemo,

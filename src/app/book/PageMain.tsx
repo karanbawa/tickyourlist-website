@@ -565,6 +565,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
 
   const renderMain = () => {
     const pricing = tourGroup?.listingPrice?.listingPrice;
+
     const hasSpecificTypes = pricing?.prices?.some((p: { type: string; }) =>
       ['adult', 'child', 'infant'].includes(p.type.toLowerCase())
     );
@@ -612,6 +613,16 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
                 <div className="p-4 md:p-5 rounded-lg max-w-5xl" style={{ backgroundColor: "#fff8e5" }}>
                   <ul className="list-none ml-0">
                     <li className="ml-1 text-xs md:text-sm font-light leading-5">Children shorter than 1.05 meters can enter for free with a valid ID.</li>
+                  </ul>
+                </div>
+              </div>
+            )}
+
+         {pricing?.prices?.some((p: { type: string; }) => p.type.toLowerCase() === 'guest') && (
+              <div className="w-full max-w-5xl mt-3 mx-auto">
+                <div className="p-4 md:p-5 rounded-lg max-w-5xl" style={{ backgroundColor: "#fff8e5" }}>
+                  <ul className="list-none ml-0">
+                    <li className="ml-1 text-xs md:text-sm font-light leading-5">{pricing?.prices?.[0]?.description}</li>
                   </ul>
                 </div>
               </div>

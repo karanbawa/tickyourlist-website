@@ -269,6 +269,17 @@ const MobileCheckNextButtonSticky: FC<MobileCheckNextButtonStickyProps> = ({
               </div>
             </div>
           )}
+
+      {pricing?.prices?.some((p: { type: string; }) => p.type.toLowerCase() === 'guest') && (
+                    <div className="w-full max-w-5xl mt-3 mx-auto mb-3">
+                      <div className="p-4 md:p-5 rounded-lg max-w-5xl" style={{ backgroundColor: "#fff8e5" }}>
+                        <ul className="list-none ml-0">
+                          <li className="ml-1 text-xs md:text-sm font-light leading-5">{pricing?.prices?.[0]?.description}</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
+
           
           {!hasSpecificTypes && pricing ? (
           <PriceRow
