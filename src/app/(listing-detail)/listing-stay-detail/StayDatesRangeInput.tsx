@@ -30,20 +30,12 @@ const StayDatesRangeInput: FC<StayDatesRangeInputProps> = ({
     const searchParams = new URLSearchParams(window.location.search);
     const dateParam = searchParams.get("date");
 
-    console.log("searchParams and dateParam: ", searchParams, dateParam);
-
     if (dateParam) {
       const parsedDate = DateTime.fromISO(dateParam, { zone: "local" });
-
-      console.log("parsedDateparsedDate ", parsedDate);
-
-
-      console.log("parsedDateparsedDatetest ", parsedDate.isValid);
 
       if (parsedDate.isValid) {
         const newDate = parsedDate.toJSDate();
         const formattedDate = formatDateToYYYYMMDD(parsedDate);
-        console.log("Formatted Date:", formattedDate);
 
         // Check if the new date is different from the previous one
         if (prevDateRef.current?.getTime() !== newDate.getTime()) {
