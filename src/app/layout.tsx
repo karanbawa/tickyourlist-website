@@ -66,12 +66,16 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  metadataBase: new URL(`https://www.tickyourlist.com`),
   title: "Tick Your List: Book Top Attractions, Tours, & Unique Experiences",
   description: "Discover and book top attractions, tours, and unforgettable experiences with Tick Your List. Enjoy seamless online booking for theme parks, adventures, museums, and more, worldwide.",
   keywords: "Tick Your List, IMG Worlds of Adventure, IMG Adventure tickets, Yas Island tickets, Ferrari World, Yas Waterworld, SeaWorld Abu Dhabi tickets, Ski Dubai, Dubai Aquarium, Miracle Garden tickets, Desert Safari, Motiongate rides, Aquaventure tickets, TYL packages, TickYourList, Tick Your List",
   icons: {
     icon: '/favicon.ico',
   },
+  alternates: {
+    canonical: './',
+  }
 }; 
 
 export const viewport = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
