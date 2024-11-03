@@ -66,10 +66,14 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const tourGroup = data?.data?.tourgroup;
 
   return {
+    robots: {
+      index: true,
+      follow: true,
+    },
     title: tourGroup?.metaTitle,
     description: tourGroup?.metaDescription,
     alternates: {
-      canonical: `https://tickyourlist.com${tourGroup?.url}`,
+      canonical: `https://tickyourlist.com${tourGroup?.urlSlugs?.EN}`,
     },
     openGraph: {
       title: tourGroup?.metaTitle,
