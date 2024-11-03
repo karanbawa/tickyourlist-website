@@ -51,17 +51,15 @@ function mapCountryToCurrency(countryCode: string) {
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const cookieStore = cookies();
-  let currency = cookieStore.get('currency')?.value; // Default to 'USD' if no cookie
+  let currency = cookieStore.get('currency')?.value || 'USD';
 
+  // Dynamically fetch currency if no cookie is present
   if (!currency) {
-    // No currency cookie, get country from headers
     const headersList = headers();
-    const country = headersList.get('x-vercel-ip-country') ?? 'AE'; // Fallback to 'AE' if not available
+    const country = headersList.get('x-vercel-ip-country') ?? 'AE';
     currency = mapCountryToCurrency(country);
-
-    // Optionally set the currency cookie for future requests
-    // Note: Setting cookies in server components is not straightforward; you may need to adjust your approach
   }
+
   const data = await fetchTourGroupData(params?.slug, params?.slug2, currency);
   const tourGroup = data?.data?.tourgroup;
 
@@ -73,7 +71,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     title: tourGroup?.metaTitle,
     description: tourGroup?.metaDescription,
     alternates: {
-      canonical: `https://tickyourlist.com${tourGroup?.urlSlugs?.EN}`,
+      canonical: `https://tickyourlist.com/${params.slug}/${params.slug2}`, // Use dynamic URL
     },
     openGraph: {
       title: tourGroup?.metaTitle,
