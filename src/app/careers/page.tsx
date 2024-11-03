@@ -1,8 +1,6 @@
 import rightImg from "@/images/about-hero-right.png";
 import React, { FC } from "react";
 import BgGlassmorphism from "@/components/BgGlassmorphism";
-import BackgroundSection from "@/components/BackgroundSection";
-import SectionClientSay from "@/components/SectionClientSay";
 import SectionSubscribe2 from "@/components/SectionSubscribe2";
 import SectionHero from "../about/SectionHero";
 import SectionStatistic from "../about/SectionStatistic";
