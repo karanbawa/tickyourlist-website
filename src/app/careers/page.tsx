@@ -6,8 +6,28 @@ import SectionClientSay from "@/components/SectionClientSay";
 import SectionSubscribe2 from "@/components/SectionSubscribe2";
 import SectionHero from "../about/SectionHero";
 import SectionStatistic from "../about/SectionStatistic";
+import { Metadata } from "next";
 
 export interface PageCareersProps {}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Careers at TickYourList | Join Our Team of Adventure Enthusiasts",
+    description: "Explore exciting career opportunities at TickYourList. Join our passionate team and help create unforgettable travel experiences for people around the world. Discover roles in tech, marketing, customer service, and more.",
+    keywords: [
+      "Tick Your List careers",
+      "jobs at TickYourList",
+      "TickYourList hiring",
+      "travel careers",
+      "join TickYourList",
+      "TickYourList job openings",
+      "work at Tick Your List"
+    ].join(", "),
+    icons: {
+      icon: '/favicon.ico',
+    },
+  };
+}
 
 const PageCareers: FC<PageCareersProps> = ({}) => {
   return (

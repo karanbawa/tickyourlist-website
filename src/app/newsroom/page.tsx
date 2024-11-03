@@ -6,8 +6,28 @@ import SectionClientSay from "@/components/SectionClientSay";
 import SectionSubscribe2 from "@/components/SectionSubscribe2";
 import SectionHero from "../about/SectionHero";
 import SectionStatistic from "../about/SectionStatistic";
+import { Metadata } from "next";
 
 export interface PageNewsRoomProps {}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Newsroom | TickYourList - Latest Updates, Press Releases, and Announcements",
+    description: "Stay updated with the latest news, press releases, and announcements from TickYourList. Discover our latest achievements, upcoming events, and industry insights.",
+    keywords: [
+      "Tick Your List",
+      "Newsroom",
+      "TickYourList updates",
+      "press releases",
+      "announcements",
+      "travel news",
+      "tourism industry insights"
+    ].join(", "),
+    icons: {
+      icon: '/favicon.ico',
+    },
+  };
+}
 
 const PageNewsRoom: FC<PageNewsRoomProps> = ({}) => {
   return (
