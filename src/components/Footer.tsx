@@ -22,7 +22,7 @@ const widgetMenus: WidgetFooterMenu[] = [
       { href: "/contact", label: "Help Center" },
       { href: "/contact", label: "Contact Us" },
       { href: "tel:+971529061536", label: "Call +971 529061536" },
-      { href: "tel:+917982053440", label: "Call +91 7982053440" },
+      // { href: "tel:+917982053440", label: "Call +91 7982053440" },
       { href: "mailto:help@tickyourlist.com", label: "help@tickyourlist.com" },
     ],
   },
