@@ -60,13 +60,17 @@ const breadcrumbSchema = {
   }]
 };
 
-
 export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    noimageindex: false,
+    nocache: false,
+    'max-video-preview': 'large',
+    'max-image-preview': 'large',
+    'max-snippet': -1,
   },
-  metadataBase: new URL(`https://www.tickyourlist.com`),
+  metadataBase: new URL("https://www.tickyourlist.com"),
   title: "Tick Your List: Book Top Attractions, Tours, & Unique Experiences",
   description: "Discover and book top attractions, tours, and unforgettable experiences with Tick Your List. Enjoy seamless online booking for theme parks, adventures, museums, and more, worldwide.",
   keywords: "Tick Your List, IMG Worlds of Adventure, IMG Adventure tickets, Yas Island tickets, Ferrari World, Yas Waterworld, SeaWorld Abu Dhabi tickets, Ski Dubai, Dubai Aquarium, Miracle Garden tickets, Desert Safari, Motiongate rides, Aquaventure tickets, TYL packages, TickYourList, Tick Your List",
@@ -74,9 +78,10 @@ export const metadata: Metadata = {
     icon: '/favicon.ico',
   },
   alternates: {
-    canonical: './',
-  }
-}; 
+    canonical: 'https://www.tickyourlist.com/',
+  },
+};
+
 
 export const viewport = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
 
