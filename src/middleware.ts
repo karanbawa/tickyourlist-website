@@ -5,12 +5,12 @@ function mapCountryToCurrency(countryCode: string): string {
   switch (countryCode) {
     case 'US':
       return 'USD';
-    case 'GB':
-      return 'GBP';
-    case 'JP':
-      return 'JPY';
-    case 'EU':
-      return 'EUR';
+    // case 'GB':
+    //   return 'GBP';
+    // case 'JP':
+    //   return 'JPY';
+    // case 'EU':
+    //   return 'EUR';
     case 'IN':
       return 'INR';
     case 'AE':
@@ -24,6 +24,7 @@ function mapCountryToCurrency(countryCode: string): string {
 
 export async function middleware(request: NextRequest) {
   const country = request.geo?.country ?? 'AE'; // Fallback to 'US' if geo info isn't available
+  const countryLocation = request.geo?.country ?? 'unknown';
   // const countryIp = await getGeolocation(request.ip || '');
   // const country = countryIp || countrycode;
   // console.log("nexturltest ", request.nextUrl);
@@ -34,6 +35,7 @@ export async function middleware(request: NextRequest) {
     const response = NextResponse.next();
     response.cookies.set('country', country, { maxAge: 3600, path: '/' });
     response.cookies.set('currency', currency, { maxAge: 3600, path: '/' }); // Set the cookie for 1 hour
+    response.cookies.set('countryLocation', countryLocation, { maxAge: 3600, path: '/' });    
     // Proceed without an immediate redirect to avoid the loop
     return response;
   }
