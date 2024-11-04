@@ -85,9 +85,9 @@ const MobileConfimAndPayButton: FC<MobileConfimAndPayButtonProps> = ({ tourGroup
               <span className="text-lg font-semibold">
                 {currencyCode} {formatPrice(totalFinalPrice)}
               </span>
-              <span className="ml-1 text-sm font-normal text-neutral-500 dark:text-neutral-400">
+              {/* <span className="ml-1 text-sm font-normal text-neutral-500 dark:text-neutral-400">
                 /ticket
-              </span>
+              </span> */}
             </div>
           </div>
           <div className="flex items-center space-x-4">
