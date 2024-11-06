@@ -26,29 +26,14 @@ const widgetMenus: WidgetFooterMenu[] = [
       { href: "mailto:help@tickyourlist.com", label: "help@tickyourlist.com" },
     ],
   },
-  // {
-  //   id: "1",
-  //   title: "Top Places",
-  //   menus: [
-  //     { href: "/things-to-do-in-dubai/", label: "Dubai" },
-  //     { href: "/things-to-do-in-abu_dhabi/", label: "Abu Dhabi" },
-  //     { href: "/things-to-do-in-singapore/", label: "Singapore" },
-  //     { href: "/things-to-do-in-thailand/", label: "Thailand" },
-  //     { href: "/things-to-do-in-riyad/", label: "Riyad" },
-  //     { href: "/things-to-do-in-maldives/", label: "Maldives" },
-  //     { href: "/things-to-do-in-bali/", label: "Bali" },
-  //     { href: "/things-to-do-in-india/", label: "India" },
-  //     // { href: "#", label: "+ 148 more" },
-  //   ],
-  // },
   {
     id: "2",
     title: "TickYourList",
     menus: [
       { href: "/about", label: "Our Story" },
       { href: "/careers", label: "Careers" },
-      { href: "/newsroom", label: "Newsroom" },
-      { href: "/blog", label: "Travel Blog" },
+      // { href: "/newsroom", label: "Newsroom" },
+      // { href: "/blog", label: "Travel Blog" },
     ],
   },
   {
