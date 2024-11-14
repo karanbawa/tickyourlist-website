@@ -78,12 +78,12 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       }
     },
     alternates: {
-      canonical: `https://tickyourlist.com/${tourGroup?.urlSlugs?.EN}`, // Use dynamic URL
+      canonical: `https://www.tickyourlist.com/${tourGroup?.urlSlugs?.EN}`, // Use dynamic URL
     },
     openGraph: {
       title: tourGroup?.metaTitle,
       description: tourGroup?.metaDescription,
-      url: `https://tickyourlist.com/${tourGroup?.urlSlugs?.EN}`, // Using same canonical URL here
+      url: `https://www.tickyourlist.com/${tourGroup?.urlSlugs?.EN}`, // Using same canonical URL here
       siteName: 'TickYourList',
       images: tourGroup?.imageUploads?.[0]?.url ? [
         {

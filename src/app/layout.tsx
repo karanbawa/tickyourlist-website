@@ -41,7 +41,7 @@ const breadcrumbSchema = {
     "@type": "ListItem",
     "position": 1,
     "name": "Tick Your List: Book Top Attractions, Tours & Experiences",
-    "item": "https://tickyourlist.com/"
+    "item": "https://www.tickyourlist.com/"
   },{
     "@type": "ListItem",
     "position": 2,
