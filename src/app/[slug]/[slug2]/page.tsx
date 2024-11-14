@@ -64,17 +64,19 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const tourGroup = data?.data?.tourgroup;
 
   return {
+    title: tourGroup?.metaTitle,
+    description: tourGroup?.metaDescription,
     robots: {
       index: true,
       follow: true,
-      nocache: true,
       googleBot: {
         index: true,
-        follow: true
+        follow: true,
+        'max-image-preview': 'large',
+        'max-video-preview': -1,
+        'max-snippet': -1,
       }
     },
-    title: tourGroup?.metaTitle,
-    description: tourGroup?.metaDescription,
     alternates: {
       canonical: `https://tickyourlist.com/${tourGroup?.urlSlugs?.EN}`, // Use dynamic URL
     },

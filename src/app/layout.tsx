@@ -68,11 +68,13 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    noimageindex: false,
-    nocache: false,
-    'max-video-preview': 'large',
-    'max-image-preview': 'large',
-    'max-snippet': -1,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-video-preview': -1,
+      'max-snippet': -1,
+    }
   },
   icons: {
     icon: [
@@ -85,7 +87,7 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: 'https://www.tickyourlist.com/',
-  },
+  }
 };
 
 export const viewport = {
