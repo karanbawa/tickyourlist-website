@@ -67,21 +67,39 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     robots: {
       index: true,
       follow: true,
+      nocache: true,
+      googleBot: {
+        index: true,
+        follow: true
+      }
     },
     title: tourGroup?.metaTitle,
     description: tourGroup?.metaDescription,
     alternates: {
-      canonical: `https://tickyourlist.com/${params.slug}/${params.slug2}`, // Use dynamic URL
+      canonical: `https://tickyourlist.com/${tourGroup?.urlSlugs?.EN}`, // Use dynamic URL
     },
     openGraph: {
       title: tourGroup?.metaTitle,
       description: tourGroup?.metaDescription,
-      images: [
+      url: `https://tickyourlist.com/${tourGroup?.urlSlugs?.EN}`, // Using same canonical URL here
+      siteName: 'TickYourList',
+      images: tourGroup?.imageUploads?.[0]?.url ? [
         {
-          url: tourGroup?.imageUploads[0]?.url || '',
-        },
-      ],
+          url: tourGroup.imageUploads[0].url,
+          width: 1200,
+          height: 630,
+          alt: tourGroup.metaTitle
+        }
+      ] : [],
+      locale: 'en_US',
+      type: 'website'
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: tourGroup?.metaTitle,
+      description: tourGroup?.metaDescription,
+      images: tourGroup?.imageUploads?.[0]?.url ? [tourGroup.imageUploads[0].url] : []
+    }
   };
 }
 
