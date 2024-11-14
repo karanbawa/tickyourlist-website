@@ -24,9 +24,19 @@ const poppins = Poppins({
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "name": "Tick Your List",
+  "name": "TickYourList",
+  "alternateName": [
+    "Tick Your List",
+    "TYL",
+    "TickYourList",
+    "tickyourlist",
+    "tick your list",
+    "tick-your-list",
+    "Tick your list",
+    "TICKYOURLIST"
+  ],
   "url": "https://www.tickyourlist.com",
-  "description": "Book top attractions, tours, and experiences with Tick Your List. Enjoy seamless online booking for theme parks, adventures, museums, and more worldwide.",
+  "description": "TickYourList (also known as Tick Your List) - Book top attractions, tours, and experiences worldwide. Seamless online booking for theme parks, adventures, museums, and more.",
   "potentialAction": {
     "@type": "SearchAction",
     "target": "https://www.tickyourlist.com/search?query={search_term_string}",
@@ -58,6 +68,44 @@ const breadcrumbSchema = {
     "name": "SeaWorld Abu Dhabi Tickets",
     "item": "https://www.tickyourlist.com/seaworld-abu-dhabi/book-seaworld-abu-dhabi"
   }]
+} as const;
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "TickYourList",
+  "alternateName": [
+    "Tick Your List",
+    "TYL",
+    "TickYourList",
+    "tickyourlist",
+    "tick your list",
+    "tick-your-list",
+    "Tick your list",
+    "TICKYOURLIST"
+  ],
+  "url": "https://www.tickyourlist.com",
+  "logo": "https://tickyourlist-images.s3.ap-south-1.amazonaws.com/tyllogo.png",
+  "description": "TickYourList (Tick Your List) is the leading platform for booking attractions and tours worldwide.",
+  // ... rest of the schema
+} as const;
+
+const brandSchema = {
+  "@context": "https://schema.org",
+  "@type": "Brand",
+  "name": "TickYourList",
+  "alternateName": [
+    "Tick Your List",
+    "TYL",
+    "TickYourList",
+    "tickyourlist",
+    "tick your list",
+    "tick-your-list",
+    "Tick your list",
+    "TICKYOURLIST"
+  ],
+  "description": "TickYourList (Tick Your List) - Your trusted platform for booking attractions and experiences.",
+  "logo": "https://tickyourlist-images.s3.ap-south-1.amazonaws.com/tyllogo.png"
 } as const;
 
 export const metadata: Metadata = {
@@ -114,6 +162,18 @@ export default function RootLayout({
               __html: JSON.stringify(websiteSchema)
             }}
           />
+          <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema)
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(brandSchema)  // Add this new schema
+          }}
+        />
           {/* Breadcrumb Schema */}
           <script
             type="application/ld+json"
