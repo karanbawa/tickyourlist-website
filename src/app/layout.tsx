@@ -85,9 +85,10 @@ const organizationSchema = {
     "TICKYOURLIST"
   ],
   "url": "https://www.tickyourlist.com",
+  "image": "https://tickyourlist-images.s3.ap-south-1.amazonaws.com/tyllogo.png",
   "logo": "https://tickyourlist-images.s3.ap-south-1.amazonaws.com/tyllogo.png",
   "description": "TickYourList (Tick Your List) is the leading platform for booking attractions and tours worldwide.",
-  // ... rest of the schema
+  "email": "info@tickyourlist.com",
 } as const;
 
 const brandSchema = {
