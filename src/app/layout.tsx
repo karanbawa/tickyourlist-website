@@ -46,7 +46,7 @@ const breadcrumbSchema = {
     "@type": "ListItem",
     "position": 2,
     "name": "IMG Worlds of Adventure Tickets",
-    "item": "https://www.tickyourlist.com/tickets/book-img-worlds-of-adventure"
+    "item": "https://www.tickyourlist.com/tickets/book-img-worlds-of-adventure-tickets"
   },{
     "@type": "ListItem",
     "position": 3,
@@ -56,11 +56,15 @@ const breadcrumbSchema = {
     "@type": "ListItem",
     "position": 4,
     "name": "SeaWorld Abu Dhabi Tickets",
-    "item": "https://www.tickyourlist.com/seaworld-abu-dhabi/tickets-to-seaworld-abu-dhabi"
+    "item": "https://www.tickyourlist.com/seaworld-abu-dhabi/book-seaworld-abu-dhabi"
   }]
-};
+} as const;
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.tickyourlist.com"),
+  title: "Tick Your List: Book Top Attractions, Tours, & Unique Experiences",
+  description: "Discover and book top attractions, tours, and unforgettable experiences with Tick Your List. Enjoy seamless online booking for theme parks, adventures, museums, and more, worldwide.",
+  keywords: "Tick Your List, IMG Worlds of Adventure, IMG Adventure tickets, Yas Island tickets, Ferrari World, Yas Waterworld, SeaWorld Abu Dhabi tickets, Ski Dubai, Dubai Aquarium, Miracle Garden tickets, Desert Safari, Motiongate rides, Aquaventure tickets, TYL packages, TickYourList, Tick Your List",
   robots: {
     index: true,
     follow: true,
@@ -70,20 +74,26 @@ export const metadata: Metadata = {
     'max-image-preview': 'large',
     'max-snippet': -1,
   },
-  metadataBase: new URL("https://www.tickyourlist.com"),
-  title: "Tick Your List: Book Top Attractions, Tours, & Unique Experiences",
-  description: "Discover and book top attractions, tours, and unforgettable experiences with Tick Your List. Enjoy seamless online booking for theme parks, adventures, museums, and more, worldwide.",
-  keywords: "Tick Your List, IMG Worlds of Adventure, IMG Adventure tickets, Yas Island tickets, Ferrari World, Yas Waterworld, SeaWorld Abu Dhabi tickets, Ski Dubai, Dubai Aquarium, Miracle Garden tickets, Desert Safari, Motiongate rides, Aquaventure tickets, TYL packages, TickYourList, Tick Your List",
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/images/logo/tyllogo.png' },
+      { url: '/images/logo/tyllogo.png', sizes: '16x16', type: 'image/png' },
+      { url: '/images/logo/tyllogo.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon.ico' },
+    ],
+    apple: '/images/logo/tyllogo.png'
   },
   alternates: {
     canonical: 'https://www.tickyourlist.com/',
   },
 };
 
-
-export const viewport = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
 
 export default function RootLayout({
   children,
@@ -95,8 +105,7 @@ export default function RootLayout({
   return (
     <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID || ''}>
       <html lang="en" className={poppins.className}>
-        <Head>
-          <link rel="icon" href="/images/logo/tyllogo.png" /> {/* Add this line */}
+      <body className="bg-white text-base dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{
@@ -110,8 +119,6 @@ export default function RootLayout({
               __html: JSON.stringify(breadcrumbSchema)
             }}
           />
-        </Head>
-        <body className="bg-white text-base dark:bg-neutral-900 text-neutral-900 dark:text-neutral-200">
           <AuthProvider>
           <DataProvider>
             <ClientCommons />
@@ -182,7 +189,7 @@ export default function RootLayout({
           `,
             }}
           />
-          <Script id="checkoutpagetracking" strategy="afterInteractive">
+          <Script id="checkout-tracking" strategy="afterInteractive">
               {`
                 if (window.location.href.includes("/book?tourId")) {
                   gtag("event", "conversion", {
