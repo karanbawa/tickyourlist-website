@@ -1,4 +1,27 @@
+# Global rules for all user agents
 User-agent: *
+
+# Disallow paths containing query parameters
+Disallow: */?*
+
+# Disallow specific sections
+Disallow: */account-savelists/*
+Disallow: */listing-stay-map/*
+Disallow: */author/*
+
+# Explicitly allow all other paths
 Allow: /
 
+# XML Sitemap location
 Sitemap: https://www.tickyourlist.com/sitemap.xml
+
+# Additional recommended disallows for security
+Disallow: */wp-admin/
+Disallow: */wp-includes/
+Disallow: */wp-content/plugins/
+Disallow: */wp-json/
+Disallow: */xmlrpc.php
+Disallow: */admin/
+Disallow: */login/
+Disallow: */cgi-bin/
+Disallow: */includes/
