@@ -50,7 +50,7 @@ const breadcrumbSchema = {
   "itemListElement": [{
     "@type": "ListItem",
     "position": 1,
-    "name": "Tick Your List: Book Top Attractions, Tours & Experiences",
+    "name": "TickYourList (Tick Your List): Book Top Attractions, Tours & Experiences",
     "item": "https://www.tickyourlist.com/"
   },{
     "@type": "ListItem",
@@ -105,7 +105,7 @@ const brandSchema = {
     "Tick your list",
     "TICKYOURLIST"
   ],
-  "description": "TickYourList (Tick Your List) - Your trusted platform for booking attractions and experiences.",
+  "description": "TickYourList (also known as Tick Your List) - Your trusted platform for booking attractions and experiences.",
   "logo": "https://tickyourlist-images.s3.ap-south-1.amazonaws.com/tyllogo.png"
 } as const;
 
@@ -128,7 +128,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: '/images/logo/tyllogo.png' },
-      { url: '/images/logo/tyllogo.png', sizes: '16x16', type: 'image/png' },
+      { url: '/images/logo/tyllogo.png', sizes: ' 16x16', type: 'image/png' },
       { url: '/images/logo/tyllogo.png', sizes: '32x32', type: 'image/png' },
       { url: '/favicon.ico' },
     ],
