@@ -112,8 +112,8 @@ const brandSchema = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.tickyourlist.com"),
   title: "TickYourList: Book Top Attractions, Tours, & Unique Experiences",
-  description: "Discover and book top attractions, tours, and unforgettable experiences with Tick Your List. Enjoy seamless online booking for theme parks, adventures, museums, and more, worldwide.",
-  keywords: "Tick Your List, TickYourList, IMG Worlds of Adventure, IMG Adventure tickets, Yas Island tickets, Ferrari World, Yas Waterworld, SeaWorld Abu Dhabi tickets, Ski Dubai, Dubai Aquarium, Miracle Garden tickets, Desert Safari, Motiongate rides, Aquaventure tickets, TYL packages, TickYourList, Tick Your List",
+  description: "Discover and book top attractions, tours, and unforgettable experiences with TickYourList (Tick Your List). Enjoy seamless online booking for theme parks, adventures, museums, and more, worldwide.",
+  keywords: "TickYourList, Tick Your List , IMG Worlds of Adventure, IMG Adventure tickets, Yas Island tickets, Ferrari World, Yas Waterworld, SeaWorld Abu Dhabi tickets, Ski Dubai, Dubai Aquarium, Miracle Garden tickets, Desert Safari, Motiongate rides, Aquaventure tickets, TYL packages, TickYourList, Tick Your List",
   robots: {
     index: true,
     follow: true,
