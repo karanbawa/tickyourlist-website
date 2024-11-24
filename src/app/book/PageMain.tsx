@@ -232,7 +232,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
     });
   };
 
-  const handleRazorpayPayment = async (amount: any, orderId: any, booking: { nonCustomerFirstName: any; nonCustomerLastName: any; phoneCode: any; phoneNumber: any; _id: string, email: string }) => {
+  const handleRazorpayPayment = async (amount: any, orderId: any, booking: { nonCustomerFirstName: any; nonCustomerLastName: any; phoneCode: any; phoneNumber: any; _id: string, email: string }, title: string) => {
     try {
       const scriptLoaded = await loadRazorpayScript();
       if (!scriptLoaded) {
@@ -244,7 +244,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         amount,
         currency: currencyCode,
         name: "TickYourList",
-        description: "Test Transaction",
+        description: title,
         image: "https://tickyourlist-images.s3.ap-south-1.amazonaws.com/tyllogo.png",
         order_id: orderId,
         prefill: {
@@ -365,7 +365,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
           "Content-Type": "application/json",
           "x-api-key": "GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(data), 
       });
 
       if (!response.ok) {
@@ -373,7 +373,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
       }
 
       const result = await response.json();
-      await handleRazorpayPayment(result?.data?.booking?.amount, result.data.razorpayOrderId, result?.data?.booking);
+      await handleRazorpayPayment(result?.data?.booking?.amount, result.data.razorpayOrderId, result?.data?.booking, tourGroup?.name);
     } catch (error: any) {
       setConfirmPayError(error?.message || 'Failed to Save the Record. Please try again!');
     } finally {
