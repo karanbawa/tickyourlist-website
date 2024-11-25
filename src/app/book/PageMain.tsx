@@ -244,7 +244,7 @@ const CheckOutPagePageMain: FC<CheckOutPagePageMainProps> = ({
         amount,
         currency: currencyCode,
         name: "TickYourList",
-        description: `Booking Confirmed for ${title}`,
+        description: `Booking Confirmation for ${title}`,
         image: "https://tickyourlist-images.s3.ap-south-1.amazonaws.com/tyllogo.png",
         order_id: orderId,
         prefill: {
