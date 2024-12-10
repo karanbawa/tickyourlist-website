@@ -13,6 +13,7 @@ import { ArrowLeft, HelpCircle, Loader2 } from "lucide-react";
 import MobileFooterSticky from "../(listing-detail)/(components)/MobileFooterSticky";
 import MobileCheckNextButtonSticky from "../(listing-detail)/(components)/MobileCheckNextButtonSticky";
 import { Route } from "next";
+import { FaWhatsapp } from "react-icons/fa";
 const { DateTime } = require('luxon');
 
 export interface CheckOutPagePageMainProps {
@@ -167,10 +168,40 @@ function calculateDiscountPercentage(originalPrice: string | number, finalPrice:
   return Math.round(discount).toString(); // Rounds to the nearest integer
 }
 
+const handleWhatsappRedirect = () => {
+  const phoneNumber = "+971529061536"; // replace with the WhatsApp number you want to send the message to
+  const message = `Hello, I'm interested in personalized itineraries and vacation planning. Here is the link: https://tickyourlist.com/${tourGroup?.urlSlugs?.EN}`;
+  const encodedMessage = encodeURIComponent(message);
+
+  // Construct WhatsApp URL
+  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+  // Redirect to WhatsApp
+  window.open(whatsappUrl, "_blank");
+};
+
  const renderPreference = () => {
   return (
     <div className="flex flex-col">
+      <div className="flex gap-5">
       <div className="text-md md:text-2xl font-semibold mt-2 md:mt-0 mb-4 sm:max-md:text-[#444444]">Select a preference</div>
+      <div className="text-md md:text-xl font-normal mt-2 md:mt-1">OR</div>
+      <div style={{
+              backgroundColor: "#1a9a5b",
+              borderRadius: "50%",
+              width: "30px",
+              height: "30px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              cursor: 'pointer',
+              marginTop: '1px'
+            }}
+            onClick={handleWhatsappRedirect}
+            >
+              <FaWhatsapp size={20} color="#fff" />
+            </div>
+      </div>
       {/* <span className="text-xs text-gray-500">Select a Preference to proceed</span> */}
       <div className="flex lg:justify-between gap-4 overflow-x-auto xl:overflow-x-visible">
         <div className="flex flex-grow-1 gap-4">
