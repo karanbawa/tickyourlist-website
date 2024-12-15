@@ -290,7 +290,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ travelSections }) => {
               >
                 <div className="flex space-x-4 px-4">
                   {section.tourGroups?.map((tourgroup: any) => (
-                    <StayCard2 key={tourgroup.id} data={tourgroup} className="min-w-[300px] max-w-[300px] flex-shrink-0" />
+                    <StayCard2 key={tourgroup.id} data={tourgroup} className="min-w-[260px] max-w-[260px] md:min-w-[280px] md:max-w-[280px] flex-shrink-0" />
                   ))}
                 </div>
               </div>

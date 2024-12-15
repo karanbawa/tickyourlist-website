@@ -330,7 +330,7 @@ const CategoryTabs: React.FC<CategoryTabsProps> = ({ travelSections }) => {
                       } else {
                         setWishlist(prev => prev.filter(id => id !== tourgroup.id));
                       }
-                    }} className="min-w-[260px] max-w-[260px] md:min-w-[290px] md:max-w-[290px] flex-shrink-0" />
+                    }} className="min-w-[260px] max-w-[260px] md:min-w-[280px] md:max-w-[280px] flex-shrink-0" />
                   ))}
                 </div>
               </div>
