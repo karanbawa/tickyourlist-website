@@ -5,6 +5,8 @@ import SectionMagazine5 from "./SectionMagazine5";
 import SectionLatestPosts from "./SectionLatestPosts";
 import BgGlassmorphism from "@/components/BgGlassmorphism";
 import SectionSubscribe2 from "@/components/SectionSubscribe2";
+import SectionHero2 from "../(server-components)/SectionHero2";
+import BlogHero from "../(server-components)/BlogHero";
 
 // DEMO DATA
 const POSTS = DEMO_POSTS;
@@ -17,6 +19,9 @@ const BlogPage: React.FC = () => {
   return (
     <div className="nc-BlogPage overflow-hidden relative">
       {/* ======== BG GLASS ======== */}
+      <div className="pb-24 lg:pb-28">
+      <BlogHero className="" />
+      </div>
       <BgGlassmorphism />
       {/* ======== ALL SECTIONS ======== */}
       {/* ======= START CONTAINER ============= */}
