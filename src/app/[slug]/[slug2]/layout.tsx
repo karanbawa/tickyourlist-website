@@ -9,6 +9,7 @@ import React, { ReactNode, Suspense, useEffect } from "react";
 import MobileFooterSticky from "../../(listing-detail)/(components)/MobileFooterSticky";
 import { ListingGalleryImage } from "@/components/listing-image-gallery/utils/types";
 import { useData } from "@/context/DataContext";
+import SnowfallWrapper from "@/app/(server-components)/SnowFallAnimation";
 
 const DetailLayout = ({ children }: { children: ReactNode }) => {
   const thisPathname = usePathname();
@@ -25,7 +26,9 @@ const DetailLayout = ({ children }: { children: ReactNode }) => {
     <Suspense fallback={<div>Loading...</div>}>
       <div className="ListingDetailPage">
         <Suspense fallback={<div>Loading Listing Image Gallery...</div>}>
+        <SnowfallWrapper>
           <ListingImageGallery images={transformImageUploads(data?.imageUploads)} data={data} />
+          </SnowfallWrapper>
         </Suspense>
         <div className="container ListingDetailPage__content">{children}</div>
 
