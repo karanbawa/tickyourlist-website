@@ -116,7 +116,7 @@ const LocationInput: FC<LocationInputProps> = ({
       {Object.entries(groupedCities).map(([country, cities]) => (
         <div key={country} className="mb-6">
           <Link
-            href={`${thisPathname}/country/${country.toLowerCase().replace(/\s+/g, '-')}`}
+            href={`${thisPathname}/country/${country.toLowerCase().replace(/\s+/g, '-')}` as Route}
             className="text-base font-semibold text-neutral-900 dark:text-neutral-100 mb-3 cursor-pointer hover:text-purple-600"
           >
             <h3>{country}</h3>
@@ -125,7 +125,7 @@ const LocationInput: FC<LocationInputProps> = ({
             {cities?.map((city, index) => (
               <Link
                 key={index}
-                href={`${thisPathname}/city/${city.cityCode.toLowerCase()}`}
+                href={`${thisPathname}/city/${city.cityCode.toLowerCase()}` as Route}
                 className="text-left px-3 py-2 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded-lg transition-colors"
               >
                 {city.displayName}
