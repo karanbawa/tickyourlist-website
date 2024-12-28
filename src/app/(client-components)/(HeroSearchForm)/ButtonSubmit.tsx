@@ -6,7 +6,7 @@ import React, { CSSProperties, FC } from "react";
 interface Props {
   href?: PathName;
   className?: string;
-  style?: CSSProperties;
+  style: CSSProperties | string;
 }
 
 const ButtonSubmit: FC<Props> = ({ href = "", className, style = "" }) => {
