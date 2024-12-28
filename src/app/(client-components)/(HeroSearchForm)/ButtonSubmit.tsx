@@ -1,12 +1,12 @@
 import { PathName } from "@/routers/types";
 import { Route } from "next";
 import Link from "next/link";
-import React, { FC } from "react";
+import React, { CSSProperties, FC } from "react";
 
 interface Props {
   href?: PathName;
   className?: string;
-  style?: any;
+  style?: CSSProperties;
 }
 
 const ButtonSubmit: FC<Props> = ({ href = "", className, style = "" }) => {

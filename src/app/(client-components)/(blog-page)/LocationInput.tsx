@@ -181,7 +181,7 @@ const LocationInput: FC<LocationInputProps> = ({
             />
           )}
         </div>
-        <ButtonSubmit href="" style={{ backgroundColor: '#7C25E9' }} />
+        <ButtonSubmit style={{ backgroundColor: '#7C25E9' }} />
       </div>
 
       {showPopover && (
