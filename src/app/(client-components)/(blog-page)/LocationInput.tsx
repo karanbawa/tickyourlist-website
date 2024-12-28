@@ -34,29 +34,57 @@ const LocationInput: FC<LocationInputProps> = ({
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const thisPathname = usePathname();
 
-  const groupedCities = _.groupBy(travelCities, city => 
+  const groupedCities = _.groupBy(travelCities, city =>
     city.country?.displayName || 'Other Destinations'
   );
-  
-    const handleNavigation = (item: any, isCountry: boolean = false) => {
-      console.log("Navigation item:", item);
-      
-      if (isCountry) {
-        // Handle country navigation
-        const countryPath = `${thisPathname}/country/${item.toLowerCase().replace(/\s+/g, '-')}`;
-        console.log("Country path:", countryPath);
-        router.push(countryPath as Route);
-      } else {
-        // Handle city navigation
-        if (!item?.cityCode) {
-          console.error("City code is missing:", item);
-          return;
-        }
-        const cityPath = `${thisPathname}/city/${item.cityCode.toLowerCase()}`;
-        console.log("City path:", cityPath);
-        router.push(cityPath as Route);
+
+  // Add this useEffect for handling clicks outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setShowPopover(false);
       }
     };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  // Add this useEffect for Escape key handling
+  useEffect(() => {
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setShowPopover(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscKey);
+    return () => {
+      document.removeEventListener('keydown', handleEscKey);
+    };
+  }, []);
+
+  const handleNavigation = (item: any, isCountry: boolean = false) => {
+    console.log("Navigation item:", item);
+
+    if (isCountry) {
+      // Handle country navigation
+      const countryPath = `${thisPathname}/country/${item.toLowerCase().replace(/\s+/g, '-')}`;
+      console.log("Country path:", countryPath);
+      router.push(countryPath as Route);
+    } else {
+      // Handle city navigation
+      if (!item?.cityCode) {
+        console.error("City code is missing:", item);
+        return;
+      }
+      const cityPath = `${thisPathname}/city/${item.cityCode.toLowerCase()}`;
+      console.log("City path:", cityPath);
+      router.push(cityPath as Route);
+    }
+  };
 
   const renderSearchResults = () => {
     const resultsToShow = searchResults.length > 0 ? searchResults : [];
@@ -126,9 +154,8 @@ const LocationInput: FC<LocationInputProps> = ({
     <div className={`relative flex ${className}`} ref={containerRef}>
       <div
         onClick={() => setShowPopover(true)}
-        className={`flex z-10 flex-1 relative pt-4 pb-4 pr-5 pl-5 flex-shrink-0 items-center space-x-3 cursor-pointer focus:outline-none text-left ${
-          showPopover ? "nc-hero-field-focused" : ""
-        }`}
+        className={`flex z-10 flex-1 relative pt-4 pb-4 pr-5 pl-5 flex-shrink-0 items-center space-x-3 cursor-pointer focus:outline-none text-left ${showPopover ? "nc-hero-field-focused" : ""
+          }`}
       >
         <div className="text-neutral-300 dark:text-neutral-400">
           <MagnifyingGlassIcon className="w-5 h-5 lg:w-7 lg:h-7" />
@@ -154,7 +181,7 @@ const LocationInput: FC<LocationInputProps> = ({
             />
           )}
         </div>
-        <ButtonSubmit style={{ backgroundColor: '#7C25E9' }} />
+        <ButtonSubmit href="/" style={{ backgroundColor: '#7C25E9' }} />
       </div>
 
       {showPopover && (
