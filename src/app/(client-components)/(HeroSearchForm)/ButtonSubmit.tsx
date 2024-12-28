@@ -6,16 +6,15 @@ import React, { CSSProperties, FC } from "react";
 interface Props {
   href?: PathName;
   className?: string;
-  style?: CSSProperties;
 }
 
-const ButtonSubmit: FC<Props> = ({ href = "", className, style }) => {
+const ButtonSubmit: FC<Props> = ({ href = "", className }) => {
   return (
     <Link
     href={href as Route}
     type="button"
     className={`h-14 md:h-16 w-full md:w-16 rounded-full bg-primary-6000 hover:bg-primary-700 flex items-center justify-center text-neutral-50 focus:outline-none ${className}`}
-    {...(style ? { style } : {})}
+    style={{ backgroundColor: '#7C25E9' }}
     >
       <span className="mr-3 md:hidden">Search</span>
       <svg
