@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, FC } from "react";
 import { ClockIcon, MapPinIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import ClearDataButton from "../(HeroSearchForm)/ClearDataButton";
-import ButtonSubmit from "../(HeroSearchForm)/ButtonSubmit";
+// import ButtonSubmit from "../(HeroSearchForm)/ButtonSubmit";
 import _ from 'lodash';
 import { usePathname, useRouter } from "next/navigation";
 import { Route } from "next";
@@ -181,7 +181,7 @@ const LocationInput: FC<LocationInputProps> = ({
             />
           )}
         </div>
-        <ButtonSubmit href="/" style={{ backgroundColor: '#7C25E9' }} />
+        {/* <ButtonSubmit href="/" style={{ backgroundColor: '#7C25E9' }} /> */}
       </div>
 
       {showPopover && (
