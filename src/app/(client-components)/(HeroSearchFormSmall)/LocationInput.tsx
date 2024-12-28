@@ -253,7 +253,7 @@ const LocationInput: FC<LocationInputProps> = ({
           </span>
           </div>
            <div>
-            <ButtonSubmit href="/" style={{ backgroundColor: '#7C25E9' }}  />
+            <ButtonSubmit href="/"  />
            </div>
           {value && showPopover && (
             <ClearDataButton onClick={() => setValue("")} />
