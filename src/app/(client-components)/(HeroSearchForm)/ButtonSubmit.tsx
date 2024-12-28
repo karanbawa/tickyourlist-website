@@ -9,7 +9,7 @@ interface Props {
   style?: CSSProperties;
 }
 
-const ButtonSubmit: FC<Props> = ({ href = "", className, style = "" }) => {
+const ButtonSubmit: FC<Props> = ({ href = "", className, style }) => {
   return (
     <Link
     href={href as Route}
