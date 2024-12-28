@@ -33,7 +33,7 @@ const widgetMenus: WidgetFooterMenu[] = [
       { href: "/about", label: "Our Story" },
       { href: "/careers", label: "Careers" },
       // { href: "/newsroom", label: "Newsroom" },
-      // { href: "/blog", label: "Travel Blog" },
+      { href: "/blog", label: "Travel Blog" },
     ],
   },
   {

@@ -248,13 +248,13 @@ const LocationInput: FC<LocationInputProps> = ({
             onChange={handleInputChange} // Updated to handle input change
             ref={inputRef}
           />
-          <span className="block mt-0.5 text-sm text-neutral-400 font-light ">
+          <span className="block mt-0.5 text-sm text-neutral-400 font-light">
             <span className="line-clamp-1">{!!value ? placeHolder : desc}</span>
           </span>
           </div>
            <div>
-            <ButtonSubmit href="/"  />
-           </div> 
+            <ButtonSubmit href="/" style={{ backgroundColor: '#7C25E9' }}  />
+           </div>
           {value && showPopover && (
             <ClearDataButton onClick={() => setValue("")} />
           )}

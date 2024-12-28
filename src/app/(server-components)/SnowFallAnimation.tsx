@@ -6,8 +6,8 @@ export interface SnowfallWrapperProps {
 
 const SnowfallWrapper: FC<SnowfallWrapperProps> = ({ children }) => {
     const snowflakes = Array.from({ length: 40 }, (_, index) => {
-        const isLarge = index % 3 === 0;
-        const isMedium = index % 3 === 1;
+        const isLarge = index % 10 === 0;
+        const isMedium = index % 10 === 1;
         const left = `${(index % 10) * 10}%`;
         const delay = `${(index % 7) * 0.5}s`;
         const opacity = 1 - (index % 5) * 0.1;

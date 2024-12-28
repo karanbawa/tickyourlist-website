@@ -8,17 +8,19 @@ export type SearchRealEstateTab = "Buy" | "Rent" | "Sell";
 export interface BlogSearchFormProps {
   className?: string;
   currentTab?: SearchRealEstateTab;
+  travelCities?: any;
 }
 
 const BlogSearchForm: FC<BlogSearchFormProps> = ({
   className = "",
+  travelCities
 }) => {
 
   return (
     <div
-      className={`nc-HeroRealEstateSearchForm w-full max-w-6xl py-5 lg:py-0 ${className}`}
+      className={`flex justify-center nc-HeroRealEstateSearchForm w-full max-w-6xl py-5 lg:py-0 ${className}`}
     >
-      <RealEstateSearchForm />
+      <RealEstateSearchForm travelCities={travelCities} />
     </div>
   );
 };
