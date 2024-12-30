@@ -19,11 +19,11 @@ const MAGAZINE1_POSTS = POSTS.filter((_, i) => i >= 0 && i < 8);
 
 
 async function fetchTravelCities() {
-  const response = await fetch(`http://localhost:3005/v1/tyltravelcity/get/travelcity/public/submitted/all?websiteId=${process.env.WEBSITE_ID}`, {
+  const response = await fetch(`${process.env.BASE_URL}/v1/tyltravelcity/get/travelcity/public/submitted/all?websiteId=${process.env.WEBSITE_ID}`, {
     headers: {
       'Content-Type': 'application/json',
       'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
-      'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj'
+      'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj' 
 
     },
     next: { revalidate: 10 }
