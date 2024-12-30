@@ -276,7 +276,7 @@ const Page = ({
 
           <div className="flex">
             <span className="block text-neutral-200 hover:text-white font-medium truncate">
-              {post.author.displayName}
+              {post?.author?.displayName}
             </span>
             <span className="mx-1.5 font-medium">·</span>
             <span className="font-normal truncate">{post.date}</span>
