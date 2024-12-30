@@ -146,10 +146,10 @@ const BlogPage = async () => {
         
         <SectionLatestPosts className="py-16 lg:py-28" allTags={allTags} posts={allLatestPosts} allCategories={allCategories} />
 
-        <div className="pt-12 pb-16 lg:pb-28">
+        {/* <div className="pt-12 pb-16 lg:pb-28">
           <SectionMagazine5 posts={MAGAZINE1_POSTS} />
         </div>
-        
+         */}
         <SectionSubscribe2 className="pb-16 lg:pb-28" />
       </div>
     </div>

@@ -1,7 +1,10 @@
+'use client'
+
 import React, { FC } from "react";
 import { TaxonomyType } from "@/data/types";
 import Link from "next/link";
 import Image from "next/image";
+import { Route } from "next";
 
 export interface CardCategory1Props {
   className?: string;
@@ -14,20 +17,21 @@ const CardCategory1: FC<CardCategory1Props> = ({
   size = "normal",
   taxonomy,
 }) => {
-  const { count, name, href = "/", thumbnail } = taxonomy;
+  const { count, name, href = "/", slug, thumbnail } = taxonomy;
+
   return (
     <Link
-      href={href}
+      href={`/blog/category/${slug}` as Route}
       className={`nc-CardCategory1 flex items-center ${className}`}
       data-nc-id="CardCategory1"
     >
-      <div
+      {/* <div
         className={`flex-shrink-0 relative ${
           size === "large" ? "w-20 h-20" : "w-12 h-12"
         } rounded-lg mr-4 overflow-hidden`}
       >
         <Image alt="" fill src={thumbnail || ""} />
-      </div>
+      </div> */}
 
       <div>
         <h2

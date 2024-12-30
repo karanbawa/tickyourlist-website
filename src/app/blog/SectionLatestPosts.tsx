@@ -38,8 +38,7 @@ const formatDate = (dateString: string | undefined): string => {
   }).format(date);
 };
 
-
-const SectionLatestPosts: FC<SectionLatestPostsProps> = ({ 
+const SectionLatestPosts: FC<SectionLatestPostsProps> = ({
   posts = postsDemo,
   postCardName = "card3",
   className = "",
@@ -54,7 +53,11 @@ const SectionLatestPosts: FC<SectionLatestPostsProps> = ({
       firstName: '', // Add required field
       lastName: '', // Add required field
       displayName: 'TickYourList',
-      avatar: post?.author?.avatar || '',
+      avatar: {
+        src: post?.author?.avatar ?? '',
+        height: 20,
+        width: 20
+      },
       count: 0, // Add required field
       desc: '', // Add required field
       jobName: '', // Add required field

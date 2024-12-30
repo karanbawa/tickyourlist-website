@@ -2,6 +2,8 @@
 
 import React, { FC, useState } from 'react';
 import styles from './newsTicker.module.css';
+import Link from 'next/link';
+import { Route } from 'next';
 
 export interface NewsTickerProps {
     posts?: any[];
@@ -28,16 +30,17 @@ const BlinkingDot = () => (
   <div className="animate-pulse w-2 h-2 bg-white rounded-full mr-2" />
 );
 
-const NewsTickerItem = ({ title, date, imageUrl }: {
+const NewsTickerItem = ({ title, date, imageUrl, slug }: {
   title: string;
   date: string;
   imageUrl?: boolean;
+  slug: string
 }) => (
   <div className={`${styles.newsItem} flex items-center space-x-3 min-w-max px-4 cursor-pointer`}>
     {imageUrl && (
       <div className="w-12 h-12 flex-shrink-0">
         <img
-          src="/api/placeholder/48/48"
+          src={imageUrl}
           alt={title}
           className="w-full h-full object-cover rounded"
         />
@@ -45,7 +48,7 @@ const NewsTickerItem = ({ title, date, imageUrl }: {
     )}
     <div className="flex flex-col">
       <h6 className={`${styles.newsTitle} text-sm font-medium text-gray-800`}>
-        {title}
+        <Link href={`/blog/${slug}` as Route}>{title}</Link>
       </h6>
       <span className="text-xs text-gray-500">{date}</span>
     </div>
@@ -55,28 +58,20 @@ const NewsTickerItem = ({ title, date, imageUrl }: {
 const NewsTicker: FC<NewsTickerProps> = ({ posts }) => {
   const [isPaused, setIsPaused] = useState(false);
 
+  console.log("postsdata ", posts);
+
 //   const newsData = posts?.
 
-  const news = [
-    {
-      title: "First Test Post",
-      date: "December 24, 2024",
-      imageUrl: true
-    },
-    {
-      title: "test title – dubai blog",
-      date: "December 14, 2024"
-    },
-    {
-      title: "Discover Dubai's Top Indoor Attractions",
-      date: "December 13, 2024",
-      imageUrl: true
-    },
-    {
-      title: "Hello world!",
-      date: "November 26, 2024"
-    }
-  ];
+const news = posts?.map(post => ({
+  title: post.title.replace('&#8211;', '–'), // Replace HTML entity with actual dash
+  date: new Date(post.date).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric', 
+    year: 'numeric'
+  }),
+  imageUrl: post.featured_image ? post.featured_image : false,
+  slug: post.slug
+})) || [];
 
   return (
     <div className="w-full bg-white shadow-md rounded-2xl overflow-hidden mt-10">
