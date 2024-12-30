@@ -1,0 +1,34 @@
+/* newsTicker.module.css */
+.tickerWrapper {
+    position: relative;
+  }
+  
+  .tickerContent {
+    animation: tickerMove 20s linear infinite;
+    will-change: transform;
+  }
+  
+  .tickerContent.paused,
+  .tickerWrapper:hover .tickerContent {
+    animation-play-state: paused;
+  }
+  
+  .newsItem {
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .newsItem:hover .newsTitle {
+    color: #9333EA;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+  }
+  
+  @keyframes tickerMove {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }

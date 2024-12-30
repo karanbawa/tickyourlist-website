@@ -10,6 +10,7 @@ import BlogHero from "../(server-components)/BlogHero";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
+import NewsTicker from "./NewsTicker";
 
 const POSTS = DEMO_POSTS;
 
@@ -19,6 +20,60 @@ const MAGAZINE1_POSTS = POSTS.filter((_, i) => i >= 0 && i < 8);
 
 async function fetchTravelCities() {
   const response = await fetch(`http://localhost:3005/v1/tyltravelcity/get/travelcity/public/submitted/all?websiteId=${process.env.WEBSITE_ID}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+      'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj'
+
+    },
+    next: { revalidate: 10 }
+  });
+
+  if (!response.ok) {
+    throw notFound();
+  }
+
+  return response.json();
+}
+
+async function fetchAllTags() {
+  const response = await fetch(`https://limegreen-goat-705421.hostingersite.com/wp-json/tyl/v1/tags`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+      'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj'
+
+    },
+    next: { revalidate: 10 }
+  });
+
+  if (!response.ok) {
+    throw notFound();
+  }
+
+  return response.json();
+}
+
+async function fetchAllLatestPosts() {
+  const response = await fetch(`https://limegreen-goat-705421.hostingersite.com/wp-json/tyl/v1/posts?page=1`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
+      'x-api-key': 'GCMUDiuY5a7WvyUNt9n3QztToSHzK7Uj'
+
+    },
+    next: { revalidate: 10 }
+  });
+
+  if (!response.ok) {
+    throw notFound();
+  }
+
+  return response.json();
+}
+
+async function fetchAllCategoriesStats() {
+  const response = await fetch(`https://limegreen-goat-705421.hostingersite.com/wp-json/tyl/v1/categories/stats`, {
     headers: {
       'Content-Type': 'application/json',
       'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0',
@@ -63,27 +118,37 @@ const BlogPage = async () => {
   const cookieStore = cookies();
   
   const travelCities = await fetchTravelCities();
-  const posts = travelCities?.data?.posts || [];
+  const allTags = await fetchAllTags();
+  const allLatestPosts = await fetchAllLatestPosts();
+  const allCategories = await fetchAllCategoriesStats();
 
-  console.log('travelCitiestravelCities ', travelCities?.data?.travelCitiesList);
+  console.log("allLatestPosts ", allLatestPosts);
+
+  const posts = travelCities?.data?.posts || [];
   
   // const magazinePosts = posts.filter((_, i) => i >= 0 && i < 8);
 
   return (
     <div className="nc-BlogPage overflow-hidden relative">
-      <div className="pb-24 lg:pb-28">
+      <div className="">
         <BlogHero className="" travelCities={travelCities?.data?.travelCitiesList} />
       </div>
       <BgGlassmorphism />
       
       <div className="container relative">
+        {/* <div className="pt-12 pb-16 lg:pb-28">
+          <SectionMagazine5 posts={MAGAZINE1_POSTS} />
+        </div> */}
+
+        {/* <SectionAds /> */}
+
+        <NewsTicker posts={allLatestPosts} />
+        
+        <SectionLatestPosts className="py-16 lg:py-28" allTags={allTags} posts={allLatestPosts} allCategories={allCategories} />
+
         <div className="pt-12 pb-16 lg:pb-28">
           <SectionMagazine5 posts={MAGAZINE1_POSTS} />
         </div>
-
-        <SectionAds />
-        
-        <SectionLatestPosts className="py-16 lg:py-28" />
         
         <SectionSubscribe2 className="pb-16 lg:pb-28" />
       </div>

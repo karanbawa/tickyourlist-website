@@ -56,9 +56,21 @@ const nextConfig = {
         hostname: 'cdn-imgix.headout.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'limegreen-goat-705421.hostingersite.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'secure.gravatar.com',
+        port: '',
+        pathname: '/**',
       }
     ],
-    domains: ['tickyourlist-images.s3.ap-south-1.amazonaws.com'],
+    domains: ['tickyourlist-images.s3.ap-south-1.amazonaws.com', 'limegreen-goat-705421.hostingersite.com'],
   },
 };
 

@@ -11,6 +11,20 @@ export interface Card3Props {
   post: PostDataType;
 }
 
+const HTMLDescription: FC<{ html: string; className?: string }> = ({ 
+  html, 
+  className = "" 
+}) => {
+  return (
+    <div
+      className={`line-clamp-1 ${className}`}
+      dangerouslySetInnerHTML={{
+        __html: html.replace(/<[^>]*>/g, ' ').trim() // Strip HTML tags but preserve spacing
+      }}
+    />
+  );
+};
+
 const Card3: FC<Card3Props> = ({ className = "h-full", post }) => {
   const { title, href, featuredImage, desc, categories, postType } = post;
 
@@ -30,9 +44,10 @@ const Card3: FC<Card3Props> = ({ className = "h-full", post }) => {
               </Link>
             </h2>
             <div className="hidden sm:block sm:mt-2">
-              <span className="text-neutral-500 dark:text-neutral-400 text-base line-clamp-1">
-                {desc}
-              </span>
+              <HTMLDescription
+                  html={desc}
+                  className="text-neutral-500 dark:text-neutral-400 text-base"
+                />
             </div>
           </div>
 

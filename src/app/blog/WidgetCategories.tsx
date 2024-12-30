@@ -15,6 +15,9 @@ const WidgetCategories: FC<WidgetCategoriesProps> = ({
   className = "bg-neutral-100 dark:bg-neutral-800",
   categories = categoriesDemo,
 }) => {
+
+  const trendingCategories = categories?.filter((_, i) => i < 5);
+
   return (
     <div
       className={`nc-WidgetCategories rounded-3xl overflow-hidden ${className}`}
@@ -25,7 +28,7 @@ const WidgetCategories: FC<WidgetCategoriesProps> = ({
       />
       <div className="flow-root">
         <div className="flex flex-col divide-y divide-neutral-200 dark:divide-neutral-700">
-          {categories.map((category) => (
+          {trendingCategories.map((category) => (
             <CardCategory1
               className="p-4 xl:p-5 hover:bg-neutral-200 dark:hover:bg-neutral-700"
               key={category.id}

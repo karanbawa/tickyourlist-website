@@ -19,6 +19,8 @@ export interface TaxonomyType {
   color?: TwMainColor | string;
   taxonomy: "category" | "tag";
   listingType?: "stay" | "experiences" | "car";
+  slug?: string;
+  description?: string;
 }
 
 export interface AuthorType {
@@ -34,11 +36,14 @@ export interface AuthorType {
   jobName: string;
   href: Route<string>;
   starRating?: number;
+  name?: string;
 }
 
 export interface PostDataType {
   id: string | number;
-  author: AuthorType;
+  author?: AuthorType;
+  content?: string;
+  featured_image?: StaticImageData | string;
   date: string;
   href: Route<string>;
   categories: TaxonomyType[];
@@ -49,6 +54,8 @@ export interface PostDataType {
   viewdCount: number;
   readingTime: number;
   postType?: "standard" | "video" | "gallery" | "audio";
+  slug?: string;
+  description?: string;
 }
 
 export type TwMainColor =
