@@ -41,7 +41,7 @@ export interface AuthorType {
 
 export interface PostDataType {
   id: string | number;
-  author?: AuthorType;
+  author: AuthorType;
   content?: string;
   featured_image?: StaticImageData | string;
   date: string;
