@@ -1,7 +1,7 @@
 "use client"
 
 import React, { FC } from "react";
-import { TaxonomyType } from "@/data/types";
+import { TaxonomyType, TwMainColor } from "@/data/types";
 import WidgetHeading1 from "./WidgetHeading1";
 import Tag from "@/shared/Tag";
 import { DEMO_TAGS } from "@/data/taxonomies";
