@@ -107,8 +107,7 @@ export default function GallerySlider({
                   alt="listing card gallery"
                   className={`object-cover ${imageClass}`}
                   sizes="(max-width: 1025px) 100vw, 300px"
-                  // loading="eager"
-                  // quality={75}
+                  priority={index === 0}
                 />
               </motion.div>
             </AnimatePresence>
