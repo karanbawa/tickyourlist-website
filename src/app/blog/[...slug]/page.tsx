@@ -101,9 +101,9 @@ const Page = async ({ params }: { params: { slug: string } }) => {
                   src: post?.author?.avatar,
                   width: 10,
                   height: 10
-                }} */}
+                }}
                 // width={10}
-              />
+              /> */}
               <div className="ml-3">
                 <div className="flex items-center">
                   <span className="block font-semibold">
