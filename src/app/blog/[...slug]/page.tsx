@@ -7,6 +7,7 @@ import Comment from "@/shared/Comment";
 import SocialsList from "@/shared/SocialsList";
 import Textarea from "@/shared/Textarea";
 import Image from "next/image";
+import { Route } from "next";
 
 // TypeScript interfaces for the WordPress API response
 interface Category {
@@ -79,7 +80,7 @@ const Page = async ({ params }: { params: { slug: string } }) => {
           {post.categories.map((category) => (
             <Badge 
               key={category.id}
-              href={`/category/${category.slug}`}
+              href={`/category/${category.slug}` as Route}
               color="purple"
               name={category.name}
             />
