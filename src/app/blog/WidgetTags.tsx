@@ -25,12 +25,17 @@ const WidgetTags: FC<WidgetTagsProps> = ({
   const tagsData = tags?.map(tag => ({
     id: tag.id,
     name: tag.name,
-    href: `${thisPathname}/tag/${tag?.slug}` as Route, // Creating href from slug
+    href: `${thisPathname}/tag/${tag?.slug}` as Route,
     count: tag.count,
-    taxonomy: "tag",
-    color: "indigo", // You can set a default color or randomize from a set of colors
-    description: tag.description
-  }));
+    taxonomy: "tag" as const, // Fix: explicitly type as "tag"
+    color: "indigo" as TwMainColor, // Fix: explicitly type as TwMainColor
+    description: tag.description,
+    // Add other required TaxonomyType fields
+    thumbnail: tag.thumbnail,
+    desc: tag.desc,
+    listingType: tag.listingType,
+    slug: tag.slug
+  })) as TaxonomyType[]; // Add type assertion to ensure it matches TaxonomyType
 
   console.log("tagsData ", tagsData);
 
