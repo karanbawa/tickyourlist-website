@@ -33,7 +33,7 @@ const BlinkingDot = () => (
 const NewsTickerItem = ({ title, date, imageUrl, slug }: {
   title: string;
   date: string;
-  imageUrl?: boolean;
+  imageUrl?: string;
   slug: string
 }) => (
   <div className={`${styles.newsItem} flex items-center space-x-3 min-w-max px-4 cursor-pointer`}>
@@ -69,7 +69,7 @@ const news = posts?.map(post => ({
     day: 'numeric', 
     year: 'numeric'
   }),
-  imageUrl: post.featured_image ? post.featured_image : false,
+  imageUrl: post.featured_image ? post.featured_image : '',
   slug: post.slug
 })) || [];
 
