@@ -11,7 +11,7 @@ export interface Card3Props {
   post: PostDataType;
 }
 
-const HTMLDescription: FC<{ html: string; className?: string }> = ({ 
+const HTMLDescription: FC<{ html?: string; className?: string }> = ({ 
   html, 
   className = "" 
 }) => {
@@ -19,7 +19,7 @@ const HTMLDescription: FC<{ html: string; className?: string }> = ({
     <div
       className={`line-clamp-1 ${className}`}
       dangerouslySetInnerHTML={{
-        __html: html.replace(/<[^>]*>/g, ' ').trim() // Strip HTML tags but preserve spacing
+        __html: html?.replace(/<[^>]*>/g, ' ').trim() ?? <></>// Strip HTML tags but preserve spacing
       }}
     />
   );
