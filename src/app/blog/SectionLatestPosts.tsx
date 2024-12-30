@@ -48,30 +48,38 @@ const SectionLatestPosts: FC<SectionLatestPostsProps> = ({
 }) => {
 
   const newPosts = posts?.map(post => ({
-      id: post?.id,
-      author: {
-          id: post.id,
-          avatar: {
-            src: post?.author?.avatar,
-            width: 10,
-            height: 10
-          },
-          href: `/${post?.slug}` as Route,
-          displayName: 'TickYourList',
-
-      },
-      date: formatDate(post?.date),
-      href: `/${post?.slug}` as Route,
-      categories: post?.categories,
-      title: post?.title,
-      featuredImage: post?.featured_image,
-      desc: post?.content,
-      commentCount: 0,
-      viewdCount: 1,
-      readingTime: 1,
-      slug: post?.slug as Route,
-      description: post?.content
-  }))
+    id: post?.id,
+    author: {
+      id: post.id,
+      firstName: '', // Add required field
+      lastName: '', // Add required field
+      displayName: 'TickYourList',
+      avatar: post?.author?.avatar || '',
+      count: 0, // Add required field
+      desc: '', // Add required field
+      jobName: '', // Add required field
+      href: `/${post?.slug}` as Route<string>,
+      // Optional fields can be added if you have them
+      bgImage: undefined,
+      email: undefined,
+      starRating: undefined,
+      name: undefined
+    },
+    date: formatDate(post?.date),
+    href: `/${post?.slug}` as Route<string>,
+    categories: post?.categories || [], // Ensure it's an array of TaxonomyType
+    title: post?.title || '',
+    featuredImage: post?.featured_image || '',
+    desc: post?.content,
+    commentCount: 0,
+    viewdCount: 1, // Note: property in interface is "viewCount" not "viewdCount"
+    viewCount: 1, // Add this if required by PostDataType
+    readingTime: 1,
+    postType: "standard" as const, // Add if needed
+    slug: post?.slug,
+    description: post?.content,
+    content: post?.content // Add if needed based on PostDataType
+  })) as PostDataType[] // Type assertion to ensure it matches PostDataType
 
   const renderCard = (post: PostDataType) => {
     switch (postCardName) {
