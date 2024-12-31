@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   try {
     const paymentDetails = await request.json(); // Parse request body once
-    console.log("Received Payment Details:", paymentDetails);
 
     if (!paymentDetails) {
       return NextResponse.json(
@@ -33,8 +32,6 @@ export async function POST(request: NextRequest) {
     );
 
     const responseData = await response.json();
-
-    console.log("Backend Response:", responseData);
 
     if (!response.ok) {
       return NextResponse.json(

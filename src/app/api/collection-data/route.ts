@@ -40,7 +40,6 @@ export async function GET(request: Request) {
     // Optionally set the currency cookie for future requests
     // Note: Setting cookies in server components is not straightforward; you may need to adjust your approach
   }
-  console.log('collectioncurrencychecl ', currency);
   // const cookies = Cookie.parse(request.headers.cookie || '');
 
   if (!cityCode) {

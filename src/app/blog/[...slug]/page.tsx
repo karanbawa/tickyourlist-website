@@ -71,8 +71,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 const Page = async ({ params }: { params: { slug: string } }) => {
   const post = await getPost(params.slug);
 
-  console.log("postcheck ", post);
-
   const renderHeader = () => {
     return (
       <header className="container rounded-xl">

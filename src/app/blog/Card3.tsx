@@ -5,6 +5,7 @@ import CategoryBadgeList from "@/components/CategoryBadgeList";
 import PostTypeFeaturedIcon from "@/components/PostTypeFeaturedIcon";
 import Link from "next/link";
 import Image from "next/image";
+import { Route } from "next";
 
 export interface Card3Props {
   className?: string;
@@ -42,7 +43,7 @@ const Card3: FC<Card3Props> = ({ className = "h-full", post }) => {
             <h2
               className={`nc-card-title block font-semibold text-neutral-900 dark:text-neutral-100 text-xl`}
             >
-              <Link href={href} className="line-clamp-2" title={title}>
+              <Link href={`/blog/${href}` as Route} className="line-clamp-2" title={title}>
                 {title}
               </Link>
             </h2>
@@ -51,7 +52,7 @@ const Card3: FC<Card3Props> = ({ className = "h-full", post }) => {
               html={desc || ''} // Provide a default empty string
               className="text-neutral-500 dark:text-neutral-400 text-base"
             />
-            </div>
+            </div> 
           </div>
 
           <PostCardMeta meta={{ ...post }} />

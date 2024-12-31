@@ -37,8 +37,6 @@ const WidgetTags: FC<WidgetTagsProps> = ({
     slug: tag.slug
   })) as TaxonomyType[]; // Add type assertion to ensure it matches TaxonomyType
 
-  console.log("tagsData ", tagsData);
-
   return (
     <div className={`nc-WidgetTags rounded-3xl overflow-hidden ${className}`}>
       <WidgetHeading1

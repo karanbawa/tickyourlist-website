@@ -15,8 +15,6 @@ export async function POST(request: NextRequest) {
     // PayPal API URL for creating an order
     const paypalOrderUrl = 'https://api-m.sandbox.paypal.com/v2/checkout/orders';
 
-    console.log("paypalOrderUrl ", paypalOrderUrl);
-
     // Calculate the total amount
     const totalAmount = cart.reduce(
       (total: number, item: { quantity: number; price: number }) =>

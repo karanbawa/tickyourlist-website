@@ -31,7 +31,6 @@ const AccountSavelists = () => {
           });
           const data = await response.json();
           if (data.tourGroup) {
-            console.log("sadadadadasd ", data);
             setTourGroups(data.tourGroup);
           }
         } catch (error) {
@@ -79,7 +78,6 @@ const AccountSavelists = () => {
                       // <></>
                       <StayCard2 key={tourgroup._id} data={tourgroup} isLiked={true} className="min-w-[300px] max-w-[300px] flex-shrink-0" onLikeChange={(newStatus) => {
                         if (!newStatus) {
-                          console.log(tourGroups);
                           setTourGroups(prev => prev.filter((data: any) => data?._id !== tourgroup._id));
                         }
                       }} />

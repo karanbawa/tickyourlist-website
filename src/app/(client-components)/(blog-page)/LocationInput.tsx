@@ -67,12 +67,10 @@ const LocationInput: FC<LocationInputProps> = ({
   }, []);
 
   const handleNavigation = (item: any, isCountry: boolean = false) => {
-    console.log("Navigation item:", item);
 
     if (isCountry) {
       // Handle country navigation
       const countryPath = `${thisPathname}/country/${item.toLowerCase().replace(/\s+/g, '-')}`;
-      console.log("Country path:", countryPath);
       router.push(countryPath as Route);
     } else {
       // Handle city navigation
@@ -81,7 +79,6 @@ const LocationInput: FC<LocationInputProps> = ({
         return;
       }
       const cityPath = `${thisPathname}/city/${item.cityCode.toLowerCase()}`;
-      console.log("City path:", cityPath);
       router.push(cityPath as Route);
     }
   };

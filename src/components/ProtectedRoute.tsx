@@ -10,7 +10,6 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
   React.useEffect(() => {
     if (!user && !localStorage.getItem('user')) {
-      console.log("usertest ", user);
       router.push('/login');
     }
   }, [user, router]);

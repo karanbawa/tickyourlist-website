@@ -58,10 +58,6 @@ const NewsTickerItem = ({ title, date, imageUrl, slug }: {
 const NewsTicker: FC<NewsTickerProps> = ({ posts }) => {
   const [isPaused, setIsPaused] = useState(false);
 
-  console.log("postsdata ", posts);
-
-//   const newsData = posts?.
-
 const news = posts?.map(post => ({
   title: post.title.replace('&#8211;', '–'), // Replace HTML entity with actual dash
   date: new Date(post.date).toLocaleDateString('en-US', {

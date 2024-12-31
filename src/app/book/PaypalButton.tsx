@@ -34,7 +34,6 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
 
     const createOrder = async (): Promise<string> => {
         try {
-            console.log('createorder');
             const response = await fetch("/api/paypalcreateorder", {
                 method: "POST",
                 headers: {
@@ -49,7 +48,6 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
             });
     
             const data = await response.json();
-            console.log("datadata ", data);
             if (response.ok) {
                 return data.id;
             } else {
@@ -86,7 +84,6 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
                 const transaction = orderData.purchase_units?.[0].payments.captures[0];
                 if (transaction) {
                     setMessage(`Transaction ${transaction.status}: ${transaction.id}. See console for all available details`);
-                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
                 }
             }
         } catch (error) {

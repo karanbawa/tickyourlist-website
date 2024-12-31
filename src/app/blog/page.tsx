@@ -122,8 +122,6 @@ const BlogPage = async () => {
   const allLatestPosts = await fetchAllLatestPosts();
   const allCategories = await fetchAllCategoriesStats();
 
-  console.log("allLatestPosts ", allLatestPosts);
-
   const posts = travelCities?.data?.posts || [];
   
   // const magazinePosts = posts.filter((_, i) => i >= 0 && i < 8);
