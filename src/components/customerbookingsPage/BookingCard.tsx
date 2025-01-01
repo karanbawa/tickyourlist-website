@@ -3,6 +3,7 @@ import ButtonPrimary from "@/shared/ButtonPrimary";
 import Image from "next/image";
 import { Calendar, Users } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { Route } from 'next';
 
 export interface BookingCardProps {
     booking?: any;
@@ -28,14 +29,18 @@ const BookingCard: FC<BookingCardProps> = ({ booking }) => {
     router.push(`/book?tourId=${booking?.tourGroupId?._id}&date=${booking?.bookingDate}&tour=${booking?.tourId?._id}&variantId=${booking?.variandId?._id}&${paxQuery}`);
   };
 
-  const handleDownload = (bookingId: any) => {
-    // Implement download logic here
-    console.log(`Downloading booking ${bookingId}`);
+  const handleDownload = (booking: any) => {
+    if (!booking?.invoice?.s3Url) {
+      console.error('No invoice URL found');
+      return;
+    }
+
+    window.open(booking?.invoice?.s3Url, '_blank');
   };
   
-  const handleViewTourGroup = (slug: any) => {
+  const handleViewTourGroup = (booking: any) => {
     // Implement download logic here
-    router.push(`/${slug}`)
+    router.push(`${booking?.tourGroupId?.urlSlugs?.EN}` as Route)
   };
 
   return (
@@ -85,9 +90,9 @@ const BookingCard: FC<BookingCardProps> = ({ booking }) => {
             </div>
           </div>
           <div className="bg-gray-50 dark:bg-neutral-700 p-4 flex justify-between items-center">
-            <ButtonPrimary className='' onClick={() => handleViewTourGroup(booking?.urlSlugs?.EN)}>View Details</ButtonPrimary>
+            <ButtonPrimary className='' onClick={() => handleViewTourGroup(booking)}>View Details</ButtonPrimary>
             {booking?.status === 'PENDING' ? <ButtonPrimary onClick={() => handleBookNow(booking)}>Book Now</ButtonPrimary> : 
-             <ButtonPrimary onClick={() => handleDownload(booking._id)}>Download</ButtonPrimary> }
+             <ButtonPrimary onClick={() => handleDownload(booking)}>Download</ButtonPrimary> }
           </div>
         </div>
       );

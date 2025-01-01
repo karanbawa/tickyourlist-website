@@ -11,6 +11,7 @@ export const Nav = () => {
   const listNav: Route[] = [
     "/account",
     "/account-wishlist",
+    "/bookings"
     // "/account-password",
     // "/account-billing",
   ];
